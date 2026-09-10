@@ -10,6 +10,23 @@ export async function personalize(req: AuthenticatedRequest, res: Response) {
   const course = await prisma.course.findUnique({ where: { id: courseId } });
   if (!course) return res.status(404).json({ error: 'Course not found' });
 
+  // Section 18: retrieve the trusted materials for the path's topics and hand
+  // them to the LLM. The LLM may recommend from this list but never invent one.
+  const pathTopicNames: string[] = Array.isArray(learningPath) ? learningPath : [];
+  const materialRows = pathTopicNames.length
+    ? await prisma.learningMaterial.findMany({
+        where: { courseId, isActive: true, topic: { name: { in: pathTopicNames } } },
+        include: { topic: { select: { name: true } } },
+        orderBy: { sortOrder: 'asc' },
+      })
+    : [];
+  const availableMaterials = materialRows.map((m) => ({
+    title: m.title,
+    type: m.type,
+    topic: m.topic.name,
+    url: m.url,
+  }));
+
   const result = await llm.personalize({
     course: course.code,
     weakTopics,
@@ -17,6 +34,7 @@ export async function personalize(req: AuthenticatedRequest, res: Response) {
     studyTimeMinutes: studyTimeMinutes ?? 60,
     learningPreference: learningPreference ?? 'Video + Practice',
     goal: goal ?? `Understand ${course.code} fundamentals`,
+    availableMaterials,
   });
 
   await prisma.aIInteraction.create({

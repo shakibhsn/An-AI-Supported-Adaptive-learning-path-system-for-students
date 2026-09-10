@@ -73,6 +73,24 @@ export function calculateTopicScores(answers: AnswerRecord[]): Record<string, To
   return result;
 }
 
+/**
+ * Blends a fresh practice observation into an existing mastery score.
+ *
+ * A diagnostic and a follow-up assessment REPLACE the mastery score (they
+ * are formal, answer-once assessments). Practice is different: it shows the
+ * answer immediately and can be retaken, so a single practice run should
+ * nudge mastery toward the observed score rather than overwrite it. Recent
+ * performance is weighted higher (0.6) than the prior score (0.4).
+ * If there is no prior score, the observation stands on its own.
+ */
+export const PRACTICE_RECENCY_WEIGHT = 0.6;
+
+export function blendMastery(previous: number | null | undefined, observed: number): number {
+  if (previous === null || previous === undefined) return Math.round(observed * 10) / 10;
+  const blended = (1 - PRACTICE_RECENCY_WEIGHT) * previous + PRACTICE_RECENCY_WEIGHT * observed;
+  return Math.round(blended * 10) / 10;
+}
+
 export interface RankedTopic {
   topic: string;
   score: number;

@@ -5,6 +5,7 @@ import diagnosticRoutes from './diagnostic.routes';
 import practiceRoutes from './practice.routes';
 import followUpRoutes from './followUp.routes';
 import learningPathRoutes from './learningPath.routes';
+import materialsRoutes from './materials.routes';
 import aiRoutes from './ai.routes';
 import progressRoutes from './progress.routes';
 
@@ -16,6 +17,7 @@ router.use('/', diagnosticRoutes); // exposes /courses/:id/diagnostic and /diagn
 router.use('/', practiceRoutes); // exposes /courses/:id/practice and /practice/submit
 router.use('/', followUpRoutes); // exposes /courses/:id/follow-up and /follow-up/submit
 router.use('/', learningPathRoutes); // exposes /courses/:id/gaps, /learning-path/*
+router.use('/', materialsRoutes); // exposes /courses/:id/materials, /topics/:id/materials, /materials/:id/complete
 router.use('/ai', aiRoutes);
 router.use('/progress', progressRoutes);
 

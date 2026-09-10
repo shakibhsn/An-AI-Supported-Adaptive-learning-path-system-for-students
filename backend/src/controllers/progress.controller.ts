@@ -14,7 +14,25 @@ export async function getOverallProgress(req: AuthenticatedRequest, res: Respons
     const avg = mastery.length > 0
       ? Math.round((mastery.reduce((sum, m) => sum + m.masteryPercentage, 0) / mastery.length) * 10) / 10
       : null;
-    results.push({ courseId: course.id, courseCode: course.code, courseName: course.name, averageMastery: avg, topicsAssessed: mastery.length });
+
+    const [materialsCompleted, diagnosticAttempts, practiceAttempts, followUpAttempts] = await Promise.all([
+      prisma.materialCompletion.count({ where: { userId: req.user.userId, material: { courseId: course.id } } }),
+      prisma.diagnosticAttempt.count({ where: { userId: req.user.userId, courseId: course.id } }),
+      prisma.practiceAttempt.count({ where: { userId: req.user.userId, courseId: course.id } }),
+      prisma.followUpAttempt.count({ where: { userId: req.user.userId, courseId: course.id } }),
+    ]);
+
+    results.push({
+      courseId: course.id,
+      courseCode: course.code,
+      courseName: course.name,
+      averageMastery: avg,
+      topicsAssessed: mastery.length,
+      materialsCompleted,
+      diagnosticAttempts,
+      practiceAttempts,
+      followUpAttempts,
+    });
   }
   return res.json(results);
 }

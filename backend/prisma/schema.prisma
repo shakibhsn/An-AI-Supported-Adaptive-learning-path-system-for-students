@@ -25,6 +25,7 @@ model User {
   practiceAttempts   PracticeAttempt[]
   followUpAttempts   FollowUpAttempt[]
   aiInteractions     AIInteraction[]
+  materialCompletions MaterialCompletion[]
 
   @@index([email])
 }
@@ -44,6 +45,7 @@ model Course {
   practiceAttempts   PracticeAttempt[]
   followUpAttempts   FollowUpAttempt[]
   aiInteractions     AIInteraction[]
+  learningMaterials  LearningMaterial[]
 }
 
 model Topic {
@@ -65,6 +67,7 @@ model Topic {
   practiceAttempts    PracticeAttempt[]
   followUpAttempts    FollowUpAttempt[]
   aiInteractions      AIInteraction[]
+  learningMaterials   LearningMaterial[]
 
   @@unique([courseId, name])
   @@index([courseId])
@@ -241,4 +244,48 @@ model AIInteraction {
   topic  Topic?  @relation(fields: [topicId], references: [id])
 
   @@index([userId, courseId])
+}
+
+// Curated learning resources. The system is extensible by design: adding a
+// resource = inserting a row (see prisma/seed.ts + src/data/learningMaterials.ts).
+// Every topic can carry any number of materials of any type. The frontend
+// loads whatever is active for a topic - no code change needed to add more.
+model LearningMaterial {
+  id              String   @id @default(cuid())
+  courseId        String
+  topicId         String
+  title           String
+  description     String?
+  type            String   // "VIDEO" | "PLAYLIST" | "ARTICLE" | "PRACTICE" | "DOCUMENT" | "OTHER"
+  url             String
+  provider        String?  // e.g. "YouTube", "GeeksforGeeks", "MDN"
+  difficulty      String   @default("BEGINNER") // "BEGINNER" | "INTERMEDIATE" | "ADVANCED"
+  durationMinutes Int?
+  sortOrder       Int      @default(0)
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  course      Course               @relation(fields: [courseId], references: [id])
+  topic       Topic                @relation(fields: [topicId], references: [id])
+  completions MaterialCompletion[]
+
+  @@index([courseId])
+  @@index([topicId, isActive])
+}
+
+// A student marking a material as completed. Feeds the progress dashboard
+// (Section 22: "completed learning materials") and material-completion state
+// in the learning path UI.
+model MaterialCompletion {
+  id          String   @id @default(cuid())
+  userId      String
+  materialId  String
+  completedAt DateTime @default(now())
+
+  user     User             @relation(fields: [userId], references: [id])
+  material LearningMaterial @relation(fields: [materialId], references: [id])
+
+  @@unique([userId, materialId])
+  @@index([userId])
 }
