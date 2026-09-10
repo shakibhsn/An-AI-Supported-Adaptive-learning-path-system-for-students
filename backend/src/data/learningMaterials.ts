@@ -28,6 +28,10 @@ export interface SeedMaterial {
 
 const ABDUL_BARI_DSA = 'https://www.youtube.com/playlist?list=PLsr8vTgyLdy_YndxNcI4WkH5Vorj5qvrv';
 const MYCODESCHOOL_DS = 'https://www.youtube.com/playlist?list=PL2_aWCzGMAwI3W_JlcBbtYTwiQSsOTa6P';
+// Telusko - "OOP in Java" playlist (covers all 10 OOP topics in one series).
+const TELUSKO_OOP = 'https://www.youtube.com/playlist?list=PLsyeobzWxl7oa1WO9n4cP3OY9nOtUcZIg';
+// Neso Academy - "C Programming" full course playlist (covers all 10 SPL topics).
+const NESO_C = 'https://www.youtube.com/playlist?list=PLBlnK6fEyqRggZZgYpPMUxdY1CYkZtARR';
 
 export const LEARNING_MATERIALS: Record<CourseCode, Record<string, SeedMaterial[]>> = {
   DSA: {
@@ -78,42 +82,52 @@ export const LEARNING_MATERIALS: Record<CourseCode, Record<string, SeedMaterial[
   OOP: {
     Encapsulation: [
       { title: 'Encapsulation in Java', description: 'Private fields, getters/setters and why hiding state matters.', type: 'ARTICLE', url: 'https://www.geeksforgeeks.org/encapsulation-in-java/', provider: 'GeeksforGeeks', difficulty: 'BEGINNER' },
+      { title: 'Telusko - OOP in Java (Encapsulation)', description: 'The encapsulation videos from the OOP-in-Java series.', type: 'PLAYLIST', url: TELUSKO_OOP, provider: 'YouTube (Telusko)', difficulty: 'BEGINNER', durationMinutes: 30 },
       { title: 'Programiz - Java Encapsulation', description: 'Worked example with access control.', type: 'ARTICLE', url: 'https://www.programiz.com/java-programming/encapsulation', provider: 'Programiz', difficulty: 'BEGINNER' },
     ],
     'Access Modifiers': [
       { title: 'Access Modifiers in Java', description: 'public / private / protected / default and their scope.', type: 'ARTICLE', url: 'https://www.geeksforgeeks.org/access-modifiers-java/', provider: 'GeeksforGeeks', difficulty: 'BEGINNER' },
+      { title: 'Telusko - OOP in Java (Access modifiers)', description: 'The access-modifier videos from the OOP-in-Java series.', type: 'PLAYLIST', url: TELUSKO_OOP, provider: 'YouTube (Telusko)', difficulty: 'BEGINNER', durationMinutes: 20 },
       { title: 'Oracle Java Tutorial - Controlling Access', description: 'Official reference for member access levels.', type: 'DOCUMENT', url: 'https://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html', provider: 'Oracle', difficulty: 'BEGINNER' },
     ],
     Inheritance: [
       { title: 'Inheritance in Java', description: 'extends, super, method inheritance, the final keyword.', type: 'ARTICLE', url: 'https://www.geeksforgeeks.org/inheritance-in-java/', provider: 'GeeksforGeeks', difficulty: 'BEGINNER' },
+      { title: 'Telusko - OOP in Java (Inheritance)', description: 'The inheritance videos from the OOP-in-Java series.', type: 'PLAYLIST', url: TELUSKO_OOP, provider: 'YouTube (Telusko)', difficulty: 'BEGINNER', durationMinutes: 35 },
       { title: 'Programiz - Java Inheritance', description: 'is-a relationships and code reuse with examples.', type: 'ARTICLE', url: 'https://www.programiz.com/java-programming/inheritance', provider: 'Programiz', difficulty: 'BEGINNER' },
     ],
     Polymorphism: [
       { title: 'Polymorphism in Java', description: 'Compile-time vs run-time, dynamic method dispatch, vtables.', type: 'ARTICLE', url: 'https://www.geeksforgeeks.org/polymorphism-in-java/', provider: 'GeeksforGeeks', difficulty: 'INTERMEDIATE' },
+      { title: 'Telusko - OOP in Java (Polymorphism)', description: 'Overriding, upcasting and dynamic dispatch from the OOP series.', type: 'PLAYLIST', url: TELUSKO_OOP, provider: 'YouTube (Telusko)', difficulty: 'INTERMEDIATE', durationMinutes: 35 },
       { title: 'Programiz - Java Polymorphism', description: 'Method overriding and upcasting explained simply.', type: 'ARTICLE', url: 'https://www.programiz.com/java-programming/polymorphism', provider: 'Programiz', difficulty: 'BEGINNER' },
     ],
     Overloading: [
       { title: 'Method Overloading in Java', description: 'Overloading rules, signature resolution, common pitfalls.', type: 'ARTICLE', url: 'https://www.geeksforgeeks.org/method-overloading-in-java/', provider: 'GeeksforGeeks', difficulty: 'BEGINNER' },
+      { title: 'Telusko - OOP in Java (Overloading)', description: 'Method and constructor overloading from the OOP series.', type: 'PLAYLIST', url: TELUSKO_OOP, provider: 'YouTube (Telusko)', difficulty: 'BEGINNER', durationMinutes: 18 },
       { title: 'Overloading vs Overriding', description: 'Side-by-side comparison with examples.', type: 'ARTICLE', url: 'https://www.geeksforgeeks.org/difference-between-method-overloading-and-method-overriding-in-java/', provider: 'GeeksforGeeks', difficulty: 'INTERMEDIATE' },
     ],
     'Abstract Classes': [
       { title: 'Abstract Classes in Java', description: 'abstract methods, partial implementation, when to use.', type: 'ARTICLE', url: 'https://www.geeksforgeeks.org/abstract-classes-in-java/', provider: 'GeeksforGeeks', difficulty: 'INTERMEDIATE' },
+      { title: 'Telusko - OOP in Java (Abstract classes)', description: 'The abstract-class videos from the OOP-in-Java series.', type: 'PLAYLIST', url: TELUSKO_OOP, provider: 'YouTube (Telusko)', difficulty: 'INTERMEDIATE', durationMinutes: 20 },
       { title: 'Abstract Class vs Interface', description: 'How to choose between the two abstraction tools.', type: 'ARTICLE', url: 'https://www.geeksforgeeks.org/difference-between-abstract-class-and-interface-in-java/', provider: 'GeeksforGeeks', difficulty: 'INTERMEDIATE' },
     ],
     Interfaces: [
       { title: 'Interfaces in Java', description: 'Contracts, multiple inheritance of type, default methods.', type: 'ARTICLE', url: 'https://www.geeksforgeeks.org/interfaces-in-java/', provider: 'GeeksforGeeks', difficulty: 'INTERMEDIATE' },
+      { title: 'Telusko - OOP in Java (Interfaces)', description: 'The interface videos from the OOP-in-Java series.', type: 'PLAYLIST', url: TELUSKO_OOP, provider: 'YouTube (Telusko)', difficulty: 'INTERMEDIATE', durationMinutes: 25 },
       { title: 'Oracle Java Tutorial - Interfaces', description: 'Official guide to defining and implementing interfaces.', type: 'DOCUMENT', url: 'https://docs.oracle.com/javase/tutorial/java/IandI/createinterface.html', provider: 'Oracle', difficulty: 'INTERMEDIATE' },
     ],
     Constructors: [
       { title: 'Constructors in Java', description: 'Default vs parameterized, constructor chaining with this()/super().', type: 'ARTICLE', url: 'https://www.geeksforgeeks.org/constructors-in-java/', provider: 'GeeksforGeeks', difficulty: 'BEGINNER' },
+      { title: 'Telusko - OOP in Java (Constructors)', description: 'Constructors and constructor chaining from the OOP series.', type: 'PLAYLIST', url: TELUSKO_OOP, provider: 'YouTube (Telusko)', difficulty: 'BEGINNER', durationMinutes: 22 },
       { title: 'Programiz - Java Constructors', description: 'How and when constructors run, with examples.', type: 'ARTICLE', url: 'https://www.programiz.com/java-programming/constructors', provider: 'Programiz', difficulty: 'BEGINNER' },
     ],
     'Static Members': [
       { title: 'Static Keyword in Java', description: 'Class-level fields and methods, static blocks, memory model.', type: 'ARTICLE', url: 'https://www.geeksforgeeks.org/static-keyword-java/', provider: 'GeeksforGeeks', difficulty: 'BEGINNER' },
+      { title: 'Telusko - OOP in Java (static keyword)', description: 'The static-members videos from the OOP-in-Java series.', type: 'PLAYLIST', url: TELUSKO_OOP, provider: 'YouTube (Telusko)', difficulty: 'BEGINNER', durationMinutes: 15 },
       { title: 'Programiz - Java static Keyword', description: 'static variables vs instance variables.', type: 'ARTICLE', url: 'https://www.programiz.com/java-programming/static-keyword', provider: 'Programiz', difficulty: 'BEGINNER' },
     ],
     'Exception Handling': [
       { title: 'Exceptions in Java', description: 'try/catch/finally, checked vs unchecked, custom exceptions.', type: 'ARTICLE', url: 'https://www.geeksforgeeks.org/exceptions-in-java/', provider: 'GeeksforGeeks', difficulty: 'INTERMEDIATE' },
+      { title: 'Telusko - Java (Exception handling)', description: 'The exception-handling videos from the Java series.', type: 'PLAYLIST', url: TELUSKO_OOP, provider: 'YouTube (Telusko)', difficulty: 'INTERMEDIATE', durationMinutes: 30 },
       { title: 'Oracle Java Tutorial - Exceptions', description: 'Official lesson on exception handling.', type: 'DOCUMENT', url: 'https://docs.oracle.com/javase/tutorial/essential/exceptions/', provider: 'Oracle', difficulty: 'INTERMEDIATE' },
     ],
   },
@@ -121,6 +135,7 @@ export const LEARNING_MATERIALS: Record<CourseCode, Record<string, SeedMaterial[
   SPL: {
     'Data Types': [
       { title: 'Data Types in C', description: 'int/char/float/double, sizes, signed vs unsigned.', type: 'ARTICLE', url: 'https://www.geeksforgeeks.org/data-types-in-c/', provider: 'GeeksforGeeks', difficulty: 'BEGINNER' },
+      { title: 'Neso Academy - C Programming (Data types)', description: 'The data-type lectures from the full C Programming course.', type: 'PLAYLIST', url: NESO_C, provider: 'YouTube (Neso Academy)', difficulty: 'BEGINNER', durationMinutes: 40 },
       { title: 'Programiz - C Data Types', description: 'Beginner overview with ranges and format specifiers.', type: 'ARTICLE', url: 'https://www.programiz.com/c-programming/c-data-types', provider: 'Programiz', difficulty: 'BEGINNER' },
     ],
     Pointers: [
@@ -130,34 +145,42 @@ export const LEARNING_MATERIALS: Record<CourseCode, Record<string, SeedMaterial[
     ],
     Dereferencing: [
       { title: 'Dereference, Reference, & Dereference again', description: 'The * and & operators and what dereferencing actually does.', type: 'ARTICLE', url: 'https://www.geeksforgeeks.org/difference-between-dereference-and-reference-operator-in-c/', provider: 'GeeksforGeeks', difficulty: 'BEGINNER' },
+      { title: 'Neso Academy - C Programming (Pointers & dereferencing)', description: 'The pointer/dereference lectures from the full C course.', type: 'PLAYLIST', url: NESO_C, provider: 'YouTube (Neso Academy)', difficulty: 'BEGINNER', durationMinutes: 35 },
       { title: 'Programiz - C Pointers and Arrays', description: 'Covers dereferencing and the address-of operator.', type: 'ARTICLE', url: 'https://www.programiz.com/c-programming/c-pointers-arrays', provider: 'Programiz', difficulty: 'BEGINNER' },
     ],
     'Arrays & Pointers': [
       { title: 'Pointer vs Array in C', description: 'Array-to-pointer decay and the equivalence a[i] == *(a+i).', type: 'ARTICLE', url: 'https://www.geeksforgeeks.org/difference-pointer-array-c/', provider: 'GeeksforGeeks', difficulty: 'INTERMEDIATE' },
+      { title: 'Neso Academy - C Programming (Arrays & pointers)', description: 'The arrays-and-pointers lectures from the full C course.', type: 'PLAYLIST', url: NESO_C, provider: 'YouTube (Neso Academy)', difficulty: 'INTERMEDIATE', durationMinutes: 30 },
       { title: 'Pointer Arithmetic in C', description: 'Why p+1 advances by sizeof(*p) bytes.', type: 'ARTICLE', url: 'https://www.geeksforgeeks.org/pointer-arithmetics-in-c-with-examples/', provider: 'GeeksforGeeks', difficulty: 'INTERMEDIATE' },
     ],
     'Dynamic Memory': [
       { title: 'Dynamic Memory Allocation in C', description: 'malloc/calloc/realloc/free and checking for NULL.', type: 'ARTICLE', url: 'https://www.geeksforgeeks.org/dynamic-memory-allocation-in-c-using-malloc-calloc-free-and-realloc/', provider: 'GeeksforGeeks', difficulty: 'INTERMEDIATE' },
+      { title: 'Neso Academy - C Programming (Dynamic memory)', description: 'The malloc/calloc/realloc/free lectures from the full C course.', type: 'PLAYLIST', url: NESO_C, provider: 'YouTube (Neso Academy)', difficulty: 'INTERMEDIATE', durationMinutes: 30 },
       { title: 'Programiz - C Dynamic Memory Allocation', description: 'Heap allocation lifecycle with examples.', type: 'ARTICLE', url: 'https://www.programiz.com/c-programming/c-dynamic-memory-allocation', provider: 'Programiz', difficulty: 'BEGINNER' },
     ],
     Deallocation: [
       { title: 'free() and dangling pointers', description: 'Use-after-free, double-free, and setting pointers to NULL.', type: 'ARTICLE', url: 'https://www.geeksforgeeks.org/dangling-void-null-wild-pointers/', provider: 'GeeksforGeeks', difficulty: 'INTERMEDIATE' },
+      { title: 'Neso Academy - C Programming (free & dangling pointers)', description: 'The deallocation/dangling-pointer lectures from the full C course.', type: 'PLAYLIST', url: NESO_C, provider: 'YouTube (Neso Academy)', difficulty: 'INTERMEDIATE', durationMinutes: 20 },
       { title: 'Memory Leak in C', description: 'What leaks are, how to spot them, remediation.', type: 'ARTICLE', url: 'https://www.geeksforgeeks.org/what-is-memory-leak-how-can-we-avoid/', provider: 'GeeksforGeeks', difficulty: 'INTERMEDIATE' },
     ],
     Strings: [
       { title: 'Strings in C', description: 'Null-terminated char arrays and the string.h functions.', type: 'ARTICLE', url: 'https://www.geeksforgeeks.org/strings-in-c/', provider: 'GeeksforGeeks', difficulty: 'BEGINNER' },
+      { title: 'Neso Academy - C Programming (Strings)', description: 'The strings-in-C lectures from the full C course.', type: 'PLAYLIST', url: NESO_C, provider: 'YouTube (Neso Academy)', difficulty: 'BEGINNER', durationMinutes: 35 },
       { title: 'Programiz - C Strings', description: 'Declaring, reading and manipulating strings.', type: 'ARTICLE', url: 'https://www.programiz.com/c-programming/c-strings', provider: 'Programiz', difficulty: 'BEGINNER' },
     ],
     Structures: [
       { title: 'Structures in C', description: 'struct definition, member access, and struct pointers (-> operator).', type: 'ARTICLE', url: 'https://www.geeksforgeeks.org/structures-c/', provider: 'GeeksforGeeks', difficulty: 'BEGINNER' },
+      { title: 'Neso Academy - C Programming (Structures)', description: 'The structures lectures from the full C course.', type: 'PLAYLIST', url: NESO_C, provider: 'YouTube (Neso Academy)', difficulty: 'BEGINNER', durationMinutes: 40 },
       { title: 'Programiz - C structs', description: 'Structs, arrays of structs, and pointers to structs.', type: 'ARTICLE', url: 'https://www.programiz.com/c-programming/c-structures', provider: 'Programiz', difficulty: 'BEGINNER' },
     ],
     'Storage Classes': [
       { title: 'Storage Classes in C', description: 'auto / register / static / extern and variable lifetime.', type: 'ARTICLE', url: 'https://www.geeksforgeeks.org/storage-classes-in-c/', provider: 'GeeksforGeeks', difficulty: 'INTERMEDIATE' },
+      { title: 'Neso Academy - C Programming (Storage classes)', description: 'The storage-class lectures from the full C course.', type: 'PLAYLIST', url: NESO_C, provider: 'YouTube (Neso Academy)', difficulty: 'INTERMEDIATE', durationMinutes: 25 },
       { title: 'Programiz - C Storage Class', description: 'Scope, lifetime and linkage with examples.', type: 'ARTICLE', url: 'https://www.programiz.com/c-programming/c-storage-class', provider: 'Programiz', difficulty: 'BEGINNER' },
     ],
     'Call Stack': [
       { title: 'Function Call Stack in C', description: 'Stack frames, local variables, and how returns work.', type: 'ARTICLE', url: 'https://www.geeksforgeeks.org/function-call-stack-in-c/', provider: 'GeeksforGeeks', difficulty: 'INTERMEDIATE' },
+      { title: 'Neso Academy - C Programming (Functions & the stack)', description: 'The function-call lectures from the full C course.', type: 'PLAYLIST', url: NESO_C, provider: 'YouTube (Neso Academy)', difficulty: 'INTERMEDIATE', durationMinutes: 30 },
       { title: 'CS50 - Memory (stack vs heap)', description: "Harvard CS50's lecture segment on memory layout.", type: 'VIDEO', url: 'https://cs50.harvard.edu/x/2024/weeks/4/', provider: 'Harvard CS50', difficulty: 'BEGINNER' },
     ],
   },
