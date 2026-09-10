@@ -168,8 +168,12 @@ async function main() {
   // frontend source (Section 22). Change it immediately in a real deployment.
   const demoPassword = 'AdaptivePath#Demo2026';
   const demoPasswordHash = await bcrypt.hash(demoPassword, 12);
-  const demoUser = await prisma.user.create({
-    data: {
+  // upsert (not create) so the seed stays re-runnable - real signups in the
+  // User table are never wiped, so the demo row may already exist.
+  const demoUser = await prisma.user.upsert({
+    where: { email: 'demo.student@bscse.uiu.ac.bd' },
+    update: { name: 'Demo Student', studentId: '223210', passwordHash: demoPasswordHash },
+    create: {
       name: 'Demo Student',
       studentId: '223210',
       email: 'demo.student@bscse.uiu.ac.bd',
