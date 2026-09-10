@@ -231,94 +231,39 @@
             Ask AI
           </button>
 
-          <!-- PROTOTYPE SCREEN FLOW SELECTOR -->
-          <div class="relative flex items-center">
-            <div class="absolute left-2.5 pointer-events-none text-blue-600">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z">
-                </path>
-              </svg>
-            </div>
-            <select id="screenSelect" onchange="handleScreenSelect(this.value)"
-              class="text-xs font-bold bg-slate-50 hover:bg-white border border-slate-200 hover:border-blue-400 rounded-xl pl-8 pr-7 py-2 text-slate-700 shadow-2xs focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition appearance-none cursor-pointer">
-              <optgroup label="Main System Flow">
-                <option value="s01">01. Login (sahmed223210@bscse.uiu.ac.bd)</option>
-                <option value="s02">02. Student Dashboard</option>
-                <option value="s03">03. Course Overview (DSA, OOP, SPL)</option>
-                <option value="s04">04. Identify Weak Topics (DSA, OOP, SPL)</option>
-                <option value="s07">07. Learning Gap Analysis (DSA, OOP, SPL)</option>
-                <option value="s08">08. AI Personalized Study Plan (DSA, OOP, SPL)</option>
-                <option value="s09">09. Learning Content + Adaptive Learning Path AI</option>
-                <option value="s11">11. Follow-up Assessment (DSA, OOP, SPL)</option>
-                <option value="s12">12. Before vs After Mastery Progression</option>
-                <option value="s13">13. Course Progress Hub (Separate Tabs)</option>
-              </optgroup>
-              <optgroup label="Course Overviews">
-                <option value="s03_dsa">03A. DSA Course Overview (42%)</option>
-                <option value="s03_oop">03B. OOP Course Overview (75%)</option>
-                <option value="s03_spl">03C. SPL Course Overview (82%)</option>
-              </optgroup>
-              <optgroup label="Academic Learning Gaps">
-                <option value="s07_dsa">07A. DSA Learning Gaps</option>
-                <option value="s07_oop">07B. OOP Learning Gaps</option>
-                <option value="s07_spl">07C. SPL Learning Gaps</option>
-              </optgroup>
-              <optgroup label="AI Study Plans (60 Min)">
-                <option value="s08_dsa">08A. DSA AI Study Plan</option>
-                <option value="s08_oop">08B. OOP AI Study Plan</option>
-                <option value="s08_spl">08C. SPL AI Study Plan</option>
-              </optgroup>
-              <optgroup label="Follow-Up Assessments (5 Qs Each)">
-                <option value="s11_dsa">11A. DSA Follow-Up (5 Qs)</option>
-                <option value="s11_oop">11B. OOP Follow-Up (5 Qs)</option>
-                <option value="s11_spl">11C. SPL Follow-Up (5 Qs)</option>
-              </optgroup>
-              <optgroup label="Diagnostic Quizzes (10 Qs Each)">
-                <option value="diag_dsa">05A. DSA Diagnostic Quiz (10 Qs)</option>
-                <option value="diag_oop">05B. OOP Diagnostic Quiz (10 Qs)</option>
-                <option value="diag_spl">05C. SPL Diagnostic Quiz (10 Qs)</option>
-              </optgroup>
-              <optgroup label="Diagnostic Results">
-                <option value="s06a">06A. DSA Assessment Result (4/10)</option>
-                <option value="s06b">06B. OOP Assessment Result (7/10)</option>
-                <option value="s06c">06C. SPL Assessment Result (6/10)</option>
-              </optgroup>
-              <optgroup label="Practice Modules (10 Qs Each)">
-                <option value="prac_dsa">10A. DSA Practice (10 Qs + Feedback)</option>
-                <option value="prac_oop">10B. OOP Practice (10 Qs + Feedback)</option>
-                <option value="prac_spl">10C. SPL Practice (10 Qs + Feedback)</option>
-              </optgroup>
-            </select>
-            <div class="absolute right-2.5 pointer-events-none text-slate-400">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-              </svg>
-            </div>
-          </div>
+          <!-- GLOBAL BACK BUTTON (history-aware; hidden on login + dashboard) -->
+          <button id="globalBackBtn" onclick="goBack()" title="Go back" hidden
+            class="hidden sm:flex items-center gap-1.5 text-xs font-bold bg-slate-50 hover:bg-white border border-slate-200 hover:border-blue-400 rounded-xl px-3 py-2 text-slate-700 shadow-2xs transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            Back
+          </button>
 
           <!-- STUDENT PROFILE WIDGET -->
           <div class="flex items-center gap-1.5 pl-2 border-l border-slate-200">
             <div
               class="flex items-center gap-2 bg-slate-50 hover:bg-slate-100 p-1.5 pr-2.5 rounded-xl border border-slate-200/80 transition cursor-pointer"
               onclick="switchScreen('s02')" title="View Student Dashboard">
-              <div
+              <div id="profileInitials"
                 class="w-7 h-7 rounded-lg bg-gradient-to-tr from-blue-700 via-blue-600 to-indigo-600 text-white flex items-center justify-center font-extrabold text-[11px] shadow-2xs ring-1 ring-blue-200">
-                SA
+                —
               </div>
               <div class="text-left hidden sm:block leading-tight">
                 <div class="text-xs font-bold text-slate-800 flex items-center gap-1">
-                  <span>S. Ahmed</span>
+                  <span id="profileName">—</span>
                   <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span>
                 </div>
-                <div class="text-[10px] text-slate-500 font-semibold">011223210 • UIU</div>
+                <div id="profileMeta" class="text-[10px] text-slate-500 font-semibold">—</div>
               </div>
             </div>
-            <button onclick="switchScreen('s01')" title="Lock / Logout to Login Screen"
-              class="w-8 h-8 rounded-xl bg-white hover:bg-red-50 text-slate-400 hover:text-red-600 border border-slate-200 flex items-center justify-center transition shadow-2xs">
+            <button onclick="handleLogout()" title="Log out"
+              class="flex items-center gap-1.5 h-8 px-2.5 rounded-xl bg-white hover:bg-red-50 text-slate-500 hover:text-red-600 border border-slate-200 transition shadow-2xs text-xs font-bold">
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
               </svg>
+              <span class="hidden md:inline">Logout</span>
             </button>
           </div>
 
@@ -368,7 +313,7 @@
             <span id="loginErrorText">Your email or password is incorrect</span>
           </div>
 
-          <form onsubmit="handleLogin(event)" class="space-y-4 text-left mb-2">
+          <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4 text-left mb-2">
             <div id="authSignupFields" class="hidden space-y-4">
               <div>
                 <label class="block text-xs font-bold text-slate-700 mb-1.5">Full Name</label>
@@ -448,9 +393,9 @@
               <span
                 class="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-100">Fall
                 Semester 2026</span>
-              <span class="text-xs text-slate-500 font-medium">Student ID: 011223210 (sahmed223210)</span>
+              <span id="dashStudentId" class="text-xs text-slate-500 font-medium">Student ID: —</span>
             </div>
-            <h2 class="text-2xl md:text-3xl font-bold text-slate-900">Good morning, S. Ahmed</h2>
+            <h2 id="dashGreeting" class="text-2xl md:text-3xl font-bold text-slate-900">Welcome back</h2>
             <p class="text-sm text-slate-500 mt-1">
               Track your course mastery percentages below, identify your weak topics, and take diagnostic assessments to
               close academic gaps.
@@ -2583,6 +2528,10 @@
       }
     }
 
+    function clearCourseIdCache() {
+      for (const k of Object.keys(courseIdCache)) delete courseIdCache[k];
+    }
+
     // ---- Generic authenticated fetch wrapper ----
     // Centralizes error handling so every API call below has consistent
     // loading/error behavior instead of duplicating try/catch everywhere.
@@ -2656,8 +2605,11 @@
         }
         setAuthToken(result.token);
         errorBox.classList.add('hidden');
+        if (result.user) applyUserToUI(result.user);
         await loadCourseIds();
-        switchScreen('s02');
+        // Start the history stack at the dashboard - no stray "back to login" entry.
+        history.replaceState({ screen: 's02' }, '', '#s02');
+        _activateScreen('s02');
       } catch (err) {
         errorText.textContent = err.message || 'Your email or password is incorrect.';
         errorBox.classList.remove('hidden');
@@ -2667,10 +2619,91 @@
       }
     }
 
-    function handleLogout() {
+    async function handleLogout() {
+      // Tell the backend first (hook point for a token blocklist), then
+      // drop every trace of the session on the client and hard-reset to
+      // the login screen. This is a real logout, not a screen swap.
+      try { await apiFetch('/auth/logout', { method: 'POST' }); } catch (_) { /* logout must always succeed client-side */ }
       clearAuthToken();
-      switchScreen('s01');
+      clearCourseIdCache();
+      currentUser = null;
+      resetProfileUI();
+      history.replaceState({ screen: 's01' }, '', '#s01');
+      _activateScreen('s01');
+      // Reset the login form to a clean state.
+      const form = document.getElementById('loginForm');
+      if (form) form.reset();
+      toggleAuthMode('login');
     }
+
+    // ================= CURRENT USER + PROFILE UI =================
+    let currentUser = null;
+
+    function greetingFor(date) {
+      const h = date.getHours();
+      if (h < 12) return 'Good morning';
+      if (h < 17) return 'Good afternoon';
+      if (h < 21) return 'Good evening';
+      return 'Good evening';
+    }
+
+    function firstNameOf(fullName) {
+      return (fullName || '').trim().split(/\s+/)[0] || 'there';
+    }
+
+    function initialsOf(fullName) {
+      const parts = (fullName || '').trim().split(/\s+/).filter(Boolean);
+      if (parts.length === 0) return '—';
+      if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
+
+    function applyUserToUI(user) {
+      currentUser = user;
+      const nameEl = document.getElementById('profileName');
+      const initEl = document.getElementById('profileInitials');
+      const metaEl = document.getElementById('profileMeta');
+      const greetEl = document.getElementById('dashGreeting');
+      const sidEl = document.getElementById('dashStudentId');
+      if (nameEl) nameEl.textContent = user.name || user.email || 'Student';
+      if (initEl) initEl.textContent = initialsOf(user.name);
+      if (metaEl) metaEl.textContent = `${user.studentId || '—'} • UIU`;
+      if (greetEl) greetEl.textContent = `${greetingFor(new Date())}, ${firstNameOf(user.name)}`;
+      if (sidEl) sidEl.textContent = `Student ID: ${user.studentId || '—'}`;
+    }
+
+    function resetProfileUI() {
+      ['profileName', 'profileMeta'].forEach((id) => {
+        const el = document.getElementById(id); if (el) el.textContent = '—';
+      });
+      const initEl = document.getElementById('profileInitials');
+      if (initEl) initEl.textContent = '—';
+    }
+
+    // ================= SESSION BOOTSTRAP (fixes refresh-logout) =================
+    // On every page load: if a token exists, verify it against the backend
+    // (GET /auth/me is the source of truth for who is logged in), restore
+    // the profile UI + course-id cache, and land on the last screen from
+    // the URL hash. If the token is missing/expired, fall back to login.
+    window.addEventListener('DOMContentLoaded', async () => {
+      toggleAuthMode('login');
+      const token = getAuthToken();
+      if (!token) { _activateScreen('s01'); return; }
+      try {
+        const me = await apiFetch('/auth/me');
+        applyUserToUI(me);
+        await loadCourseIds();
+        const hash = (location.hash || '').replace('#', '');
+        const start = (/^(s\d+[a-c]?|screen_[a-z]+)$/.test(hash) && hash !== 's01') ? hash : 's02';
+        history.replaceState({ screen: start }, '', '#' + start);
+        _activateScreen(start);
+      } catch (_) {
+        clearAuthToken();
+        clearCourseIdCache();
+        history.replaceState({ screen: 's01' }, '', '#s01');
+        _activateScreen('s01');
+      }
+    });
 
     // ================= QUESTION DATA =================
     // The 9 hardcoded question arrays (dsaDiagQuestions, oopDiagQuestions, splDiagQuestions,
@@ -2727,17 +2760,24 @@
       }
     }
 
-    function switchScreen(screenId) {
+    // ================= NAVIGATION + BROWSER HISTORY =================
+    // switchScreen() is the single public navigation entry point (called
+    // from every onclick in the markup). It toggles the visible .screen-view
+    // AND pushes a real history entry so the browser Back/Forward buttons
+    // and the in-app Back button all work. _activateScreen() does the DOM
+    // work only and is what the popstate handler calls (no extra push).
+    const SCREENS_NO_BACK = ['s01', 's02'];
+
+    function _activateScreen(screenId) {
       document.querySelectorAll('.screen-view').forEach(el => el.classList.remove('active'));
       const target = document.getElementById(screenId);
       if (target) {
         target.classList.add('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
-      const select = document.getElementById('screenSelect');
-      if (select && select.value !== screenId) {
-        select.value = screenId;
-      }
+      const backBtn = document.getElementById('globalBackBtn');
+      if (backBtn) backBtn.hidden = SCREENS_NO_BACK.includes(screenId) || !getAuthToken();
+
       // Load real data for screens that default to the DSA tab on entry
       // (their non-DSA tabs are loaded on-demand by their own tab switchers).
       if (screenId === 's13') renderProgressTab('dsa');
@@ -2745,28 +2785,23 @@
       if (screenId === 's02') renderDashboard();
     }
 
-    function handleScreenSelect(val) {
-      if (val === 'diag_dsa') startDiag('dsa');
-      else if (val === 'diag_oop') startDiag('oop');
-      else if (val === 'diag_spl') startDiag('spl');
-      else if (val === 'prac_dsa') startPractice('dsa');
-      else if (val === 'prac_oop') startPractice('oop');
-      else if (val === 'prac_spl') startPractice('spl');
-      else if (val === 's03_dsa') { switchScreen('s03'); switchOverviewTab('dsa'); }
-      else if (val === 's03_oop') { switchScreen('s03'); switchOverviewTab('oop'); }
-      else if (val === 's03_spl') { switchScreen('s03'); switchOverviewTab('spl'); }
-      else if (val === 's07_dsa') { switchScreen('s07'); switchGapTab('dsa'); }
-      else if (val === 's07_oop') { switchScreen('s07'); switchGapTab('oop'); }
-      else if (val === 's07_spl') { switchScreen('s07'); switchGapTab('spl'); }
-      else if (val === 's08_dsa') { switchScreen('s08'); switchPlanTab('dsa'); }
-      else if (val === 's08_oop') { switchScreen('s08'); switchPlanTab('oop'); }
-      else if (val === 's08_spl') { switchScreen('s08'); switchPlanTab('spl'); }
-      else if (val === 's11_dsa') { startFollowup('dsa'); }
-      else if (val === 's11_oop') { startFollowup('oop'); }
-      else if (val === 's11_spl') { startFollowup('spl'); }
-      else if (val === 's11') { startFollowup(currentFollowupCourse || 'dsa'); }
-      else switchScreen(val);
+    function switchScreen(screenId, opts) {
+      const push = !opts || opts.push !== false;
+      _activateScreen(screenId);
+      if (push && screenId !== 's01') {
+        history.pushState({ screen: screenId }, '', '#' + screenId);
+      }
     }
+
+    function goBack() {
+      history.back();
+    }
+
+    window.addEventListener('popstate', (e) => {
+      if (!getAuthToken()) { _activateScreen('s01'); return; }
+      const screenId = (e.state && e.state.screen) || 's02';
+      _activateScreen(screenId === 's01' ? 's02' : screenId);
+    });
 
     // ================= COURSE OVERVIEW TAB SWITCHER =================
     function switchOverviewTab(course) {
