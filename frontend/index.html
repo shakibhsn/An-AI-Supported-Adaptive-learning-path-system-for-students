@@ -232,8 +232,8 @@
           </button>
 
           <!-- GLOBAL BACK BUTTON (history-aware; hidden on login + dashboard) -->
-          <button id="globalBackBtn" onclick="goBack()" title="Go back" hidden
-            class="hidden sm:flex items-center gap-1.5 text-xs font-bold bg-slate-50 hover:bg-white border border-slate-200 hover:border-blue-400 rounded-xl px-3 py-2 text-slate-700 shadow-2xs transition">
+          <button id="globalBackBtn" onclick="goBack()" title="Go back" style="display:none"
+            class="items-center gap-1.5 text-xs font-bold bg-slate-50 hover:bg-white border border-slate-200 hover:border-blue-400 rounded-xl px-3 py-2 text-slate-700 shadow-2xs transition">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
@@ -420,179 +420,12 @@
             <span class="text-xs font-medium text-slate-500">Separate topic-level mastery tracked per course</span>
           </h3>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-            <!-- COURSE 1: DSA (42% Mastery - Needs Attention) -->
-            <div
-              class="hub-card rounded-2xl p-6 border-2 border-blue-500 relative flex flex-col justify-between hover:shadow-lg transition">
-              <div
-                class="absolute -top-3 right-6 bg-red-600 text-white text-[11px] font-bold uppercase tracking-wider px-3 py-0.5 rounded-full shadow-sm">
-                Needs Attention
-              </div>
-              <div>
-                <div class="text-xs font-semibold text-blue-600 mb-1">COURSE 01</div>
-                <h4 class="text-xl font-bold text-slate-900 mb-2">DSA — Data Structures & Algorithms</h4>
-                <p class="text-xs text-slate-500 mb-4 leading-relaxed">
-                  Linear lists, stacks, recursion call trees, binary search trees and graph algorithms.
-                </p>
-
-                <!-- COURSE MASTERY PERCENTAGE (SEPARATE DSA) -->
-                <div class="mb-4 bg-red-50/50 border border-red-100 rounded-xl p-3.5">
-                  <div class="flex justify-between items-center text-xs font-semibold mb-1.5">
-                    <span class="text-slate-700 font-bold">Course Mastery:</span>
-                    <span class="text-red-600 font-extrabold text-sm" id="dashDsaMasteryText">Take diagnostic</span>
-                  </div>
-                  <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
-                    <div class="bg-red-500 h-2.5 rounded-full" id="dashDsaMasteryBar" style="width: 0%"></div>
-                  </div>
-                  <div class="flex justify-between text-[11px] text-slate-500 mt-2">
-                    <span id="dashDsaWeakTopics">No diagnostic data yet</span>
-                    <span class="font-semibold text-red-700">Diagnostic Needed</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="space-y-2 pt-2 border-t border-slate-100">
-                <button onclick="switchScreen('s03'); switchOverviewTab('dsa');"
-                  class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs py-2.5 rounded-xl border border-indigo-200 transition flex items-center justify-center gap-1.5 shadow-2xs">
-                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                    </path>
-                  </svg>
-                  DSA Course Overview (10 Topics) →
-                </button>
-                <button onclick="startDiag('dsa')"
-                  class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs py-2.5 rounded-xl transition shadow-sm">
-                  Take DSA Diagnostic (10 Qs) →
-                </button>
-                <div class="grid grid-cols-2 gap-2">
-                  <button onclick="openWeakTopicSelector('dsa')"
-                    class="bg-sky-50 hover:bg-sky-100 text-sky-800 font-semibold text-xs py-2 rounded-xl border border-sky-200 transition">
-                    Identify Weak Topics
-                  </button>
-                  <button onclick="startPractice('dsa')"
-                    class="bg-slate-50 hover:bg-slate-100 text-slate-700 font-semibold text-xs py-2 rounded-xl border border-slate-200 transition">
-                    Practice (10 Qs)
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- COURSE 2: OOP (75% Mastery - Developing) -->
-            <div class="hub-card rounded-2xl p-6 flex flex-col justify-between hover:shadow-md transition">
-              <div>
-                <div class="flex items-center justify-between mb-1">
-                  <span class="text-xs font-semibold text-slate-400">COURSE 02</span>
-                  <span class="text-[11px] font-semibold badge-developing px-2 py-0.5 rounded-full">Developing</span>
-                </div>
-                <h4 class="text-xl font-bold text-slate-900 mb-2">OOP — Object-Oriented Programming</h4>
-                <p class="text-xs text-slate-500 mb-4 leading-relaxed">
-                  Encapsulation, inheritance hierarchies, runtime polymorphism, interface contracts and exception
-                  handling.
-                </p>
-
-                <!-- COURSE MASTERY PERCENTAGE (SEPARATE OOP) -->
-                <div class="mb-4 bg-amber-50/50 border border-amber-100 rounded-xl p-3.5">
-                  <div class="flex justify-between items-center text-xs font-semibold mb-1.5">
-                    <span class="text-slate-700 font-bold">Course Mastery:</span>
-                    <span class="text-amber-700 font-extrabold text-sm" id="dashOopMasteryText">Take diagnostic</span>
-                  </div>
-                  <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
-                    <div class="bg-amber-500 h-2.5 rounded-full" id="dashOopMasteryBar" style="width: 0%"></div>
-                  </div>
-                  <div class="flex justify-between text-[11px] text-slate-500 mt-2">
-                    <span id="dashOopWeakTopics">No diagnostic data yet</span>
-                    <span class="font-semibold text-amber-700">Solid Baseline</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="space-y-2 pt-2 border-t border-slate-100">
-            <button onclick="switchScreen('s03'); switchOverviewTab('oop');"
-              class="w-full bg-amber-50 hover:bg-amber-100 text-amber-800 font-bold text-xs py-2.5 rounded-xl border border-amber-200 transition flex items-center justify-center gap-1.5 shadow-2xs">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                </path>
-              </svg>
-              OOP Course Overview (10 Topics) →
-            </button>
-            <button onclick="startDiag('oop')"
-              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs py-2.5 rounded-xl transition shadow-sm">
-              Take OOP Diagnostic (10 Qs) →
-            </button>
-            <div class="grid grid-cols-2 gap-2">
-              <button onclick="openWeakTopicSelector('oop')"
-                class="bg-sky-50 hover:bg-sky-100 text-sky-800 font-semibold text-xs py-2 rounded-xl border border-sky-200 transition">
-                Identify Weak Topics
-              </button>
-              <button onclick="startPractice('oop')"
-                class="bg-slate-50 hover:bg-slate-100 text-slate-700 font-semibold text-xs py-2 rounded-xl border border-slate-200 transition">
-                Practice (10 Qs)
-              </button>
-            </div>
+          <div id="dashCourseGrid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Course cards are rendered by renderDashboard() from GET /api/courses
+                 + GET /api/progress/:id - one template per enrolled course. -->
+            <p class="text-sm text-slate-500 col-span-full">Loading your courses&hellip;</p>
           </div>
         </div>
-
-        <!-- COURSE 3: SPL (82% Mastery - On Track) -->
-        <div class="hub-card rounded-2xl p-6 flex flex-col justify-between hover:shadow-md transition">
-          <div>
-            <div class="flex items-center justify-between mb-1">
-              <span class="text-xs font-semibold text-slate-400">COURSE 03</span>
-              <span class="text-[11px] font-semibold badge-mastered px-2 py-0.5 rounded-full">On Track</span>
-            </div>
-            <h4 class="text-xl font-bold text-slate-900 mb-2">SPL — Structured Programming Language</h4>
-            <p class="text-xs text-slate-500 mb-4 leading-relaxed">
-              C syntax, control flow, pointer arithmetic, heap memory management (malloc/free) and struct definitions.
-            </p>
-
-            <!-- COURSE MASTERY PERCENTAGE (SEPARATE SPL) -->
-            <div class="mb-4 bg-emerald-50/50 border border-emerald-100 rounded-xl p-3.5">
-              <div class="flex justify-between items-center text-xs font-semibold mb-1.5">
-                <span class="text-slate-700 font-bold">Course Mastery:</span>
-                <span class="text-emerald-700 font-extrabold text-sm" id="dashSplMasteryText">Take diagnostic</span>
-              </div>
-              <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
-                <div class="bg-emerald-500 h-2.5 rounded-full" id="dashSplMasteryBar" style="width: 0%"></div>
-              </div>
-              <div class="flex justify-between text-[11px] text-slate-500 mt-2">
-                <span id="dashSplWeakTopics">No diagnostic data yet</span>
-                <span class="font-semibold text-emerald-700">Advanced Stage</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="space-y-2 pt-2 border-t border-slate-100">
-            <button onclick="switchScreen('s03'); switchOverviewTab('spl');"
-              class="w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs py-2.5 rounded-xl border border-emerald-200 transition flex items-center justify-center gap-1.5 shadow-2xs">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                </path>
-              </svg>
-              SPL Course Overview (10 Topics) →
-            </button>
-            <button onclick="startDiag('spl')"
-              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs py-2.5 rounded-xl transition shadow-sm">
-              Take SPL Diagnostic (10 Qs) →
-            </button>
-            <div class="grid grid-cols-2 gap-2">
-              <button onclick="openWeakTopicSelector('spl')"
-                class="bg-sky-50 hover:bg-sky-100 text-sky-800 font-semibold text-xs py-2 rounded-xl border border-sky-200 transition">
-                Identify Weak Topics
-              </button>
-              <button onclick="startPractice('spl')"
-                class="bg-slate-50 hover:bg-slate-100 text-slate-700 font-semibold text-xs py-2 rounded-xl border border-slate-200 transition">
-                Practice (10 Qs)
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- Dashboard Summary Stats Row -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -1799,285 +1632,11 @@
           <!-- LEFT 2 COLUMNS: COURSE-SPECIFIC LEARNING MODULE CONTENT -->
           <div class="lg:col-span-2 space-y-6">
 
-            <!-- ================= DSA LEARNING CONTENT ================= -->
-            <div id="contentDsa" class="hub-card rounded-2xl p-6 md:p-8 space-y-6">
-              <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-                <span
-                  class="text-xs font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-100">DSA
-                  Module 2.1</span>
-                <span class="text-xs font-semibold text-slate-400">Step 1 of Today's Plan • 15 Mins</span>
-              </div>
-
-              <div>
-                <h2 class="text-2xl font-bold text-slate-900 mb-2">What is a Singly Linked List?</h2>
-                <p class="text-sm text-slate-600 leading-relaxed">
-                  Unlike an Array where elements reside in contiguous memory slots, a <strong>Linked List</strong>
-                  consists of independent nodes scattered across heap RAM. Each node stores two items:
-                </p>
-                <ul class="text-sm text-slate-700 space-y-1.5 pl-5 list-disc mt-3">
-                  <li><strong>Data:</strong> The actual payload (e.g. integer, character, student record).</li>
-                  <li><strong>Next Pointer:</strong> The raw memory address of the subsequent node in line.</li>
-                </ul>
-              </div>
-
-              <!-- VISUAL MEMORY LAYOUT DIAGRAM -->
-              <div class="bg-sky-50/70 border border-sky-200 rounded-2xl p-5 text-center">
-                <div class="text-xs font-bold text-sky-800 uppercase tracking-wider mb-3">Visualizing Node Linkage in
-                  RAM</div>
-                <div
-                  class="inline-flex items-center gap-2 overflow-x-auto p-3 bg-white rounded-xl border border-sky-100 shadow-xs mono text-xs max-w-full">
-                  <div class="border-2 border-blue-500 rounded-lg p-2.5 bg-blue-50 text-slate-800 shrink-0">
-                    <div class="font-bold text-blue-700">[ Head Pointer ]</div>
-                    <div class="text-[10px] text-slate-500 mt-0.5">Address: 0x1000</div>
-                  </div>
-                  <span class="text-blue-500 font-bold text-base">➔</span>
-                  <div class="border border-slate-300 rounded-lg p-2.5 bg-slate-50 text-slate-800 shrink-0">
-                    <div>Node 1 (Data: <strong>10</strong>)</div>
-                    <div class="text-[10px] text-blue-600 mt-0.5">Next: 0x2040</div>
-                  </div>
-                  <span class="text-slate-400 font-bold text-base">➔</span>
-                  <div class="border border-slate-300 rounded-lg p-2.5 bg-slate-50 text-slate-800 shrink-0">
-                    <div>Node 2 (Data: <strong>20</strong>)</div>
-                    <div class="text-[10px] text-emerald-600 mt-0.5">Next: NULL (End)</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- CODE WALKTHROUGH -->
-              <div>
-                <h4 class="text-sm font-bold text-slate-900 mb-2">The Golden Rule of Head Insertion (O(1) Time):</h4>
-                <div class="bg-slate-900 text-slate-200 rounded-xl p-4 mono text-xs leading-relaxed overflow-x-auto">
-                  <span class="text-slate-500">// Step 1: Allocate new node in heap memory</span><br>
-                  struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));<br>
-                  newNode-&gt;data = val;<br><br>
-                  <span class="text-amber-400">// Step 2: Connect new node to the existing chain FIRST (Prevents memory
-                    leak!)</span><br>
-                  newNode-&gt;next = head;<br><br>
-                  <span class="text-emerald-400">// Step 3: Repoint head to the newly inserted node</span><br>
-                  head = newNode;
-                </div>
-                <div class="mt-3 p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900">
-                  ⚠️ <strong>Common Exam Trap:</strong> If you execute <code
-                    class="mono text-red-600 font-bold">head = newNode;</code> before <code
-                    class="mono text-emerald-700 font-bold">newNode-&gt;next = head;</code>, you lose the memory
-                  reference to all subsequent nodes in the list!
-                </div>
-              </div>
-
-              <!-- ACTION FOOTER -->
-              <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-slate-100">
-                <button onclick="switchScreen('s08'); switchPlanTab('dsa');"
-                  class="text-xs font-bold text-slate-500 hover:text-slate-800">
-                  ← Back to DSA Plan
-                </button>
-                <div class="flex items-center gap-2">
-                  <button onclick="startPractice('dsa')"
-                    class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs px-4 py-2.5 rounded-xl transition">
-                    Practice (10 Qs)
-                  </button>
-                  <button onclick="startFollowup('dsa')"
-                    class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-md transition">
-                    Take DSA Follow-Up (5 Qs) →
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- ================= OOP LEARNING CONTENT ================= -->
-            <div id="contentOop" class="hidden hub-card rounded-2xl p-6 md:p-8 space-y-6">
-              <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-                <span
-                  class="text-xs font-bold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">OOP
-                  Module 3.2</span>
-                <span class="text-xs font-semibold text-slate-400">Step 1 of Today's Plan • 15 Mins</span>
-              </div>
-
-              <div>
-                <h2 class="text-2xl font-bold text-slate-900 mb-2">Dynamic Polymorphism & Virtual Method Tables (VTable)
-                </h2>
-                <p class="text-sm text-slate-600 leading-relaxed">
-                  Dynamic runtime polymorphism enables a variable of a parent class reference type to invoke methods
-                  overridden in derived subclasses. The resolution occurs at <strong>runtime</strong> based on the
-                  actual object stored on the heap, NOT the variable reference type.
-                </p>
-              </div>
-
-              <!-- VISUAL VTABLE ARCHITECTURE DIAGRAM -->
-              <div class="bg-amber-50/60 border border-amber-200 rounded-2xl p-5 text-center">
-                <div class="text-xs font-bold text-amber-800 uppercase tracking-wider mb-3">How Runtime Dynamic Dispatch
-                  Works</div>
-                <div
-                  class="inline-flex items-center gap-3 overflow-x-auto p-3 bg-white rounded-xl border border-amber-100 shadow-xs mono text-xs max-w-full">
-                  <div class="border-2 border-amber-500 rounded-lg p-2.5 bg-amber-50 text-slate-800 shrink-0">
-                    <div class="font-bold text-amber-800">[ Reference: Animal a ]</div>
-                    <div class="text-[10px] text-slate-500 mt-0.5">Stack Pointer</div>
-                  </div>
-                  <span class="text-amber-600 font-bold text-base">➔ points to ➔</span>
-                  <div class="border border-blue-400 rounded-lg p-2.5 bg-blue-50 text-slate-800 shrink-0">
-                    <div class="font-bold text-blue-800">[ Heap Object: new Dog() ]</div>
-                    <div class="text-[10px] text-blue-600 mt-0.5">Hidden vptr pointer</div>
-                  </div>
-                  <span class="text-indigo-600 font-bold text-base">➔ resolves ➔</span>
-                  <div class="border-2 border-emerald-500 rounded-lg p-2.5 bg-emerald-50 text-slate-800 shrink-0">
-                    <div class="font-bold text-emerald-800">[ VTable: Dog.makeSound() ]</div>
-                    <div class="text-[10px] text-emerald-700 mt-0.5">Executes "Woof!"</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- CODE WALKTHROUGH -->
-              <div>
-                <h4 class="text-sm font-bold text-slate-900 mb-2">Dynamic Dispatch in Action (Java / C++):</h4>
-                <div class="bg-slate-900 text-slate-200 rounded-xl p-4 mono text-xs leading-relaxed overflow-x-auto">
-                  <span class="text-slate-500">// 1. Base Class</span><br>
-                  class Animal {<br>
-                  &nbsp;&nbsp;void makeSound() { System.out.println("Generic sound"); }<br>
-                  }<br><br>
-                  <span class="text-slate-500">// 2. Overridden Derived Class</span><br>
-                  class Dog extends Animal {<br>
-                  &nbsp;&nbsp;@Override<br>
-                  &nbsp;&nbsp;void makeSound() { System.out.println("Woof! Woof!"); }<br>
-                  }<br><br>
-                  <span class="text-amber-400">// 3. Polymorphic Call: Reference is Animal, but instance is
-                    Dog</span><br>
-                  Animal a = new Dog();<br>
-                  a.makeSound(); <span class="text-emerald-400">// OUTPUT: "Woof! Woof!" (Dynamic Dispatch via
-                    VTable)</span>
-                </div>
-              </div>
-
-              <!-- INTERFACE VS ABSTRACT CLASS COMPARISON TABLE -->
-              <div>
-                <h4 class="text-sm font-bold text-slate-900 mb-2">Interfaces vs Abstract Classes Quick Reference:</h4>
-                <div class="overflow-x-auto">
-                  <table class="w-full text-xs text-left border border-slate-200 rounded-xl overflow-hidden">
-                    <thead class="bg-slate-100 text-slate-600 uppercase font-bold">
-                      <tr>
-                        <th class="p-2.5">Feature</th>
-                        <th class="p-2.5">Interface</th>
-                        <th class="p-2.5">Abstract Class</th>
-                      </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-100">
-                      <tr>
-                        <td class="p-2.5 font-semibold text-slate-800">Multiple Inheritance</td>
-                        <td class="p-2.5 text-emerald-600 font-bold">✓ Yes (multiple contracts)</td>
-                        <td class="p-2.5 text-red-600 font-bold">✗ No (single class tree)</td>
-                      </tr>
-                      <tr>
-                        <td class="p-2.5 font-semibold text-slate-800">State / Variables</td>
-                        <td class="p-2.5 text-slate-600">public static final constants only</td>
-                        <td class="p-2.5 text-emerald-600 font-bold">✓ Can hold mutable instance state</td>
-                      </tr>
-                      <tr>
-                        <td class="p-2.5 font-semibold text-slate-800">Constructor</td>
-                        <td class="p-2.5 text-slate-600">No constructors</td>
-                        <td class="p-2.5 text-emerald-600 font-bold">✓ Can have constructor for base init</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              <!-- ACTION FOOTER -->
-              <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-slate-100">
-                <button onclick="switchScreen('s08'); switchPlanTab('oop');"
-                  class="text-xs font-bold text-slate-500 hover:text-slate-800">
-                  ← Back to OOP Plan
-                </button>
-                <div class="flex items-center gap-2">
-                  <button onclick="startPractice('oop')"
-                    class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs px-4 py-2.5 rounded-xl transition">
-                    Practice (10 Qs)
-                  </button>
-                  <button onclick="startFollowup('oop')"
-                    class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-md transition">
-                    Take OOP Follow-Up (5 Qs) →
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- ================= SPL LEARNING CONTENT ================= -->
-            <div id="contentSpl" class="hidden hub-card rounded-2xl p-6 md:p-8 space-y-6">
-              <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-                <span
-                  class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">SPL
-                  Module 4.1</span>
-                <span class="text-xs font-semibold text-slate-400">Step 1 of Today's Plan • 15 Mins</span>
-              </div>
-
-              <div>
-                <h2 class="text-2xl font-bold text-slate-900 mb-2">Pointer Arithmetic Byte Scaling & Safe Heap Memory
-                </h2>
-                <p class="text-sm text-slate-600 leading-relaxed">
-                  In C, pointer arithmetic is <strong>byte-scaled</strong> by the underlying data type size. Adding
-                  <code class="mono text-blue-600 font-bold">1</code> to a pointer moves forward by <code
-                    class="mono text-blue-600 font-bold">sizeof(*ptr)</code> bytes, not 1 single byte!
-                </p>
-              </div>
-
-              <!-- VISUAL RAM BYTE ALIGNMENT DIAGRAM -->
-              <div class="bg-emerald-50/60 border border-emerald-200 rounded-2xl p-5 text-center">
-                <div class="text-xs font-bold text-emerald-800 uppercase tracking-wider mb-3">RAM Memory Layout for int
-                  arr[3] (4 Bytes Per Int)</div>
-                <div
-                  class="inline-flex items-center gap-2 overflow-x-auto p-3 bg-white rounded-xl border border-emerald-100 shadow-xs mono text-xs max-w-full">
-                  <div class="border-2 border-emerald-500 rounded-lg p-2.5 bg-emerald-50 text-slate-800 shrink-0">
-                    <div class="font-bold text-emerald-800">arr[0] / *ptr</div>
-                    <div class="text-[10px] text-slate-500 mt-0.5">Address: 0x2000</div>
-                  </div>
-                  <span class="text-emerald-600 font-bold text-xs">+ 4 bytes ➔</span>
-                  <div class="border border-slate-300 rounded-lg p-2.5 bg-slate-50 text-slate-800 shrink-0">
-                    <div>arr[1] / *(ptr + 1)</div>
-                    <div class="text-[10px] text-blue-600 mt-0.5">Address: 0x2004</div>
-                  </div>
-                  <span class="text-emerald-600 font-bold text-xs">+ 4 bytes ➔</span>
-                  <div class="border border-slate-300 rounded-lg p-2.5 bg-slate-50 text-slate-800 shrink-0">
-                    <div>arr[2] / *(ptr + 2)</div>
-                    <div class="text-[10px] text-purple-600 mt-0.5">Address: 0x2008</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- CODE WALKTHROUGH -->
-              <div>
-                <h4 class="text-sm font-bold text-slate-900 mb-2">Defensive Memory Allocation and Deallocation in C:
-                </h4>
-                <div class="bg-slate-900 text-slate-200 rounded-xl p-4 mono text-xs leading-relaxed overflow-x-auto">
-                  <span class="text-slate-500">// 1. Allocate heap memory safely</span><br>
-                  int *ptr = (int*)malloc(5 * sizeof(int));<br><br>
-                  <span class="text-amber-400">// 2. ALWAYS verify malloc didn't return NULL</span><br>
-                  if (ptr == NULL) {<br>
-                  &nbsp;&nbsp;printf("Heap Memory Allocation Failed!\n");<br>
-                  &nbsp;&nbsp;return -1;<br>
-                  }<br><br>
-                  <span class="text-slate-500">// 3. Use byte-scaled pointer arithmetic safely</span><br>
-                  *(ptr + 2) = 99; <span class="text-slate-400">// Correctly modifies address 0x2008</span><br><br>
-                  <span class="text-emerald-400">// 4. Free heap RAM and eliminate dangling pointer</span><br>
-                  free(ptr);<br>
-                  <span class="text-sky-300 font-bold">ptr = NULL; // CRITICAL: Prevents catastrophic Use-After-Free
-                    bugs!</span>
-                </div>
-              </div>
-
-              <!-- ACTION FOOTER -->
-              <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-slate-100">
-                <button onclick="switchScreen('s08'); switchPlanTab('spl');"
-                  class="text-xs font-bold text-slate-500 hover:text-slate-800">
-                  ← Back to SPL Plan
-                </button>
-                <div class="flex items-center gap-2">
-                  <button onclick="startPractice('spl')"
-                    class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs px-4 py-2.5 rounded-xl transition">
-                    Practice (10 Qs)
-                  </button>
-                  <button onclick="startFollowup('spl')"
-                    class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-md transition">
-                    Take SPL Follow-Up (5 Qs) →
-                  </button>
-                </div>
-              </div>
+            <!-- LEARNING MATERIALS - rendered by renderMaterials(course) from
+                 GET /api/courses/:id/materials. Grouped by topic; the LLM's
+                 recommended picks (from the AI plan) are highlighted. -->
+            <div id="materialsPanel" class="space-y-5">
+              <p class="text-sm text-slate-500">Loading learning materials&hellip;</p>
             </div>
 
           </div>
@@ -2199,8 +1758,8 @@
 
             <!-- CHAT MESSAGE TRANSCRIPT -->
             <div id="aiChatLog" class="flex-1 py-3 space-y-3 text-xs overflow-y-auto max-h-[300px] min-h-[220px]">
-              <div class="bg-slate-100 text-slate-700 p-3 rounded-xl rounded-tl-none">
-                <span class="font-bold text-slate-900">Adaptive Learning Path AI:</span> Hello S. Ahmed! I am your AI
+              <div id="aiChatWelcome" class="bg-slate-100 text-slate-700 p-3 rounded-xl rounded-tl-none">
+                <span class="font-bold text-slate-900">Adaptive Learning Path AI:</span> Hi! I am your AI
                 academic tutor for DSA, OOP, and SPL. Click any quick prompt above or ask your own question to clarify
                 your diagnosed learning gaps.
               </div>
@@ -2212,7 +1771,7 @@
                 <input id="aiCustomInput" onkeydown="if(event.key==='Enter') sendAiCustomMessage();" type="text"
                   placeholder="Ask about DSA, OOP, or SPL topics..."
                   class="flex-1 text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition">
-                <button onclick="sendAiCustomMessage()"
+                <button id="aiSendBtn" onclick="sendAiCustomMessage()"
                   class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-3.5 py-2 rounded-xl shadow-xs transition">
                   Ask
                 </button>
@@ -2670,6 +2229,8 @@
       if (metaEl) metaEl.textContent = `${user.studentId || '—'} • UIU`;
       if (greetEl) greetEl.textContent = `${greetingFor(new Date())}, ${firstNameOf(user.name)}`;
       if (sidEl) sidEl.textContent = `Student ID: ${user.studentId || '—'}`;
+      const welcome = document.getElementById('aiChatWelcome');
+      if (welcome) welcome.innerHTML = `<span class="font-bold text-slate-900">Adaptive Learning Path AI:</span> Hi ${escapeHtml(firstNameOf(user.name))}! I am your AI academic tutor for DSA, OOP, and SPL. Click a quick prompt above or ask your own question about your weak topics.`;
     }
 
     function resetProfileUI() {
@@ -2730,34 +2291,105 @@
 
     let selectedWeakCourse = 'dsa';
 
-    // ================= SCREEN SWITCHER & HEADER ROUTING =================
-    // Real dashboard mastery figures (replaces the fixed 42%/75%/82% that
-    // used to be hardcoded here regardless of actual student performance).
-    async function renderDashboard() {
-      const courses = [
-        { key: 'dsa', textId: 'dashDsaMasteryText', barId: 'dashDsaMasteryBar', weakId: 'dashDsaWeakTopics' },
-        { key: 'oop', textId: 'dashOopMasteryText', barId: 'dashOopMasteryBar', weakId: 'dashOopWeakTopics' },
-        { key: 'spl', textId: 'dashSplMasteryText', barId: 'dashSplMasteryBar', weakId: 'dashSplWeakTopics' },
-      ];
-      for (const c of courses) {
-        try {
-          const courseId = courseIdCache[c.key];
-          if (!courseId) continue;
-          const data = await apiFetch(`/progress/${courseId}`);
-          const textEl = document.getElementById(c.textId);
-          const barEl = document.getElementById(c.barId);
-          const weakEl = document.getElementById(c.weakId);
-          if (data.progress.length === 0) continue; // leave "Take diagnostic" placeholder
+    // ================= DASHBOARD (fully data-driven) =================
+    // One card per enrolled course, built from GET /api/courses +
+    // GET /api/progress. Replaces the three hardcoded 42/75/82% cards and
+    // the malformed grid they lived in.
+    const COURSE_THEME = {
+      DSA: { accent: 'blue', bar: 'bg-blue-500', tint: 'bg-blue-50/50 border-blue-100', btn: 'bg-blue-600 hover:bg-blue-700', ovBtn: 'bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border-indigo-200' },
+      OOP: { accent: 'amber', bar: 'bg-amber-500', tint: 'bg-amber-50/50 border-amber-100', btn: 'bg-blue-600 hover:bg-blue-700', ovBtn: 'bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-200' },
+      SPL: { accent: 'emerald', bar: 'bg-emerald-500', tint: 'bg-emerald-50/50 border-emerald-100', btn: 'bg-blue-600 hover:bg-blue-700', ovBtn: 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-200' },
+    };
 
-          const avg = Math.round(data.progress.reduce((s, t) => s + t.currentMastery, 0) / data.progress.length);
-          textEl.textContent = `${avg}%`;
-          barEl.style.width = `${avg}%`;
-          const weak = data.progress.filter((t) => t.status !== 'Mastered').map((t) => t.topic);
-          weakEl.textContent = weak.length > 0 ? `Weak Topics: ${weak.slice(0, 2).join(', ')}` : 'All topics mastered';
-        } catch (err) {
-          console.error(`Failed to load dashboard progress for ${c.key}:`, err.message);
+    function masteryBadge(avg, assessed) {
+      if (assessed === 0) return { label: 'Not started', cls: 'bg-slate-100 text-slate-500 border border-slate-200' };
+      if (avg >= 80) return { label: 'On Track', cls: 'badge-mastered' };
+      if (avg >= 60) return { label: 'Developing', cls: 'badge-developing' };
+      if (avg >= 40) return { label: 'Needs Improvement', cls: 'badge-weak' };
+      return { label: 'Needs Attention', cls: 'badge-critical' };
+    }
+
+    async function renderDashboard() {
+      const grid = document.getElementById('dashCourseGrid');
+      if (!grid) return;
+      try {
+        const [courses, progress] = await Promise.all([
+          apiFetch('/courses'),
+          apiFetch('/progress'),
+        ]);
+        const progById = Object.fromEntries(progress.map((p) => [p.courseId, p]));
+
+        // per-course weak-topic names - only for courses that actually have
+        // diagnostic data (avoids a guaranteed 400 from /gaps otherwise).
+        const gapsById = {};
+        await Promise.all(courses.map(async (c) => {
+          if (!progById[c.id] || (progById[c.id].topicsAssessed || 0) === 0) { gapsById[c.id] = null; return; }
+          try {
+            const g = await apiFetch(`/courses/${c.id}/gaps`);
+            gapsById[c.id] = (g.ranked || []).map((t) => t.topic);
+          } catch (_) { gapsById[c.id] = null; }
+        }));
+
+        grid.innerHTML = '';
+        for (const c of courses) {
+          const code = c.code.toUpperCase();
+          const key = c.code.toLowerCase();
+          const theme = COURSE_THEME[code] || COURSE_THEME.DSA;
+          const p = progById[c.id] || { averageMastery: null, topicsAssessed: 0 };
+          const assessed = p.topicsAssessed || 0;
+          const avg = p.averageMastery == null ? null : Math.round(p.averageMastery);
+          const badge = masteryBadge(avg ?? 0, assessed);
+          const weak = gapsById[c.id];
+
+          const weakLine = assessed === 0
+            ? 'No diagnostic data yet'
+            : (weak && weak.length > 0 ? `Weak: ${weak.slice(0, 3).join(', ')}` : 'All assessed topics on track');
+
+          const card = document.createElement('div');
+          card.className = 'hub-card rounded-2xl p-6 flex flex-col justify-between hover:shadow-lg transition';
+          card.innerHTML = `
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-xs font-semibold text-${theme.accent}-600">${code}</span>
+                <span class="text-[11px] font-semibold ${badge.cls} px-2 py-0.5 rounded-full">${badge.label}</span>
+              </div>
+              <h4 class="text-xl font-bold text-slate-900 mb-2">${code} &mdash; ${escapeHtml(c.name)}</h4>
+              <p class="text-xs text-slate-500 mb-4 leading-relaxed">${escapeHtml(c.description || '')}</p>
+              <div class="mb-4 ${theme.tint} border rounded-xl p-3.5">
+                <div class="flex justify-between items-center text-xs font-semibold mb-1.5">
+                  <span class="text-slate-700 font-bold">Course Mastery</span>
+                  <span class="text-${theme.accent}-700 font-extrabold text-sm">${avg == null ? 'Take diagnostic' : avg + '%'}</span>
+                </div>
+                <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
+                  <div class="${theme.bar} h-2.5 rounded-full" style="width:${avg == null ? 0 : avg}%"></div>
+                </div>
+                <div class="flex justify-between text-[11px] text-slate-500 mt-2">
+                  <span>${escapeHtml(weakLine)}</span>
+                  <span class="font-semibold">${assessed} topic${assessed === 1 ? '' : 's'} assessed</span>
+                </div>
+              </div>
+            </div>
+            <div class="space-y-2 pt-2 border-t border-slate-100">
+              <button data-act="overview" class="w-full ${theme.ovBtn} border font-bold text-xs py-2.5 rounded-xl transition shadow-2xs">${code} Course Overview &rarr;</button>
+              <button data-act="diag" class="w-full ${theme.btn} text-white font-semibold text-xs py-2.5 rounded-xl transition shadow-sm">Take ${code} Diagnostic (10 Qs) &rarr;</button>
+              <div class="grid grid-cols-2 gap-2">
+                <button data-act="weak" class="bg-sky-50 hover:bg-sky-100 text-sky-800 font-semibold text-xs py-2 rounded-xl border border-sky-200 transition">Identify Weak Topics</button>
+                <button data-act="practice" class="bg-slate-50 hover:bg-slate-100 text-slate-700 font-semibold text-xs py-2 rounded-xl border border-slate-200 transition">Practice</button>
+              </div>
+            </div>`;
+          card.querySelector('[data-act="overview"]').onclick = () => { switchScreen('s03'); switchOverviewTab(key); };
+          card.querySelector('[data-act="diag"]').onclick = () => startDiag(key);
+          card.querySelector('[data-act="weak"]').onclick = () => openWeakTopicSelector(key);
+          card.querySelector('[data-act="practice"]').onclick = () => startPractice(key);
+          grid.appendChild(card);
         }
+      } catch (err) {
+        grid.innerHTML = `<p class="text-sm text-red-600 col-span-full">Could not load your courses: ${escapeHtml(err.message)}</p>`;
       }
+    }
+
+    function escapeHtml(s) {
+      return String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
     }
 
     // ================= NAVIGATION + BROWSER HISTORY =================
@@ -2776,13 +2408,17 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
       const backBtn = document.getElementById('globalBackBtn');
-      if (backBtn) backBtn.hidden = SCREENS_NO_BACK.includes(screenId) || !getAuthToken();
+      if (backBtn) {
+        const hide = SCREENS_NO_BACK.includes(screenId) || !getAuthToken();
+        backBtn.style.display = hide ? 'none' : 'inline-flex';
+      }
 
       // Load real data for screens that default to the DSA tab on entry
       // (their non-DSA tabs are loaded on-demand by their own tab switchers).
       if (screenId === 's13') renderProgressTab('dsa');
       if (screenId === 's07') renderGaps('dsa');
       if (screenId === 's02') renderDashboard();
+      if (screenId === 's09') switchContentTab(currentChatCourse || 'dsa');
     }
 
     function switchScreen(screenId, opts) {
@@ -2801,6 +2437,18 @@
       if (!getAuthToken()) { _activateScreen('s01'); return; }
       const screenId = (e.state && e.state.screen) || 's02';
       _activateScreen(screenId === 's01' ? 's02' : screenId);
+    });
+
+    // Support direct hash navigation (bookmarks, manual URL edits) once logged
+    // in. Only act when the hash points somewhere we're NOT already showing -
+    // history.back()/forward() also fire hashchange, and those are already
+    // handled by popstate; re-pushing here would corrupt the history stack.
+    window.addEventListener('hashchange', () => {
+      if (!getAuthToken()) return;
+      const id = (location.hash || '').replace('#', '');
+      if (!/^(s\d+[a-c]?|screen_[a-z]+)$/.test(id) || id === 's01') return;
+      const current = document.querySelector('.screen-view.active')?.id;
+      if (id !== current) _activateScreen(id);
     });
 
     // ================= COURSE OVERVIEW TAB SWITCHER =================
@@ -2936,12 +2584,21 @@
           return;
         }
 
+        // The authoritative path comes from the deterministic engine - generate
+        // it (idempotent: supersedes any prior active path) and use its topic
+        // ORDER for the LLM, so the LLM personalizes around the real sequence.
+        let pathTopics = gaps.ranked.map((t) => t.topic);
+        try {
+          const path = await apiFetch('/learning-path/generate', { method: 'POST', body: { courseId } });
+          if (path.items && path.items.length) pathTopics = path.items.map((i) => i.topic.name);
+        } catch (_) { /* fall back to ranked weak topics */ }
+
         const result = await apiFetch('/ai/personalize', {
           method: 'POST',
           body: {
             courseId,
             weakTopics: gaps.ranked.map((t) => ({ name: t.topic, mastery: t.score })),
-            learningPath: gaps.ranked.map((t) => t.topic),
+            learningPath: pathTopics,
             studyTimeMinutes: 60,
             learningPreference: 'Video + Practice',
             goal: `Understand ${course.toUpperCase()} fundamentals`,
@@ -2952,6 +2609,12 @@
 
         const plan = result.data;
         summaryEl.textContent = plan.summary;
+
+        // Capture the LLM's material picks so the Materials screen can flag them.
+        const recSet = recommendedMaterialTitles[course] || new Set();
+        recSet.clear();
+        (plan.topicGuidance || []).forEach((tg) => (tg.recommendedMaterialTitles || []).forEach((t) => recSet.add(t)));
+        recommendedMaterialTitles[course] = recSet;
 
         const totalMinutes = (plan.todaysPlan || []).reduce((sum, item) => sum + (item.minutes || 0), 0);
         if (durationEl) durationEl.innerHTML = `${totalMinutes || 60} Minutes Total`;
@@ -2975,10 +2638,12 @@
         (plan.topicGuidance || []).forEach((tg) => {
           const div = document.createElement('div');
           div.className = 'p-4 bg-sky-50/40 border border-sky-100 rounded-xl';
+          const recs = (tg.recommendedMaterialTitles || []).filter(Boolean);
           div.innerHTML = `
-            <h4 class="text-sm font-bold text-slate-900">${tg.topic}</h4>
-            <p class="text-xs text-slate-600 mt-1"><strong>Why it matters:</strong> ${tg.whyItMatters}</p>
-            <p class="text-xs text-slate-600 mt-1"><strong>How to approach it:</strong> ${tg.howToApproach}</p>
+            <h4 class="text-sm font-bold text-slate-900">${escapeHtml(tg.topic || '')}</h4>
+            <p class="text-xs text-slate-600 mt-1"><strong>Why it matters:</strong> ${escapeHtml(tg.whyItMatters || '')}</p>
+            <p class="text-xs text-slate-600 mt-1"><strong>How to approach it:</strong> ${escapeHtml(tg.howToApproach || '')}</p>
+            ${recs.length ? `<p class="text-xs text-blue-700 mt-1.5"><strong>Recommended materials:</strong> ${recs.map(escapeHtml).join(' · ')}</p>` : ''}
           `;
           stepsEl.appendChild(div);
         });
@@ -3025,37 +2690,105 @@
       renderAiPlan(course);
     }
 
-    // ================= LEARNING CONTENT TAB SWITCHER (SCREEN 09) =================
+    // ================= LEARNING MATERIALS (SCREEN 09) =================
+    // Titles the AI plan recommended, per course code - populated by
+    // renderAiPlan() so renderMaterials() can highlight them (Section 18).
+    const recommendedMaterialTitles = { dsa: new Set(), oop: new Set(), spl: new Set() };
+
+    const MATERIAL_TYPE_META = {
+      VIDEO:    { label: 'Video',    cls: 'bg-rose-50 text-rose-700 border-rose-200' },
+      PLAYLIST: { label: 'Playlist', cls: 'bg-violet-50 text-violet-700 border-violet-200' },
+      ARTICLE:  { label: 'Article',  cls: 'bg-blue-50 text-blue-700 border-blue-200' },
+      PRACTICE: { label: 'Practice', cls: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
+      DOCUMENT: { label: 'Docs',     cls: 'bg-amber-50 text-amber-700 border-amber-200' },
+      OTHER:    { label: 'Resource', cls: 'bg-slate-100 text-slate-600 border-slate-200' },
+    };
+
     function switchContentTab(course) {
-      document.getElementById('contentDsa').classList.add('hidden');
-      document.getElementById('contentOop').classList.add('hidden');
-      document.getElementById('contentSpl').classList.add('hidden');
-
-      const dsaBtn = document.getElementById('contentTabDsa');
-      const oopBtn = document.getElementById('contentTabOop');
-      const splBtn = document.getElementById('contentTabSpl');
+      currentChatCourse = course;
+      for (const k of ['dsa', 'oop', 'spl']) {
+        const btn = document.getElementById('contentTab' + k.charAt(0).toUpperCase() + k.slice(1));
+        if (btn) btn.className = k === course
+          ? 'px-3.5 py-1.5 rounded-lg text-xs font-bold bg-blue-600 text-white shadow-xs transition'
+          : 'px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition';
+      }
       const breadcrumb = document.getElementById('contentBreadcrumbText');
-      const contextPill = document.getElementById('aiContextPill');
+      if (breadcrumb) breadcrumb.textContent = `${course.toUpperCase()} — Learning Materials`;
+      renderMaterials(course);
+    }
 
-      dsaBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
-      oopBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
-      splBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
+    async function renderMaterials(course) {
+      const panel = document.getElementById('materialsPanel');
+      if (!panel) return;
+      panel.innerHTML = '<p class="text-sm text-slate-500">Loading learning materials…</p>';
+      try {
+        const courseId = courseIdCache[course];
+        const data = await apiFetch(`/courses/${courseId}/materials`);
+        const rec = recommendedMaterialTitles[course] || new Set();
 
-      if (course === 'dsa') {
-        document.getElementById('contentDsa').classList.remove('hidden');
-        dsaBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold bg-blue-600 text-white shadow-xs transition";
-        if (breadcrumb) breadcrumb.textContent = "DSA Module 2.1: Singly Linked Lists";
-        if (contextPill) contextPill.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Context: DSA (Linked Lists)';
-      } else if (course === 'oop') {
-        document.getElementById('contentOop').classList.remove('hidden');
-        oopBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold bg-amber-600 text-white shadow-xs transition";
-        if (breadcrumb) breadcrumb.textContent = "OOP Module 3.2: Dynamic Polymorphism & VTables";
-        if (contextPill) contextPill.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span> Context: OOP (Polymorphism)';
-      } else {
-        document.getElementById('contentSpl').classList.remove('hidden');
-        splBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 text-white shadow-xs transition";
-        if (breadcrumb) breadcrumb.textContent = "SPL Module 4.1: Pointer Arithmetic & Heap Safety";
-        if (contextPill) contextPill.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span> Context: SPL (Pointer Arithmetic)';
+        // Order topics by the active learning path if we have one, else as returned.
+        let topics = data.topics || [];
+        try {
+          const path = await apiFetch(`/learning-path/${courseId}`);
+          const order = (path.items || []).map((i) => i.topic.name);
+          if (order.length) {
+            topics = [...topics].sort((a, b) => {
+              const ia = order.indexOf(a.topicName), ib = order.indexOf(b.topicName);
+              return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
+            });
+          }
+        } catch (_) { /* no active path yet - keep default order */ }
+
+        if (topics.length === 0) {
+          panel.innerHTML = '<div class="hub-card rounded-2xl p-6 text-sm text-slate-500">No learning materials for this course yet.</div>';
+          return;
+        }
+
+        panel.innerHTML = '';
+        for (const t of topics) {
+          const card = document.createElement('div');
+          card.className = 'hub-card rounded-2xl p-5 md:p-6 space-y-3';
+          const items = t.materials.map((m) => {
+            const meta = MATERIAL_TYPE_META[m.type] || MATERIAL_TYPE_META.OTHER;
+            const isRec = rec.has(m.title);
+            return `
+              <div class="flex items-start gap-3 p-3 rounded-xl border ${isRec ? 'border-blue-300 bg-blue-50/40' : 'border-slate-100 bg-white'}">
+                <label class="pt-0.5 shrink-0">
+                  <input type="checkbox" class="mat-check w-4 h-4 accent-blue-600 cursor-pointer" data-id="${m.id}" ${m.completed ? 'checked' : ''}>
+                </label>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <a href="${escapeHtml(m.url)}" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-slate-900 hover:text-blue-700 hover:underline">${escapeHtml(m.title)}</a>
+                    <span class="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded border ${meta.cls}">${meta.label}</span>
+                    ${isRec ? '<span class="text-[10px] font-bold text-blue-700 bg-blue-100 px-1.5 py-0.5 rounded">AI pick</span>' : ''}
+                  </div>
+                  <p class="text-xs text-slate-500 mt-0.5">${escapeHtml(m.description || '')}</p>
+                  <p class="text-[11px] text-slate-400 mt-1">${escapeHtml(m.provider || '')}${m.durationMinutes ? ' · ~' + m.durationMinutes + ' min' : ''} · ${escapeHtml((m.difficulty || '').toLowerCase())}</p>
+                </div>
+              </div>`;
+          }).join('');
+          card.innerHTML = `
+            <div class="flex items-center justify-between">
+              <h3 class="text-base font-bold text-slate-900">${escapeHtml(t.topicName)}</h3>
+              <span class="text-[11px] text-slate-400 font-semibold">${t.materials.length} resource${t.materials.length === 1 ? '' : 's'}</span>
+            </div>
+            <div class="space-y-2">${items}</div>`;
+          panel.appendChild(card);
+        }
+
+        panel.querySelectorAll('.mat-check').forEach((cb) => {
+          cb.addEventListener('change', async () => {
+            const id = cb.dataset.id;
+            try {
+              await apiFetch(`/materials/${id}/complete`, { method: cb.checked ? 'POST' : 'DELETE' });
+            } catch (err) {
+              cb.checked = !cb.checked;
+              console.error('Failed to update material completion:', err.message);
+            }
+          });
+        });
+      } catch (err) {
+        panel.innerHTML = `<div class="hub-card rounded-2xl p-6 text-sm text-red-600">Could not load materials: ${escapeHtml(err.message)}</div>`;
       }
     }
 
