@@ -1,25 +1,121 @@
+/**
+ * LLM integration layer.
+ *
+ * PROVIDER-AGNOSTIC. Controlled by env var LLM_PROVIDER:
+ *   - "xai"       (default) -> xAI / Grok, via its OpenAI-compatible REST API
+ *   - "anthropic"           -> Anthropic Claude, via @anthropic-ai/sdk
+ *
+ * The rest of the app (controllers) never sees the provider - it only calls
+ * personalize() and chat(). Swapping providers is one env var.
+ *
+ * ARCHITECTURAL ROLE (do not change): the LLM does NOT decide the learning
+ * path. adaptiveEngine.service.ts produces the authoritative topic sequence;
+ * the LLM only personalizes explanations and study guidance around it, and
+ * the system prompts below explicitly forbid it from reordering anything.
+ */
+
 import Anthropic from '@anthropic-ai/sdk';
 
-// Verified against Anthropic's live model documentation on the day this
-// was written: claude-sonnet-5 is the current balanced/everyday-use model
-// (see https://platform.claude.com/docs/en/about-claude/models/overview).
-// Anthropic ships new model generations regularly - re-check that page
-// before your final submission in case the identifier has moved on.
-const MODEL = 'claude-sonnet-5';
+type Provider = 'xai' | 'anthropic';
 
-let client: Anthropic | null = null;
-function getClient(): Anthropic {
-  if (!client) {
-    const apiKey = process.env.ANTHROPIC_API_KEY;
-    if (!apiKey) {
-      throw new Error('ANTHROPIC_API_KEY is not set. Copy .env.example to .env and add your key.');
-    }
-    client = new Anthropic({ apiKey });
-  }
-  return client;
+function getProvider(): Provider {
+  const p = (process.env.LLM_PROVIDER || 'xai').toLowerCase();
+  return p === 'anthropic' ? 'anthropic' : 'xai';
 }
 
-const PERSONALIZE_SYSTEM_PROMPT = `You are the Adaptive Learning Path AI, an educational learning assistant.
+// --- xAI / Grok config -------------------------------------------------------
+// xAI's API is OpenAI-compatible. Model list: https://docs.x.ai/docs/models
+const XAI_BASE_URL = process.env.XAI_BASE_URL || 'https://api.x.ai/v1';
+const XAI_MODEL = process.env.XAI_MODEL || 'grok-3';
+
+// --- Anthropic config ------------------------------------------------------
+const ANTHROPIC_MODEL = process.env.ANTHROPIC_MODEL || 'claude-sonnet-5';
+let anthropicClient: Anthropic | null = null;
+function getAnthropic(): Anthropic {
+  if (!anthropicClient) {
+    const apiKey = process.env.ANTHROPIC_API_KEY;
+    if (!apiKey) {
+      throw new Error('ANTHROPIC_API_KEY is not set. Add it to .env or set LLM_PROVIDER=xai.');
+    }
+    anthropicClient = new Anthropic({ apiKey });
+  }
+  return anthropicClient;
+}
+
+// --- unified call ----------------------------------------------------------
+
+interface LlmRequest {
+  system: string;
+  user: string;
+  maxTokens: number;
+  /** Ask the provider to return strict JSON (used by personalize()). */
+  jsonMode?: boolean;
+}
+
+/**
+ * Makes one non-streaming completion call to the configured provider and
+ * returns the assistant's text. Throws on any transport/auth/shape error -
+ * callers are responsible for the graceful fallback (see personalize/chat).
+ */
+async function callLlm(req: LlmRequest): Promise<string> {
+  return getProvider() === 'anthropic' ? callAnthropic(req) : callXai(req);
+}
+
+async function callXai(req: LlmRequest): Promise<string> {
+  const apiKey = process.env.XAI_API_KEY;
+  if (!apiKey) {
+    throw new Error('XAI_API_KEY is not set. Get one at https://console.x.ai and add it to .env.');
+  }
+
+  const res = await fetch(`${XAI_BASE_URL}/chat/completions`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify({
+      model: XAI_MODEL,
+      messages: [
+        { role: 'system', content: req.system },
+        { role: 'user', content: req.user },
+      ],
+      max_tokens: req.maxTokens,
+      temperature: 0.4,
+      ...(req.jsonMode ? { response_format: { type: 'json_object' } } : {}),
+    }),
+  });
+
+  if (!res.ok) {
+    const detail = await res.text().catch(() => '');
+    throw new Error(`xAI API error ${res.status}: ${detail.slice(0, 300)}`);
+  }
+
+  const data = (await res.json()) as {
+    choices?: { message?: { content?: string } }[];
+  };
+  const text = data.choices?.[0]?.message?.content;
+  if (!text) throw new Error('xAI response contained no message content');
+  return text;
+}
+
+async function callAnthropic(req: LlmRequest): Promise<string> {
+  const anthropic = getAnthropic();
+  const response = await anthropic.messages.create({
+    model: ANTHROPIC_MODEL,
+    max_tokens: req.maxTokens,
+    system: req.system,
+    messages: [{ role: 'user', content: req.user }],
+  });
+  const textBlock = response.content.find((b) => b.type === 'text');
+  if (!textBlock || textBlock.type !== 'text') {
+    throw new Error('Anthropic response contained no text block');
+  }
+  return textBlock.text;
+}
+
+// --- prompts --------------------------------------------------------------
+
+const PERSONALIZE_SYSTEM_PROMPT = `You are StudyGuard AI, an educational learning assistant.
 
 The Adaptive Learning Engine has already determined the student's weak topics and authoritative learning path. Both are provided to you below as ground truth - you are NOT responsible for predicting the student's overall performance, and you must NOT invent, reorder, or second-guess the learning path, any topic name, or any mastery score.
 
@@ -30,8 +126,9 @@ Your job is to personalize the learning experience around the path you are given
 - provide examples
 - adjust explanation difficulty to the student's level
 - explain why each topic is included (referencing the actual mastery data given)
+- recommend which of the provided learning materials are most useful for each weak topic (you may ONLY reference materials that appear in the provided list - never invent a resource, title, or URL)
 
-Base your response only on the provided course, topics, mastery data, and learning path. Do not claim to know anything that was not provided to you.
+Base your response only on the provided course, topics, mastery data, learning path, and materials. Do not claim to know anything that was not provided to you.
 
 Return VALID JSON ONLY, no markdown fences, no preamble, matching exactly this shape:
 {
@@ -40,12 +137,12 @@ Return VALID JSON ONLY, no markdown fences, no preamble, matching exactly this s
     { "activity": "<short activity description>", "minutes": <number> }
   ],
   "topicGuidance": [
-    { "topic": "<topic name, must exactly match one of the provided learning path topics>", "whyItMatters": "<one sentence>", "howToApproach": "<one or two sentences>" }
+    { "topic": "<topic name, must exactly match one of the provided learning path topics>", "whyItMatters": "<one sentence>", "howToApproach": "<one or two sentences>", "recommendedMaterialTitles": ["<title copied verbatim from the provided materials list, or omit if none provided>"] }
   ],
   "encouragement": "<one genuine, specific sentence>"
 }`;
 
-const CHAT_SYSTEM_PROMPT = `You are the Adaptive Learning Path AI, a contextual learning assistant embedded in an adaptive learning app.
+const CHAT_SYSTEM_PROMPT = `You are StudyGuard AI, a contextual learning assistant embedded in an adaptive learning app.
 
 You know the student's current course, current topic, their mastery level on that topic, and the authoritative learning path (determined by a separate deterministic engine, which you must never contradict or reorder).
 
@@ -58,6 +155,15 @@ function extractJson(text: string): unknown {
   return JSON.parse(cleaned);
 }
 
+// --- personalize ---------------------------------------------------------
+
+export interface PersonalizeMaterial {
+  title: string;
+  type: string;
+  topic: string;
+  url: string;
+}
+
 export interface PersonalizeInput {
   course: string;
   weakTopics: { name: string; mastery: number }[];
@@ -65,6 +171,8 @@ export interface PersonalizeInput {
   studyTimeMinutes: number;
   learningPreference: string;
   goal: string;
+  /** Curated materials the backend retrieved for the weak topics (Section 18). */
+  availableMaterials?: PersonalizeMaterial[];
 }
 
 export interface PersonalizeResult {
@@ -76,19 +184,13 @@ export interface PersonalizeResult {
 
 export async function personalize(input: PersonalizeInput): Promise<PersonalizeResult> {
   try {
-    const anthropic = getClient();
-    const response = await anthropic.messages.create({
-      model: MODEL,
-      max_tokens: 1500,
+    const text = await callLlm({
       system: PERSONALIZE_SYSTEM_PROMPT,
-      messages: [{ role: 'user', content: JSON.stringify(input, null, 2) }],
+      user: JSON.stringify(input, null, 2),
+      maxTokens: 1500,
+      jsonMode: true,
     });
-
-    const textBlock = response.content.find((b) => b.type === 'text');
-    if (!textBlock || textBlock.type !== 'text') {
-      throw new Error('LLM response contained no text block');
-    }
-    const data = extractJson(textBlock.text);
+    const data = extractJson(text);
     return { success: true, source: 'llm', data };
   } catch (err) {
     // The core adaptive path must keep working even if the LLM is down -
@@ -101,12 +203,19 @@ export async function personalize(input: PersonalizeInput): Promise<PersonalizeR
       data: {
         summary: 'AI personalization is temporarily unavailable. Here is your learning path in the order the Adaptive Engine determined.',
         todaysPlan: input.learningPath.slice(0, 3).map((topic) => ({ activity: `Study: ${topic}`, minutes: Math.round(input.studyTimeMinutes / 3) })),
-        topicGuidance: input.learningPath.map((topic) => ({ topic, whyItMatters: 'Part of your current learning path.', howToApproach: 'Review the fundamentals, then attempt practice questions.' })),
+        topicGuidance: input.learningPath.map((topic) => ({
+          topic,
+          whyItMatters: 'Part of your current learning path.',
+          howToApproach: 'Review the fundamentals, then attempt practice questions.',
+          recommendedMaterialTitles: (input.availableMaterials || []).filter((m) => m.topic === topic).map((m) => m.title),
+        })),
         encouragement: 'Keep going - steady practice on your weak topics will pay off.',
       },
     };
   }
 }
+
+// --- chat --------------------------------------------------------------
 
 export interface ChatInput {
   course: string;
@@ -125,18 +234,13 @@ export interface ChatResult {
 
 export async function chat(input: ChatInput): Promise<ChatResult> {
   try {
-    const anthropic = getClient();
     const context = `Course: ${input.course}\nCurrent topic: ${input.topic}\nCurrent mastery on this topic: ${input.mastery}%\nAuthoritative learning path: ${input.learningPath.join(' -> ')}`;
-    const response = await anthropic.messages.create({
-      model: MODEL,
-      max_tokens: 700,
+    const reply = await callLlm({
       system: CHAT_SYSTEM_PROMPT,
-      messages: [{ role: 'user', content: `${context}\n\nStudent's message: ${input.message}` }],
+      user: `${context}\n\nStudent's message: ${input.message}`,
+      maxTokens: 700,
     });
-
-    const textBlock = response.content.find((b) => b.type === 'text');
-    const reply = textBlock && textBlock.type === 'text' ? textBlock.text : '';
-    if (!reply) throw new Error('LLM response contained no text block');
+    if (!reply.trim()) throw new Error('LLM response was empty');
     return { success: true, source: 'llm', reply };
   } catch (err) {
     return {
