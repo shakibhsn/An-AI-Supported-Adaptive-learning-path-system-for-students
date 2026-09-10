@@ -1,0 +1,9 @@
+node_modules/
+dist/
+dist-test/
+dist-*/
+*.log
+.env
+backend/.env
+DEMO_ACCOUNT.md
+.DS_Store

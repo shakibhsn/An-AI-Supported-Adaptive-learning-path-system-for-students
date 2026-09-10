@@ -1,0 +1,244 @@
+// An AI-Supported Adaptive Learning Path System for Students database schema.
+// Run `npx prisma migrate dev --name init` after setting DATABASE_URL in .env.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  studentId    String   @unique
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  diagnosticAttempts DiagnosticAttempt[]
+  topicMastery       TopicMastery[]
+  learningPaths      LearningPath[]
+  practiceAttempts   PracticeAttempt[]
+  followUpAttempts   FollowUpAttempt[]
+  aiInteractions     AIInteraction[]
+
+  @@index([email])
+}
+
+model Course {
+  id          String  @id @default(cuid())
+  code        String  @unique // "DSA" | "OOP" | "SPL"
+  name        String
+  description String?
+
+  topics             Topic[]
+  diagnosticQuestions DiagnosticQuestion[]
+  practiceQuestions  PracticeQuestion[]
+  diagnosticAttempts DiagnosticAttempt[]
+  topicMastery       TopicMastery[]
+  learningPaths      LearningPath[]
+  practiceAttempts   PracticeAttempt[]
+  followUpAttempts   FollowUpAttempt[]
+  aiInteractions     AIInteraction[]
+}
+
+model Topic {
+  id                  String  @id @default(cuid())
+  courseId            String
+  name                String
+  description         String?
+  prerequisiteTopicId String?
+
+  course       Course  @relation(fields: [courseId], references: [id])
+  prerequisite Topic?  @relation("TopicPrerequisite", fields: [prerequisiteTopicId], references: [id])
+  dependents   Topic[] @relation("TopicPrerequisite")
+
+  diagnosticQuestions DiagnosticQuestion[]
+  practiceQuestions   PracticeQuestion[]
+  diagnosticAnswers   DiagnosticAnswer[]
+  topicMastery        TopicMastery[]
+  learningPathItems   LearningPathItem[]
+  practiceAttempts    PracticeAttempt[]
+  followUpAttempts    FollowUpAttempt[]
+  aiInteractions      AIInteraction[]
+
+  @@unique([courseId, name])
+  @@index([courseId])
+}
+
+model DiagnosticQuestion {
+  id            String @id @default(cuid())
+  courseId      String
+  topicId       String
+  question      String
+  optionA       String
+  optionB       String
+  optionC       String
+  optionD       String
+  correctAnswer String // "A" | "B" | "C" | "D"
+
+  course  Course @relation(fields: [courseId], references: [id])
+  topic   Topic  @relation(fields: [topicId], references: [id])
+  answers DiagnosticAnswer[]
+
+  @@index([courseId])
+  @@index([topicId])
+}
+
+model DiagnosticAttempt {
+  id             String   @id @default(cuid())
+  userId         String
+  courseId       String
+  score          Int // total correct
+  totalQuestions Int
+  completedAt    DateTime @default(now())
+
+  user    User               @relation(fields: [userId], references: [id])
+  course  Course             @relation(fields: [courseId], references: [id])
+  answers DiagnosticAnswer[]
+
+  @@index([userId, courseId])
+}
+
+model DiagnosticAnswer {
+  id             String  @id @default(cuid())
+  attemptId      String
+  questionId     String
+  topicId        String
+  selectedAnswer String
+  isCorrect      Boolean
+
+  attempt  DiagnosticAttempt @relation(fields: [attemptId], references: [id])
+  question DiagnosticQuestion @relation(fields: [questionId], references: [id])
+  topic    Topic              @relation(fields: [topicId], references: [id])
+
+  @@index([attemptId])
+}
+
+model TopicMastery {
+  id                String   @id @default(cuid())
+  userId            String
+  courseId          String
+  topicId           String
+  masteryPercentage Float
+  previousPercentage Float?
+  status            String // "Mastered" | "Developing" | "Needs Improvement" | "Weak/Critical"
+  attempts          Int      @default(1)
+  updatedAt         DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id])
+  course Course @relation(fields: [courseId], references: [id])
+  topic  Topic  @relation(fields: [topicId], references: [id])
+
+  @@unique([userId, topicId])
+  @@index([userId, courseId])
+}
+
+model LearningPath {
+  id        String   @id @default(cuid())
+  userId    String
+  courseId  String
+  status    String   @default("active") // "active" | "superseded"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User               @relation(fields: [userId], references: [id])
+  course Course             @relation(fields: [courseId], references: [id])
+  items  LearningPathItem[]
+
+  @@index([userId, courseId])
+}
+
+model LearningPathItem {
+  id               String  @id @default(cuid())
+  learningPathId   String
+  topicId          String
+  sequenceOrder    Int
+  status           String  @default("pending") // "pending" | "in_progress" | "completed"
+  isRevision       Boolean @default(false)
+  estimatedMinutes Int
+
+  learningPath LearningPath @relation(fields: [learningPathId], references: [id])
+  topic        Topic        @relation(fields: [topicId], references: [id])
+
+  @@index([learningPathId])
+}
+
+model PracticeQuestion {
+  id            String  @id @default(cuid())
+  courseId      String
+  topicId       String
+  question      String
+  options       Json // [{ letter, text }]
+  correctAnswer String
+  explanation   String?
+  // The spec's model list has FollowUpAttempt (a result) but no separate
+  // follow-up QUESTION table. Follow-up questions are structurally
+  // identical to practice questions (question/options/answer/explanation),
+  // so this flag distinguishes the 15 real follow-up questions (used only
+  // by GET /api/courses/:id/follow-up) from the 30 regular practice
+  // questions, without inventing an unlisted table. Documented here and
+  // in the README as an intentional, justified schema adaptation.
+  isFollowUp    Boolean @default(false)
+
+  course Course @relation(fields: [courseId], references: [id])
+  topic  Topic  @relation(fields: [topicId], references: [id])
+
+  @@index([courseId])
+  @@index([topicId])
+}
+
+model PracticeAttempt {
+  id          String   @id @default(cuid())
+  userId      String
+  courseId    String
+  topicId     String
+  score       Int
+  totalQuestions Int
+  completedAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id])
+  course Course @relation(fields: [courseId], references: [id])
+  topic  Topic  @relation(fields: [topicId], references: [id])
+
+  @@index([userId, courseId])
+}
+
+model FollowUpAttempt {
+  id             String   @id @default(cuid())
+  userId         String
+  courseId       String
+  topicId        String
+  score          Int
+  totalQuestions Int
+  previousMastery Float?
+  newMastery     Float
+  completedAt    DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id])
+  course Course @relation(fields: [courseId], references: [id])
+  topic  Topic  @relation(fields: [topicId], references: [id])
+
+  @@index([userId, courseId])
+}
+
+model AIInteraction {
+  id           String   @id @default(cuid())
+  userId       String
+  courseId     String
+  topicId      String?
+  interactionType String // "personalize" | "chat"
+  userMessage  String
+  aiResponse   String
+  createdAt    DateTime @default(now())
+
+  user   User    @relation(fields: [userId], references: [id])
+  course Course  @relation(fields: [courseId], references: [id])
+  topic  Topic?  @relation(fields: [topicId], references: [id])
+
+  @@index([userId, courseId])
+}

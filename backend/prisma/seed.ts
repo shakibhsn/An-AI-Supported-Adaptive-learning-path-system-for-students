@@ -1,0 +1,158 @@
+/**
+ * Database seed script.
+ *
+ * Run with: npx prisma db seed
+ * (wired via the "prisma.seed" key in package.json)
+ *
+ * Populates:
+ *   - 3 courses (DSA, OOP, SPL)
+ *   - Canonical topics per course + prerequisite links
+ *   - 30 real diagnostic questions (10/course) - extracted verbatim from
+ *     the original frontend prototype, topic-mapped (see src/data/topicMapping.ts)
+ *   - 45 real practice/follow-up questions (10 practice + 5 follow-up per course)
+ *   - One demo account (see printed credentials at the end - these are
+ *     NOT committed anywhere in frontend source, per Section 22)
+ *
+ * Safe to re-run: wipes and recreates all seeded tables first.
+ */
+
+import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcryptjs';
+import { CANONICAL_TOPICS, PREREQUISITES, CourseCode } from '../src/data/topicMapping';
+import { SEED_QUESTIONS } from '../src/data/seedQuestions';
+
+const prisma = new PrismaClient();
+
+const COURSES: { code: CourseCode; name: string; description: string }[] = [
+  { code: 'DSA', name: 'Data Structures and Algorithms', description: 'Core data structures, algorithmic complexity, and traversal/search techniques.' },
+  { code: 'OOP', name: 'Object-Oriented Programming', description: 'Classes, inheritance, polymorphism, and OOP design principles.' },
+  { code: 'SPL', name: 'Structured Programming Language', description: 'C fundamentals: pointers, memory management, and structures.' },
+];
+
+async function main() {
+  console.log('Wiping existing seeded data...');
+  await prisma.aIInteraction.deleteMany();
+  await prisma.followUpAttempt.deleteMany();
+  await prisma.practiceAttempt.deleteMany();
+  await prisma.learningPathItem.deleteMany();
+  await prisma.learningPath.deleteMany();
+  await prisma.topicMastery.deleteMany();
+  await prisma.diagnosticAnswer.deleteMany();
+  await prisma.diagnosticAttempt.deleteMany();
+  await prisma.practiceQuestion.deleteMany();
+  await prisma.diagnosticQuestion.deleteMany();
+  await prisma.topic.deleteMany();
+  await prisma.course.deleteMany();
+
+  const courseByCode: Record<CourseCode, { id: string }> = {} as never;
+
+  for (const c of COURSES) {
+    const course = await prisma.course.create({ data: c });
+    courseByCode[c.code] = course;
+    console.log(`Created course ${c.code} (${course.id})`);
+  }
+
+  // Topics: create all topics first WITHOUT prerequisite links (since a
+  // prerequisite must already exist to be referenced), then a second pass
+  // to set prerequisiteTopicId now that every topic has an id.
+  const topicByName: Record<string, { id: string }> = {};
+
+  for (const c of COURSES) {
+    for (const topicName of CANONICAL_TOPICS[c.code]) {
+      const topic = await prisma.topic.create({
+        data: { courseId: courseByCode[c.code].id, name: topicName },
+      });
+      topicByName[`${c.code}:${topicName}`] = topic;
+    }
+  }
+
+  for (const c of COURSES) {
+    for (const [topicName, prereqName] of Object.entries(PREREQUISITES[c.code])) {
+      if (!prereqName) continue;
+      await prisma.topic.update({
+        where: { id: topicByName[`${c.code}:${topicName}`].id },
+        data: { prerequisiteTopicId: topicByName[`${c.code}:${prereqName}`].id },
+      });
+    }
+  }
+  console.log('Created topics + prerequisite links.');
+
+  // Diagnostic questions
+  for (const c of COURSES) {
+    const questions = SEED_QUESTIONS[c.code].diagnostic;
+    for (const q of questions) {
+      const topic = topicByName[`${c.code}:${q.topic}`];
+      if (!topic) {
+        console.warn(`WARNING: no topic found for "${q.topic}" in ${c.code} - skipping question: ${q.question.slice(0, 60)}`);
+        continue;
+      }
+      await prisma.diagnosticQuestion.create({
+        data: {
+          courseId: courseByCode[c.code].id,
+          topicId: topic.id,
+          question: q.question,
+          optionA: q.optionA,
+          optionB: q.optionB,
+          optionC: q.optionC,
+          optionD: q.optionD,
+          correctAnswer: q.correctAnswer,
+        },
+      });
+    }
+    console.log(`Seeded ${questions.length} diagnostic questions for ${c.code}.`);
+  }
+
+  // Practice + follow-up questions (same table, isFollowUp flag distinguishes them)
+  for (const c of COURSES) {
+    const questions = SEED_QUESTIONS[c.code].practice;
+    for (const q of questions) {
+      const topic = topicByName[`${c.code}:${q.topic}`];
+      if (!topic) {
+        console.warn(`WARNING: no topic found for "${q.topic}" in ${c.code} - skipping question: ${q.question.slice(0, 60)}`);
+        continue;
+      }
+      await prisma.practiceQuestion.create({
+        data: {
+          courseId: courseByCode[c.code].id,
+          topicId: topic.id,
+          question: q.question,
+          options: q.options as unknown as object,
+          correctAnswer: q.correctAnswer,
+          explanation: q.explanation ?? undefined,
+          isFollowUp: q.isFollowUp,
+        },
+      });
+    }
+    const practiceCount = questions.filter((q) => !q.isFollowUp).length;
+    const followUpCount = questions.filter((q) => q.isFollowUp).length;
+    console.log(`Seeded ${practiceCount} practice + ${followUpCount} follow-up questions for ${c.code}.`);
+  }
+
+  // Demo account - password is printed once here, never hardcoded in
+  // frontend source (Section 22). Change it immediately in a real deployment.
+  const demoPassword = 'AdaptivePath#Demo2026';
+  const demoPasswordHash = await bcrypt.hash(demoPassword, 12);
+  const demoUser = await prisma.user.create({
+    data: {
+      name: 'Demo Student',
+      studentId: '223210',
+      email: 'demo.student@bscse.uiu.ac.bd',
+      passwordHash: demoPasswordHash,
+    },
+  });
+
+  console.log('\n=== SEED COMPLETE ===');
+  console.log(`Demo account created:`);
+  console.log(`  Email:    ${demoUser.email}`);
+  console.log(`  Password: ${demoPassword}`);
+  console.log('  (Also written to backend/DEMO_ACCOUNT.md - do not commit that file if it contains a real production password.)');
+}
+
+main()
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

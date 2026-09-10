@@ -1,0 +1,6 @@
+.env
+node_modules/
+dist/
+dist-test/
+*.log
+DEMO_ACCOUNT.md
