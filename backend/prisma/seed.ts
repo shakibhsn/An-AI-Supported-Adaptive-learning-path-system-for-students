@@ -20,6 +20,7 @@ import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import { CANONICAL_TOPICS, PREREQUISITES, CourseCode } from '../src/data/topicMapping';
 import { SEED_QUESTIONS } from '../src/data/seedQuestions';
+import { LEARNING_MATERIALS } from '../src/data/learningMaterials';
 
 const prisma = new PrismaClient();
 
@@ -34,6 +35,8 @@ async function main() {
   await prisma.aIInteraction.deleteMany();
   await prisma.followUpAttempt.deleteMany();
   await prisma.practiceAttempt.deleteMany();
+  await prisma.materialCompletion.deleteMany();
+  await prisma.learningMaterial.deleteMany();
   await prisma.learningPathItem.deleteMany();
   await prisma.learningPath.deleteMany();
   await prisma.topicMastery.deleteMany();
@@ -127,6 +130,39 @@ async function main() {
     const followUpCount = questions.filter((q) => q.isFollowUp).length;
     console.log(`Seeded ${practiceCount} practice + ${followUpCount} follow-up questions for ${c.code}.`);
   }
+
+  // Curated learning materials (Section 15-18). Extensible: edit
+  // src/data/learningMaterials.ts and re-seed, or INSERT rows directly.
+  let materialCount = 0;
+  for (const c of COURSES) {
+    const byTopic = LEARNING_MATERIALS[c.code] || {};
+    for (const [topicName, materials] of Object.entries(byTopic)) {
+      const topic = topicByName[`${c.code}:${topicName}`];
+      if (!topic) {
+        console.warn(`WARNING: no topic "${topicName}" in ${c.code} - skipping ${materials.length} material(s)`);
+        continue;
+      }
+      for (let i = 0; i < materials.length; i++) {
+        const m = materials[i];
+        await prisma.learningMaterial.create({
+          data: {
+            courseId: courseByCode[c.code].id,
+            topicId: topic.id,
+            title: m.title,
+            description: m.description,
+            type: m.type,
+            url: m.url,
+            provider: m.provider,
+            difficulty: m.difficulty,
+            durationMinutes: m.durationMinutes ?? null,
+            sortOrder: i,
+          },
+        });
+        materialCount++;
+      }
+    }
+  }
+  console.log(`Seeded ${materialCount} learning materials.`);
 
   // Demo account - password is printed once here, never hardcoded in
   // frontend source (Section 22). Change it immediately in a real deployment.
