@@ -7,7 +7,8 @@
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "test": "tsc --outDir dist-test tests/core.test.ts && node dist-test/tests/core.test.js",
+    "test": "tsx tests/core.test.ts",
+    "typecheck": "tsc --noEmit",
     "prisma:migrate": "prisma migrate dev --name init",
     "prisma:seed": "prisma db seed",
     "prisma:studio": "prisma studio"

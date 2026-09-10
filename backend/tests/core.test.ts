@@ -1,13 +1,7 @@
 /**
  * Tests for the two pure-logic services. No Express, no Prisma, no
- * network - runs with: tsc --outDir dist && node dist/tests/core.test.js
- * (or `npm test` once ts-jest is installed - see package.json).
+ * network. Run with: npm test   (executes `tsx tests/core.test.ts`).
  */
-
-// Minimal ambient shim so this file compiles standalone without @types/node
-// (this sandbox has no internet access to install it; the real project's
-// tsconfig should include @types/node normally - see package.json).
-declare const process: { exit: (code: number) => void };
 
 import { calculateTopicScores, rankWeakTopics, classifyStatus, AnswerRecord } from '../src/services/mastery.service';
 import { generateLearningPath, TopicMasterySnapshot } from '../src/services/adaptiveEngine.service';

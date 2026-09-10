@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { prisma } from '../prisma';
 import { AuthenticatedRequest } from '../middleware/auth.middleware';
 import { calculateTopicScores, AnswerRecord } from '../services/mastery.service';
+import { regeneratePath } from '../services/learningPath.service';
 
 // NOTE: follow-up questions span DIFFERENT topics per course in the real
 // seeded data - all 5 DSA follow-up questions happen to be about "Linked
@@ -109,8 +110,13 @@ export async function submitFollowUp(req: AuthenticatedRequest, res: Response) {
 
   const anyChanged = results.some((r) => r.previousMastery !== null && r.newMastery !== r.previousMastery);
 
+  // Section 21: recompute weak/developing/mastered and regenerate the path.
+  const regen = await regeneratePath(req.user.userId, courseId);
+
   return res.json({
     results,
     message: anyChanged ? 'Your learning path has been updated because your mastery changed.' : undefined,
+    learningPath: regen.status === 'ok' ? regen.path : null,
+    pathStatus: regen.status,
   });
 }

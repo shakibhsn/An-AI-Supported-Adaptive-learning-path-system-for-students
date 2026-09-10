@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { prisma } from '../prisma';
 import { AuthenticatedRequest } from '../middleware/auth.middleware';
 import { calculateTopicScores, classifyStatus, blendMastery, AnswerRecord } from '../services/mastery.service';
+import { regeneratePath } from '../services/learningPath.service';
 
 export async function getPractice(req: Request, res: Response) {
   const { topicId } = req.query;
@@ -116,10 +117,14 @@ export async function submitPractice(req: AuthenticatedRequest, res: Response) {
     });
   }
 
+  // Practice changed mastery -> keep the adaptive path in sync (Section 21).
+  const regen = masteryChanged ? await regeneratePath(req.user.userId, courseId) : null;
+
   return res.json({
     score: totalCorrect,
     totalQuestions: scoringInput.length,
     results,
     masteryChanged,
+    learningPath: regen && regen.status === 'ok' ? regen.path : null,
   });
 }
