@@ -22,5 +22,12 @@ export function requireAuth(req: AuthenticatedRequest, res: Response, next: Next
 
 export function errorHandler(err: Error, _req: Request, res: Response, _next: NextFunction) {
   console.error(err);
-  res.status(500).json({ error: 'Internal server error', detail: err.message });
+  if (err.message === 'Not allowed by CORS') {
+    return res.status(403).json({ error: 'Origin not allowed.' });
+  }
+  // Never leak stack traces or internal messages to clients in production
+  // (Section 25/26). Full detail stays in the server log above.
+  const body: { error: string; detail?: string } = { error: 'Internal server error' };
+  if (process.env.NODE_ENV !== 'production') body.detail = err.message;
+  res.status(500).json(body);
 }
