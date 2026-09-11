@@ -66,10 +66,27 @@ export async function getAdaptivePractice(req: AuthenticatedRequest, res: Respon
     ).map((a) => a.questionId),
   );
 
-  const pool = await prisma.practiceQuestion.findMany({
-    where: { topicId, isFollowUp: false, difficulty: recommendation.recommendedDifficulty },
-    include: { topic: true },
-  });
+  // Not every topic necessarily has a question bank at every tier yet (the
+  // schema/engine support it - content just grows over time, Section 20).
+  // If the recommended tier is empty for this topic, fall back through the
+  // other tiers rather than serving nothing; note which tier actually got
+  // used so the frontend doesn't claim a difficulty that wasn't really served.
+  const fallbackOrder: Difficulty[] = [
+    recommendation.recommendedDifficulty,
+    ...(['EASY', 'MEDIUM', 'HARD'] as Difficulty[]).filter((d) => d !== recommendation.recommendedDifficulty),
+  ];
+  const fetchPool = (difficulty: Difficulty) =>
+    prisma.practiceQuestion.findMany({ where: { topicId, isFollowUp: false, difficulty }, include: { topic: true } });
+
+  let pool: Awaited<ReturnType<typeof fetchPool>> = [];
+  let servedDifficulty: Difficulty = recommendation.recommendedDifficulty;
+  for (const d of fallbackOrder) {
+    pool = await fetchPool(d);
+    if (pool.length > 0) {
+      servedDifficulty = d;
+      break;
+    }
+  }
 
   const unseen = pool.filter((q) => !recentCorrectQuestionIds.has(q.id));
   const chosen = (unseen.length >= count ? unseen : pool).sort(() => Math.random() - 0.5).slice(0, count);
@@ -86,7 +103,14 @@ export async function getAdaptivePractice(req: AuthenticatedRequest, res: Respon
     questionType: q.questionType,
   }));
 
-  return res.json({ questions: shaped, recommendation });
+  const servedNote = servedDifficulty !== recommendation.recommendedDifficulty
+    ? ` (no ${recommendation.recommendedDifficulty} questions exist yet for this topic, so ${servedDifficulty} was served instead)`
+    : '';
+
+  return res.json({
+    questions: shaped,
+    recommendation: { ...recommendation, servedDifficulty, reason: recommendation.reason + servedNote },
+  });
 }
 
 export async function submitPractice(req: AuthenticatedRequest, res: Response) {

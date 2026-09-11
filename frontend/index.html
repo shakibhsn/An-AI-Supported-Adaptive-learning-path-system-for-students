@@ -1830,6 +1830,13 @@
           </div>
         </div>
 
+        <!-- ADAPTIVE DIFFICULTY BANNER (Section 9-11) - only shown when this
+             session was served by the adaptive per-topic endpoint. -->
+        <div id="adaptiveBanner" hidden class="hub-card rounded-xl p-3 flex items-center gap-2 border-l-4 border-purple-400 bg-purple-50/40">
+          <span id="adaptiveDifficultyBadge" class="text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full bg-purple-600 text-white shrink-0">MEDIUM</span>
+          <span id="adaptiveReasonText" class="text-xs text-purple-900"></span>
+        </div>
+
         <div class="hub-card rounded-xl p-3 flex items-center justify-between gap-1 overflow-x-auto">
           <span class="text-xs font-bold text-slate-400 mr-2 shrink-0">Practice Qs:</span>
           <div id="practiceChips" class="flex items-center gap-1.5 w-full justify-between"></div>
@@ -2956,7 +2963,11 @@
               <h3 class="text-base font-bold text-slate-900">${escapeHtml(t.topicName)}</h3>
               <span class="text-[11px] text-slate-400 font-semibold">${t.materials.length} resource${t.materials.length === 1 ? '' : 's'}</span>
             </div>
-            <div class="space-y-2">${items}</div>`;
+            <div class="space-y-2">${items}</div>
+            <button data-adaptive-topic-id="${t.topicId}" data-adaptive-topic-name="${escapeHtml(t.topicName)}"
+              class="text-[11px] font-bold text-purple-700 bg-purple-50 hover:bg-purple-100 border border-purple-200 px-3 py-1.5 rounded-lg transition">
+              Practice ${escapeHtml(t.topicName)} (adapts to your level) →
+            </button>`;
           panel.appendChild(card);
         }
 
@@ -2969,6 +2980,12 @@
               cb.checked = !cb.checked;
               console.error('Failed to update material completion:', err.message);
             }
+          });
+        });
+
+        panel.querySelectorAll('[data-adaptive-topic-id]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            startAdaptivePractice(course, btn.dataset.adaptiveTopicId, btn.dataset.adaptiveTopicName);
           });
         });
 
@@ -3204,6 +3221,7 @@
       currentPracticeCourse = course;
       currentPracticeIndex = 0;
       practiceAnswered = {};
+      document.getElementById('adaptiveBanner').hidden = true;
 
       try {
         const courseId = courseIdCache[course];
@@ -3216,6 +3234,42 @@
         document.getElementById('pTabSpl').className = course === 'spl' ? 'text-xs font-bold px-3 py-1.5 rounded-lg bg-blue-600 text-white' : 'text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200';
       } catch (err) {
         alert('Could not load practice questions: ' + err.message);
+      }
+    }
+
+    // Adaptive, single-topic practice (Section 9-11): serves whatever
+    // difficulty tier recommendDifficulty() picked from the student's real
+    // recent attempt history on this exact topic, and shows the reason.
+    async function startAdaptivePractice(course, topicId, topicName) {
+      currentPracticeCourse = course;
+      currentPracticeIndex = 0;
+      practiceAnswered = {};
+
+      try {
+        const result = await apiFetch(`/topics/${topicId}/practice/next?count=5`);
+        if (!result.questions || result.questions.length === 0) {
+          alert(`No ${result.recommendation?.recommendedDifficulty || ''} practice questions available for ${topicName} yet.`);
+          return;
+        }
+        activePracticeQuestions = result.questions;
+        renderPracticeQuestion();
+        switchScreen('screen_practice');
+
+        const banner = document.getElementById('adaptiveBanner');
+        const badge = document.getElementById('adaptiveDifficultyBadge');
+        const reasonText = document.getElementById('adaptiveReasonText');
+        const shownDifficulty = result.recommendation.servedDifficulty || result.recommendation.recommendedDifficulty;
+        banner.hidden = false;
+        badge.textContent = shownDifficulty;
+        badge.className = 'text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full text-white shrink-0 ' +
+          (shownDifficulty === 'HARD' ? 'bg-red-600' : shownDifficulty === 'EASY' ? 'bg-emerald-600' : 'bg-amber-600');
+        reasonText.textContent = result.recommendation.reason;
+
+        ['pTabDsa', 'pTabOop', 'pTabSpl'].forEach((id) => {
+          document.getElementById(id).className = 'text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200';
+        });
+      } catch (err) {
+        alert('Could not load adaptive practice: ' + err.message);
       }
     }
 
