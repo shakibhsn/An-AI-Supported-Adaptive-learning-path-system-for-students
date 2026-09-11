@@ -2094,6 +2094,13 @@
           </div>
         </div>
 
+        <!-- LEARNING PATH COMPARISON (Section 16) -->
+        <div class="hub-card rounded-2xl p-6">
+          <h3 class="text-base font-bold text-slate-900 mb-1">Learning Path History</h3>
+          <p id="pathHistorySubtitle" class="text-xs text-slate-500 mb-4">How your adaptive path has changed as your mastery updated.</p>
+          <div id="pathHistoryBody" class="space-y-1.5">Loading…</div>
+        </div>
+
         <!-- LEARNING PROFILE (Section 18) -->
         <div class="hub-card rounded-2xl p-6">
           <h3 class="text-base font-bold text-slate-900 mb-1">Learning Profile</h3>
@@ -2586,7 +2593,7 @@
 
       // Load real data for screens that default to the DSA tab on entry
       // (their non-DSA tabs are loaded on-demand by their own tab switchers).
-      if (screenId === 's13') { currentProgressCourse = 'dsa'; renderProgressTab('dsa'); renderMasteryMap('dsa'); renderLearningProfile('dsa'); }
+      if (screenId === 's13') { currentProgressCourse = 'dsa'; renderProgressTab('dsa'); renderMasteryMap('dsa'); renderPathHistory('dsa'); renderLearningProfile('dsa'); }
       if (screenId === 's07') renderGaps('dsa');
       if (screenId === 's02') renderDashboard();
       if (screenId === 's09') switchContentTab(currentChatCourse || 'dsa');
@@ -3642,6 +3649,7 @@
       currentProgressCourse = tabId.replace('Tab', '');
       renderProgressTab(currentProgressCourse);
       renderMasteryMap(currentProgressCourse);
+      renderPathHistory(currentProgressCourse);
       renderLearningProfile(currentProgressCourse);
       document.getElementById('analyzeProgressResult').innerHTML = '';
     }
@@ -3683,6 +3691,54 @@
       const m = Math.round(seconds / 60);
       if (m < 60) return `${m}m`;
       return `${Math.floor(m / 60)}h ${m % 60}m`;
+    }
+
+    // ---- Learning Path History / Comparison (Section 16) ----
+    async function renderPathHistory(course) {
+      const body = document.getElementById('pathHistoryBody');
+      const subtitle = document.getElementById('pathHistorySubtitle');
+      if (!body) return;
+      body.innerHTML = 'Loading…';
+      try {
+        const courseId = courseIdCache[course];
+        const data = await apiFetch(`/courses/${courseId}/path-history`);
+
+        if (!data.hasPrevious) {
+          subtitle.textContent = 'This is your first generated path for this course - it will update automatically as your mastery changes.';
+          body.innerHTML = data.current.length
+            ? data.current.map((i) => `
+                <div class="flex items-center gap-2 text-sm text-slate-700 py-1">
+                  <span class="w-5 h-5 rounded-full bg-slate-100 text-slate-500 text-[10px] font-bold flex items-center justify-center shrink-0">${i.sequenceOrder}</span>
+                  ${escapeHtml(i.topic)}${i.isRevision ? '<span class="text-[10px] text-slate-400">(revision)</span>' : ''}
+                </div>`).join('')
+            : '<p class="text-sm text-slate-500">No active learning path yet - generate one from the AI Study Plan screen.</p>';
+          return;
+        }
+
+        subtitle.textContent = data.message || 'Your learning path has not changed since it was last generated.';
+        const completed = data.comparison.filter((c) => c.status === 'completed');
+        const current = data.comparison
+          .filter((c) => c.status === 'carried_over' || c.status === 'new')
+          .sort((a, b) => (a.sequenceOrder ?? 0) - (b.sequenceOrder ?? 0));
+
+        const rows = [];
+        for (const c of completed) {
+          rows.push(`<div class="flex items-center gap-2 text-sm py-1"><span class="text-emerald-600 font-bold">✓</span><span class="text-slate-400 line-through">${escapeHtml(c.topic)}</span><span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded-full">Mastered - dropped from path</span></div>`);
+        }
+        for (const c of current) {
+          const isNew = c.status === 'new';
+          rows.push(`
+            <div class="flex items-center gap-2 text-sm py-1">
+              <span class="${isNew ? 'text-purple-600' : 'text-blue-600'} font-bold">${isNew ? '★' : '→'}</span>
+              <span class="text-slate-800 font-medium">${escapeHtml(c.topic)}</span>
+              ${isNew ? '<span class="text-[10px] font-bold text-purple-700 bg-purple-50 border border-purple-200 px-1.5 py-0.5 rounded-full">New</span>' : ''}
+            </div>`);
+        }
+        body.innerHTML = rows.join('') || '<p class="text-sm text-slate-500">Your path is fully up to date.</p>';
+      } catch (err) {
+        subtitle.textContent = '';
+        body.innerHTML = `<p class="text-sm text-red-600">Could not load path history: ${escapeHtml(err.message)}</p>`;
+      }
     }
 
     async function renderLearningProfile(course) {
