@@ -201,6 +201,18 @@
             AI Study Plan
           </button>
 
+          <!-- Learning Materials (direct link - was previously only reachable
+               through the diagnostic -> gap -> plan flow, which was hard to find) -->
+          <button id="navMaterials" onclick="switchScreen('s09')"
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-white hover:text-emerald-700 hover:shadow-2xs transition-all duration-150">
+            <svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+              </path>
+            </svg>
+            Materials
+          </button>
+
           <!-- Progress Hub -->
           <button id="navProgress" onclick="switchScreen('s13')"
             class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-white hover:text-blue-700 hover:shadow-2xs transition-all duration-150">
@@ -2372,15 +2384,17 @@
             <div class="space-y-2 pt-2 border-t border-slate-100">
               <button data-act="overview" class="w-full ${theme.ovBtn} border font-bold text-xs py-2.5 rounded-xl transition shadow-2xs">${code} Course Overview &rarr;</button>
               <button data-act="diag" class="w-full ${theme.btn} text-white font-semibold text-xs py-2.5 rounded-xl transition shadow-sm">Take ${code} Diagnostic (10 Qs) &rarr;</button>
-              <div class="grid grid-cols-2 gap-2">
-                <button data-act="weak" class="bg-sky-50 hover:bg-sky-100 text-sky-800 font-semibold text-xs py-2 rounded-xl border border-sky-200 transition">Identify Weak Topics</button>
+              <div class="grid grid-cols-3 gap-2">
+                <button data-act="weak" class="bg-sky-50 hover:bg-sky-100 text-sky-800 font-semibold text-xs py-2 rounded-xl border border-sky-200 transition">Weak Topics</button>
                 <button data-act="practice" class="bg-slate-50 hover:bg-slate-100 text-slate-700 font-semibold text-xs py-2 rounded-xl border border-slate-200 transition">Practice</button>
+                <button data-act="materials" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-semibold text-xs py-2 rounded-xl border border-emerald-200 transition">Materials</button>
               </div>
             </div>`;
           card.querySelector('[data-act="overview"]').onclick = () => { switchScreen('s03'); switchOverviewTab(key); };
           card.querySelector('[data-act="diag"]').onclick = () => startDiag(key);
           card.querySelector('[data-act="weak"]').onclick = () => openWeakTopicSelector(key);
           card.querySelector('[data-act="practice"]').onclick = () => startPractice(key);
+          card.querySelector('[data-act="materials"]').onclick = () => { switchContentTab(key); switchScreen('s09'); };
           grid.appendChild(card);
         }
       } catch (err) {
