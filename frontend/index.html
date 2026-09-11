@@ -1777,6 +1777,17 @@
               </div>
             </div>
 
+            <!-- EXPLAIN AT MY LEVEL (Section 13) -->
+            <div class="pt-3 border-t border-slate-100">
+              <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Explain "<span id="explainTopicLabel">Linked Lists</span>" at my level:</div>
+              <div class="grid grid-cols-2 gap-1.5">
+                <button onclick="explainAtMyLevel('simple')" class="text-[10px] font-bold bg-sky-50 hover:bg-sky-100 text-sky-800 px-2 py-1.5 rounded-lg border border-sky-200 transition">Simply</button>
+                <button onclick="explainAtMyLevel('detailed')" class="text-[10px] font-bold bg-sky-50 hover:bg-sky-100 text-sky-800 px-2 py-1.5 rounded-lg border border-sky-200 transition">In Detail</button>
+                <button onclick="explainAtMyLevel('example')" class="text-[10px] font-bold bg-sky-50 hover:bg-sky-100 text-sky-800 px-2 py-1.5 rounded-lg border border-sky-200 transition">With an Example</button>
+                <button onclick="explainAtMyLevel('step_by_step')" class="text-[10px] font-bold bg-sky-50 hover:bg-sky-100 text-sky-800 px-2 py-1.5 rounded-lg border border-sky-200 transition">Step-by-Step</button>
+              </div>
+            </div>
+
             <!-- CHAT INPUT BOX -->
             <div class="pt-3 border-t border-slate-100">
               <div class="flex items-center gap-2">
@@ -2066,6 +2077,36 @@
           </div>
         </div>
 
+        <!-- TOPIC MASTERY MAP (Section 17) - shared across whichever course
+             tab is active above; renderMasteryMap() re-populates it on tab switch. -->
+        <div class="hub-card rounded-2xl p-6">
+          <h3 class="text-base font-bold text-slate-900 mb-1">Topic Mastery Map</h3>
+          <p class="text-xs text-slate-500 mb-4">Real status per topic, from your stored assessment data.</p>
+          <div id="masteryMapGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <p class="text-sm text-slate-500 col-span-full">Loading mastery map…</p>
+          </div>
+        </div>
+
+        <!-- LEARNING PROFILE (Section 18) -->
+        <div class="hub-card rounded-2xl p-6">
+          <h3 class="text-base font-bold text-slate-900 mb-1">Learning Profile</h3>
+          <p class="text-xs text-slate-500 mb-4">Built from your actual usage - not a one-time survey answer.</p>
+          <div id="learningProfileBody" class="text-sm text-slate-600">Loading…</div>
+        </div>
+
+        <!-- AI PROGRESS ANALYSIS (Section 8/14) -->
+        <div class="hub-card rounded-2xl p-6">
+          <div class="flex items-center justify-between mb-1">
+            <h3 class="text-base font-bold text-slate-900">AI Progress Insight</h3>
+            <button id="analyzeProgressBtn" onclick="analyzeMyProgress()"
+              class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-sm transition">
+              Analyze My Progress
+            </button>
+          </div>
+          <p class="text-xs text-slate-500 mb-3">Sends only your real stored mastery/activity/practice numbers to the AI - it never invents a statistic.</p>
+          <div id="analyzeProgressResult"></div>
+        </div>
+
       </div>
     </div>
 
@@ -2125,6 +2166,101 @@
       }
       return data;
     }
+
+    // ================= LEARNING ACTIVITY TRACKING =================
+    // Real, event-based time tracking (no countdown timer, no guessed
+    // durations). One span at a time: start() opens a server-side
+    // LearningActivity row, a visibilitychange listener pauses the local
+    // clock the instant the tab is hidden and resumes it the instant it's
+    // visible again, a heartbeat periodically checkpoints the running total
+    // (crash/close resilience), and end() writes the final real elapsed
+    // ACTIVE seconds. logInstant() is for events with no meaningful
+    // duration - an external resource opened, an AI chat message sent.
+    const ActivityTracker = (() => {
+      const HEARTBEAT_MS = 20000;
+      let current = null; // { id, accumulated, resumedAt }
+
+      const nowSec = () => Date.now() / 1000;
+
+      function tick() {
+        if (current && current.resumedAt !== null) {
+          current.accumulated += nowSec() - current.resumedAt;
+          current.resumedAt = nowSec();
+        }
+      }
+
+      async function heartbeat() {
+        if (!current) return;
+        tick();
+        try {
+          await apiFetch(`/activity/${current.id}/heartbeat`, { method: 'POST', body: { durationSeconds: Math.round(current.accumulated) } });
+        } catch (_) { /* best-effort - never interrupts the student */ }
+      }
+
+      // Fire-and-forget flush that survives page unload (fetch keepalive
+      // carries the Authorization header, unlike navigator.sendBeacon).
+      function flushOnUnload() {
+        if (!current) return;
+        tick();
+        const token = getAuthToken();
+        const url = `${API_BASE}/activity/${current.id}/end`;
+        try {
+          fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+            body: JSON.stringify({ durationSeconds: Math.round(current.accumulated) }),
+            keepalive: true,
+          });
+        } catch (_) { /* best-effort */ }
+        current = null;
+      }
+
+      async function start(activityType, ctx = {}) {
+        await end(); // only one span tracked at a time - close whatever was running
+        if (!ctx.courseId || !getAuthToken()) return;
+        try {
+          const row = await apiFetch('/activity/start', {
+            method: 'POST',
+            body: { courseId: ctx.courseId, topicId: ctx.topicId || undefined, materialId: ctx.materialId || undefined, activityType, source: 'in_app' },
+          });
+          current = { id: row.id, accumulated: 0, resumedAt: document.hidden ? null : nowSec(), timer: setInterval(heartbeat, HEARTBEAT_MS) };
+        } catch (e) {
+          console.error('ActivityTracker.start failed:', e.message);
+        }
+      }
+
+      async function end() {
+        if (!current) return;
+        tick();
+        clearInterval(current.timer);
+        const { id, accumulated } = current;
+        current = null;
+        try {
+          await apiFetch(`/activity/${id}/end`, { method: 'POST', body: { durationSeconds: Math.round(accumulated) } });
+        } catch (_) { /* best-effort */ }
+      }
+
+      function logInstant(activityType, ctx = {}) {
+        if (!ctx.courseId || !getAuthToken()) return;
+        apiFetch('/activity/instant', {
+          method: 'POST',
+          body: { courseId: ctx.courseId, topicId: ctx.topicId || undefined, materialId: ctx.materialId || undefined, activityType, source: ctx.source || 'external' },
+        }).catch(() => undefined);
+      }
+
+      document.addEventListener('visibilitychange', () => {
+        if (!current) return;
+        if (document.hidden) {
+          tick();
+          current.resumedAt = null;
+        } else {
+          current.resumedAt = nowSec();
+        }
+      });
+      window.addEventListener('pagehide', flushOnUnload);
+
+      return { start, end, logInstant };
+    })();
 
     // ================= REAL AUTHENTICATION =================
     // Replaces the old hardcoded email/password comparison entirely.
@@ -2414,7 +2550,21 @@
     // work only and is what the popstate handler calls (no extra push).
     const SCREENS_NO_BACK = ['s01', 's02'];
 
+    // Screens that represent real learning activity, and which activityType
+    // covers them - _activateScreen starts/stops the tracker automatically
+    // as the student navigates, so no individual button has to remember to.
+    const SCREEN_ACTIVITY = {
+      s09: () => ({ type: 'MATERIAL_VIEW', courseId: courseIdCache[currentChatCourse || 'dsa'] }),
+      screen_diag: () => ({ type: 'QUIZ', courseId: courseIdCache[currentDiagCourse] }),
+      screen_practice: () => ({ type: 'PRACTICE', courseId: courseIdCache[currentPracticeCourse] }),
+      s11: () => ({ type: 'QUIZ', courseId: courseIdCache[currentFollowupCourse] }),
+    };
+
     function _activateScreen(screenId) {
+      // Leaving whatever screen was active - close out its activity span
+      // (real elapsed time, paused for any period the tab was hidden).
+      ActivityTracker.end();
+
       document.querySelectorAll('.screen-view').forEach(el => el.classList.remove('active'));
       const target = document.getElementById(screenId);
       if (target) {
@@ -2429,10 +2579,16 @@
 
       // Load real data for screens that default to the DSA tab on entry
       // (their non-DSA tabs are loaded on-demand by their own tab switchers).
-      if (screenId === 's13') renderProgressTab('dsa');
+      if (screenId === 's13') { currentProgressCourse = 'dsa'; renderProgressTab('dsa'); renderMasteryMap('dsa'); renderLearningProfile('dsa'); }
       if (screenId === 's07') renderGaps('dsa');
       if (screenId === 's02') renderDashboard();
       if (screenId === 's09') switchContentTab(currentChatCourse || 'dsa');
+
+      const activityFor = SCREEN_ACTIVITY[screenId];
+      if (activityFor) {
+        const { type, courseId } = activityFor();
+        if (courseId) ActivityTracker.start(type, { courseId });
+      }
     }
 
     function switchScreen(screenId, opts) {
@@ -2729,6 +2885,20 @@
       const breadcrumb = document.getElementById('contentBreadcrumbText');
       if (breadcrumb) breadcrumb.textContent = `${course.toUpperCase()} — Learning Materials`;
       renderMaterials(course);
+
+      // Default the "Explain at my level" / chat context to this course's
+      // top real weak topic (falls back to the previous topic if none).
+      (async () => {
+        try {
+          const courseId = courseIdCache[course];
+          const gaps = await apiFetch(`/courses/${courseId}/gaps`);
+          if (gaps.ranked && gaps.ranked.length > 0) currentChatTopic = gaps.ranked[0].topic;
+        } catch (_) { /* keep previous topic if no diagnostic yet */ }
+        const label = document.getElementById('explainTopicLabel');
+        if (label) label.textContent = currentChatTopic;
+        const pill = document.getElementById('aiContextPill');
+        if (pill) pill.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Context: ${course.toUpperCase()} (${currentChatTopic})`;
+      })();
     }
 
     async function renderMaterials(course) {
@@ -2772,7 +2942,7 @@
                 </label>
                 <div class="flex-1 min-w-0">
                   <div class="flex items-center gap-2 flex-wrap">
-                    <a href="${escapeHtml(m.url)}" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-slate-900 hover:text-blue-700 hover:underline">${escapeHtml(m.title)}</a>
+                    <a href="${escapeHtml(m.url)}" target="_blank" rel="noopener noreferrer" class="mat-link text-sm font-bold text-slate-900 hover:text-blue-700 hover:underline" data-mat-id="${m.id}" data-topic-id="${m.topicId}">${escapeHtml(m.title)}</a>
                     <span class="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded border ${meta.cls}">${meta.label}</span>
                     ${isRec ? '<span class="text-[10px] font-bold text-blue-700 bg-blue-100 px-1.5 py-0.5 rounded">AI pick</span>' : ''}
                   </div>
@@ -2799,6 +2969,19 @@
               cb.checked = !cb.checked;
               console.error('Failed to update material completion:', err.message);
             }
+          });
+        });
+
+        // Track that a resource was OPENED (Section 5) - a discrete event,
+        // never a claimed watch/read duration, since it leaves the app.
+        panel.querySelectorAll('.mat-link').forEach((a) => {
+          a.addEventListener('click', () => {
+            ActivityTracker.logInstant('MATERIAL_VIEW', {
+              courseId: courseIdCache[course],
+              topicId: a.dataset.topicId,
+              materialId: a.dataset.matId,
+              source: 'external',
+            });
           });
         });
       } catch (err) {
@@ -3388,6 +3571,8 @@
       }
     }
 
+    let currentProgressCourse = 'dsa';
+
     function switchProgressTab(tabId) {
       document.getElementById('dsaTab').classList.add('hidden');
       document.getElementById('oopTab').classList.add('hidden');
@@ -3400,7 +3585,107 @@
       document.getElementById(tabId).classList.remove('hidden');
       document.getElementById(tabId + 'Btn').className = "px-5 py-3 text-sm font-bold border-b-2 border-blue-600 text-blue-600";
 
-      renderProgressTab(tabId.replace('Tab', ''));
+      currentProgressCourse = tabId.replace('Tab', '');
+      renderProgressTab(currentProgressCourse);
+      renderMasteryMap(currentProgressCourse);
+      renderLearningProfile(currentProgressCourse);
+      document.getElementById('analyzeProgressResult').innerHTML = '';
+    }
+
+    // ---- Topic Mastery Map (Section 17) ----
+    const MASTERY_MAP_BAR = {
+      Mastered: 'bg-emerald-500', Developing: 'bg-amber-500',
+      'Needs Improvement': 'bg-orange-500', 'Weak/Critical': 'bg-red-600', 'Not Started': 'bg-slate-300',
+    };
+
+    async function renderMasteryMap(course) {
+      const grid = document.getElementById('masteryMapGrid');
+      if (!grid) return;
+      grid.innerHTML = '<p class="text-sm text-slate-500 col-span-full">Loading mastery map…</p>';
+      try {
+        const courseId = courseIdCache[course];
+        const data = await apiFetch(`/courses/${courseId}/mastery-map`);
+        grid.innerHTML = data.topics.map((t) => `
+          <div class="flex items-center gap-3 p-3 rounded-xl border border-slate-100 bg-white" title="${escapeHtml(t.reason || '')}">
+            <span class="text-lg leading-none">${t.emoji}</span>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-sm font-bold text-slate-900 truncate">${escapeHtml(t.topic)}</span>
+                <span class="text-xs font-semibold text-slate-500 shrink-0">${t.score === null ? '—' : t.score + '%'}</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-1.5 mt-1">
+                <div class="${MASTERY_MAP_BAR[t.status]} h-1.5 rounded-full" style="width:${t.score || 0}%"></div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        grid.innerHTML = `<p class="text-sm text-red-600 col-span-full">Could not load the mastery map: ${escapeHtml(err.message)}</p>`;
+      }
+    }
+
+    // ---- Learning Profile (Section 18) ----
+    function fmtMinutes(seconds) {
+      const m = Math.round(seconds / 60);
+      if (m < 60) return `${m}m`;
+      return `${Math.floor(m / 60)}h ${m % 60}m`;
+    }
+
+    async function renderLearningProfile(course) {
+      const body = document.getElementById('learningProfileBody');
+      if (!body) return;
+      body.innerHTML = 'Loading…';
+      try {
+        const courseId = courseIdCache[course];
+        const p = await apiFetch(`/learning-profile?courseId=${courseId}`);
+        const tag = (list, cls) => list.length
+          ? list.map((t) => `<span class="text-[11px] font-bold px-2 py-0.5 rounded-full ${cls} mr-1 mb-1 inline-block">${escapeHtml(t)}</span>`).join('')
+          : '<span class="text-xs text-slate-400">None yet</span>';
+        body.innerHTML = `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <div class="text-xs font-bold text-slate-500 mb-1">Strong Topics</div>${tag(p.strongTopics, 'bg-emerald-50 text-emerald-700 border border-emerald-200')}
+              <div class="text-xs font-bold text-slate-500 mb-1 mt-3">Developing</div>${tag(p.developingTopics, 'bg-amber-50 text-amber-700 border border-amber-200')}
+              <div class="text-xs font-bold text-slate-500 mb-1 mt-3">Needs Improvement</div>${tag(p.needsImprovementTopics, 'bg-red-50 text-red-700 border border-red-200')}
+            </div>
+            <div class="space-y-2">
+              <div class="flex justify-between text-xs"><span class="text-slate-500">Today</span><span class="font-bold text-slate-800">${fmtMinutes(p.activity.todaySeconds)}</span></div>
+              <div class="flex justify-between text-xs"><span class="text-slate-500">This Week</span><span class="font-bold text-slate-800">${fmtMinutes(p.activity.weekSeconds)}</span></div>
+              <div class="flex justify-between text-xs"><span class="text-slate-500">Overall</span><span class="font-bold text-slate-800">${fmtMinutes(p.activity.overallSeconds)}</span></div>
+              <div class="flex justify-between text-xs pt-2 border-t border-slate-100"><span class="text-slate-500">Practice Accuracy</span><span class="font-bold text-slate-800">${p.practiceAccuracy === null ? 'No practice yet' : p.practiceAccuracy + '%'}</span></div>
+              <div class="flex justify-between text-xs"><span class="text-slate-500">Preferred Resource</span><span class="font-bold text-slate-800">${p.preferredResourceType || 'Not enough data'}</span></div>
+              <p class="text-[11px] text-slate-400 italic mt-1">${escapeHtml(p.preferredResourceBasis)}</p>
+            </div>
+          </div>`;
+      } catch (err) {
+        body.innerHTML = `<p class="text-sm text-red-600">Could not load your learning profile: ${escapeHtml(err.message)}</p>`;
+      }
+    }
+
+    // ---- AI Progress Analysis (Section 8/14) ----
+    async function analyzeMyProgress() {
+      const btn = document.getElementById('analyzeProgressBtn');
+      const box = document.getElementById('analyzeProgressResult');
+      const original = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Analyzing…';
+      box.innerHTML = '';
+      try {
+        const courseId = courseIdCache[currentProgressCourse];
+        const result = await apiFetch('/ai/analyze-progress', { method: 'POST', body: { courseId } });
+        const fallbackNote = result.source === 'fallback'
+          ? '<p class="text-[11px] text-amber-600 font-semibold mb-1">AI temporarily unavailable - showing a data summary instead.</p>' : '';
+        box.innerHTML = `
+          <div class="p-4 bg-sky-50/50 border border-sky-100 rounded-xl">
+            ${fallbackNote}
+            <p class="text-sm text-slate-700 leading-relaxed">${escapeHtml(result.analysis)}</p>
+          </div>`;
+      } catch (err) {
+        box.innerHTML = `<p class="text-sm text-red-600">Could not analyze progress: ${escapeHtml(err.message)}</p>`;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = original;
+      }
     }
 
     // ================= ADAPTIVE LEARNING PATH AI ASSISTANT ENGINE =================
@@ -3430,7 +3715,7 @@
       spl_arrow: { q: "When to use arrow (->) vs dot (.) in C structs?", course: 'spl', topic: 'Structures' },
     };
 
-    async function sendChatToBackend(course, topic, message, userBubbleEl) {
+    async function sendChatToBackend(course, topic, message, userBubbleEl, style) {
       const log = document.getElementById('aiChatLog');
       const loadingBubble = document.createElement('div');
       loadingBubble.className = "bg-slate-100 text-slate-500 p-3 rounded-xl rounded-tl-none leading-relaxed text-xs border border-slate-200/60 italic";
@@ -3440,7 +3725,8 @@
 
       try {
         const courseId = courseIdCache[course];
-        // Best-effort mastery lookup for context - not required for the reply.
+        // Best-effort mastery lookup for context - not required for the reply
+        // (the backend re-derives real mastery/path server-side regardless).
         let mastery = 0;
         try {
           const gaps = await apiFetch(`/courses/${courseId}/gaps`);
@@ -3448,9 +3734,11 @@
           if (match) mastery = match.score;
         } catch (_) { /* non-fatal */ }
 
+        ActivityTracker.logInstant('AI_INTERACTION', { courseId, source: 'in_app' });
+
         const result = await apiFetch('/ai/chat', {
           method: 'POST',
-          body: { courseId, topic, mastery, learningPath: [], message },
+          body: { courseId, topic, mastery, learningPath: [], message, style },
         });
         loadingBubble.remove();
 
@@ -3534,6 +3822,27 @@
       log.scrollTop = log.scrollHeight;
 
       sendChatToBackend(currentChatCourse, currentChatTopic, text);
+    }
+
+    // "Explain at my level" (Section 13) - one click sends a request for the
+    // CURRENT topic at a chosen depth; the backend supplies the student's
+    // real mastery/learning-path context automatically.
+    const EXPLAIN_STYLE_LABEL = {
+      simple: 'Explain Simply',
+      detailed: 'Explain in Detail',
+      example: 'Give an Example',
+      step_by_step: 'Show Step-by-Step',
+    };
+
+    function explainAtMyLevel(style) {
+      const log = document.getElementById('aiChatLog');
+      const userBubble = document.createElement('div');
+      userBubble.className = "bg-blue-50 text-blue-900 p-3 rounded-xl rounded-tr-none ml-4 font-semibold border border-blue-100 text-xs";
+      userBubble.textContent = `${EXPLAIN_STYLE_LABEL[style]}: ${currentChatTopic}`;
+      log.appendChild(userBubble);
+      log.scrollTop = log.scrollHeight;
+
+      sendChatToBackend(currentChatCourse, currentChatTopic, `Explain ${currentChatTopic}`, null, style);
     }
 
     // NOTE: no longer auto-rendering the follow-up quiz on page load - that
