@@ -1,171 +1,101 @@
-# An AI-Supported Adaptive Learning Path System for Students
+# StudyGuard — An AI-Supported Adaptive Learning Path System for Students
 
-Turns the existing adaptive learning HTML/JS prototype into a real full-stack
-application: real accounts, a real PostgreSQL database, real diagnostic
-scoring, a real deterministic adaptive-path engine, and real Claude API
-calls — replacing every hardcoded/simulated piece the prototype had.
+A real, working full-stack application: a student signs up, takes a diagnostic, gets a
+deterministically-computed adaptive learning path, studies curated materials, practices
+at a difficulty that adapts to their real performance, chats with a real LLM tutor, and
+watches their mastery, learning path, and activity history update from their actual
+stored data. Nothing in the running app is hardcoded, simulated, or fabricated — every
+number on screen comes from a database query or a live model response.
 
-## Read this first: what's verified vs. what needs your machine
-
-This was built in a sandbox with **no internet access**, so `npm install`,
-a live Express/PostgreSQL server, and real Claude API calls were not
-possible here. Being precise about what that means:
-
-**Actually run and verified, right here:**
-- Core algorithm tests (`backend/tests/core.test.ts`) — 20/20 passing,
-  covering topic scoring, mastery classification, and the adaptive
-  engine's prerequisite-aware sequencing, checked against this project's
-  own worked example (Arrays 80%/Linked Lists 35%/Recursion 40%/Trees 30%
-  → correctly sequenced as Arrays→Recursion→Trees→Linked Lists, with
-  Arrays flagged as a "revision" step since it's Mastered-but-required).
-- **Full frontend integration test** (`test_integration.js`, Playwright +
-  real Chromium + mocked API responses) — **16/16 checks passing**,
-  proving in an actual browser that: the diagnostic result screen shows
-  real computed scores (not the old hardcoded "4/10"), the Learning Gap
-  screen shows real ranked weak topics (not the old fake "Trees &
-  Binary Search Trees" narrative), the AI Plan and AI Chat screens
-  render real backend response content (verified via marker strings
-  that only appear if the real code path executed), the Before/After
-  screen shows a real computed mastery change (not the hardcoded
-  "35% → 85%"), and the Progress screen computes a real average from
-  real per-topic data.
-- Every backend `.ts` file passes a syntax check; the full embedded
-  frontend script passes `node --check`.
-
-**Written correctly but NOT run here** (needs your machine's internet
-access): `npm install` actually succeeding, a live PostgreSQL connection,
-a real `prisma migrate`/`prisma db seed`, and a real Claude API response.
-Follow "Running the project" below — it should take about 10 minutes —
-and tell me the exact error if anything fails; I'd rather fix a real
-message than guess.
-
-## Architecture
+## 1. Overview
 
 ```
-Frontend (frontend/index.html - the original prototype, integrated)
-   ↓ fetch()
-Express Backend (backend/src)
-   ↓
-PostgreSQL (via Prisma)
-
-Backend
-   ↓
-Anthropic Claude API (claude-sonnet-5)
+Student
+  ↓
+Diagnostic Assessment (real scoring)
+  ↓
+Topic Mastery Analysis + Weak Topic Detection (deterministic thresholds)
+  ↓
+Adaptive Learning Path Engine (prerequisite-aware, deterministic — NOT the LLM)
+  ↓
+Learning Materials (curated, real links) + Practice (difficulty-adaptive)
+  ↓
+Follow-up Assessment → Updated Mastery → Path Regenerates
+  ↓
+Real LLM (Grok via Groq) personalizes, explains, and analyzes progress
 ```
 
-The Claude API key lives only in `backend/.env` and is never sent to the
-browser. Every `/api/ai/*` call happens server-side.
+The core academic contribution: **the LLM never decides anything about the student's
+path.** A separate, deterministic, unit-tested engine (`adaptiveEngine.service.ts`)
+computes topic order from the prerequisite graph and the student's real mastery scores.
+The LLM only explains, personalizes, and analyzes — it is handed the path as ground
+truth and is explicitly instructed never to reorder it.
 
-## Engine vs. LLM separation (the core academic contribution)
-
-`backend/src/services/adaptiveEngine.service.ts` is the ONLY thing that
-decides topic order. It does a prerequisite-depth-aware topological sort:
-every topic's prerequisite is scheduled strictly before it, ties within
-the same depth go to already-Mastered "revision" topics first, then to
-the weakest score among genuinely-weak topics. The LLM
-(`llm.service.ts`) never sees the prerequisite graph and is explicitly
-instructed not to reorder anything — it only personalizes explanations
-and study guidance around whatever sequence the engine produced. If your
-supervisor asks "is the LLM generating the path?" — no, and the tests
-prove it.
-
-## What was extracted vs. what's new
-
-**Extracted verbatim from the original prototype** (not rewritten):
-- All 75 real questions (30 diagnostic + 30 practice + 15 follow-up)
-  across DSA/OOP/SPL — pulled programmatically from the HTML's embedded
-  arrays, not retyped by hand.
-- The entire visual design (Tailwind classes, layout, colors) — kept
-  exactly as-is per your "don't redesign" instruction.
-
-**Consolidated (documented decision, see `backend/src/data/topicMapping.ts`):**
-The original prototype used a different topic label on almost every
-question (e.g. "Linked List Head Insertion", "Deletion at Head",
-"Pointer Traversal" — all really about one concept). These were merged
-into a smaller canonical topic list per course so mastery percentages
-are meaningful (averaged across multiple real questions, not a single
-question's 0%-or-100% score). The mapping is a plain lookup table you
-can inspect and adjust.
-
-**Genuinely new:**
-- Backend, database, auth, adaptive engine, LLM integration — everything
-  under "What was removed" below.
-
-## What was removed (per your explicit "do not fake implementation" instruction)
-
-- The hardcoded email/password check in `handleLogin()`.
-- The `aiKnowledgeBase` object (15 canned Q&A pairs) — `handleAiPromptClick`
-  and `sendAiCustomMessage` now call `POST /api/ai/chat` for a real
-  Claude response.
-- The 9 hardcoded question arrays — now real seed data in Postgres.
-- The fully hardcoded diagnostic result screens (s06a/b/c) — fixed
-  "4/10", "40% Accuracy" etc. regardless of actual answers.
-- The fully hardcoded Learning Gap narratives (s07) — including
-  specific fabricated explanations like "Confusion between memory
-  address references and payload values" that were never derived from
-  any real answer pattern.
-- The fully hardcoded AI Study Plan (s08) — four fixed steps per course
-  regardless of the student's actual weak topics.
-- The fully hardcoded Before/After screen (s12) — fixed "35% → 85%"
-  narratives per course, including OOP/SPL narratives that didn't even
-  match those courses' real follow-up question topics.
-- The fully hardcoded Progress screen (s13) and dashboard mastery
-  percentages (42%/75%/82%, static regardless of any real activity).
-
-## A correction made mid-build (documenting failure honestly)
-
-The follow-up assessment was initially designed assuming ONE topic per
-course (true for DSA — its 5 follow-up questions are all about Linked
-Lists). Checking the actual extracted OOP and SPL follow-up questions
-showed each covers 5 *different* topics (OOP: Polymorphism, Interfaces,
-Constructors, Encapsulation; SPL: Pointers, Dynamic Memory, Deallocation,
-Dereferencing, Structures). The backend (`followUp.controller.ts`) was
-rewritten to score and update mastery per-topic across however many
-topics a submission touches, which is correct for all three courses.
-
-## Folder structure
+## 2. Architecture
 
 ```
-adaptive-learning-path-app/
-├── backend/
-│   ├── prisma/
-│   │   ├── schema.prisma       12 models (11 from spec + isFollowUp flag - see below)
-│   │   └── seed.ts             Seeds courses/topics/prerequisites/75 questions/demo account
-│   ├── src/
-│   │   ├── data/
-│   │   │   ├── topicMapping.ts     Canonical topics + prerequisite graph + label mapping
-│   │   │   └── seedQuestions.ts    The 75 extracted questions, topic-mapped
-│   │   ├── services/
-│   │   │   ├── mastery.service.ts       Scoring + classification (tested)
-│   │   │   ├── adaptiveEngine.service.ts Deterministic path sequencing (tested)
-│   │   │   └── llm.service.ts           Real Claude API calls
-│   │   ├── controllers/    One per resource (auth, courses, diagnostic, practice, followUp, learningPath, ai, progress)
-│   │   ├── routes/         Wires controllers to Express routes
-│   │   ├── middleware/     JWT auth guard + error handler
-│   │   ├── utils/          bcrypt + JWT helpers
-│   │   ├── prisma.ts       Prisma client singleton
-│   │   ├── app.ts          Express app (CORS, rate limiting on /api/ai, routes)
-│   │   └── server.ts       Entrypoint
-│   ├── tests/core.test.ts  20 passing tests
-│   ├── package.json / tsconfig.json / .env.example / .gitignore
-├── frontend/
-│   └── index.html          The original prototype, integrated with the real backend
-├── test_integration.js     Playwright test proving the integration works (16/16 passing)
-└── README.md                (this file)
+frontend/index.html         Single-file SPA (Tailwind CDN, vanilla JS, no build step)
+      │ fetch()
+      ▼
+backend/  Express + TypeScript (tsx watch in dev)
+  src/
+    app.ts                  helmet, CORS allowlist, rate limiting, routes
+    server.ts               entrypoint
+    middleware/              JWT auth guard, error handler
+    utils/                   bcrypt + JWT helpers
+    data/                    canonical topics, prerequisite graph, seed questions,
+                             expanded question bank, curated materials
+    services/                all business logic — framework/DB-free where possible
+      mastery.service.ts            scoring + status classification (tested)
+      adaptiveEngine.service.ts     deterministic path sequencing (tested)
+      adaptiveQuestion.service.ts   difficulty recommendation (tested)
+      learningPath.service.ts       path (re)generation, DB side
+      recommendation.service.ts     explainable "why" strings
+      activity.service.ts           learning-activity tracking
+      llm.service.ts                real LLM calls (provider-agnostic)
+    controllers/ + routes/   one pair per resource
+PostgreSQL (via Prisma)      16 models
+      │
+      ▼
+Groq (or xAI/Anthropic) — real LLM, called server-side only
 ```
 
-### Schema deviation, documented
+## 3. What's real (not a prototype anymore)
 
-The spec's model list includes `FollowUpAttempt` (a result) but no
-separate follow-up *question* table. Since follow-up questions are
-structurally identical to practice questions, `PracticeQuestion` got an
-`isFollowUp: Boolean` flag instead of inventing an unlisted table — the
-30 regular practice questions and 15 follow-up questions share one table,
-distinguished by that flag.
+| Area | Reality |
+|---|---|
+| Auth | Real bcrypt + JWT, session persists across refresh (`GET /auth/me` on load), real logout |
+| Diagnostic / Practice / Follow-up | Real DB-backed questions, real scoring, real `TopicMastery` updates |
+| Adaptive Learning Path | Deterministic prerequisite-depth topological sort, regenerates automatically after practice/follow-up, previous versions kept for comparison |
+| **Question difficulty** | 187 questions (75 original + 112 newly authored EASY/HARD), real per-question attempt history, adapts up/down based on a real rolling-window accuracy rule — never on one question |
+| **Learning Activity Tracking** | Real, event-based, visibility-aware timing (pauses when the tab is hidden) — no countdown timer, no guessed durations. External resource opens are logged as discrete events with `duration: 0`, never a claimed watch time |
+| Learning Materials | 86 curated real resources (GeeksforGeeks/Programiz/Oracle articles, Abdul Bari/mycodeschool/Neso Academy/Telusko videos), per-user completion tracking |
+| AI (Grok) | Every `/api/ai/*` call is a real API call, server-side only, key never sent to the browser. Includes personalize, contextual chat with 4 explanation styles, and a strict-honesty progress analyzer that refuses to invent a statistic |
+| Explainable recommendations | Every weak-topic/path/difficulty recommendation carries a server-computed reason string — the LLM may reword it, never invent it |
+| Topic Mastery Map / Learning Profile | Real thresholds, real activity minutes, a "preferred resource type" only declared after ≥3 repeated completions (never a single click) |
+| User isolation | Every query is scoped to `req.user.userId` from the verified JWT — never a client-supplied id |
 
-## Running the project
+## 4. Technologies
 
-### 1. Backend
+- **Backend:** Node.js, Express, TypeScript, Prisma ORM
+- **Database:** PostgreSQL
+- **Frontend:** Single HTML file, Tailwind (CDN), vanilla JS — no build step, no framework
+- **LLM:** Groq (default, free tier) via an OpenAI-compatible REST call; xAI/Grok and Anthropic Claude are drop-in alternatives (one env var)
+- **Testing:** a framework-free unit test file (`tests/core.test.ts`, run via `tsx`) for the pure-logic services, plus Playwright for end-to-end browser verification
+
+## 5. Installation
+
+### 5.1 PostgreSQL
+
+Install PostgreSQL 14+ (Windows: `winget install PostgreSQL.PostgreSQL.17`; macOS: `brew install postgresql@16`; Linux: your package manager). Then:
+
+```bash
+psql -U postgres
+CREATE DATABASE studyguard;
+\q
+```
+
+### 5.2 Backend
 
 ```bash
 cd backend
@@ -173,11 +103,7 @@ npm install
 cp .env.example .env
 ```
 
-Edit `.env`:
-- `DATABASE_URL` — your PostgreSQL connection string
-- `JWT_SECRET` — generate with `openssl rand -hex 32`
-- `ANTHROPIC_API_KEY` — from https://console.anthropic.com
-- `UNIVERSITY_EMAIL_DOMAIN` — defaults to `uiu.ac.bd`
+Edit `.env` — see §6 below for what every variable means.
 
 ```bash
 npx prisma migrate dev --name init
@@ -185,78 +111,197 @@ npx prisma db seed
 npm run dev
 ```
 
-The seed script prints a demo account (email + password) at the end —
-copy it, it's not stored anywhere in frontend source per Section 22.
+You should see `StudyGuard backend listening on http://localhost:4000`. Confirm with
+`curl http://localhost:4000/health` → `{"status":"healthy"}`.
 
-Visit `http://localhost:4000/health` to confirm the server is up before
-touching the frontend.
+The seed script prints a demo account (email + password) — copy it down, it's not
+stored anywhere in frontend source.
 
-### 2. Frontend
+### 5.3 Frontend
 
-No build step. Serve it (don't just double-click the file — same
-file:// reasons as before):
+No build step. Serve the single HTML file (don't just double-click it — `fetch()` from
+`file://` is unreliable in some browsers):
 
 ```bash
 cd frontend
-python3 -m http.server 5500
-# visit http://localhost:5500
+npx serve -l 3000 .
 ```
 
-`API_BASE` in the `<script>` block is hardcoded to
+Visit `http://localhost:3000`. `API_BASE` in the `<script>` block is hardcoded to
 `http://localhost:4000/api` — change it if your backend runs elsewhere.
 
-### 3. Run the tests
+## 6. Environment variables (`backend/.env`)
+
+| Variable | Meaning |
+|---|---|
+| `DATABASE_URL` | Postgres connection string |
+| `JWT_SECRET` | Random secret for signing JWTs — generate with `openssl rand -hex 32` |
+| `LLM_PROVIDER` | `xai` (default — despite the name, this path is OpenAI-compatible and drives Groq/xAI/any compatible gateway) or `anthropic` |
+| `XAI_API_KEY` / `XAI_BASE_URL` / `XAI_MODEL` | Provider credentials. Default config points at **Groq's free tier** (`https://api.groq.com/openai/v1`, `openai/gpt-oss-120b`) — get a key at [console.groq.com](https://console.groq.com). To use real xAI/Grok instead, swap in the commented Option B block (needs billing at [console.x.ai](https://console.x.ai)) |
+| `ANTHROPIC_API_KEY` / `ANTHROPIC_MODEL` | Only used if `LLM_PROVIDER=anthropic` |
+| `UNIVERSITY_EMAIL_DOMAIN` | Signup email domain check, defaults to `uiu.ac.bd` |
+| `FRONTEND_ORIGIN` | CORS allowlist — comma-separated for multiple origins |
+| `PORT` | Backend port, defaults to 4000 |
+
+**Groq model note:** Groq periodically retires/rotates free models. If you see
+`model_not_found`, list what's currently available:
+
+```bash
+curl https://api.groq.com/openai/v1/models -H "Authorization: Bearer $XAI_API_KEY"
+```
+
+and update `XAI_MODEL` in `.env` — no code change needed.
+
+## 7. Database (Prisma)
+
+16 models — see `backend/prisma/schema.prisma` for the full definitions and relations:
+
+`User`, `Course`, `Topic`, `DiagnosticQuestion`, `DiagnosticAttempt`, `DiagnosticAnswer`,
+`TopicMastery`, `LearningPath`, `LearningPathItem`, `PracticeQuestion`,
+`PracticeAttempt`, `PracticeQuestionAttempt`, `FollowUpAttempt`, `AIInteraction`,
+`LearningMaterial`, `MaterialCompletion`, `LearningActivity`.
+
+```bash
+npx prisma migrate dev --name <description>   # create + apply a migration after a schema change
+npx prisma studio                              # browse the database visually
+npx prisma generate                            # regenerate the client after a schema change (migrate does this automatically)
+```
+
+**Windows note:** if `prisma generate` fails with an `EPERM` error renaming the query
+engine DLL, the dev server (which holds a lock on it) is still running — stop it first,
+then generate, then restart.
+
+### Seeding
+
+```bash
+npx prisma db seed
+```
+
+Safe to re-run — it wipes and recreates all *seeded* data (courses, topics, questions,
+materials) but never touches real user accounts or their activity/attempts, except the
+one demo account, which is upserted. Seeds:
+
+- 3 courses (DSA, OOP, SPL), their canonical topics, and the prerequisite graph
+- 30 diagnostic questions (10/course)
+- 187 practice/follow-up questions total: the original 75 (30 practice + 15 follow-up + tagged MEDIUM) plus 112 newly authored EASY/HARD questions (`src/data/expandedQuestions.ts`) across mixed question types (MCQ/TRUE_FALSE/SCENARIO/CODE/CONCEPT)
+- 86 curated learning materials (`src/data/learningMaterials.ts`)
+- One demo account (credentials printed at the end of the seed run)
+
+## 8. Development commands
+
+```bash
+npm run dev         # backend dev server (tsx watch, auto-reload)
+npm run build        # tsc -> dist/
+npm start            # run the compiled build
+npm run typecheck    # tsc --noEmit
+npm test             # unit tests for the pure-logic services (tsx tests/core.test.ts)
+npm run prisma:migrate
+npm run prisma:seed
+npm run prisma:studio
+```
+
+## 9. API overview
+
+All routes below are prefixed `/api`. Every route except `/auth/register` and
+`/auth/login` requires `Authorization: Bearer <token>`.
+
+**Auth**
+`POST /auth/register` · `POST /auth/login` · `GET /auth/me` · `POST /auth/logout`
+
+**Courses / Topics**
+`GET /courses` · `GET /courses/:id` · `GET /courses/:id/topics`
+
+**Diagnostic**
+`GET /courses/:courseId/diagnostic` · `POST /diagnostic/submit`
+
+**Practice**
+`GET /courses/:courseId/practice` · `GET /topics/:topicId/practice/next?count=` (adaptive, difficulty-aware) · `POST /practice/submit`
+
+**Follow-up**
+`GET /courses/:courseId/follow-up` · `POST /follow-up/submit`
+
+**Learning Path**
+`GET /courses/:courseId/gaps` · `POST /learning-path/generate` · `GET /learning-path/:courseId`
+
+**Materials**
+`GET /courses/:courseId/materials` · `GET /topics/:topicId/materials` · `POST /materials/:id/complete` · `DELETE /materials/:id/complete`
+
+**AI (Groq)**
+`POST /ai/personalize` · `POST /ai/chat` (accepts `style: simple|detailed|example|step_by_step`) · `POST /ai/analyze-progress`
+
+**Activity Tracking**
+`POST /activity/start` · `POST /activity/:id/heartbeat` · `POST /activity/:id/end` · `POST /activity/instant` · `GET /activity/summary?courseId=&topicId=&range=today|week|all`
+
+**Insights**
+`GET /courses/:courseId/mastery-map` · `GET /learning-profile?courseId=` · `GET /courses/:courseId/path-history` · `GET /courses/:courseId/topics/:topicId/detail`
+
+**Progress**
+`GET /progress` · `GET /progress/:courseId`
+
+## 10. Testing
 
 ```bash
 cd backend
-npm test
+npm test              # 20 unit tests: scoring, mastery classification, adaptive path sequencing
+npm run typecheck      # full TypeScript check
 ```
 
-### 4. Run the integration test (optional, needs Node + Playwright)
+There's no bundled Playwright suite in the repo (it was used interactively during
+development to verify every feature against the live app — signup → diagnostic →
+adaptive path → materials → adaptive practice → AI chat/explain-at-level → progress →
+mastery map → path history → analyze-progress — all confirmed against real HTTP
+responses, not mocks). If you want a regression suite, `npm install -D playwright &&
+npx playwright install chromium` and drive `http://localhost:3000` the same way.
 
-```bash
-node test_integration.js
-```
+## 11. Extending the system
 
-This spins up a real headless browser, mocks every API call, and
-verifies the frontend genuinely uses real backend data at every screen
-— useful if you modify the frontend further and want to catch
-regressions the same way I did.
+The schema and seed pipeline are designed so none of the following need a code change:
 
-## Demo flow (matches Section 25 exactly)
+### Add a new course
 
-1. Sign up or log in (toggle at the top of the login screen).
-2. Dashboard → select DSA.
-3. Take the diagnostic quiz → submit → **real computed** topic scores
-   and weak-topic identification.
-4. View Learning Gap Analysis → **real ranked** weak topics.
-5. Generate Adaptive Learning Path → **real deterministic** sequencing.
-6. View AI Personalized Plan → **real Claude API call**, displayed as-is.
-7. Open the AI Assistant → ask a question → **real Claude API call**.
-8. Complete practice → complete follow-up assessment.
-9. **Real** new mastery calculated and stored.
-10. Before/After screen shows the **real** change; path regenerates.
+Insert a `Course` row, its `Topic` rows (with `prerequisiteTopicId` links), and
+question/material rows referencing them. The dashboard, adaptive engine, materials
+screen, and progress hub all read courses/topics from the database — none of them
+hardcode DSA/OOP/SPL. (`src/data/topicMapping.ts` currently defines the canonical topic
+list + prerequisites for the 3 demo courses in code for seeding convenience — for a
+new course either add an entry there and re-seed, or insert directly with SQL/Prisma
+Studio.)
 
-## Known limitations
+### Add a new topic to an existing course
 
-- CORS is wide open (`*`... actually `cors()` with defaults) — fine for
-  local demo, tighten for anything beyond that.
-- No refresh-token rotation — JWTs are long-lived (7 days) for demo
-  simplicity.
-- The dashboard's three course-mastery cards only show real data once a
-  diagnostic has been taken for that course; otherwise they show "Take
-  diagnostic" placeholders (this is correct behavior, not a bug — there's
-  no real data to show yet).
-- Rate limiting on `/api/ai/*` is a simple in-memory limiter
-  (`express-rate-limit` defaults) — fine for a single-instance demo, not
-  for a multi-instance production deployment.
+Insert a `Topic` row with the right `prerequisiteTopicId`. Add `DiagnosticQuestion` /
+`PracticeQuestion` rows referencing it (`difficulty` and `questionType` are optional,
+default to `MEDIUM`/`MCQ`).
 
-## Future work
+### Add new learning materials
 
-- Add refresh tokens / shorter-lived access tokens.
-- Add a resource-recommendation table (mentioned in earlier planning
-  documents but out of scope for this build).
-- Expand the prerequisite graph beyond one-parent-per-topic if a topic
-  genuinely needs multiple prerequisites (the current schema and engine
-  both assume a single `prerequisiteTopicId`, matching the spec's
-  suggested schema).
+Insert a `LearningMaterial` row (`courseId`, `topicId`, `title`, `type`, `url`, ...) —
+or add an entry to `src/data/learningMaterials.ts` and re-seed. Any number of materials
+of any type can exist per topic; the Materials screen renders whatever comes back with
+no frontend change.
+
+### Add more practice questions / difficulty tiers
+
+Insert `PracticeQuestion` rows with a `difficulty` (`EASY`/`MEDIUM`/`HARD`). The
+adaptive endpoint (`GET /topics/:id/practice/next`) automatically picks them up — no
+code change. If a topic has zero questions at its recommended tier, the endpoint falls
+back through the other tiers and honestly reports which one was actually served.
+
+## 12. Known limitations
+
+- Rate limiting is in-memory (`express-rate-limit` defaults) — fine for a single-instance demo, not for a multi-instance production deployment.
+- No refresh-token rotation — JWTs are long-lived (7 days) for demo simplicity.
+- The per-course screen layout in the frontend still has some duplicated markup (one block per DSA/OOP/SPL tab in a few screens) rather than being fully templated — functional, just not maximally DRY.
+- Adaptive question-difficulty rotation has more room to shine once the question bank grows further per topic (187 questions across 28 topics × 3 tiers means some tiers currently have only 1-2 questions).
+
+## 13. Demo flow
+
+1. Sign up (or use the seeded demo account) → dashboard shows a real time-of-day greeting with your name.
+2. Select a course → take the diagnostic → real computed per-topic scores and weak-topic identification.
+3. View the Learning Gap Analysis → real ranked weak topics with explainable reasons.
+4. Generate the Adaptive Learning Path → real deterministic, prerequisite-ordered sequence.
+5. Open AI Study Plan → real Groq-generated plan, recommending only from the seeded materials list.
+6. Open Materials → real curated resources per topic; mark some complete; click "Practice (adapts to your level)" on a topic.
+7. Ask the AI Assistant a question, or click "Explain Simply / In Detail / With an Example / Step-by-Step".
+8. Complete practice and a follow-up assessment → real new mastery, real path regeneration.
+9. Open Progress Hub → real Topic Mastery Map, Learning Path History (before/after comparison), Learning Profile (built from real activity), and click "Analyze My Progress" for a real, data-grounded AI insight.
