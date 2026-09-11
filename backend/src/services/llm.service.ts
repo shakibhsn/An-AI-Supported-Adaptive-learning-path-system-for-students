@@ -150,6 +150,27 @@ Answer the student's question directly and simply, calibrated to their stated ma
 
 Respond in plain text (not JSON) - a normal, warm, helpful reply.`;
 
+// Appended to CHAT_SYSTEM_PROMPT when the student picks an explanation style
+// (Section 13 - "Explain at my level").
+const CHAT_STYLE_INSTRUCTIONS: Record<string, string> = {
+  simple: 'The student asked for a SIMPLE explanation: use short sentences, everyday analogies, and avoid jargon. Assume this is their first real exposure to the idea.',
+  detailed: 'The student asked for a DETAILED explanation: cover the underlying mechanism thoroughly, including edge cases and why it works the way it does.',
+  example: 'The student asked for an EXAMPLE: lead with a concrete, worked example (with code if the course is DSA/OOP/SPL) before any abstract explanation.',
+  step_by_step: 'The student asked for a STEP-BY-STEP walkthrough: number each step in order, and keep each step to one clear action or idea.',
+};
+
+const PROGRESS_ANALYSIS_SYSTEM_PROMPT = `You are StudyGuard AI, analyzing a student's real, backend-supplied learning data.
+
+You will receive actual stored numbers: topic mastery percentages, learning activity minutes by category, practice accuracy, and follow-up assessment results. This is the complete and only truth about the student - you have no other information.
+
+STRICT RULES:
+- Never invent a score, a duration, a topic name, or any statistic not present in the data given to you.
+- Never claim the student did something (e.g. "watched a video") unless an activity record says so.
+- If a field is null or missing, say there isn't enough data yet for that part - do not guess a plausible-sounding number.
+- Reference the actual numbers you were given (e.g. "your practice accuracy is 72%"), don't just gesture vaguely at "good progress".
+
+Your job: analyze the pattern across topics/activity/performance and write a short, encouraging, honest progress insight - noting what improved, what still needs attention, and a concrete next step. 3-5 sentences, plain text (not JSON).`;
+
 function extractJson(text: string): unknown {
   const cleaned = text.trim().replace(/^```(?:json)?/, '').replace(/```$/, '').trim();
   return JSON.parse(cleaned);
@@ -217,12 +238,18 @@ export async function personalize(input: PersonalizeInput): Promise<PersonalizeR
 
 // --- chat --------------------------------------------------------------
 
+export type ChatStyle = 'simple' | 'detailed' | 'example' | 'step_by_step';
+
 export interface ChatInput {
   course: string;
   topic: string;
   mastery: number;
   learningPath: string[];
   message: string;
+  /** "Explain at my level" style toggle (Section 13). Optional - plain chat if omitted. */
+  style?: ChatStyle;
+  /** Recent performance context (Section 13's "recent performance" requirement), server-derived. */
+  recentPerformance?: string;
 }
 
 export interface ChatResult {
@@ -234,9 +261,20 @@ export interface ChatResult {
 
 export async function chat(input: ChatInput): Promise<ChatResult> {
   try {
-    const context = `Course: ${input.course}\nCurrent topic: ${input.topic}\nCurrent mastery on this topic: ${input.mastery}%\nAuthoritative learning path: ${input.learningPath.join(' -> ')}`;
+    const context = [
+      `Course: ${input.course}`,
+      `Current topic: ${input.topic}`,
+      `Current mastery on this topic: ${input.mastery}%`,
+      `Authoritative learning path: ${input.learningPath.join(' -> ')}`,
+      input.recentPerformance ? `Recent performance: ${input.recentPerformance}` : null,
+    ].filter(Boolean).join('\n');
+
+    const system = input.style && CHAT_STYLE_INSTRUCTIONS[input.style]
+      ? `${CHAT_SYSTEM_PROMPT}\n\n${CHAT_STYLE_INSTRUCTIONS[input.style]}`
+      : CHAT_SYSTEM_PROMPT;
+
     const reply = await callLlm({
-      system: CHAT_SYSTEM_PROMPT,
+      system,
       user: `${context}\n\nStudent's message: ${input.message}`,
       maxTokens: 700,
     });
@@ -248,6 +286,58 @@ export async function chat(input: ChatInput): Promise<ChatResult> {
       source: 'fallback',
       error: err instanceof Error ? err.message : String(err),
       reply: "Sorry, the AI assistant is temporarily unavailable right now. Please try again in a moment.",
+    };
+  }
+}
+
+// --- progress analysis ("Analyze My Progress" / AI Learning Insight) -----
+// Sections 8/14: the caller must pass only real, backend-queried numbers -
+// this function does not query the database itself, by design, so it's
+// impossible to accidentally leak unvetted data into the prompt.
+
+export interface ProgressAnalysisInput {
+  course: string;
+  topics: {
+    topic: string;
+    masteryPercentage: number | null;
+    status: string;
+    activityMinutes: number | null;
+    practiceAccuracy: number | null;
+    followUpScore: number | null;
+    improvement: number | null;
+  }[];
+  activityThisWeekMinutes: number;
+}
+
+export interface ProgressAnalysisResult {
+  success: boolean;
+  source: 'llm' | 'fallback';
+  analysis: string;
+  error?: string;
+}
+
+export async function analyzeProgress(input: ProgressAnalysisInput): Promise<ProgressAnalysisResult> {
+  try {
+    const analysis = await callLlm({
+      system: PROGRESS_ANALYSIS_SYSTEM_PROMPT,
+      user: JSON.stringify(input, null, 2),
+      maxTokens: 500,
+    });
+    if (!analysis.trim()) throw new Error('LLM response was empty');
+    return { success: true, source: 'llm', analysis };
+  } catch (err) {
+    const strongest = [...input.topics].filter((t) => t.masteryPercentage !== null).sort((a, b) => (b.masteryPercentage ?? 0) - (a.masteryPercentage ?? 0))[0];
+    const weakest = [...input.topics].filter((t) => t.masteryPercentage !== null).sort((a, b) => (a.masteryPercentage ?? 0) - (b.masteryPercentage ?? 0))[0];
+    return {
+      success: false,
+      source: 'fallback',
+      error: err instanceof Error ? err.message : String(err),
+      analysis: [
+        'AI progress analysis is temporarily unavailable, so here is a plain summary of your stored data.',
+        strongest ? `Your strongest topic is ${strongest.topic} at ${strongest.masteryPercentage}% mastery.` : null,
+        weakest && weakest.topic !== strongest?.topic ? `${weakest.topic} is your lowest at ${weakest.masteryPercentage}% - consider focusing there next.` : null,
+        `You've logged ${input.activityThisWeekMinutes} minutes of learning activity this week.`,
+      ].filter(Boolean).join(' '),
     };
   }
 }

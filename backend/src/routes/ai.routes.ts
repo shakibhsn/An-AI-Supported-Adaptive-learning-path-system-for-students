@@ -6,5 +6,6 @@ const router = Router();
 
 router.post('/personalize', requireAuth, aiController.personalize);
 router.post('/chat', requireAuth, aiController.chatEndpoint);
+router.post('/analyze-progress', requireAuth, aiController.analyzeProgressEndpoint);
 
 export default router;
