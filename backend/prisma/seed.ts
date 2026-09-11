@@ -20,6 +20,7 @@ import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import { CANONICAL_TOPICS, PREREQUISITES, CourseCode } from '../src/data/topicMapping';
 import { SEED_QUESTIONS } from '../src/data/seedQuestions';
+import { EXPANDED_QUESTIONS } from '../src/data/expandedQuestions';
 import { LEARNING_MATERIALS } from '../src/data/learningMaterials';
 
 const prisma = new PrismaClient();
@@ -129,6 +130,35 @@ async function main() {
     const practiceCount = questions.filter((q) => !q.isFollowUp).length;
     const followUpCount = questions.filter((q) => q.isFollowUp).length;
     console.log(`Seeded ${practiceCount} practice + ${followUpCount} follow-up questions for ${c.code}.`);
+  }
+
+  // Expanded difficulty-tiered practice questions (EASY/HARD; see
+  // src/data/expandedQuestions.ts for provenance). Feeds adaptive selection.
+  for (const c of COURSES) {
+    const expanded = EXPANDED_QUESTIONS[c.code];
+    let seeded = 0;
+    for (const q of expanded) {
+      const topic = topicByName[`${c.code}:${q.topic}`];
+      if (!topic) {
+        console.warn(`WARNING: no topic found for "${q.topic}" in ${c.code} - skipping expanded question: ${q.question.slice(0, 60)}`);
+        continue;
+      }
+      await prisma.practiceQuestion.create({
+        data: {
+          courseId: courseByCode[c.code].id,
+          topicId: topic.id,
+          question: q.question,
+          options: q.options as unknown as object,
+          correctAnswer: q.correctAnswer,
+          explanation: q.explanation,
+          isFollowUp: false,
+          difficulty: q.difficulty,
+          questionType: q.questionType,
+        },
+      });
+      seeded++;
+    }
+    console.log(`Seeded ${seeded} expanded (EASY/HARD) practice questions for ${c.code}.`);
   }
 
   // Curated learning materials (Section 15-18). Extensible: edit

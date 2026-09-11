@@ -26,6 +26,8 @@ model User {
   followUpAttempts   FollowUpAttempt[]
   aiInteractions     AIInteraction[]
   materialCompletions MaterialCompletion[]
+  practiceQuestionAttempts PracticeQuestionAttempt[]
+  learningActivities LearningActivity[]
 
   @@index([email])
 }
@@ -46,6 +48,7 @@ model Course {
   followUpAttempts   FollowUpAttempt[]
   aiInteractions     AIInteraction[]
   learningMaterials  LearningMaterial[]
+  learningActivities LearningActivity[]
 }
 
 model Topic {
@@ -68,6 +71,8 @@ model Topic {
   followUpAttempts    FollowUpAttempt[]
   aiInteractions      AIInteraction[]
   learningMaterials   LearningMaterial[]
+  practiceQuestionAttempts PracticeQuestionAttempt[]
+  learningActivities  LearningActivity[]
 
   @@unique([courseId, name])
   @@index([courseId])
@@ -83,6 +88,7 @@ model DiagnosticQuestion {
   optionC       String
   optionD       String
   correctAnswer String // "A" | "B" | "C" | "D"
+  difficulty    String @default("MEDIUM") // "EASY" | "MEDIUM" | "HARD"
 
   course  Course @relation(fields: [courseId], references: [id])
   topic   Topic  @relation(fields: [topicId], references: [id])
@@ -182,17 +188,21 @@ model PracticeQuestion {
   // The spec's model list has FollowUpAttempt (a result) but no separate
   // follow-up QUESTION table. Follow-up questions are structurally
   // identical to practice questions (question/options/answer/explanation),
-  // so this flag distinguishes the 15 real follow-up questions (used only
-  // by GET /api/courses/:id/follow-up) from the 30 regular practice
+  // so this flag distinguishes the real follow-up questions (used only
+  // by GET /api/courses/:id/follow-up) from the regular practice
   // questions, without inventing an unlisted table. Documented here and
   // in the README as an intentional, justified schema adaptation.
   isFollowUp    Boolean @default(false)
+  difficulty    String  @default("MEDIUM") // "EASY" | "MEDIUM" | "HARD" - drives adaptive selection
+  questionType  String  @default("MCQ")    // "MCQ" | "TRUE_FALSE" | "CONCEPT" | "SCENARIO" | "CODE"
 
-  course Course @relation(fields: [courseId], references: [id])
-  topic  Topic  @relation(fields: [topicId], references: [id])
+  course  Course                    @relation(fields: [courseId], references: [id])
+  topic   Topic                     @relation(fields: [topicId], references: [id])
+  attempts PracticeQuestionAttempt[]
 
   @@index([courseId])
   @@index([topicId])
+  @@index([topicId, isFollowUp, difficulty])
 }
 
 model PracticeAttempt {
@@ -269,9 +279,59 @@ model LearningMaterial {
   course      Course               @relation(fields: [courseId], references: [id])
   topic       Topic                @relation(fields: [topicId], references: [id])
   completions MaterialCompletion[]
+  activities  LearningActivity[]
 
   @@index([courseId])
   @@index([topicId, isActive])
+}
+
+// One row per individual practice-question response. PracticeAttempt (above)
+// stays as the aggregate summary a submission produces; this is the
+// per-question detail needed for adaptive difficulty selection (Section 9)
+// and to avoid re-serving a question the student already answered correctly
+// recently (Section 9/19).
+model PracticeQuestionAttempt {
+  id          String   @id @default(cuid())
+  userId      String
+  questionId  String
+  topicId     String
+  difficulty  String   // snapshot of the question's difficulty at answer time
+  isCorrect   Boolean
+  attemptedAt DateTime @default(now())
+
+  user     User             @relation(fields: [userId], references: [id])
+  question PracticeQuestion @relation(fields: [questionId], references: [id])
+  topic    Topic            @relation(fields: [topicId], references: [id])
+
+  @@index([userId, topicId, difficulty])
+  @@index([questionId])
+}
+
+// Real, event-based learning-activity tracking (Section 2/3/4). Each row is
+// one continuous span of active engagement - the frontend starts a span when
+// an activity begins, pauses it on tab-hidden, resumes on tab-visible, and
+// flushes durationSeconds when the activity ends or the page unloads. No
+// countdown timer, no guessed durations - see LearningActivity docs.
+model LearningActivity {
+  id              String    @id @default(cuid())
+  userId          String
+  courseId        String
+  topicId         String?
+  materialId      String?
+  activityType    String    // "MATERIAL_VIEW" | "READING" | "PRACTICE" | "QUIZ" | "AI_INTERACTION"
+  source          String    @default("in_app") // "in_app" | "external" - Section 5: never conflate the two
+  startedAt       DateTime  @default(now())
+  endedAt         DateTime?
+  durationSeconds Int       @default(0)
+  createdAt       DateTime  @default(now())
+
+  user     User              @relation(fields: [userId], references: [id])
+  course   Course            @relation(fields: [courseId], references: [id])
+  topic    Topic?            @relation(fields: [topicId], references: [id])
+  material LearningMaterial? @relation(fields: [materialId], references: [id])
+
+  @@index([userId, courseId, createdAt])
+  @@index([userId, topicId])
 }
 
 // A student marking a material as completed. Feeds the progress dashboard
