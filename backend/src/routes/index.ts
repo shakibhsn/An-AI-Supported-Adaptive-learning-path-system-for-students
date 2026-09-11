@@ -8,6 +8,8 @@ import learningPathRoutes from './learningPath.routes';
 import materialsRoutes from './materials.routes';
 import aiRoutes from './ai.routes';
 import progressRoutes from './progress.routes';
+import activityRoutes from './activity.routes';
+import insightsRoutes from './insights.routes';
 
 const router = Router();
 
@@ -20,5 +22,7 @@ router.use('/', learningPathRoutes); // exposes /courses/:id/gaps, /learning-pat
 router.use('/', materialsRoutes); // exposes /courses/:id/materials, /topics/:id/materials, /materials/:id/complete
 router.use('/ai', aiRoutes);
 router.use('/progress', progressRoutes);
+router.use('/', activityRoutes); // exposes /activity/start, /activity/:id/heartbeat, /activity/:id/end, /activity/instant, /activity/summary
+router.use('/', insightsRoutes); // exposes /courses/:id/mastery-map, /courses/:id/learning-profile, /courses/:id/path-history
 
 export default router;
