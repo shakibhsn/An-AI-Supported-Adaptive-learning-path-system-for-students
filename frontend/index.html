@@ -85,7 +85,101 @@
         transform: translateY(0);
       }
     }
+
+    html.dark-mode body {
+      background-color: #0f172a;
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(37, 99, 235, 0.18), transparent 70%),
+        radial-gradient(ellipse 60% 40% at 95% 10%, rgba(14, 165, 233, 0.12), transparent 70%),
+        radial-gradient(#334155 1.2px, transparent 1.2px);
+      color: #e2e8f0;
+    }
+
+    html.dark-mode .bg-white,
+    html.dark-mode .bg-white\/95,
+    html.dark-mode .bg-white\/90 {
+      background-color: #1e293b !important;
+    }
+
+    html.dark-mode .bg-slate-50,
+    html.dark-mode .bg-slate-100,
+    html.dark-mode .bg-slate-100\/90 {
+      background-color: #273449 !important;
+    }
+
+    html.dark-mode .bg-slate-200 {
+      background-color: #334155 !important;
+    }
+
+    html.dark-mode .text-slate-900,
+    html.dark-mode .text-slate-800,
+    html.dark-mode .text-slate-700 {
+      color: #e2e8f0 !important;
+    }
+
+    html.dark-mode .text-slate-600,
+    html.dark-mode .text-slate-500 {
+      color: #94a3b8 !important;
+    }
+
+    html.dark-mode .text-slate-400 {
+      color: #a8b5c7 !important;
+    }
+
+    html.dark-mode .border-slate-100,
+    html.dark-mode .border-slate-200,
+    html.dark-mode .border-slate-200\/80,
+    html.dark-mode .border-slate-200\/90 {
+      border-color: #334155 !important;
+    }
+
+    html.dark-mode .hub-card {
+      background: #1e293b;
+      border-color: #334155;
+      box-shadow: 0 8px 24px -8px rgba(2, 6, 23, 0.45);
+    }
+
+    html.dark-mode input,
+    html.dark-mode textarea,
+    html.dark-mode select {
+      color: #e2e8f0 !important;
+      background-color: #273449 !important;
+      border-color: #475569 !important;
+    }
+
+    html.dark-mode input::placeholder,
+    html.dark-mode textarea::placeholder {
+      color: #94a3b8;
+    }
+
+    html.dark-mode .theme-toggle .theme-icon-sun,
+    html:not(.dark-mode) .theme-toggle .theme-icon-moon {
+      display: none;
+    }
+
+    html.dark-mode .theme-toggle .theme-icon-moon,
+    html:not(.dark-mode) .theme-toggle .theme-icon-sun {
+      display: block;
+    }
+
+    html.dark-mode .hover\:bg-white:hover {
+      background-color: #334155 !important;
+    }
+
+    html.dark-mode .hover\:bg-slate-100:hover,
+    html.dark-mode .hover\:bg-slate-200:hover {
+      background-color: #3b4a60 !important;
+    }
   </style>
+  <script>
+    (() => {
+      const savedTheme = localStorage.getItem('adaptive_learning_path_theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.documentElement.classList.add('dark-mode');
+      }
+    })();
+  </script>
 </head>
 
 <body class="min-h-screen flex flex-col antialiased">
@@ -241,6 +335,22 @@
               </path>
             </svg>
             Ask AI
+          </button>
+
+          <button id="themeToggle" type="button" onclick="toggleTheme()" aria-label="Switch to dark mode"
+            title="Switch to dark mode"
+            class="theme-toggle flex items-center justify-center w-9 h-9 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-600 hover:text-blue-600 transition shadow-2xs">
+            <svg class="theme-icon-sun w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 3v1m0 16v1m9-9h-1M4 12H3m16.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+              </path>
+            </svg>
+            <svg class="theme-icon-moon w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+            </svg>
           </button>
 
           <!-- GLOBAL BACK BUTTON (history-aware; hidden on login + dashboard) -->
@@ -439,35 +549,38 @@
           </div>
         </div>
 
-    <!-- Dashboard Summary Stats Row -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <div class="hub-card rounded-xl p-4 flex items-center gap-4">
-        <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg">🎯
-        </div>
-        <div>
-          <div class="text-xs font-medium text-slate-500">Diagnostic Testing</div>
-          <div class="text-sm font-bold text-slate-800">10 Questions Per Course</div>
+        <!-- Dashboard Summary Stats Row -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="hub-card rounded-xl p-4 flex items-center gap-4">
+            <div
+              class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg">
+              🎯
+            </div>
+            <div>
+              <div class="text-xs font-medium text-slate-500">Diagnostic Testing</div>
+              <div class="text-sm font-bold text-slate-800">10 Questions Per Course</div>
+            </div>
+          </div>
+          <div class="hub-card rounded-xl p-4 flex items-center gap-4">
+            <div class="w-10 h-10 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center font-bold text-lg">
+              📝
+            </div>
+            <div>
+              <div class="text-xs font-medium text-slate-500">Targeted Practice</div>
+              <div class="text-sm font-bold text-slate-800">10 Practice Qs with Feedback</div>
+            </div>
+          </div>
+          <div class="hub-card rounded-xl p-4 flex items-center gap-4">
+            <div
+              class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-lg">
+              📈</div>
+            <div>
+              <div class="text-xs font-medium text-slate-500">Separated Progress</div>
+              <div class="text-sm font-bold text-slate-800">Independent DSA, OOP & SPL Hubs</div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="hub-card rounded-xl p-4 flex items-center gap-4">
-        <div class="w-10 h-10 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center font-bold text-lg">📝
-        </div>
-        <div>
-          <div class="text-xs font-medium text-slate-500">Targeted Practice</div>
-          <div class="text-sm font-bold text-slate-800">10 Practice Qs with Feedback</div>
-        </div>
-      </div>
-      <div class="hub-card rounded-xl p-4 flex items-center gap-4">
-        <div
-          class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-lg">
-          📈</div>
-        <div>
-          <div class="text-xs font-medium text-slate-500">Separated Progress</div>
-          <div class="text-sm font-bold text-slate-800">Independent DSA, OOP & SPL Hubs</div>
-        </div>
-      </div>
-    </div>
-    </div>
     </div>
 
     <!-- ================= SCREEN 03: COURSE OVERVIEW (DSA, OOP, SPL SEPARATELY) ================= -->
@@ -1779,12 +1892,19 @@
 
             <!-- EXPLAIN AT MY LEVEL (Section 13) -->
             <div class="pt-3 border-t border-slate-100">
-              <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Explain "<span id="explainTopicLabel">Linked Lists</span>" at my level:</div>
+              <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Explain "<span
+                  id="explainTopicLabel">Linked Lists</span>" at my level:</div>
               <div class="grid grid-cols-2 gap-1.5">
-                <button onclick="explainAtMyLevel('simple')" class="text-[10px] font-bold bg-sky-50 hover:bg-sky-100 text-sky-800 px-2 py-1.5 rounded-lg border border-sky-200 transition">Simply</button>
-                <button onclick="explainAtMyLevel('detailed')" class="text-[10px] font-bold bg-sky-50 hover:bg-sky-100 text-sky-800 px-2 py-1.5 rounded-lg border border-sky-200 transition">In Detail</button>
-                <button onclick="explainAtMyLevel('example')" class="text-[10px] font-bold bg-sky-50 hover:bg-sky-100 text-sky-800 px-2 py-1.5 rounded-lg border border-sky-200 transition">With an Example</button>
-                <button onclick="explainAtMyLevel('step_by_step')" class="text-[10px] font-bold bg-sky-50 hover:bg-sky-100 text-sky-800 px-2 py-1.5 rounded-lg border border-sky-200 transition">Step-by-Step</button>
+                <button onclick="explainAtMyLevel('simple')"
+                  class="text-[10px] font-bold bg-sky-50 hover:bg-sky-100 text-sky-800 px-2 py-1.5 rounded-lg border border-sky-200 transition">Simply</button>
+                <button onclick="explainAtMyLevel('detailed')"
+                  class="text-[10px] font-bold bg-sky-50 hover:bg-sky-100 text-sky-800 px-2 py-1.5 rounded-lg border border-sky-200 transition">In
+                  Detail</button>
+                <button onclick="explainAtMyLevel('example')"
+                  class="text-[10px] font-bold bg-sky-50 hover:bg-sky-100 text-sky-800 px-2 py-1.5 rounded-lg border border-sky-200 transition">With
+                  an Example</button>
+                <button onclick="explainAtMyLevel('step_by_step')"
+                  class="text-[10px] font-bold bg-sky-50 hover:bg-sky-100 text-sky-800 px-2 py-1.5 rounded-lg border border-sky-200 transition">Step-by-Step</button>
               </div>
             </div>
 
@@ -1832,8 +1952,10 @@
 
         <!-- ADAPTIVE DIFFICULTY BANNER (Section 9-11) - only shown when this
              session was served by the adaptive per-topic endpoint. -->
-        <div id="adaptiveBanner" hidden class="hub-card rounded-xl p-3 flex items-center gap-2 border-l-4 border-purple-400 bg-purple-50/40">
-          <span id="adaptiveDifficultyBadge" class="text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full bg-purple-600 text-white shrink-0">MEDIUM</span>
+        <div id="adaptiveBanner" hidden
+          class="hub-card rounded-xl p-3 flex items-center gap-2 border-l-4 border-purple-400 bg-purple-50/40">
+          <span id="adaptiveDifficultyBadge"
+            class="text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full bg-purple-600 text-white shrink-0">MEDIUM</span>
           <span id="adaptiveReasonText" class="text-xs text-purple-900"></span>
         </div>
 
@@ -2097,7 +2219,8 @@
         <!-- LEARNING PATH COMPARISON (Section 16) -->
         <div class="hub-card rounded-2xl p-6">
           <h3 class="text-base font-bold text-slate-900 mb-1">Learning Path History</h3>
-          <p id="pathHistorySubtitle" class="text-xs text-slate-500 mb-4">How your adaptive path has changed as your mastery updated.</p>
+          <p id="pathHistorySubtitle" class="text-xs text-slate-500 mb-4">How your adaptive path has changed as your
+            mastery updated.</p>
           <div id="pathHistoryBody" class="space-y-1.5">Loading…</div>
         </div>
 
@@ -2117,7 +2240,8 @@
               Analyze My Progress
             </button>
           </div>
-          <p class="text-xs text-slate-500 mb-3">Sends only your real stored mastery/activity/practice numbers to the AI - it never invents a statistic.</p>
+          <p class="text-xs text-slate-500 mb-3">Sends only your real stored mastery/activity/practice numbers to the AI
+            - it never invents a statistic.</p>
           <div id="analyzeProgressResult"></div>
         </div>
 
@@ -2131,6 +2255,23 @@
     // ================= API CONFIGURATION =================
     // Change this if the backend runs somewhere other than localhost:4000.
     const API_BASE = 'http://localhost:4000/api';
+
+    function updateThemeToggle() {
+      const isDark = document.documentElement.classList.contains('dark-mode');
+      const toggle = document.getElementById('themeToggle');
+      if (!toggle) return;
+      const nextMode = isDark ? 'light' : 'dark';
+      toggle.setAttribute('aria-label', `Switch to ${nextMode} mode`);
+      toggle.setAttribute('title', `Switch to ${nextMode} mode`);
+    }
+
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark-mode');
+      localStorage.setItem('adaptive_learning_path_theme', isDark ? 'dark' : 'light');
+      updateThemeToggle();
+    }
+
+    updateThemeToggle();
 
     // ---- Auth token storage ----
     function getAuthToken() { return localStorage.getItem('adaptive_learning_path_token'); }
@@ -2880,12 +3021,12 @@
     const recommendedMaterialTitles = { dsa: new Set(), oop: new Set(), spl: new Set() };
 
     const MATERIAL_TYPE_META = {
-      VIDEO:    { label: 'Video',    cls: 'bg-rose-50 text-rose-700 border-rose-200' },
+      VIDEO: { label: 'Video', cls: 'bg-rose-50 text-rose-700 border-rose-200' },
       PLAYLIST: { label: 'Playlist', cls: 'bg-violet-50 text-violet-700 border-violet-200' },
-      ARTICLE:  { label: 'Article',  cls: 'bg-blue-50 text-blue-700 border-blue-200' },
+      ARTICLE: { label: 'Article', cls: 'bg-blue-50 text-blue-700 border-blue-200' },
       PRACTICE: { label: 'Practice', cls: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
-      DOCUMENT: { label: 'Docs',     cls: 'bg-amber-50 text-amber-700 border-amber-200' },
-      OTHER:    { label: 'Resource', cls: 'bg-slate-100 text-slate-600 border-slate-200' },
+      DOCUMENT: { label: 'Docs', cls: 'bg-amber-50 text-amber-700 border-amber-200' },
+      OTHER: { label: 'Resource', cls: 'bg-slate-100 text-slate-600 border-slate-200' },
     };
 
     function switchContentTab(course) {
@@ -3088,10 +3229,10 @@
         const isCurrent = i === currentDiagIndex;
         btn.textContent = i + 1;
         btn.className = `w-7 h-7 rounded-lg text-xs font-bold transition ${isCurrent
-            ? 'bg-blue-600 text-white shadow-sm'
-            : isAnswered
-              ? 'bg-sky-100 text-blue-700 border border-sky-300'
-              : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+          ? 'bg-blue-600 text-white shadow-sm'
+          : isAnswered
+            ? 'bg-sky-100 text-blue-700 border border-sky-300'
+            : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
           }`;
         btn.onclick = () => { currentDiagIndex = i; renderDiagQuestion(); };
         chips.appendChild(btn);
@@ -3109,8 +3250,8 @@
         const isSelected = diagAnswers[currentDiagIndex] === opt.letter;
         const div = document.createElement('div');
         div.className = `flex items-center p-4 border rounded-xl cursor-pointer transition ${isSelected
-            ? 'border-2 border-blue-600 bg-blue-50/60 shadow-sm'
-            : 'border-slate-200 hover:bg-sky-50/40 bg-white'
+          ? 'border-2 border-blue-600 bg-blue-50/60 shadow-sm'
+          : 'border-slate-200 hover:bg-sky-50/40 bg-white'
           }`;
         div.onclick = () => {
           diagAnswers[currentDiagIndex] = opt.letter;
@@ -3298,10 +3439,10 @@
         const isCurrent = i === currentPracticeIndex;
         btn.textContent = i + 1;
         btn.className = `w-7 h-7 rounded-lg text-xs font-bold transition ${isCurrent
-            ? 'bg-blue-600 text-white shadow-sm'
-            : isDone
-              ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
-              : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+          ? 'bg-blue-600 text-white shadow-sm'
+          : isDone
+            ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+            : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
           }`;
         btn.onclick = () => { currentPracticeIndex = i; renderPracticeQuestion(); };
         chips.appendChild(btn);
@@ -3453,10 +3594,10 @@
         const isCurrent = i === currentFollowupIndex;
         btn.textContent = i + 1;
         btn.className = `w-7 h-7 rounded-lg text-xs font-bold transition ${isCurrent
-            ? 'bg-blue-600 text-white shadow-sm'
-            : isDone
-              ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
-              : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+          ? 'bg-blue-600 text-white shadow-sm'
+          : isDone
+            ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+            : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
           }`;
         btn.onclick = () => { currentFollowupIndex = i; renderFollowupQuestion(); };
         chips.appendChild(btn);
@@ -3468,8 +3609,8 @@
         const isSelected = courseAnswers[currentFollowupIndex] === opt.letter;
         const div = document.createElement('div');
         div.className = `flex items-center p-4 border rounded-xl cursor-pointer transition ${isSelected
-            ? 'border-2 border-blue-600 bg-blue-50/60 shadow-sm'
-            : 'border-slate-200 hover:bg-sky-50/40 bg-white'
+          ? 'border-2 border-blue-600 bg-blue-50/60 shadow-sm'
+          : 'border-slate-200 hover:bg-sky-50/40 bg-white'
           }`;
         div.onclick = () => {
           if (!followupAnswers[currentFollowupCourse]) followupAnswers[currentFollowupCourse] = {};
