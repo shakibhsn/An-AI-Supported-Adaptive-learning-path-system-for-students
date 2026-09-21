@@ -2333,7 +2333,11 @@
     // duration - an external resource opened, an AI chat message sent.
     const ActivityTracker = (() => {
       const HEARTBEAT_MS = 20000;
-      let current = null; // { id, accumulated, resumedAt }
+      // { id, accumulated, resumedAt, tabHidden, playbackPaused }. The clock
+      // runs (resumedAt !== null) only when BOTH tabHidden and playbackPaused
+      // are false - tab visibility and video-playback state are independent
+      // pause reasons that combine, neither one can force the other to resume.
+      let current = null;
 
       const nowSec = () => Date.now() / 1000;
 
@@ -2342,6 +2346,33 @@
           current.accumulated += nowSec() - current.resumedAt;
           current.resumedAt = nowSec();
         }
+      }
+
+      function _applyRunning(shouldRun) {
+        if (!current) return;
+        const isRunning = current.resumedAt !== null;
+        if (shouldRun && !isRunning) current.resumedAt = nowSec();
+        else if (!shouldRun && isRunning) { tick(); current.resumedAt = null; }
+      }
+
+      function _recompute() {
+        if (!current) return;
+        _applyRunning(!current.tabHidden && !current.playbackPaused);
+      }
+
+      // Lets an embedded player (or any other playback signal) pause/resume
+      // the SAME span that tab-visibility already controls, without
+      // disturbing the tab-visibility pause reason. Safe no-op if no
+      // activity span is currently running.
+      function pausePlayback() { if (current) { current.playbackPaused = true; _recompute(); } }
+      function resumePlayback() { if (current) { current.playbackPaused = false; _recompute(); } }
+
+      // Read-only snapshot for UI display - never mutates tracking state
+      // beyond syncing the accumulated total up to "now".
+      function getState() {
+        if (!current) return null;
+        tick();
+        return { id: current.id, accumulatedSeconds: current.accumulated, running: current.resumedAt !== null };
       }
 
       async function heartbeat() {
@@ -2378,7 +2409,8 @@
             method: 'POST',
             body: { courseId: ctx.courseId, topicId: ctx.topicId || undefined, materialId: ctx.materialId || undefined, activityType, source: 'in_app' },
           });
-          current = { id: row.id, accumulated: 0, resumedAt: document.hidden ? null : nowSec(), timer: setInterval(heartbeat, HEARTBEAT_MS) };
+          current = { id: row.id, accumulated: 0, resumedAt: null, tabHidden: document.hidden, playbackPaused: false, timer: setInterval(heartbeat, HEARTBEAT_MS) };
+          _recompute();
         } catch (e) {
           console.error('ActivityTracker.start failed:', e.message);
         }
@@ -2405,16 +2437,222 @@
 
       document.addEventListener('visibilitychange', () => {
         if (!current) return;
-        if (document.hidden) {
-          tick();
-          current.resumedAt = null;
-        } else {
-          current.resumedAt = nowSec();
-        }
+        current.tabHidden = document.hidden;
+        _recompute();
       });
       window.addEventListener('pagehide', flushOnUnload);
 
-      return { start, end, logInstant };
+      return { start, end, logInstant, pausePlayback, resumePlayback, getState };
+    })();
+
+    // ================= TOAST NOTIFICATIONS =================
+    // Small, non-blocking, self-dismissing - no markup dependency (built
+    // entirely in JS so it can't collide with any existing screen's HTML).
+    function showToast(message) {
+      const el = document.createElement('div');
+      el.className = 'fixed bottom-5 right-5 z-[100] max-w-sm bg-slate-900 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-lg flex items-center gap-2 transition-opacity duration-300';
+      el.style.opacity = '0';
+      el.innerHTML = `<span class="text-emerald-400 shrink-0">✓</span><span>${escapeHtml(message)}</span>`;
+      document.body.appendChild(el);
+      requestAnimationFrame(() => { el.style.opacity = '1'; });
+      setTimeout(() => {
+        el.style.opacity = '0';
+        setTimeout(() => el.remove(), 350);
+      }, 4500);
+    }
+
+    // ================= YOUTUBE PLAYLIST/VIDEO EMBEDDING =================
+    // Embeds the EXISTING curated playlist/video URLs already stored in
+    // LearningMaterial (Section 2/3 of the embed spec) - never invents or
+    // searches for new ones. Only one embedded player is ever active; opening
+    // a new one closes the previous. If the URL can't be parsed, or the
+    // YouTube IFrame API fails to load, or the player itself errors out, the
+    // ORIGINAL external link (already rendered above every material) is the
+    // permanent fallback - this module only ever adds an alternative, it
+    // never removes or disables the existing "open on YouTube" behavior.
+    function parseYouTubeEmbedTarget(url) {
+      try {
+        const u = new URL(url);
+        const host = u.hostname.replace(/^www\./, '');
+        if (host !== 'youtube.com' && host !== 'youtu.be' && host !== 'm.youtube.com') return null;
+        const list = u.searchParams.get('list');
+        if (list) return { type: 'playlist', id: list };
+        if (host === 'youtu.be') {
+          const id = u.pathname.slice(1);
+          return id ? { type: 'video', id } : null;
+        }
+        const v = u.searchParams.get('v');
+        return v ? { type: 'video', id: v } : null;
+      } catch (_) {
+        return null;
+      }
+    }
+
+    const YouTubeEmbedManager = (() => {
+      let apiLoadPromise = null;
+      let player = null;
+      let containerEl = null;
+      let tickTimer = null;
+      let sessionTitle = null;
+      let wasHidden = document.hidden;
+
+      function loadApi() {
+        if (window.YT && window.YT.Player) return Promise.resolve();
+        if (apiLoadPromise) return apiLoadPromise;
+        apiLoadPromise = new Promise((resolve, reject) => {
+          const prevCb = window.onYouTubeIframeAPIReady;
+          window.onYouTubeIframeAPIReady = () => { if (prevCb) prevCb(); resolve(); };
+          const s = document.createElement('script');
+          s.src = 'https://www.youtube.com/iframe_api';
+          s.onerror = () => reject(new Error('Failed to load the YouTube player API'));
+          document.head.appendChild(s);
+          setTimeout(() => reject(new Error('Timed out loading the YouTube player API')), 10000);
+        });
+        return apiLoadPromise;
+      }
+
+      function fmtClock(totalSeconds) {
+        const s = Math.max(0, Math.round(totalSeconds));
+        const mm = String(Math.floor(s / 60)).padStart(2, '0');
+        const ss = String(s % 60).padStart(2, '0');
+        return `${mm}:${ss}`;
+      }
+
+      function updateDisplay() {
+        if (!containerEl) return;
+        const state = ActivityTracker.getState();
+        const timeEl = containerEl.querySelector('.yt-embed-time');
+        const statusEl = containerEl.querySelector('.yt-embed-status');
+        if (timeEl) timeEl.textContent = fmtClock(state ? state.accumulatedSeconds : 0);
+        if (statusEl) {
+          const running = !!(state && state.running);
+          statusEl.textContent = running ? 'Learning' : 'Paused';
+          statusEl.className = 'yt-embed-status text-xs font-bold ' + (running ? 'text-emerald-600' : 'text-amber-600');
+        }
+      }
+
+      function renderFallback(container, url, message) {
+        container.innerHTML = `
+          <div class="mt-2 p-4 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-800">
+            <p class="font-semibold mb-2">${escapeHtml(message)}</p>
+            <a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 font-bold text-blue-700 hover:underline">Open Playlist on YouTube →</a>
+          </div>`;
+      }
+
+      async function open(container, material, ctx) {
+        close();
+
+        const target = parseYouTubeEmbedTarget(material.url);
+        if (!target) return; // no embed button should have been shown at all in this case
+
+        container.innerHTML = `
+          <div class="mt-2 space-y-2">
+            <div class="relative w-full rounded-xl overflow-hidden bg-black" style="padding-top:56.25%">
+              <div id="ytPlayerTarget-${material.id}" class="absolute inset-0"></div>
+            </div>
+            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+              <div class="text-xs">
+                <span class="text-slate-500">⏱ Active Learning Time:</span>
+                <span class="yt-embed-time font-mono font-bold text-slate-800 ml-1">00:00</span>
+                <span class="yt-embed-status text-xs font-bold text-amber-600 ml-2">Paused</span>
+              </div>
+              <button type="button" class="yt-embed-close text-xs font-bold text-slate-500 hover:text-red-600">✕ Close</button>
+            </div>
+          </div>`;
+        container.querySelector('.yt-embed-close').onclick = () => close();
+
+        try {
+          await loadApi();
+        } catch (e) {
+          renderFallback(container, material.url, "Couldn't load the YouTube player right now.");
+          return;
+        }
+        // A second embed may have been opened (or this one closed) while
+        // loadApi() was in flight - bail out rather than racing it.
+        if (container.querySelector(`#ytPlayerTarget-${material.id}`) === null) return;
+
+        containerEl = container;
+        sessionTitle = material.title;
+
+        const playerVars = target.type === 'playlist'
+          ? { listType: 'playlist', list: target.id, rel: 0, modestbranding: 1 }
+          : { rel: 0, modestbranding: 1 };
+        // YT.Player validates the presence of the videoId key itself, not
+        // just its value - a playlist embed must omit the key entirely
+        // rather than pass videoId: undefined, or the widget throws
+        // "Invalid video id" and never renders. Build the options object
+        // conditionally instead.
+        const playerOptions = {
+          playerVars,
+          events: {
+            onReady: () => {
+              // Starts the tracked span, but immediately marks it paused -
+              // the clock only actually runs once YouTube reports PLAYING,
+              // never just because the embed is open (Section 6/9's "not a
+              // countdown, not a fake duration" requirement).
+              ActivityTracker.start('MATERIAL_VIEW', ctx).then(() => ActivityTracker.pausePlayback());
+              tickTimer = setInterval(updateDisplay, 1000);
+              updateDisplay();
+            },
+            onStateChange: (e) => {
+              if (e.data === YT.PlayerState.PLAYING) ActivityTracker.resumePlayback();
+              else if (e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED) ActivityTracker.pausePlayback();
+              updateDisplay();
+            },
+            onError: () => {
+              renderFallback(container, material.url, 'This video/playlist is not available to embed here.');
+              closeInternal({ clearContainer: false });
+            },
+          },
+        };
+        if (target.type === 'video') playerOptions.videoId = target.id;
+
+        try {
+          player = new YT.Player(`ytPlayerTarget-${material.id}`, playerOptions);
+        } catch (e) {
+          console.error('YouTube embed failed to initialize:', e);
+          renderFallback(container, material.url, "Couldn't start the embedded player.");
+        }
+      }
+
+      function closeInternal({ clearContainer, skipRestart }) {
+        if (tickTimer) { clearInterval(tickTimer); tickTimer = null; }
+        if (player) { try { player.destroy(); } catch (_) { /* already gone */ } player = null; }
+        const wasOnMaterialsScreen = document.querySelector('.screen-view.active')?.id === 's09';
+        const hadContainer = !!containerEl;
+        if (containerEl && clearContainer) containerEl.innerHTML = '';
+        containerEl = null;
+        sessionTitle = null;
+        ActivityTracker.end();
+        // Resume the general "browsing materials" activity span that was
+        // running before this specific video was opened (see renderMaterials) -
+        // but not when we're closing BECAUSE the student is navigating away
+        // (closeForNavigation), since something else is about to take over.
+        if (hadContainer && wasOnMaterialsScreen && clearContainer && !skipRestart) {
+          ActivityTracker.start('MATERIAL_VIEW', { courseId: courseIdCache[currentChatCourse] });
+        }
+      }
+
+      function close() { closeInternal({ clearContainer: true, skipRestart: false }); }
+      // Called by screen navigation (_activateScreen) - always safe/cheap to
+      // call even when nothing is open. Destroys any live player so a video
+      // can never keep playing invisibly in the background after the
+      // student leaves the Materials screen.
+      function closeForNavigation() { closeInternal({ clearContainer: true, skipRestart: true }); }
+
+      // Independent of ActivityTracker's own visibility handling - this one
+      // only decides whether to show the "welcome back" toast, and only
+      // when an embedded learning session is actually open.
+      document.addEventListener('visibilitychange', () => {
+        if (containerEl && !document.hidden && wasHidden) {
+          const state = ActivityTracker.getState();
+          const mins = state ? Math.floor(state.accumulatedSeconds / 60) : 0;
+          showToast(`Welcome back! Your ${sessionTitle || 'learning'} session has resumed — ${mins} minute${mins === 1 ? '' : 's'} tracked.`);
+        }
+        wasHidden = document.hidden;
+      });
+
+      return { open, close, closeForNavigation };
     })();
 
     // ================= REAL AUTHENTICATION =================
@@ -2717,7 +2955,10 @@
 
     function _activateScreen(screenId) {
       // Leaving whatever screen was active - close out its activity span
-      // (real elapsed time, paused for any period the tab was hidden).
+      // (real elapsed time, paused for any period the tab was hidden), and
+      // destroy any open embedded player so a video can never keep playing
+      // invisibly in the background after navigating away.
+      YouTubeEmbedManager.closeForNavigation();
       ActivityTracker.end();
 
       document.querySelectorAll('.screen-view').forEach(el => el.classList.remove('active'));
@@ -3056,6 +3297,10 @@
       })();
     }
 
+    // Representative-topic (Linked Lists) test verified clean - embedding is
+    // now enabled for every VIDEO/PLAYLIST material across all three courses.
+    let EMBED_TEST_TOPICS = null;
+
     async function renderMaterials(course) {
       const panel = document.getElementById('materialsPanel');
       if (!panel) return;
@@ -3090,20 +3335,26 @@
           const items = t.materials.map((m) => {
             const meta = MATERIAL_TYPE_META[m.type] || MATERIAL_TYPE_META.OTHER;
             const isRec = rec.has(m.title);
+            const topicEnabled = !EMBED_TEST_TOPICS || EMBED_TEST_TOPICS.has(t.topicName);
+            const embeddable = topicEnabled && (m.type === 'VIDEO' || m.type === 'PLAYLIST') && parseYouTubeEmbedTarget(m.url);
             return `
-              <div class="flex items-start gap-3 p-3 rounded-xl border ${isRec ? 'border-blue-300 bg-blue-50/40' : 'border-slate-100 bg-white'}">
-                <label class="pt-0.5 shrink-0">
-                  <input type="checkbox" class="mat-check w-4 h-4 accent-blue-600 cursor-pointer" data-id="${m.id}" ${m.completed ? 'checked' : ''}>
-                </label>
-                <div class="flex-1 min-w-0">
-                  <div class="flex items-center gap-2 flex-wrap">
-                    <a href="${escapeHtml(m.url)}" target="_blank" rel="noopener noreferrer" class="mat-link text-sm font-bold text-slate-900 hover:text-blue-700 hover:underline" data-mat-id="${m.id}" data-topic-id="${m.topicId}">${escapeHtml(m.title)}</a>
-                    <span class="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded border ${meta.cls}">${meta.label}</span>
-                    ${isRec ? '<span class="text-[10px] font-bold text-blue-700 bg-blue-100 px-1.5 py-0.5 rounded">AI pick</span>' : ''}
+              <div class="p-3 rounded-xl border ${isRec ? 'border-blue-300 bg-blue-50/40' : 'border-slate-100 bg-white'}">
+                <div class="flex items-start gap-3">
+                  <label class="pt-0.5 shrink-0">
+                    <input type="checkbox" class="mat-check w-4 h-4 accent-blue-600 cursor-pointer" data-id="${m.id}" ${m.completed ? 'checked' : ''}>
+                  </label>
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2 flex-wrap">
+                      <a href="${escapeHtml(m.url)}" target="_blank" rel="noopener noreferrer" class="mat-link text-sm font-bold text-slate-900 hover:text-blue-700 hover:underline" data-mat-id="${m.id}" data-topic-id="${m.topicId}">${escapeHtml(m.title)}</a>
+                      <span class="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded border ${meta.cls}">${meta.label}</span>
+                      ${isRec ? '<span class="text-[10px] font-bold text-blue-700 bg-blue-100 px-1.5 py-0.5 rounded">AI pick</span>' : ''}
+                    </div>
+                    <p class="text-xs text-slate-500 mt-0.5">${escapeHtml(m.description || '')}</p>
+                    <p class="text-[11px] text-slate-400 mt-1">${escapeHtml(m.provider || '')}${m.durationMinutes ? ' · ~' + m.durationMinutes + ' min' : ''} · ${escapeHtml((m.difficulty || '').toLowerCase())}</p>
+                    ${embeddable ? `<button type="button" class="yt-embed-open mt-2 text-[11px] font-bold text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 px-2.5 py-1 rounded-lg transition" data-mat-id="${m.id}" data-topic-id="${m.topicId}">▶ Play Inside StudyGuard</button>` : ''}
                   </div>
-                  <p class="text-xs text-slate-500 mt-0.5">${escapeHtml(m.description || '')}</p>
-                  <p class="text-[11px] text-slate-400 mt-1">${escapeHtml(m.provider || '')}${m.durationMinutes ? ' · ~' + m.durationMinutes + ' min' : ''} · ${escapeHtml((m.difficulty || '').toLowerCase())}</p>
                 </div>
+                ${embeddable ? `<div class="yt-embed-slot" data-slot-for="${m.id}"></div>` : ''}
               </div>`;
           }).join('');
           card.innerHTML = `
@@ -3146,6 +3397,23 @@
               topicId: a.dataset.topicId,
               materialId: a.dataset.matId,
               source: 'external',
+            });
+          });
+        });
+
+        // Embed the EXISTING playlist/video inside this specific material's
+        // card. materialsById looks up the real title/url the backend
+        // already returned (data.flat) - nothing invented here.
+        const materialsById = new Map((data.flat || []).map((m) => [m.id, m]));
+        panel.querySelectorAll('.yt-embed-open').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const material = materialsById.get(btn.dataset.matId);
+            const slot = panel.querySelector(`.yt-embed-slot[data-slot-for="${btn.dataset.matId}"]`);
+            if (!material || !slot) return;
+            YouTubeEmbedManager.open(slot, material, {
+              courseId: courseIdCache[course],
+              topicId: btn.dataset.topicId,
+              materialId: material.id,
             });
           });
         });
