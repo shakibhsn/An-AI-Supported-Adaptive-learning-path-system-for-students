@@ -1,0 +1,4783 @@
+[
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Traversal",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What does each node in a singly linked list typically contain?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Only data"
+      },
+      {
+        "letter": "B",
+        "text": "Data and a pointer/reference to the next node"
+      },
+      {
+        "letter": "C",
+        "text": "Data and pointers to both next and previous nodes"
+      },
+      {
+        "letter": "D",
+        "text": "Only a pointer to the next node"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A singly linked list node stores a data field plus a single pointer/reference to the next node in the sequence.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Insertion",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What is the time complexity of inserting a new node at the head of a singly linked list (given a reference to the head)?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(1)"
+      },
+      {
+        "letter": "B",
+        "text": "O(n)"
+      },
+      {
+        "letter": "C",
+        "text": "O(log n)"
+      },
+      {
+        "letter": "D",
+        "text": "O(n^2)"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Inserting at the head only requires creating a new node and updating one pointer, which takes constant time regardless of list size.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Deletion",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "To delete the node immediately after a given node in a singly linked list, which pointer must be updated?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "The given node's next pointer, to skip over the node being deleted"
+      },
+      {
+        "letter": "B",
+        "text": "The head pointer only"
+      },
+      {
+        "letter": "C",
+        "text": "The tail pointer only"
+      },
+      {
+        "letter": "D",
+        "text": "No pointer needs to change"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Deleting a node in a singly linked list requires relinking the previous node's next pointer to bypass the deleted node.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Searching",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "In the worst case, how many nodes must be visited to determine that a value is NOT present in an unsorted singly linked list of n nodes?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "1"
+      },
+      {
+        "letter": "B",
+        "text": "n"
+      },
+      {
+        "letter": "C",
+        "text": "log n"
+      },
+      {
+        "letter": "D",
+        "text": "n/2"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Since there is no ordering to exploit, every node must be checked before concluding the value is absent, requiring n comparisons in the worst case.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Traversal",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What condition typically signals the end of a singly linked list during traversal?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "The current node's next pointer is null/None"
+      },
+      {
+        "letter": "B",
+        "text": "The current node's data equals zero"
+      },
+      {
+        "letter": "C",
+        "text": "The traversal counter reaches the list's capacity"
+      },
+      {
+        "letter": "D",
+        "text": "The current node points to the head"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "The last node's next pointer is set to null, which traversal code checks to stop the loop.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Insertion",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "When inserting a new node in the middle of a singly linked list (after a given node p), what is the correct order of pointer operations?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Set p.next to null, then create the new node"
+      },
+      {
+        "letter": "B",
+        "text": "Set the new node's next to p.next, then set p.next to the new node"
+      },
+      {
+        "letter": "C",
+        "text": "Set p.next to the new node, then set the new node's next to p.next"
+      },
+      {
+        "letter": "D",
+        "text": "Delete p first, then insert the new node"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "The new node must first capture the remainder of the list (p.next) before p is repointed, otherwise the rest of the list would be lost.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Deletion",
+    "difficulty": "EASY",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain why deleting a node from a singly linked list requires access to the previous node, and how this differs for a doubly linked list.",
+    "expectedConcepts": [
+      "singly linked list only has next pointers",
+      "need previous node to update its next pointer",
+      "doubly linked list has a prev pointer",
+      "can find previous node directly in O(1) with a reference",
+      "avoids need to traverse from head"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Searching",
+    "difficulty": "EASY",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain the difference between searching for a value in a linked list versus searching for a value in a sorted array, in terms of technique and complexity.",
+    "expectedConcepts": [
+      "linked list requires linear/sequential search",
+      "no random access in linked list",
+      "sorted array allows binary search",
+      "binary search is O(log n)",
+      "linked list search is O(n) even if conceptually sorted because no random access"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Traversal",
+    "difficulty": "EASY",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe, step by step, how you would traverse a singly linked list and print the value stored in each node.",
+    "expectedConcepts": [
+      "start with a pointer/current variable set to head",
+      "check if current is null (empty list)",
+      "loop while current is not null",
+      "print or process current's data",
+      "advance current to current.next",
+      "stop when current becomes null"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Insertion",
+    "difficulty": "EASY",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe, step by step, how you would insert a new node with a given value at the end (tail) of a singly linked list when only a head pointer is available.",
+    "expectedConcepts": [
+      "create the new node with next set to null",
+      "handle empty list case by setting head to new node",
+      "otherwise traverse from head until reaching the last node (next is null)",
+      "set last node's next pointer to the new node",
+      "time complexity is O(n) without a tail pointer"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Insertion",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "What is the time complexity of inserting a new node at the tail of a singly linked list when a tail pointer is maintained?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(1)"
+      },
+      {
+        "letter": "B",
+        "text": "O(n)"
+      },
+      {
+        "letter": "C",
+        "text": "O(log n)"
+      },
+      {
+        "letter": "D",
+        "text": "O(n log n)"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "With a maintained tail pointer, the new node can be attached directly without traversing the list, making it constant time.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Deletion",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "In a doubly linked list, what is the time complexity to delete a node given only a pointer to that node (not the head)?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(1)"
+      },
+      {
+        "letter": "B",
+        "text": "O(n)"
+      },
+      {
+        "letter": "C",
+        "text": "O(log n)"
+      },
+      {
+        "letter": "D",
+        "text": "O(n^2)"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "A doubly linked list node has direct access to both its predecessor and successor via prev and next pointers, so the surrounding links can be updated without traversal.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Searching",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "Why can't binary search be directly applied to a sorted singly linked list to achieve O(log n) search time?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Linked lists cannot be sorted"
+      },
+      {
+        "letter": "B",
+        "text": "Linked lists do not support random access to the middle element in O(1) time"
+      },
+      {
+        "letter": "C",
+        "text": "Linked lists have no data field"
+      },
+      {
+        "letter": "D",
+        "text": "Binary search only works on arrays with duplicate values"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Binary search relies on jumping directly to the middle element in constant time, but a linked list requires O(n) traversal to reach the middle, negating the benefit.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Traversal",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "A programmer traverses a singly linked list using two pointers, 'slow' (moves one step) and 'fast' (moves two steps) starting at the head. What is this technique commonly used for?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Sorting the list"
+      },
+      {
+        "letter": "B",
+        "text": "Detecting a cycle or finding the middle node"
+      },
+      {
+        "letter": "C",
+        "text": "Reversing the list"
+      },
+      {
+        "letter": "D",
+        "text": "Deleting duplicate nodes"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "The slow/fast pointer technique (Floyd's algorithm) is used to detect cycles, since a fast pointer will eventually meet the slow pointer inside a loop, and it also finds the middle node when the fast pointer reaches the end.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Insertion",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "When inserting a node into a sorted singly linked list to keep it sorted, what is the worst-case time complexity?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(1)"
+      },
+      {
+        "letter": "B",
+        "text": "O(n)"
+      },
+      {
+        "letter": "C",
+        "text": "O(log n)"
+      },
+      {
+        "letter": "D",
+        "text": "O(n^2)"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "In the worst case, the correct insertion position is at the end of the list, requiring traversal of all n nodes to find it.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Deletion",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "What is a key risk when deleting a node from a singly linked list if the previous node's next pointer is updated incorrectly?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "The list becomes sorted automatically"
+      },
+      {
+        "letter": "B",
+        "text": "Part of the list becomes unreachable (logically lost) or the list becomes disconnected"
+      },
+      {
+        "letter": "C",
+        "text": "The list reverses direction"
+      },
+      {
+        "letter": "D",
+        "text": "The head pointer is automatically fixed"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "If pointers are not relinked correctly, nodes after the deletion point can become unreachable from the head, effectively losing that part of the list.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Searching",
+    "difficulty": "MEDIUM",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain how using a hash set alongside traversal can speed up detecting duplicate values in a linked list, and state the resulting time and space complexity trade-off.",
+    "expectedConcepts": [
+      "traverse list once storing seen values in a hash set",
+      "O(1) average lookup/insert in hash set",
+      "reduces time complexity to O(n) from O(n^2) nested loop approach",
+      "trades extra O(n) space for improved time"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Traversal",
+    "difficulty": "MEDIUM",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain why reversing a singly linked list in place requires keeping track of three pointers (previous, current, and next) during traversal.",
+    "expectedConcepts": [
+      "next pointer must be saved before it is overwritten",
+      "current node's next is redirected to previous",
+      "previous and current advance forward together",
+      "without saving next, the rest of the list would be lost",
+      "results in O(n) time, O(1) extra space"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Insertion",
+    "difficulty": "MEDIUM",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how you would insert a new value into a sorted singly linked list so that the list remains sorted.",
+    "expectedConcepts": [
+      "traverse from head comparing values",
+      "find the first node whose value is greater than the new value",
+      "keep track of the previous node during traversal",
+      "insert new node between previous and current node",
+      "handle special case of inserting at the head",
+      "handle special case of inserting at the tail"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Deletion",
+    "difficulty": "MEDIUM",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how you would remove all nodes containing a given value from a singly linked list.",
+    "expectedConcepts": [
+      "handle removal of head nodes matching the value first, advancing head while it matches",
+      "traverse with current and previous pointers",
+      "when current's value matches, bypass it by setting previous.next to current.next",
+      "when it does not match, advance previous and current",
+      "discard removed node",
+      "continue until current is null"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Deletion",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "When deleting a node from a singly linked list given ONLY a pointer to that node (not the head, and it is not the last node), a common trick is to:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Copy the data from the next node into the current node, then delete the next node instead"
+      },
+      {
+        "letter": "B",
+        "text": "Set the node's data to null and leave it in the list"
+      },
+      {
+        "letter": "C",
+        "text": "Traverse from the head to find the previous node"
+      },
+      {
+        "letter": "D",
+        "text": "It is impossible without a doubly linked list"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Since the previous node cannot be reached directly in a singly linked list, the standard workaround overwrites the target node with the next node's data and removes the next node instead, which fails only if the node is the last one.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Searching",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "What is the benefit, if any, of a skip list over a plain sorted linked list for search operations?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "No benefit, both are always O(n)"
+      },
+      {
+        "letter": "B",
+        "text": "Skip lists use extra forward pointers at multiple levels to achieve expected O(log n) search"
+      },
+      {
+        "letter": "C",
+        "text": "Skip lists eliminate the need for pointers entirely"
+      },
+      {
+        "letter": "D",
+        "text": "Skip lists guarantee O(1) search in all cases"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A skip list adds multiple layers of 'express lane' pointers that let a search skip over many elements, giving expected O(log n) search, insert, and delete time.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Traversal",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "Given a singly linked list, you use Floyd's cycle detection (slow/fast pointers). If a cycle exists, what is guaranteed?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "The fast pointer will always reach null before meeting the slow pointer"
+      },
+      {
+        "letter": "B",
+        "text": "The fast and slow pointers will eventually point to the same node"
+      },
+      {
+        "letter": "C",
+        "text": "The list length must be even"
+      },
+      {
+        "letter": "D",
+        "text": "The cycle must include the head node"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "If a cycle exists, the fast pointer (moving 2 steps) will eventually lap the slow pointer (moving 1 step) within the cycle, causing them to meet at the same node.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Insertion",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "What is the worst-case time complexity of inserting n elements one at a time at the tail of a singly linked list that does NOT maintain a tail pointer?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(n)"
+      },
+      {
+        "letter": "B",
+        "text": "O(n log n)"
+      },
+      {
+        "letter": "C",
+        "text": "O(n^2)"
+      },
+      {
+        "letter": "D",
+        "text": "O(1)"
+      }
+    ],
+    "correctAnswer": "C",
+    "explanation": "Each insertion requires traversing to the end, which takes O(n) in the worst case, so inserting n elements this way takes O(n^2) total.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Deletion",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "In a circular doubly linked list, what is a key advantage when deleting the last node compared to a singly linked circular list?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "No advantage exists"
+      },
+      {
+        "letter": "B",
+        "text": "The prev pointer of the tail gives O(1) access to the new tail without traversal"
+      },
+      {
+        "letter": "C",
+        "text": "Circular doubly linked lists cannot have a tail"
+      },
+      {
+        "letter": "D",
+        "text": "Deletion is always O(n) regardless of structure"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "In a circular doubly linked list, the tail's prev pointer directly references the new tail, avoiding the O(n) traversal needed in a singly linked circular list to find the node before the tail.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Searching",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "Comparing search in a linked list vs. a hash table for average-case lookup of a specific value, which statement is accurate?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Both are O(n) on average"
+      },
+      {
+        "letter": "B",
+        "text": "Linked list search is O(n) while hash table lookup is O(1) on average"
+      },
+      {
+        "letter": "C",
+        "text": "Linked list search is O(1) while hash table lookup is O(n) on average"
+      },
+      {
+        "letter": "D",
+        "text": "Both are O(log n) on average"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A linked list requires sequential scanning (O(n) average), whereas a well-implemented hash table provides O(1) average-case lookup via direct hashing.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Traversal",
+    "difficulty": "HARD",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain why detecting the start of a cycle in a linked list (not just whether a cycle exists) requires an additional step after the slow and fast pointers meet.",
+    "expectedConcepts": [
+      "meeting point is not necessarily the cycle start",
+      "reset one pointer to head after meeting",
+      "move both pointers one step at a time",
+      "they meet again exactly at the cycle's start node",
+      "based on mathematical relationship between distances (Floyd's algorithm)"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Insertion",
+    "difficulty": "HARD",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain the tradeoffs between an array-based list and a linked list for frequent insertions at arbitrary positions, considering both time complexity and memory layout.",
+    "expectedConcepts": [
+      "array insertion requires shifting elements, O(n)",
+      "linked list insertion is O(1) once position/node is found",
+      "linked list has extra memory overhead for pointers",
+      "arrays have better cache locality/contiguous memory",
+      "linked list avoids costly resizing/shifting"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Deletion",
+    "difficulty": "HARD",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how you would delete a node from the middle of a doubly linked list given only a pointer to that node, without traversing from the head.",
+    "expectedConcepts": [
+      "access the node's prev and next pointers",
+      "set prev node's next to the target's next",
+      "set next node's prev to the target's prev",
+      "handle edge case where target is the head (update head pointer)",
+      "handle edge case where target is the tail (update tail pointer)",
+      "discard the target node, O(1) time"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Linked Lists",
+    "subtopic": "Searching",
+    "difficulty": "HARD",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how you would find the k-th node from the end of a singly linked list in a single pass (one traversal), without knowing the list's length in advance.",
+    "expectedConcepts": [
+      "use two pointers, both starting at head",
+      "advance the first pointer k steps ahead",
+      "then move both pointers one step at a time together",
+      "when the first pointer reaches the end (null), the second pointer is at the k-th node from the end",
+      "handle edge case where k is greater than list length",
+      "achieves O(n) time in a single pass"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Push/Pop Operations",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What principle governs the order in which elements are added to and removed from a stack?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "FIFO (First In First Out)"
+      },
+      {
+        "letter": "B",
+        "text": "LIFO (Last In First Out)"
+      },
+      {
+        "letter": "C",
+        "text": "Random order"
+      },
+      {
+        "letter": "D",
+        "text": "Priority order"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A stack follows Last In First Out — the most recently pushed element is the first one popped.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Applications",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "Which of the following is a classic application of a stack?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Managing a print queue"
+      },
+      {
+        "letter": "B",
+        "text": "Undo functionality in a text editor"
+      },
+      {
+        "letter": "C",
+        "text": "CPU round-robin scheduling"
+      },
+      {
+        "letter": "D",
+        "text": "Breadth-first traversal of a graph"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Undo functionality pushes each action onto a stack so the most recent action can be reversed first (LIFO), a natural fit for stack behavior.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Overflow/Underflow",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What is a 'stack overflow' in the context of a stack data structure?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Popping from an empty stack"
+      },
+      {
+        "letter": "B",
+        "text": "Attempting to push onto a stack that has reached its maximum capacity"
+      },
+      {
+        "letter": "C",
+        "text": "Pushing a duplicate value"
+      },
+      {
+        "letter": "D",
+        "text": "The stack pointer becoming negative"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Stack overflow occurs when a push operation is attempted on a stack that is already full (in a fixed-capacity implementation).",
+    "maxScore": 1
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Implementation",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "Which data structure is most naturally used to implement a stack, providing O(1) push and pop at one end?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Sorted array"
+      },
+      {
+        "letter": "B",
+        "text": "Array or singly linked list, operating at one end"
+      },
+      {
+        "letter": "C",
+        "text": "Circular queue"
+      },
+      {
+        "letter": "D",
+        "text": "Balanced binary search tree"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Both a dynamic array (adding/removing from the end) and a singly linked list (adding/removing from the head) support O(1) push and pop operations.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Push/Pop Operations",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What does the 'peek' (or 'top') operation on a stack do?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Removes and returns the top element"
+      },
+      {
+        "letter": "B",
+        "text": "Returns the top element without removing it"
+      },
+      {
+        "letter": "C",
+        "text": "Removes the bottom element"
+      },
+      {
+        "letter": "D",
+        "text": "Returns the number of elements"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Peek/top inspects the element at the top of the stack without modifying the stack's contents.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Applications",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "A stack is commonly used to check whether parentheses in an expression are balanced. Why is a stack suitable for this task?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "It allows random access to any bracket"
+      },
+      {
+        "letter": "B",
+        "text": "It naturally matches each closing bracket with the most recently seen unmatched opening bracket"
+      },
+      {
+        "letter": "C",
+        "text": "It sorts brackets alphabetically"
+      },
+      {
+        "letter": "D",
+        "text": "It counts brackets in FIFO order"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Pushing opening brackets and popping when a closing bracket is seen ensures each closing bracket matches the most recent unmatched opening bracket, which is exactly LIFO behavior.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Overflow/Underflow",
+    "difficulty": "EASY",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain the difference between stack overflow and stack underflow, and give the condition under which each occurs.",
+    "expectedConcepts": [
+      "overflow occurs when pushing onto a full stack",
+      "underflow occurs when popping from an empty stack",
+      "both are error conditions that should be checked before the operation",
+      "fixed-size array implementations are prone to overflow",
+      "empty stack check prevents underflow"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Implementation",
+    "difficulty": "EASY",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain how a stack can be implemented using a dynamic array, and why push/pop are typically O(1) amortized even though the array may need to resize.",
+    "expectedConcepts": [
+      "push adds to the end (top) of the array",
+      "pop removes from the end",
+      "resizing (doubling capacity) happens infrequently",
+      "cost of resizing is spread/amortized over many operations",
+      "amortized O(1) per push despite occasional O(n) resize"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Push/Pop Operations",
+    "difficulty": "EASY",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how push and pop operations work on an array-based stack that tracks a 'top' index.",
+    "expectedConcepts": [
+      "top index starts at -1 or 0 for empty stack",
+      "push checks for overflow, increments top, stores value at top",
+      "pop checks for underflow (empty check)",
+      "pop retrieves value at top then decrements top",
+      "top always refers to the most recently pushed element"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Applications",
+    "difficulty": "EASY",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how a stack is used to convert an infix expression to postfix notation (conceptually, without writing code).",
+    "expectedConcepts": [
+      "scan the expression left to right",
+      "operands go directly to output",
+      "operators are pushed onto a stack based on precedence rules",
+      "pop operators of higher or equal precedence before pushing a new operator",
+      "parentheses: push on open, pop until matching open on close",
+      "pop all remaining operators to output at the end"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Applications",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "In a function call mechanism, the call stack is used to manage which of the following?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Global variables only"
+      },
+      {
+        "letter": "B",
+        "text": "Function call frames including local variables and return addresses"
+      },
+      {
+        "letter": "C",
+        "text": "Heap-allocated memory only"
+      },
+      {
+        "letter": "D",
+        "text": "Network sockets"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Each function call pushes a new stack frame containing local variables, parameters, and the return address; returning pops that frame off.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Overflow/Underflow",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "In a recursive function without a proper base case, what typically happens related to the call stack?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "The stack underflows"
+      },
+      {
+        "letter": "B",
+        "text": "The stack grows unbounded and eventually causes a stack overflow error"
+      },
+      {
+        "letter": "C",
+        "text": "The stack automatically resets"
+      },
+      {
+        "letter": "D",
+        "text": "Nothing, recursion never affects the stack"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Without a base case, recursive calls keep pushing new stack frames without ever popping, eventually exceeding the available stack memory and causing an overflow.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Implementation",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "When implementing a stack using a singly linked list, where should push and pop operate to guarantee O(1) time?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "At the tail of the list"
+      },
+      {
+        "letter": "B",
+        "text": "At the head of the list"
+      },
+      {
+        "letter": "C",
+        "text": "At the middle of the list"
+      },
+      {
+        "letter": "D",
+        "text": "It requires O(n) regardless of position"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Operating at the head avoids traversal — a new node can be inserted or removed at the head in constant time without searching for the previous node.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Push/Pop Operations",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "If the sequence of operations push(1), push(2), pop(), push(3), pop(), pop() is performed on an initially empty stack, what is the final state?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "The stack is empty; all three pops succeeded validly"
+      },
+      {
+        "letter": "B",
+        "text": "The stack contains [1]"
+      },
+      {
+        "letter": "C",
+        "text": "The stack underflows on the last pop"
+      },
+      {
+        "letter": "D",
+        "text": "The stack contains [3]"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Tracing the operations: push 1, push 2, pop removes 2, push 3, pop removes 3, pop removes 1 — leaving an empty stack with no underflow since each pop had an element available.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Applications",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "How can a stack be used to reverse a string?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "It cannot be used for this purpose"
+      },
+      {
+        "letter": "B",
+        "text": "Push each character onto the stack, then pop all characters off to build the reversed string"
+      },
+      {
+        "letter": "C",
+        "text": "Stacks can only reverse numbers"
+      },
+      {
+        "letter": "D",
+        "text": "Only queues can reverse strings"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Since a stack pops elements in reverse order of insertion (LIFO), pushing all characters then popping them yields the string in reverse.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Overflow/Underflow",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "Which strategy best prevents stack overflow in a fixed-capacity array-based stack implementation?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Ignoring capacity and always pushing"
+      },
+      {
+        "letter": "B",
+        "text": "Checking if the stack is full before pushing and handling the case (e.g., resizing or rejecting the push)"
+      },
+      {
+        "letter": "C",
+        "text": "Always popping before pushing"
+      },
+      {
+        "letter": "D",
+        "text": "Increasing the top index without bound"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Explicitly checking whether the stack has reached capacity before a push prevents writing beyond allocated space, avoiding overflow.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Implementation",
+    "difficulty": "MEDIUM",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain how two stacks can be used to implement a queue, and state the resulting amortized time complexity of enqueue and dequeue.",
+    "expectedConcepts": [
+      "one stack for incoming elements (enqueue)",
+      "second stack for outgoing elements (dequeue)",
+      "when outgoing stack is empty, pour all elements from incoming stack, reversing order",
+      "this reversal restores FIFO order",
+      "amortized O(1) per operation even though occasional O(n) transfer"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Push/Pop Operations",
+    "difficulty": "MEDIUM",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain why a stack does not support efficient random access to an arbitrary element (e.g., the 5th element from the bottom), unlike an array.",
+    "expectedConcepts": [
+      "stack interface only exposes the top element",
+      "accessing an arbitrary element requires popping elements off until reaching it",
+      "this is O(n) and destructive unless elements are pushed back",
+      "stacks are designed for LIFO access only, not indexed access"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Applications",
+    "difficulty": "MEDIUM",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how a stack can be used to evaluate a postfix (Reverse Polish Notation) expression such as '3 4 + 5 *'.",
+    "expectedConcepts": [
+      "scan tokens left to right",
+      "if token is an operand, push it onto the stack",
+      "if token is an operator, pop the required number of operands (usually two)",
+      "apply the operator and push the result back",
+      "continue until all tokens processed",
+      "final value remaining on stack is the result"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Overflow/Underflow",
+    "difficulty": "MEDIUM",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how you would implement a stack using a fixed-size array so that both overflow and underflow are correctly detected and handled.",
+    "expectedConcepts": [
+      "maintain a top index initialized to -1 (empty)",
+      "push: check if top equals capacity-1 (full), report overflow if so, else increment top and store value",
+      "pop: check if top equals -1 (empty), report underflow if so, else return value at top and decrement top",
+      "peek: check empty condition before returning top element",
+      "these checks prevent invalid memory access"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Overflow/Underflow",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "In a language runtime with a fixed-size call stack, deep unbounded recursion causes a stack overflow. Which technique can help avoid this for certain recursive algorithms?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Increasing the array size of unrelated data structures"
+      },
+      {
+        "letter": "B",
+        "text": "Converting the recursion to an iterative solution using an explicit stack or tail-call optimization where supported"
+      },
+      {
+        "letter": "C",
+        "text": "Using more global variables"
+      },
+      {
+        "letter": "D",
+        "text": "Reducing the number of function parameters"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Rewriting recursion iteratively with an explicit data structure (or relying on tail-call optimization when the language guarantees it) avoids growing the implicit call stack unboundedly.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Implementation",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "Comparing an array-based stack and a linked-list-based stack, which statement about worst-case push time is correct?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Array-based push is always O(n) due to resizing, linked-list push is always O(n)"
+      },
+      {
+        "letter": "B",
+        "text": "Array-based push is O(1) amortized (O(n) worst case only during resize), linked-list push is O(1) worst case"
+      },
+      {
+        "letter": "C",
+        "text": "Both are always O(n)"
+      },
+      {
+        "letter": "D",
+        "text": "Linked-list push is O(log n)"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A dynamic array's push is O(1) amortized but O(n) in the rare resize case, whereas a linked list's push at the head is always O(1) since no resizing or shifting is needed.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Push/Pop Operations",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "Consider a 'min-stack' that supports push, pop, and retrieving the minimum element, all in O(1) time. What technique achieves this?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Re-scanning the entire stack on every min() call"
+      },
+      {
+        "letter": "B",
+        "text": "Maintaining an auxiliary stack that tracks the minimum value at each level alongside the main stack"
+      },
+      {
+        "letter": "C",
+        "text": "Sorting the stack after every push"
+      },
+      {
+        "letter": "D",
+        "text": "It is mathematically impossible to achieve O(1) for all three operations"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "By pushing the current minimum onto a parallel auxiliary stack each time a new minimum is set (or duplicating the min on ties), the current minimum can always be read from the top of the auxiliary stack in O(1).",
+    "maxScore": 1
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Applications",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "Why is a stack, rather than a queue, the appropriate structure for implementing depth-first search (DFS) traversal iteratively?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "A stack guarantees sorted order of visited nodes"
+      },
+      {
+        "letter": "B",
+        "text": "A stack's LIFO order causes the most recently discovered node to be explored next, matching DFS's 'go deep before backtracking' behavior"
+      },
+      {
+        "letter": "C",
+        "text": "A queue is faster for all graph traversals"
+      },
+      {
+        "letter": "D",
+        "text": "Stacks use less memory than queues in all cases"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "DFS explores as far as possible along a branch before backtracking; a stack's LIFO order naturally implements this by always expanding the most recently discovered node next.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Overflow/Underflow",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "In a multi-threaded environment, why must overflow/underflow checks on a shared stack be handled with synchronization (e.g., locks)?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Synchronization is never needed for stacks"
+      },
+      {
+        "letter": "B",
+        "text": "Without synchronization, concurrent push/pop operations can produce race conditions leading to corrupted state or incorrect overflow/underflow detection"
+      },
+      {
+        "letter": "C",
+        "text": "Stacks are inherently thread-safe"
+      },
+      {
+        "letter": "D",
+        "text": "Overflow cannot occur in multi-threaded code"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Concurrent modifications to the shared top index/pointer without synchronization can interleave incorrectly, causing lost updates or incorrect overflow/underflow detection.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Implementation",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "What is the space complexity overhead of a linked-list-based stack implementation compared to an array-based one, per element?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "None, they are identical"
+      },
+      {
+        "letter": "B",
+        "text": "The linked-list version requires extra memory per node for a pointer, while the array version has no per-element pointer overhead (though may over-allocate)"
+      },
+      {
+        "letter": "C",
+        "text": "The array version always uses more memory"
+      },
+      {
+        "letter": "D",
+        "text": "Linked lists use less memory in every case"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Each linked-list node stores an extra pointer/reference to the next node, adding constant overhead per element, whereas an array stores elements contiguously without per-element pointer overhead (though it may allocate unused capacity).",
+    "maxScore": 1
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Push/Pop Operations",
+    "difficulty": "HARD",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain why implementing a stack with a fixed-capacity array can lead to wasted memory or overflow, and how a dynamic (resizable) array addresses this tradeoff.",
+    "expectedConcepts": [
+      "fixed capacity risks overflow if exceeded",
+      "fixed capacity also risks wasted unused memory if overestimated",
+      "dynamic array resizes (e.g., doubling) when full",
+      "resizing copies elements to new larger array, O(n) occasionally",
+      "amortized cost remains O(1) per push"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Applications",
+    "difficulty": "HARD",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain how the 'undo/redo' feature in applications typically uses two stacks, and describe what happens to the redo stack when a new action is performed after an undo.",
+    "expectedConcepts": [
+      "undo stack holds history of actions",
+      "redo stack holds undone actions",
+      "undo pops from undo stack, pushes onto redo stack",
+      "redo pops from redo stack, pushes back onto undo stack",
+      "performing a new action after undo typically clears the redo stack"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Overflow/Underflow",
+    "difficulty": "HARD",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how you would design a stack that automatically resizes (grows) to avoid overflow, including what happens during a push that exceeds current capacity.",
+    "expectedConcepts": [
+      "maintain current size and capacity variables",
+      "on push, check if size equals capacity",
+      "if full, allocate a new, larger array (e.g., double) and copy existing elements into it, discarding the old array",
+      "insert the new element and increment size",
+      "amortized O(1) per push despite occasional O(n) resize"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Stacks",
+    "subtopic": "Implementation",
+    "difficulty": "HARD",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how you would implement a single array to hold two stacks that grow toward each other from opposite ends, and explain how overflow is detected.",
+    "expectedConcepts": [
+      "stack A starts at index 0 and grows upward using a top-A pointer",
+      "stack B starts at the last index and grows downward using a top-B pointer",
+      "push on either stack increments/decrements its respective top pointer",
+      "overflow occurs when top-A pointer would meet or cross top-B pointer",
+      "this shares space more efficiently than two fixed halves",
+      "each stack's pop just moves its top pointer back"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Enqueue/Dequeue Operations",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What principle governs the order of removal in a standard queue?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "LIFO"
+      },
+      {
+        "letter": "B",
+        "text": "FIFO (First In First Out)"
+      },
+      {
+        "letter": "C",
+        "text": "Random"
+      },
+      {
+        "letter": "D",
+        "text": "Priority-based only"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A queue removes elements in the same order they were added — the first element enqueued is the first dequeued.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Circular Queues",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What problem does a circular queue solve compared to a simple linear array-based queue?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "It allows duplicate elements"
+      },
+      {
+        "letter": "B",
+        "text": "It reuses freed space at the front of the array after dequeues, avoiding wasted space"
+      },
+      {
+        "letter": "C",
+        "text": "It sorts elements automatically"
+      },
+      {
+        "letter": "D",
+        "text": "It removes the need for a front pointer"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "In a linear queue, dequeued space at the front is never reused, wasting array slots; a circular queue wraps the rear pointer back to index 0 to reuse that freed space.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Applications",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "Which of the following is a common real-world application of a queue?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Managing 'undo' history in a text editor"
+      },
+      {
+        "letter": "B",
+        "text": "A print spooler processing print jobs in the order they were submitted"
+      },
+      {
+        "letter": "C",
+        "text": "Matching balanced parentheses"
+      },
+      {
+        "letter": "D",
+        "text": "Reversing a string"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A print spooler processes jobs in the order received, which is exactly FIFO behavior provided by a queue.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Implementation",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "Which data structures can be used to implement a queue with O(1) enqueue and dequeue?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "A sorted array only"
+      },
+      {
+        "letter": "B",
+        "text": "A circular array or a doubly linked list with head/tail pointers"
+      },
+      {
+        "letter": "C",
+        "text": "A binary search tree"
+      },
+      {
+        "letter": "D",
+        "text": "A stack alone"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A circular array (with front/rear indices) and a doubly linked list (with head and tail references) both support constant-time insertion at the rear and removal at the front.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Enqueue/Dequeue Operations",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What does the 'enqueue' operation do?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Removes an element from the front"
+      },
+      {
+        "letter": "B",
+        "text": "Adds an element to the rear (back) of the queue"
+      },
+      {
+        "letter": "C",
+        "text": "Adds an element to the front"
+      },
+      {
+        "letter": "D",
+        "text": "Removes an element from the rear"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Enqueue inserts a new element at the rear of the queue, consistent with FIFO ordering.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Circular Queues",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "In a circular queue implemented with an array of size n, how is the 'queue full' condition typically distinguished from 'queue empty' when using front and rear indices?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "It cannot be distinguished"
+      },
+      {
+        "letter": "B",
+        "text": "By using a size/count variable, or by keeping one slot always empty and comparing (rear+1)%n to front"
+      },
+      {
+        "letter": "C",
+        "text": "Both conditions look identical, so it doesn't matter"
+      },
+      {
+        "letter": "D",
+        "text": "By checking if front equals 0"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Since front == rear can mean either empty or full in a naive circular queue, implementations either track an explicit count or sacrifice one slot so that (rear+1)%n == front unambiguously signals 'full'.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Applications",
+    "difficulty": "EASY",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain why a queue (rather than a stack) is the appropriate structure for implementing breadth-first search (BFS) traversal of a graph.",
+    "expectedConcepts": [
+      "BFS explores nodes level by level",
+      "queue's FIFO order processes nodes in the order they were discovered",
+      "ensures nearer nodes are visited before farther ones",
+      "stack (LIFO) would instead produce depth-first order"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Implementation",
+    "difficulty": "EASY",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain the main limitation of implementing a queue with a simple (non-circular) array where dequeue always removes from index 0, and how this affects performance.",
+    "expectedConcepts": [
+      "removing from index 0 requires shifting all remaining elements left",
+      "this makes dequeue O(n) instead of O(1)",
+      "alternative is to just move a front index forward without shifting, wasting space over time",
+      "circular array or linked list avoids this shifting cost"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Enqueue/Dequeue Operations",
+    "difficulty": "EASY",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how enqueue and dequeue operations work on a simple array-based queue using front and rear indices (non-circular).",
+    "expectedConcepts": [
+      "rear index starts before the first slot (e.g., -1) and front at 0",
+      "enqueue increments rear and stores the value there, after checking for full array",
+      "dequeue checks that front is not past rear (not empty)",
+      "dequeue retrieves the value at front, then increments front",
+      "elements between front and rear (inclusive) are the current queue contents"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Circular Queues",
+    "difficulty": "EASY",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how the enqueue operation works on a circular queue implemented with an array of fixed size n, front and rear indices, and a count variable.",
+    "expectedConcepts": [
+      "check if count equals n (queue full), reject or resize if so",
+      "compute new rear index as (rear + 1) mod n",
+      "store the new value at the new rear index",
+      "increment the count variable",
+      "wrap-around via modulo lets the queue reuse freed slots at the beginning of the array"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Circular Queues",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "In a circular queue of capacity n holding k elements (k < n), how is the rear index computed after an enqueue, given the current rear index r?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "r + 1"
+      },
+      {
+        "letter": "B",
+        "text": "(r + 1) mod n"
+      },
+      {
+        "letter": "C",
+        "text": "r - 1"
+      },
+      {
+        "letter": "D",
+        "text": "n - r"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "The modulo operation wraps the rear index back to 0 once it exceeds n-1, which is the defining mechanic of a circular queue.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Applications",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "A CPU scheduler using round-robin scheduling typically relies on which data structure to manage processes?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "A stack"
+      },
+      {
+        "letter": "B",
+        "text": "A circular queue, cycling processes in FIFO order for fixed time slices"
+      },
+      {
+        "letter": "C",
+        "text": "A binary search tree"
+      },
+      {
+        "letter": "D",
+        "text": "A hash table"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Round-robin scheduling gives each process a fixed time slice in turn, cycling back to the first process after the last — a natural fit for a circular queue.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Implementation",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "When implementing a queue using two stacks, which operation may occasionally take O(n) time instead of O(1), even though the amortized cost is O(1)?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Enqueue always takes O(n)"
+      },
+      {
+        "letter": "B",
+        "text": "Dequeue, specifically when the 'output' stack is empty and must be refilled by popping all elements from the 'input' stack"
+      },
+      {
+        "letter": "C",
+        "text": "Neither operation is ever O(n)"
+      },
+      {
+        "letter": "D",
+        "text": "Checking if the queue is empty"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "When the output stack is empty, all elements must be transferred (popped from input, pushed to output) before the front element becomes accessible, which is O(n) in that instance but amortizes to O(1) overall.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Enqueue/Dequeue Operations",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "What happens if dequeue is called on an empty queue without an underflow check?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "It returns a default success value safely"
+      },
+      {
+        "letter": "B",
+        "text": "It results in undefined behavior, an error, or an exception depending on implementation"
+      },
+      {
+        "letter": "C",
+        "text": "It automatically enqueues a new element"
+      },
+      {
+        "letter": "D",
+        "text": "The queue reverses order"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Without checking for emptiness first, attempting to access or remove a nonexistent front element leads to an error, exception, or undefined behavior depending on the language/implementation.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Circular Queues",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "What is the primary advantage of a circular queue over a simple linear array queue in terms of space usage?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "It uses less memory per element"
+      },
+      {
+        "letter": "B",
+        "text": "It reuses array slots freed by dequeue operations instead of leaving them permanently unused"
+      },
+      {
+        "letter": "C",
+        "text": "It eliminates the need for a rear pointer"
+      },
+      {
+        "letter": "D",
+        "text": "It automatically sorts elements"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A linear queue's front slots become permanently unusable once dequeued (until the whole array is reset), while a circular queue wraps around to reuse those slots.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Applications",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "In simulations (e.g., customers arriving at a bank), a queue is used to model waiting entities. Why is FIFO the appropriate model here rather than LIFO?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "FIFO better reflects real-world fairness — the entity that arrived first is served first"
+      },
+      {
+        "letter": "B",
+        "text": "LIFO would serve more customers overall"
+      },
+      {
+        "letter": "C",
+        "text": "FIFO is always faster computationally"
+      },
+      {
+        "letter": "D",
+        "text": "There is no meaningful difference"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "In most real-world waiting-line scenarios, fairness dictates serving arrivals in the order they arrived, which is exactly what a FIFO queue models.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Implementation",
+    "difficulty": "MEDIUM",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain how a doubly linked list with head and tail pointers can implement a queue with O(1) enqueue and dequeue, referencing which end each operation uses.",
+    "expectedConcepts": [
+      "enqueue adds a new node at the tail",
+      "dequeue removes the node at the head",
+      "head and tail pointers give direct O(1) access to both ends",
+      "no traversal needed, unlike a singly linked list without a tail pointer for one of the operations",
+      "update head/tail pointers appropriately, including when the list becomes empty"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Enqueue/Dequeue Operations",
+    "difficulty": "MEDIUM",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain the difference between a queue's 'front' and 'rear' in terms of which operations act on each, and why confusing them would break FIFO ordering.",
+    "expectedConcepts": [
+      "front is where elements are removed (dequeue)",
+      "rear is where elements are added (enqueue)",
+      "enqueueing at front or dequeueing at rear would reverse the order to LIFO",
+      "correct FIFO behavior depends on consistently using opposite ends for insertion and removal"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Circular Queues",
+    "difficulty": "MEDIUM",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how the dequeue operation works on a circular queue implemented with an array, front/rear indices, and a count variable.",
+    "expectedConcepts": [
+      "check if count equals 0 (empty), report underflow if so",
+      "retrieve the value at the front index",
+      "compute new front index as (front + 1) mod n",
+      "decrement the count variable",
+      "return the retrieved value"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Applications",
+    "difficulty": "MEDIUM",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how a queue is used to perform a level-order (breadth-first) traversal of a binary tree.",
+    "expectedConcepts": [
+      "enqueue the root node initially",
+      "while queue is not empty, dequeue the front node and process/visit it",
+      "enqueue that node's left child if it exists",
+      "enqueue that node's right child if it exists",
+      "repeat until queue is empty, which visits nodes level by level"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Applications",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "In an operating system implementing multi-level feedback queues for process scheduling, what is the main purpose of using multiple queues with different priorities?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "To randomize process execution order"
+      },
+      {
+        "letter": "B",
+        "text": "To balance responsiveness for short/interactive processes against throughput for long CPU-bound processes by adjusting priority based on behavior"
+      },
+      {
+        "letter": "C",
+        "text": "To guarantee every process runs exactly once"
+      },
+      {
+        "letter": "D",
+        "text": "To eliminate the need for context switching"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Multi-level feedback queues dynamically adjust a process's priority queue based on observed behavior (e.g., demoting CPU-bound processes), balancing fairness, responsiveness, and throughput.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Implementation",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "What is the worst-case time complexity of enqueue in a naive array-based (non-circular, non-resizing) queue implementation once the rear index reaches the end of the array, even though earlier slots are free?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(1), it simply wraps around"
+      },
+      {
+        "letter": "B",
+        "text": "It fails or requires shifting all elements back to the start, an O(n) operation, since the naive implementation does not wrap indices"
+      },
+      {
+        "letter": "C",
+        "text": "O(log n)"
+      },
+      {
+        "letter": "D",
+        "text": "It is always impossible"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Without circular wrap-around logic, a naive linear queue implementation cannot reuse freed front slots and must either fail or shift all remaining elements back to index 0, which costs O(n).",
+    "maxScore": 1
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Enqueue/Dequeue Operations",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "A 'double-ended queue' (deque) generalizes a queue by allowing which additional operations?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Sorting in O(1)"
+      },
+      {
+        "letter": "B",
+        "text": "Insertion and removal at both the front and the rear in O(1)"
+      },
+      {
+        "letter": "C",
+        "text": "Random access in O(1) only"
+      },
+      {
+        "letter": "D",
+        "text": "It removes the need for any pointers"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A deque supports efficient insertion and deletion at both ends, unlike a standard queue which restricts insertion to the rear and removal to the front.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Circular Queues",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "In a circular queue where a 'full' slot is reserved to distinguish full from empty (i.e., a capacity-n array can only hold n-1 elements), what is the tradeoff being made?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "No tradeoff, this is strictly better in every way"
+      },
+      {
+        "letter": "B",
+        "text": "One array slot is sacrificed (reducing usable capacity by 1) in exchange for a simple, branch-free way to distinguish full and empty without an extra counter variable"
+      },
+      {
+        "letter": "C",
+        "text": "It doubles the memory usage"
+      },
+      {
+        "letter": "D",
+        "text": "It makes enqueue O(n)"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Reserving one slot means usable capacity is n-1 instead of n, but it avoids needing a separate count variable to disambiguate the front==rear case for full vs. empty.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Applications",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "In network routers, packet buffers are often modeled as queues. What happens when a queue-based buffer is full and new packets arrive (a scenario called 'tail drop')?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "The oldest packet in the buffer is always removed to make room"
+      },
+      {
+        "letter": "B",
+        "text": "Incoming packets are dropped (rejected) because the queue is full, which can affect network performance/fairness"
+      },
+      {
+        "letter": "C",
+        "text": "The router automatically increases the queue's array size indefinitely"
+      },
+      {
+        "letter": "D",
+        "text": "Packets are silently reordered"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "In tail drop, once the buffer (queue) reaches capacity, newly arriving packets are simply discarded because there is no space to enqueue them, which can lead to synchronization issues among network flows.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Implementation",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "Comparing a circular array-based queue to a doubly linked list-based queue, which statement about memory behavior is accurate?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Both have identical memory behavior in all cases"
+      },
+      {
+        "letter": "B",
+        "text": "The circular array has fixed pre-allocated capacity with no per-element pointer overhead but may need resizing when full, while the linked list grows dynamically per node but incurs pointer overhead per element"
+      },
+      {
+        "letter": "C",
+        "text": "Linked lists cannot implement queues"
+      },
+      {
+        "letter": "D",
+        "text": "Circular arrays always use less total memory than linked lists"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "An array-based circular queue avoids per-element pointer overhead but has a fixed capacity that may require costly resizing, whereas a linked list grows one node at a time with the cost of extra pointer memory per node.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Enqueue/Dequeue Operations",
+    "difficulty": "HARD",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain why, in a naive circular queue implementation using only front and rear indices (no count variable) and using the full array capacity, the 'queue is empty' and 'queue is full' conditions can become ambiguous, and describe one way to resolve it.",
+    "expectedConcepts": [
+      "both empty and full can result in front equal to rear",
+      "without extra information the two states are indistinguishable",
+      "solutions include maintaining an explicit count/size variable",
+      "or reserving one array slot unused so full is detected before front equals rear again"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Circular Queues",
+    "difficulty": "HARD",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain why a priority queue is not a strict FIFO structure and describe how its removal order differs from a standard queue's.",
+    "expectedConcepts": [
+      "standard queue removes in strict arrival order (FIFO)",
+      "priority queue removes the element with highest (or lowest) priority first regardless of arrival order",
+      "elements with equal priority may still follow FIFO among themselves depending on implementation",
+      "commonly implemented with a heap rather than a simple array/list"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Applications",
+    "difficulty": "HARD",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how a queue-based buffer would handle simulating customers arriving at and being served by a single-teller bank, including what happens when the queue is empty.",
+    "expectedConcepts": [
+      "each arriving customer is enqueued at the rear with an arrival time",
+      "when the teller becomes free, the front customer is dequeued and service begins",
+      "if the queue is empty when the teller is free, the teller waits idle until the next arrival",
+      "track wait times as difference between service start and arrival time",
+      "repeat enqueue/dequeue as customers arrive and are served over the simulation"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Queues",
+    "subtopic": "Implementation",
+    "difficulty": "HARD",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how you would implement a queue using two stacks (an 'input' stack and an 'output' stack), including how dequeue is handled.",
+    "expectedConcepts": [
+      "enqueue always pushes the new element onto the input stack",
+      "dequeue checks if the output stack is empty",
+      "if output stack is empty, pop every element from input stack and push it onto output stack, reversing the order",
+      "dequeue then pops and returns the top of the output stack",
+      "if output stack is not empty, dequeue simply pops from it directly",
+      "this achieves amortized O(1) per operation"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Base Case",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What is the purpose of a 'base case' in a recursive function?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "To make the function run faster"
+      },
+      {
+        "letter": "B",
+        "text": "To provide a stopping condition that terminates the recursion without further recursive calls"
+      },
+      {
+        "letter": "C",
+        "text": "To handle invalid input only"
+      },
+      {
+        "letter": "D",
+        "text": "To initialize global variables"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "The base case defines the simplest instance of the problem, returning a direct answer without recursing further, which stops infinite recursion.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Recursive Case",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What does the 'recursive case' of a recursive function typically do?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Immediately return a fixed value"
+      },
+      {
+        "letter": "B",
+        "text": "Break the problem into one or more smaller subproblems and call the function again on them"
+      },
+      {
+        "letter": "C",
+        "text": "Terminate the program"
+      },
+      {
+        "letter": "D",
+        "text": "Loop indefinitely"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "The recursive case reduces the original problem to a smaller version of itself and calls the function again, progressing toward the base case.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Stack Usage",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What happens to the call stack each time a recursive function calls itself (before returning)?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "The stack shrinks"
+      },
+      {
+        "letter": "B",
+        "text": "A new stack frame is pushed for the new call"
+      },
+      {
+        "letter": "C",
+        "text": "The stack is cleared"
+      },
+      {
+        "letter": "D",
+        "text": "Nothing happens to the stack"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Each recursive call pushes a new frame containing its local variables and return address onto the call stack, which is popped when that call returns.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Tracing and Complexity",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What is the time complexity of a simple recursive function to compute the factorial of n, where each call does O(1) work besides the recursive call?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(1)"
+      },
+      {
+        "letter": "B",
+        "text": "O(n)"
+      },
+      {
+        "letter": "C",
+        "text": "O(n^2)"
+      },
+      {
+        "letter": "D",
+        "text": "O(2^n)"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "The function makes exactly n recursive calls (from n down to the base case), each doing constant work, giving O(n) total time.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Base Case",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What is a likely consequence of a recursive function missing a correct base case (or having one that is never reached)?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "The function runs faster"
+      },
+      {
+        "letter": "B",
+        "text": "Infinite recursion, typically resulting in a stack overflow"
+      },
+      {
+        "letter": "C",
+        "text": "The function returns 0 automatically"
+      },
+      {
+        "letter": "D",
+        "text": "The compiler fixes it automatically"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Without a reachable base case, the function keeps calling itself indefinitely, continually pushing stack frames until the call stack is exhausted.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Recursive Case",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "In the recursive definition of Fibonacci, fib(n) = fib(n-1) + fib(n-2) for n > 1, what best describes this recursive case?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "It reduces the problem to a single smaller subproblem"
+      },
+      {
+        "letter": "B",
+        "text": "It reduces the problem to two smaller subproblems whose results are combined"
+      },
+      {
+        "letter": "C",
+        "text": "It does not reduce the problem at all"
+      },
+      {
+        "letter": "D",
+        "text": "It is not actually recursion"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Each call to fib(n) (for n>1) makes two recursive calls on strictly smaller inputs (n-1 and n-2), and combines their results by addition.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Stack Usage",
+    "difficulty": "EASY",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain what a 'stack frame' contains during a recursive function call and why deep recursion can cause a stack overflow.",
+    "expectedConcepts": [
+      "stack frame holds local variables, parameters, and return address",
+      "each recursive call adds a new frame",
+      "frames are popped only when a call returns",
+      "very deep recursion accumulates many frames",
+      "call stack has limited memory, causing overflow if exceeded"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Tracing and Complexity",
+    "difficulty": "EASY",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain why tracing a recursive function by hand (drawing the call tree or stack) is useful for understanding its time complexity.",
+    "expectedConcepts": [
+      "tracing reveals how many recursive calls are made",
+      "shows the depth of recursion",
+      "helps identify repeated/overlapping subproblems (as in naive Fibonacci)",
+      "connects the call pattern to a recurrence relation",
+      "recurrence relation can be solved to find time complexity"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Base Case",
+    "difficulty": "EASY",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how you would identify and write the base case for a recursive function that computes the sum of the first n positive integers.",
+    "expectedConcepts": [
+      "identify the smallest input where the answer is directly known, e.g., n=0 or n=1",
+      "for sum, base case is n=0 returns 0 (or n=1 returns 1)",
+      "ensure the recursive case always moves toward this base case (decreasing n)",
+      "verify the base case is reachable for all valid inputs",
+      "without it recursion would never terminate"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Recursive Case",
+    "difficulty": "EASY",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how you would design the recursive case for a function that reverses a string using recursion.",
+    "expectedConcepts": [
+      "base case: empty string or single character returns itself",
+      "recursive case: take the first character and the rest of the string",
+      "recursively reverse the remaining substring",
+      "append the first character to the end of the reversed remainder",
+      "combine results to build the fully reversed string"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Recursive Case",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "In recursive binary search on a sorted array, what does the recursive case do?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Searches the entire array again from scratch"
+      },
+      {
+        "letter": "B",
+        "text": "Compares the target to the middle element and recurses on only the half of the array where the target could be"
+      },
+      {
+        "letter": "C",
+        "text": "Recurses on both halves every time"
+      },
+      {
+        "letter": "D",
+        "text": "Iterates through all elements sequentially"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Binary search's recursive case eliminates half the remaining search space each call by comparing the target to the middle element and recursing only into the relevant half.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Stack Usage",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "What is the maximum recursion depth (number of stack frames simultaneously active) for a recursive function computing factorial(n) using the standard definition?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(1)"
+      },
+      {
+        "letter": "B",
+        "text": "O(n)"
+      },
+      {
+        "letter": "C",
+        "text": "O(log n)"
+      },
+      {
+        "letter": "D",
+        "text": "O(n^2)"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Each call to factorial(n) waits on factorial(n-1), so n nested calls are active simultaneously before any returns, giving O(n) maximum stack depth.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Tracing and Complexity",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "What is the time complexity of the naive (non-memoized) recursive Fibonacci function fib(n) = fib(n-1) + fib(n-2)?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(n)"
+      },
+      {
+        "letter": "B",
+        "text": "O(n log n)"
+      },
+      {
+        "letter": "C",
+        "text": "O(2^n) (exponential)"
+      },
+      {
+        "letter": "D",
+        "text": "O(n^2)"
+      }
+    ],
+    "correctAnswer": "C",
+    "explanation": "Because the naive recursive Fibonacci recomputes the same subproblems repeatedly without caching, the number of calls grows exponentially with n.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Base Case",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "For a recursive function operating on a linked list (e.g., recursively computing its length), what is an appropriate base case?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "When the current node's data equals 0"
+      },
+      {
+        "letter": "B",
+        "text": "When the current pointer is null (end of list reached)"
+      },
+      {
+        "letter": "C",
+        "text": "When the list has exactly 2 nodes"
+      },
+      {
+        "letter": "D",
+        "text": "There is no valid base case for linked lists"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Reaching a null pointer indicates the end of the list has been passed, which is the natural stopping point for list recursion.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Recursive Case",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "In merge sort's recursive case, what two things happen before combining results?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "The array is searched for duplicates"
+      },
+      {
+        "letter": "B",
+        "text": "The array is divided into two halves, and each half is recursively sorted"
+      },
+      {
+        "letter": "C",
+        "text": "The array is reversed twice"
+      },
+      {
+        "letter": "D",
+        "text": "A single element is removed"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Merge sort's recursive case splits the array into two halves and recursively sorts each half before merging them back together.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Stack Usage",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "Why does tail recursion (where the recursive call is the very last operation, with no pending work after it returns) allow some compilers/interpreters to optimize stack usage?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "It doesn't; tail recursion always uses the same stack space as regular recursion"
+      },
+      {
+        "letter": "B",
+        "text": "Because no computation remains after the recursive call returns, the current stack frame can be reused/replaced instead of stacking a new one (tail-call optimization)"
+      },
+      {
+        "letter": "C",
+        "text": "Tail recursion eliminates the base case"
+      },
+      {
+        "letter": "D",
+        "text": "Tail recursion always converts to O(1) time"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Since nothing needs to happen after the recursive call returns, a compiler performing tail-call optimization can replace the current frame rather than pushing a new one, keeping stack usage constant.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Tracing and Complexity",
+    "difficulty": "MEDIUM",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain how a recurrence relation like T(n) = 2T(n/2) + O(n) arises from analyzing a recursive algorithm such as merge sort, and what it represents.",
+    "expectedConcepts": [
+      "2T(n/2) represents two recursive calls each on half the input size",
+      "O(n) represents the work done outside the recursive calls (e.g., merging/dividing)",
+      "the recurrence models total time as a function of input size",
+      "solving it (e.g., via the master theorem) gives the overall time complexity, here O(n log n)"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Base Case",
+    "difficulty": "MEDIUM",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain why a recursive function may have more than one base case, using an example such as computing Fibonacci numbers.",
+    "expectedConcepts": [
+      "Fibonacci needs two base cases, for n=0 and n=1",
+      "some recursive definitions depend on more than one prior state",
+      "multiple base cases ensure recursion terminates correctly for all small inputs",
+      "missing one of the base cases could cause incorrect results or infinite recursion"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Recursive Case",
+    "difficulty": "MEDIUM",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how you would design a recursive function to compute the greatest common divisor (GCD) of two integers using the Euclidean algorithm.",
+    "expectedConcepts": [
+      "base case: if second number is 0, return the first number",
+      "recursive case: call the function with (second number, first number mod second number)",
+      "each call reduces the problem size since the remainder is smaller",
+      "recursion terminates when the second argument reaches 0",
+      "result of base case is the GCD"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Stack Usage",
+    "difficulty": "MEDIUM",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how the call stack changes as recursive function factorial(3) executes and then returns, until the final result is produced.",
+    "expectedConcepts": [
+      "factorial(3) calls factorial(2), pushing a new frame, before it can multiply",
+      "factorial(2) calls factorial(1), pushing another frame",
+      "factorial(1) calls factorial(0), the base case, pushing a final frame",
+      "factorial(0) returns 1, popping its frame",
+      "each pending multiplication completes as frames pop back up (1*1, then *2, then *3)",
+      "final result 6 is produced after all frames have popped"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Stack Usage",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "Why does memoization (caching results of subproblems) reduce the time complexity of recursive Fibonacci from exponential to linear, and how does it affect the recursion tree?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "It has no effect on time complexity, only memory"
+      },
+      {
+        "letter": "B",
+        "text": "It avoids recomputing overlapping subproblems by storing and reusing previous results, collapsing the exponential tree into O(n) unique calls"
+      },
+      {
+        "letter": "C",
+        "text": "It removes the need for a base case"
+      },
+      {
+        "letter": "D",
+        "text": "It converts the recursion into iteration automatically"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Memoization stores each unique subproblem's result the first time it is computed, so subsequent calls with the same argument return instantly instead of re-branching, reducing total distinct calls from exponential to O(n).",
+    "maxScore": 1
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Tracing and Complexity",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "What is the space complexity (auxiliary stack space) of a memoized recursive Fibonacci implementation, considering both the recursion stack depth and the memoization cache?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(1)"
+      },
+      {
+        "letter": "B",
+        "text": "O(n), from both the O(n) maximum recursion depth and the O(n)-sized cache"
+      },
+      {
+        "letter": "C",
+        "text": "O(2^n)"
+      },
+      {
+        "letter": "D",
+        "text": "O(log n)"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "The recursion still reaches a maximum depth of O(n) (stack frames for fib(n) down to fib(0)), and the cache stores O(n) computed values, giving O(n) total auxiliary space.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Base Case",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "Consider a recursive function meant to process a tree structure where the base case only checks for a null root but does not handle a tree with cycles (a malformed structure). What is the risk?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "No risk, trees never have cycles"
+      },
+      {
+        "letter": "B",
+        "text": "If a cycle exists, the base case (null check) is never satisfied along that path, causing infinite recursion and eventual stack overflow"
+      },
+      {
+        "letter": "C",
+        "text": "The function will terminate faster"
+      },
+      {
+        "letter": "D",
+        "text": "The function automatically detects and fixes cycles"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A cycle means the traversal never reaches a null child along that path, so the null-check base case is never triggered, leading to infinite recursion.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Recursive Case",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "In a divide-and-conquer recursive case that splits a problem into k subproblems each of size n/b and does O(n^d) extra work combining them, which framework is used to derive the overall time complexity from this recurrence?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "The pigeonhole principle"
+      },
+      {
+        "letter": "B",
+        "text": "The Master Theorem"
+      },
+      {
+        "letter": "C",
+        "text": "Dijkstra's algorithm"
+      },
+      {
+        "letter": "D",
+        "text": "The pumping lemma"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "The Master Theorem provides direct asymptotic solutions for recurrences of the form T(n) = k*T(n/b) + O(n^d), which is the standard pattern produced by divide-and-conquer recursive cases.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Stack Usage",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "Why might an algorithm with correct logic but very deep recursion (e.g., processing a linked list of 1,000,000 nodes recursively) fail at runtime even though it would work fine iteratively?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Recursion is always slower but never fails"
+      },
+      {
+        "letter": "B",
+        "text": "Each recursive call consumes stack space, and 1,000,000 nested calls likely exceed the call stack's limited size, causing a stack overflow, whereas an iterative loop uses O(1) auxiliary stack space"
+      },
+      {
+        "letter": "C",
+        "text": "The compiler will refuse to compile it"
+      },
+      {
+        "letter": "D",
+        "text": "Recursive functions cannot process lists longer than 1000 elements by definition"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Because each recursive call adds a stack frame and the call stack has a fixed, limited size, extremely deep recursion (proportional to input size) can exhaust it, while an equivalent loop needs only constant extra stack space.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Tracing and Complexity",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "For a recursive algorithm with recurrence T(n) = T(n-1) + O(1), what is both its time complexity and its recursion (stack) depth?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Time O(log n), depth O(log n)"
+      },
+      {
+        "letter": "B",
+        "text": "Time O(n), depth O(n) — both linear, since each call does constant work and reduces the problem by only 1"
+      },
+      {
+        "letter": "C",
+        "text": "Time O(n^2), depth O(1)"
+      },
+      {
+        "letter": "D",
+        "text": "Time O(2^n), depth O(n)"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "With one recursive call per step, reducing the input by 1 each time and doing constant extra work, both the total work and the maximum stack depth scale linearly with n.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Base Case",
+    "difficulty": "HARD",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain the difference between a recursive function that has a base case but reaches it only for some inputs (e.g., only works correctly for non-negative integers) versus one that is correct for all valid inputs, using integer factorial as an example.",
+    "expectedConcepts": [
+      "factorial base case is typically n=0 returns 1",
+      "for negative input, n never reaches 0 by decrementing, causing infinite recursion",
+      "correct implementations should validate input or define behavior for edge cases",
+      "robust base case design must consider the full domain of valid/expected inputs"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Recursive Case",
+    "difficulty": "HARD",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain the difference between 'divide and conquer' recursion (like merge sort, which combines independent subproblem results) and 'decrease and conquer' recursion (like linear search, which reduces to one smaller subproblem), in terms of number and size of recursive calls.",
+    "expectedConcepts": [
+      "divide and conquer splits into multiple (often 2+) subproblems, typically of reduced size such as half",
+      "decrease and conquer reduces to a single smaller subproblem, often by a constant amount",
+      "divide and conquer requires a combine/merge step",
+      "decrease and conquer often has simpler combination or none at all",
+      "different resulting time complexities depending on branching factor"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Stack Usage",
+    "difficulty": "HARD",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how excessive recursion depth in a program can be diagnosed and fixed, using a recursive function that processes a very large list as an example.",
+    "expectedConcepts": [
+      "symptom: program crashes with a stack overflow error on large inputs",
+      "diagnose by checking whether recursion depth scales with input size",
+      "confirm no tail-call optimization is guaranteed by the language",
+      "rewrite algorithm iteratively using an explicit loop, or use an explicit stack data structure on the heap to simulate recursion",
+      "verify the iterative version produces the same results as the original recursive version"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Recursion",
+    "subtopic": "Tracing and Complexity",
+    "difficulty": "HARD",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how you would trace through and determine the time complexity of a recursive function with the recurrence T(n) = 2T(n-1) + O(1), without using a formula, by expanding the recursion.",
+    "expectedConcepts": [
+      "write out T(n) in terms of T(n-1), then substitute T(n-1) in terms of T(n-2), and so on",
+      "observe that each level doubles the number of calls while the argument decreases by 1",
+      "after k substitutions, there are 2^k calls with argument n-k",
+      "recursion stops when n-k reaches the base case, i.e., k = n",
+      "total number of calls is proportional to 2^n, giving exponential time complexity"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Traversal",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "In an in-order traversal of a binary search tree (BST), in what order are the nodes visited?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Root, left subtree, right subtree"
+      },
+      {
+        "letter": "B",
+        "text": "Left subtree, root, right subtree, producing values in sorted (ascending) order for a BST"
+      },
+      {
+        "letter": "C",
+        "text": "Right subtree, root, left subtree"
+      },
+      {
+        "letter": "D",
+        "text": "Level by level from top to bottom"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "In-order traversal visits the left subtree, then the current node, then the right subtree, which yields values in ascending sorted order for a valid BST.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Insertion",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "When inserting a new value into a binary search tree, how is the correct position determined?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Always insert as the new root"
+      },
+      {
+        "letter": "B",
+        "text": "Compare the value to each node starting at the root, going left if smaller and right if larger, until an empty spot is found"
+      },
+      {
+        "letter": "C",
+        "text": "Insert at a random leaf"
+      },
+      {
+        "letter": "D",
+        "text": "Always insert as the left child of the root"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "BST insertion follows the BST property by repeatedly comparing the new value to current nodes and moving left or right accordingly until reaching a null position, where the new node is attached.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Search",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What is the time complexity of searching for a value in a balanced binary search tree with n nodes?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(1)"
+      },
+      {
+        "letter": "B",
+        "text": "O(log n)"
+      },
+      {
+        "letter": "C",
+        "text": "O(n)"
+      },
+      {
+        "letter": "D",
+        "text": "O(n log n)"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "In a balanced BST, each comparison eliminates roughly half of the remaining nodes, giving a search time proportional to the tree's height, which is O(log n) when balanced.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Height and Balance",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What is the 'height' of a tree?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "The total number of nodes in the tree"
+      },
+      {
+        "letter": "B",
+        "text": "The number of edges on the longest path from the root to a leaf node"
+      },
+      {
+        "letter": "C",
+        "text": "The number of leaf nodes only"
+      },
+      {
+        "letter": "D",
+        "text": "The depth of the root node"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A tree's height is defined as the length (number of edges) of the longest path from the root down to any leaf.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Traversal",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "Which traversal visits a node before its children (root first)?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "In-order"
+      },
+      {
+        "letter": "B",
+        "text": "Pre-order"
+      },
+      {
+        "letter": "C",
+        "text": "Post-order"
+      },
+      {
+        "letter": "D",
+        "text": "Level-order only"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Pre-order traversal visits the current node first, then recursively traverses the left subtree, then the right subtree.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Insertion",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What is the defining property that must hold for every node in a binary search tree?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "The left child's value is greater than the node's value"
+      },
+      {
+        "letter": "B",
+        "text": "All values in the left subtree are less than the node's value, and all values in the right subtree are greater than the node's value"
+      },
+      {
+        "letter": "C",
+        "text": "Every node must have exactly two children"
+      },
+      {
+        "letter": "D",
+        "text": "The tree must be perfectly balanced"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "This ordering property (left subtree smaller, right subtree larger) is what defines a binary search tree and enables efficient search.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Search",
+    "difficulty": "EASY",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain why searching in an unbalanced (skewed) binary search tree can degrade to O(n) time in the worst case.",
+    "expectedConcepts": [
+      "a skewed tree resembles a linked list, e.g., every node has only a right child",
+      "height becomes O(n) instead of O(log n)",
+      "search time is proportional to the tree's height",
+      "worst case occurs when elements are inserted in already-sorted order without rebalancing"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Height and Balance",
+    "difficulty": "EASY",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain the difference between a tree's 'height' and a node's 'depth,' and how they relate to the root.",
+    "expectedConcepts": [
+      "depth of a node is the number of edges from the root to that node",
+      "height of a node is the number of edges on the longest path from that node down to a leaf",
+      "height of the tree equals the depth of the deepest leaf",
+      "root has depth 0"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Traversal",
+    "difficulty": "EASY",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how you would perform a post-order traversal of a binary tree.",
+    "expectedConcepts": [
+      "recursively traverse the left subtree first",
+      "then recursively traverse the right subtree",
+      "visit/process the current node last",
+      "base case is an empty (null) subtree, which does nothing",
+      "order results in children being processed before their parent"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Insertion",
+    "difficulty": "EASY",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how you would insert the value 15 into a binary search tree, starting comparisons from the root.",
+    "expectedConcepts": [
+      "start at the root and compare 15 to the root's value",
+      "if 15 is less, move to the left child; if greater, move to the right child",
+      "repeat the comparison at each subsequent node",
+      "continue until reaching a null (empty) position",
+      "create a new node with value 15 and attach it at that null position as a leaf"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Insertion",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "What is the time complexity of inserting a new value into a binary search tree with height h?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(1)"
+      },
+      {
+        "letter": "B",
+        "text": "O(h), which is O(log n) for a balanced tree or O(n) for a skewed tree"
+      },
+      {
+        "letter": "C",
+        "text": "O(n^2) always"
+      },
+      {
+        "letter": "D",
+        "text": "O(log n) regardless of balance"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Insertion requires traversing from the root down to a leaf position, taking time proportional to the tree's height h, which depends on whether the tree is balanced.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Search",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "When searching for a value in a BST and the target is less than the current node's value, what should happen next?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Search the right subtree"
+      },
+      {
+        "letter": "B",
+        "text": "Search the left subtree"
+      },
+      {
+        "letter": "C",
+        "text": "Terminate and report not found"
+      },
+      {
+        "letter": "D",
+        "text": "Search both subtrees"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Because all values in the left subtree are smaller than the current node's value in a BST, the search only needs to continue into the left subtree.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Height and Balance",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "What is the purpose of a self-balancing binary search tree (e.g., AVL tree or red-black tree)?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "To eliminate the need for comparisons during search"
+      },
+      {
+        "letter": "B",
+        "text": "To automatically maintain a height of O(log n) through rotations, ensuring search/insert/delete remain O(log n)"
+      },
+      {
+        "letter": "C",
+        "text": "To store duplicate values efficiently"
+      },
+      {
+        "letter": "D",
+        "text": "To convert the tree into a hash table"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Self-balancing trees perform rotations after insertions/deletions to keep the tree's height logarithmic in the number of nodes, guaranteeing O(log n) operations even in the worst case.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Traversal",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "Which traversal is most naturally suited to printing the directory structure of a file system where a folder must be listed before its contents?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "In-order"
+      },
+      {
+        "letter": "B",
+        "text": "Pre-order"
+      },
+      {
+        "letter": "C",
+        "text": "Post-order"
+      },
+      {
+        "letter": "D",
+        "text": "None of these, only level-order works"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Pre-order visits a node (the folder) before its children (contents), matching the 'list the folder, then its contents' requirement.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Insertion",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "In an AVL tree, what triggers a rotation after an insertion?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "The tree becomes too large"
+      },
+      {
+        "letter": "B",
+        "text": "The balance factor (height difference between left and right subtrees) of some node becomes greater than 1 or less than -1"
+      },
+      {
+        "letter": "C",
+        "text": "A duplicate value is inserted"
+      },
+      {
+        "letter": "D",
+        "text": "The root changes value"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "AVL trees enforce that every node's balance factor stays within {-1, 0, 1}; an insertion that violates this triggers a rotation to restore balance.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Search",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "What is the time complexity of finding the minimum value in a binary search tree?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(1)"
+      },
+      {
+        "letter": "B",
+        "text": "O(h), by following left child pointers from the root until reaching a node with no left child"
+      },
+      {
+        "letter": "C",
+        "text": "O(n), by checking every node"
+      },
+      {
+        "letter": "D",
+        "text": "O(log n) always regardless of tree shape"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "The minimum value in a BST is always the leftmost node, found by repeatedly following left children from the root, taking time proportional to the tree's height h.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Height and Balance",
+    "difficulty": "MEDIUM",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain what a 'balance factor' is in the context of AVL trees and why keeping it within {-1, 0, 1} for every node guarantees O(log n) height.",
+    "expectedConcepts": [
+      "balance factor is the difference between the heights of the left and right subtrees of a node",
+      "keeping it in {-1,0,1} prevents the tree from becoming skewed",
+      "this bounds the tree's height to O(log n) relative to the number of nodes",
+      "mathematically related to Fibonacci-like minimal node count growth per height"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Traversal",
+    "difficulty": "MEDIUM",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain why in-order traversal of a binary search tree always produces values in sorted order, referencing the BST property.",
+    "expectedConcepts": [
+      "BST property: left subtree values less than node, right subtree values greater",
+      "in-order visits left subtree, then node, then right subtree",
+      "this recursively ensures smaller values are output before the node and larger values after",
+      "the recursive structure guarantees the entire output sequence is sorted"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Insertion",
+    "difficulty": "MEDIUM",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how a left rotation is performed on a node in an AVL tree to fix a right-heavy imbalance.",
+    "expectedConcepts": [
+      "identify the unbalanced node (pivot) and its right child (new root of subtree)",
+      "the right child's left subtree becomes the pivot's new right subtree",
+      "the pivot becomes the left child of its former right child",
+      "update parent pointers/links to the subtree's new root",
+      "recompute heights/balance factors of the affected nodes after rotation"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Search",
+    "difficulty": "MEDIUM",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step the algorithm to search for a target value in a binary search tree.",
+    "expectedConcepts": [
+      "start at the root as the current node",
+      "compare the target value to the current node's value",
+      "if equal, the value is found, return success",
+      "if target is smaller, move to the left child",
+      "if target is larger, move to the right child",
+      "repeat until found or a null pointer is reached, indicating not found"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Search",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "In the worst case, what is the time complexity of searching in a binary search tree that was built by inserting n already-sorted values in order (without rebalancing)?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(log n)"
+      },
+      {
+        "letter": "B",
+        "text": "O(n), because the resulting tree degenerates into a linked-list-like chain"
+      },
+      {
+        "letter": "C",
+        "text": "O(1)"
+      },
+      {
+        "letter": "D",
+        "text": "O(n log n)"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Inserting sorted values into a plain BST without rebalancing produces a completely skewed tree (essentially a linked list), so search degrades to O(n).",
+    "maxScore": 1
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Height and Balance",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "Why do red-black trees guarantee O(log n) height despite allowing more imbalance than AVL trees (i.e., looser balance)?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "They don't guarantee O(log n) height"
+      },
+      {
+        "letter": "B",
+        "text": "Their coloring rules (e.g., no two consecutive red nodes, equal black-height on all root-to-leaf paths) bound the longest path to at most twice the shortest, keeping height O(log n)"
+      },
+      {
+        "letter": "C",
+        "text": "They rebalance after every single search operation"
+      },
+      {
+        "letter": "D",
+        "text": "They are actually unbalanced by design"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Red-black tree invariants ensure no root-to-null path is more than twice as long as any other, which mathematically bounds the tree's height to O(log n) even though it is less strictly balanced than an AVL tree.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Traversal",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "Given only the pre-order and in-order traversal sequences of a binary tree (with no duplicate values), what can be uniquely determined?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Nothing; multiple different trees could produce the same sequences"
+      },
+      {
+        "letter": "B",
+        "text": "The original binary tree can be uniquely reconstructed"
+      },
+      {
+        "letter": "C",
+        "text": "Only the tree's height can be determined"
+      },
+      {
+        "letter": "D",
+        "text": "Only the number of leaf nodes can be determined"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Pre-order identifies the root, and in-order (using that root to split into left/right value ranges) identifies which values belong to the left vs. right subtree, allowing the entire tree structure to be reconstructed uniquely.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Insertion",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "When deleting a node with two children from a binary search tree, what is the standard approach to maintain the BST property?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Delete the node and leave both children unattached"
+      },
+      {
+        "letter": "B",
+        "text": "Replace the node's value with its in-order successor (or predecessor), then delete that successor/predecessor node from its original position"
+      },
+      {
+        "letter": "C",
+        "text": "Delete the entire subtree"
+      },
+      {
+        "letter": "D",
+        "text": "Convert the tree to an array and re-sort"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Replacing the deleted node's value with its in-order successor (the smallest value in its right subtree) preserves the BST ordering property, after which the now-duplicate successor node is removed from its original leaf-like position.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Search",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "For a balanced BST versus a hash table, which statement correctly compares their search characteristics?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Both provide O(1) average search time"
+      },
+      {
+        "letter": "B",
+        "text": "A balanced BST provides O(log n) search but keeps elements in sorted order (supporting range queries), while a hash table provides O(1) average search but no inherent ordering"
+      },
+      {
+        "letter": "C",
+        "text": "A balanced BST is always faster than a hash table"
+      },
+      {
+        "letter": "D",
+        "text": "Hash tables support range queries better than BSTs"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A balanced BST trades some speed (O(log n) vs O(1) average) for maintaining sorted order, which enables efficient range queries and in-order traversal, something a hash table does not support.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Height and Balance",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "What is the minimum possible height of a binary tree with n nodes, and why?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(n), since trees are always skewed"
+      },
+      {
+        "letter": "B",
+        "text": "O(log n), achieved when the tree is as balanced/complete as possible, since a tree of height h can hold at most 2^(h+1)-1 nodes"
+      },
+      {
+        "letter": "C",
+        "text": "O(1), regardless of n"
+      },
+      {
+        "letter": "D",
+        "text": "O(n^2)"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Since a binary tree of height h can contain at most 2^(h+1)-1 nodes, achieving the minimum height for n nodes requires the tree to be as full/balanced as possible, giving height on the order of log n.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Traversal",
+    "difficulty": "HARD",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain why level-order (breadth-first) traversal of a tree requires an auxiliary queue rather than relying on the call stack like the other traversals.",
+    "expectedConcepts": [
+      "level-order visits nodes level by level, not by recursive depth",
+      "a queue's FIFO order naturally processes nodes in the order they were discovered, matching level order",
+      "recursive traversals (pre/in/post-order) rely on the call stack's LIFO order which produces depth-first order, not level order",
+      "enqueue children as each node is dequeued and processed"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Insertion",
+    "difficulty": "HARD",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain why repeatedly inserting values into a plain (non-self-balancing) BST in sorted order is a worst-case scenario, and describe one strategy to avoid this problem in practice.",
+    "expectedConcepts": [
+      "sorted-order insertion causes every new node to attach as a single chain (e.g., always to the right)",
+      "results in a degenerate tree with height O(n) instead of O(log n)",
+      "strategies include using a self-balancing tree (AVL, red-black)",
+      "or randomizing insertion order / using a randomized structure like a treap"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Search",
+    "difficulty": "HARD",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how you would find the lowest common ancestor (LCA) of two given nodes in a binary search tree, using the BST property (without extra data structures).",
+    "expectedConcepts": [
+      "start at the root as the current node",
+      "compare both target values to the current node's value",
+      "if both targets are smaller, move to the left child and repeat",
+      "if both targets are larger, move to the right child and repeat",
+      "if the targets are on different sides (or one equals the current node), the current node is the LCA",
+      "this exploits the BST ordering to avoid searching the whole tree"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Trees",
+    "subtopic": "Height and Balance",
+    "difficulty": "HARD",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how you would compute the height of a binary tree using recursion.",
+    "expectedConcepts": [
+      "base case: an empty (null) node has height -1 or 0 depending on convention",
+      "recursively compute the height of the left subtree",
+      "recursively compute the height of the right subtree",
+      "take the maximum of the two subtree heights",
+      "add 1 to account for the current node's own edge/level",
+      "return this value as the height of the current subtree"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Traversal (BFS/DFS)",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What data structure is used to implement breadth-first search (BFS) traversal of a graph?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "A stack"
+      },
+      {
+        "letter": "B",
+        "text": "A queue"
+      },
+      {
+        "letter": "C",
+        "text": "A priority queue only"
+      },
+      {
+        "letter": "D",
+        "text": "A hash table"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "BFS explores neighbors level by level, using a queue to process discovered vertices in the order they were found (FIFO).",
+    "maxScore": 1
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Representation",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What is an adjacency matrix used for in graph representation?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Storing a sorted list of vertices"
+      },
+      {
+        "letter": "B",
+        "text": "A 2D array where entry [i][j] indicates whether an edge exists between vertex i and vertex j (and possibly its weight)"
+      },
+      {
+        "letter": "C",
+        "text": "Storing only the number of edges"
+      },
+      {
+        "letter": "D",
+        "text": "A tree structure for hierarchical data"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "An adjacency matrix uses a V x V grid where each cell records the presence (and possibly weight) of an edge between the corresponding pair of vertices.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Shortest Path",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "In an unweighted graph, which traversal algorithm can be used to find the shortest path (fewest edges) from a source vertex to all other reachable vertices?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Depth-first search (DFS)"
+      },
+      {
+        "letter": "B",
+        "text": "Breadth-first search (BFS)"
+      },
+      {
+        "letter": "C",
+        "text": "In-order traversal"
+      },
+      {
+        "letter": "D",
+        "text": "Random walk"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "BFS explores vertices in increasing order of distance (number of edges) from the source, so the first time a vertex is reached gives its shortest path length in an unweighted graph.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Connectivity",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "A graph is called 'connected' (for undirected graphs) if:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "It has no edges"
+      },
+      {
+        "letter": "B",
+        "text": "There is a path between every pair of vertices"
+      },
+      {
+        "letter": "C",
+        "text": "Every vertex has the same degree"
+      },
+      {
+        "letter": "D",
+        "text": "It contains a cycle"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "An undirected graph is connected when every vertex is reachable from every other vertex via some path of edges.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Traversal (BFS/DFS)",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What data structure is used to implement depth-first search (DFS) traversal, either explicitly or via the call stack in a recursive implementation?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "A queue"
+      },
+      {
+        "letter": "B",
+        "text": "A stack"
+      },
+      {
+        "letter": "C",
+        "text": "A hash table"
+      },
+      {
+        "letter": "D",
+        "text": "A circular buffer"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "DFS explores as far as possible along a branch before backtracking, which is naturally implemented with a stack (explicit or via recursion's call stack).",
+    "maxScore": 1
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Representation",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What is an adjacency list used for in graph representation?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "An array of lists where each vertex stores a list of its directly connected neighbors"
+      },
+      {
+        "letter": "B",
+        "text": "A single sorted array of all vertices"
+      },
+      {
+        "letter": "C",
+        "text": "A matrix that stores only vertex names"
+      },
+      {
+        "letter": "D",
+        "text": "A structure that stores only the shortest paths"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "An adjacency list represents a graph as a collection where each vertex has an associated list of the neighboring vertices it connects to directly.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Shortest Path",
+    "difficulty": "EASY",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain why BFS finds the shortest path in terms of number of edges for an unweighted graph, but not necessarily for a weighted graph.",
+    "expectedConcepts": [
+      "BFS explores vertices in order of increasing edge count from the source",
+      "this guarantees the first visit to any vertex uses the fewest edges when all edges are equal weight",
+      "in a weighted graph, a path with more edges could have a smaller total weight",
+      "BFS ignores edge weights, so it cannot account for varying costs"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Connectivity",
+    "difficulty": "EASY",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain the difference between a connected undirected graph and a strongly connected directed graph.",
+    "expectedConcepts": [
+      "undirected graph is connected if a path exists between every pair of vertices, ignoring direction",
+      "directed graph is strongly connected if there is a directed path from every vertex to every other vertex, respecting edge direction",
+      "strong connectivity requires paths in both directions between every pair",
+      "a directed graph can be weakly connected without being strongly connected"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Traversal (BFS/DFS)",
+    "difficulty": "EASY",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how breadth-first search (BFS) traverses a graph starting from a given source vertex.",
+    "expectedConcepts": [
+      "mark the source vertex as visited and enqueue it",
+      "while the queue is not empty, dequeue a vertex and process it",
+      "for each unvisited neighbor of that vertex, mark it visited and enqueue it",
+      "repeat until the queue is empty",
+      "visited marking prevents revisiting vertices and infinite loops in cyclic graphs"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Representation",
+    "difficulty": "EASY",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how you would build an adjacency list representation for an undirected graph given a list of edges.",
+    "expectedConcepts": [
+      "create an empty list (or map) of neighbors for each vertex",
+      "for each edge (u, v) in the input, add v to u's neighbor list",
+      "also add u to v's neighbor list, since the graph is undirected",
+      "repeat for all given edges",
+      "resulting structure allows quick lookup of a vertex's direct neighbors"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Representation",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "For a sparse graph (relatively few edges compared to the maximum possible), which representation is generally more space-efficient?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Adjacency matrix, using O(V^2) space regardless of edge count"
+      },
+      {
+        "letter": "B",
+        "text": "Adjacency list, using O(V + E) space, which is smaller when E is much less than V^2"
+      },
+      {
+        "letter": "C",
+        "text": "Both use identical space always"
+      },
+      {
+        "letter": "D",
+        "text": "Neither can represent sparse graphs"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "An adjacency matrix always uses O(V^2) space regardless of how many edges exist, while an adjacency list uses O(V + E) space, which is much smaller for sparse graphs where E is much less than V^2.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Shortest Path",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "What is the primary difference between Dijkstra's algorithm and BFS when finding shortest paths?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "They are identical algorithms"
+      },
+      {
+        "letter": "B",
+        "text": "Dijkstra's algorithm handles weighted edges (non-negative) using a priority queue, while BFS handles only unweighted graphs"
+      },
+      {
+        "letter": "C",
+        "text": "BFS handles negative weights and Dijkstra's does not"
+      },
+      {
+        "letter": "D",
+        "text": "Dijkstra's algorithm cannot be used on graphs with cycles"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Dijkstra's algorithm generalizes shortest-path finding to graphs with non-negative edge weights by always expanding the vertex with the smallest known distance (via a priority queue), whereas BFS assumes all edges have equal weight.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Connectivity",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "How can BFS or DFS be used to determine whether an undirected graph is connected?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Count the number of edges only"
+      },
+      {
+        "letter": "B",
+        "text": "Run BFS/DFS from any single vertex; if all vertices are visited, the graph is connected"
+      },
+      {
+        "letter": "C",
+        "text": "Check if the graph has more than one vertex"
+      },
+      {
+        "letter": "D",
+        "text": "Connectivity cannot be determined using traversal"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "If a single BFS or DFS traversal starting from any vertex reaches every other vertex, then a path exists from that vertex to all others, meaning the whole undirected graph is connected.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Traversal (BFS/DFS)",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "In DFS traversal of a graph, what does it mean when a 'back edge' is encountered (an edge to an already-visited ancestor in the current DFS path)?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "The graph is definitely a tree"
+      },
+      {
+        "letter": "B",
+        "text": "It indicates the presence of a cycle in the graph"
+      },
+      {
+        "letter": "C",
+        "text": "It means the graph is disconnected"
+      },
+      {
+        "letter": "D",
+        "text": "It means the traversal has failed"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A back edge connects a vertex to one of its ancestors in the current DFS traversal path, which means there is a cycle in the graph.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Representation",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "What is the time complexity to check whether a specific edge (u, v) exists using an adjacency matrix versus an adjacency list (where deg(u) is the number of u's neighbors)?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Both are O(1)"
+      },
+      {
+        "letter": "B",
+        "text": "Adjacency matrix: O(1); adjacency list: O(deg(u)) in the worst case, since the neighbor list must be scanned"
+      },
+      {
+        "letter": "C",
+        "text": "Adjacency matrix: O(V); adjacency list: O(1)"
+      },
+      {
+        "letter": "D",
+        "text": "Both are O(V^2)"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "An adjacency matrix allows direct O(1) lookup at position [u][v], while an adjacency list requires scanning through u's neighbor list, taking time proportional to u's degree in the worst case.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Shortest Path",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "Why does Dijkstra's algorithm fail to produce correct shortest paths when a graph contains negative edge weights?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "It works correctly regardless of negative weights"
+      },
+      {
+        "letter": "B",
+        "text": "Its greedy assumption that once a vertex's shortest distance is finalized it cannot be improved later breaks down when a later negative edge could reduce a supposedly 'final' distance"
+      },
+      {
+        "letter": "C",
+        "text": "Negative weights make the graph disconnected"
+      },
+      {
+        "letter": "D",
+        "text": "Dijkstra's algorithm cannot run on weighted graphs at all"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Dijkstra's algorithm greedily finalizes the shortest distance to the closest unvisited vertex, assuming it can never be improved later; a negative edge weight can violate this assumption by providing a cheaper path discovered after finalization.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Connectivity",
+    "difficulty": "MEDIUM",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain how depth-first search (DFS) can be used to identify connected components in an undirected graph.",
+    "expectedConcepts": [
+      "iterate over all vertices, skipping any already visited",
+      "start a new DFS from each unvisited vertex",
+      "all vertices reached during that DFS belong to the same connected component",
+      "increment a component counter each time a new DFS is started",
+      "total number of DFS starts equals the number of connected components"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Traversal (BFS/DFS)",
+    "difficulty": "MEDIUM",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain the key difference in traversal order and typical use cases between BFS and DFS.",
+    "expectedConcepts": [
+      "BFS explores level by level using a queue, useful for shortest path in unweighted graphs",
+      "DFS explores as deep as possible before backtracking, using a stack/recursion",
+      "DFS is useful for tasks like cycle detection, topological sorting, or exploring all paths",
+      "BFS generally uses more memory at wide levels, DFS can use more memory for deep graphs"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Representation",
+    "difficulty": "MEDIUM",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how you would determine, using an adjacency list, the degree (number of neighbors) of every vertex in an undirected graph.",
+    "expectedConcepts": [
+      "initialize a degree counter for each vertex to 0",
+      "for each vertex, count the length of its neighbor list in the adjacency list",
+      "this count directly gives the degree since each neighbor entry represents one incident edge",
+      "store or report the degree for each vertex",
+      "total sum of degrees equals twice the number of edges (handshake lemma)"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Shortest Path",
+    "difficulty": "MEDIUM",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how Dijkstra's algorithm computes the shortest path from a single source vertex in a graph with non-negative edge weights.",
+    "expectedConcepts": [
+      "initialize distance to source as 0 and all other vertices as infinity",
+      "use a priority queue (min-heap) ordered by current known distance",
+      "repeatedly extract the vertex with the smallest tentative distance that hasn't been finalized",
+      "for each neighbor of that vertex, check if going through the current vertex offers a shorter distance (relaxation)",
+      "update the neighbor's distance and priority queue entry if a shorter path is found",
+      "repeat until all vertices are finalized or the queue is empty"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Shortest Path",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "Why is the Bellman-Ford algorithm preferred over Dijkstra's algorithm for graphs that may contain negative edge weights (but no negative cycles)?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Bellman-Ford is always faster than Dijkstra's"
+      },
+      {
+        "letter": "B",
+        "text": "Bellman-Ford correctly relaxes all edges repeatedly (V-1 times), allowing it to handle negative weights correctly, whereas Dijkstra's greedy finalization can be invalidated by negative edges"
+      },
+      {
+        "letter": "C",
+        "text": "Bellman-Ford cannot handle weighted graphs"
+      },
+      {
+        "letter": "D",
+        "text": "They produce identical results and performance in all cases"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Bellman-Ford relaxes every edge up to V-1 times without permanently finalizing any vertex's distance early, which correctly accounts for negative weights, unlike Dijkstra's greedy approach that assumes finalized distances cannot improve.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Connectivity",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "What algorithmic approach is commonly used to find strongly connected components (SCCs) in a directed graph, such as Kosaraju's or Tarjan's algorithm, and what is their typical time complexity?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(V^3), using an adjacency matrix brute-force approach"
+      },
+      {
+        "letter": "B",
+        "text": "O(V + E), using DFS-based approaches that exploit finish times or low-link values"
+      },
+      {
+        "letter": "C",
+        "text": "O(V^2 log V)"
+      },
+      {
+        "letter": "D",
+        "text": "It is undecidable"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Both Kosaraju's and Tarjan's algorithms find SCCs using one or two passes of DFS combined with clever bookkeeping (finish order or low-link values), achieving linear O(V + E) time.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Traversal (BFS/DFS)",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "In DFS-based topological sorting of a directed acyclic graph (DAG), how is the topological order derived?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "By the order vertices are first visited (discovery order)"
+      },
+      {
+        "letter": "B",
+        "text": "By reversing the order in which vertices finish (complete) their DFS exploration"
+      },
+      {
+        "letter": "C",
+        "text": "By sorting vertices alphabetically"
+      },
+      {
+        "letter": "D",
+        "text": "Topological sort cannot be done with DFS"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "In DFS-based topological sort, a vertex is added to the front of the result (or the finish order is reversed) only after all of its descendants have finished processing, ensuring dependencies come before dependents.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Representation",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "For an algorithm that needs to repeatedly check 'does edge (u,v) exist?' a very large number of times on a dense graph (E close to V^2), which representation minimizes total lookup time, and why?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Adjacency list, because it uses less memory"
+      },
+      {
+        "letter": "B",
+        "text": "Adjacency matrix, because it provides guaranteed O(1) lookup per query regardless of degree, which is advantageous when the graph is dense and queries are frequent"
+      },
+      {
+        "letter": "C",
+        "text": "Neither matters for dense graphs"
+      },
+      {
+        "letter": "D",
+        "text": "A linked list of all edges"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "While an adjacency matrix always uses O(V^2) space, its O(1) edge-existence lookup outperforms an adjacency list's O(degree) lookup when the graph is dense and such queries are frequent, since a dense graph already implies large memory usage regardless of representation.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Shortest Path",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "Why does the Floyd-Warshall algorithm (all-pairs shortest path) have O(V^3) time complexity, and what is one advantage it offers over running Dijkstra's algorithm from every vertex?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "It's not actually O(V^3), it's O(V^2)"
+      },
+      {
+        "letter": "B",
+        "text": "It uses three nested loops over all vertices to iteratively consider each vertex as an intermediate point, and it correctly handles negative edge weights (without negative cycles), unlike repeated Dijkstra's"
+      },
+      {
+        "letter": "C",
+        "text": "It only works on unweighted graphs"
+      },
+      {
+        "letter": "D",
+        "text": "It has no advantages over Dijkstra's"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Floyd-Warshall iterates over all vertices as potential intermediate points in a triple nested loop (O(V^3)), and unlike Dijkstra's, it correctly computes shortest paths even with negative edge weights as long as there are no negative cycles.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Connectivity",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "What does it mean for an edge in an undirected connected graph to be a 'bridge' (cut edge), and how does its removal affect connectivity?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "A bridge is any edge in the graph"
+      },
+      {
+        "letter": "B",
+        "text": "A bridge is an edge whose removal increases the number of connected components (disconnects the graph or a part of it)"
+      },
+      {
+        "letter": "C",
+        "text": "A bridge only exists in directed graphs"
+      },
+      {
+        "letter": "D",
+        "text": "Removing a bridge never changes connectivity"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A bridge (cut edge) is an edge that is the only path between two parts of the graph; removing it splits the graph into more connected components than before.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Traversal (BFS/DFS)",
+    "difficulty": "HARD",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain why DFS is well-suited for detecting cycles in a directed graph, and why simply checking for 'already visited' vertices (as in undirected graphs) is insufficient for directed graphs.",
+    "expectedConcepts": [
+      "directed graph cycle detection needs to track vertices in the current recursion path, not just visited overall",
+      "a vertex can be visited via one path and revisited via a different, non-cyclic path in a DAG",
+      "need a separate 'currently in recursion stack' marker distinct from 'globally visited'",
+      "encountering a vertex that is still in the current recursion stack indicates a cycle (back edge)"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Representation",
+    "difficulty": "HARD",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain how a graph can be represented using an edge list, and discuss a scenario where this representation is preferable over an adjacency matrix or adjacency list.",
+    "expectedConcepts": [
+      "edge list stores a simple collection of (u, v) pairs (optionally with weights)",
+      "uses O(E) space, very compact for sparse graphs",
+      "preferable when algorithms just need to iterate over all edges, e.g., Kruskal's minimum spanning tree algorithm which sorts edges by weight",
+      "less efficient for neighbor lookups compared to adjacency list"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Shortest Path",
+    "difficulty": "HARD",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how you would reconstruct the actual shortest path (not just the distance) from source to a target vertex after running Dijkstra's algorithm.",
+    "expectedConcepts": [
+      "during Dijkstra's algorithm, whenever a shorter distance to a vertex is found, record that vertex's predecessor (the vertex it was relaxed from)",
+      "after the algorithm finishes, start at the target vertex",
+      "follow the predecessor pointers backward from target toward the source",
+      "collect each vertex visited along this backward walk",
+      "reverse the collected sequence to get the path from source to target",
+      "if the target's predecessor is undefined, no path exists"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Graphs",
+    "subtopic": "Connectivity",
+    "difficulty": "HARD",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how you would use DFS to find all bridges (cut edges) in an undirected connected graph.",
+    "expectedConcepts": [
+      "perform a DFS while tracking discovery time of each vertex",
+      "maintain a 'low-link' value for each vertex, the lowest discovery time reachable via back edges from that vertex's subtree",
+      "for each tree edge (u,v) in the DFS, after recursing into v, update u's low-link using v's low-link",
+      "an edge (u,v) is a bridge if v's low-link is strictly greater than u's discovery time, meaning v's subtree has no back edge reaching u or earlier",
+      "collect all such edges as bridges",
+      "overall runs in O(V + E) time"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Hash Functions",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What is the purpose of a hash function in a hash table?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "To sort the keys"
+      },
+      {
+        "letter": "B",
+        "text": "To map a key to an index (bucket) in the underlying array"
+      },
+      {
+        "letter": "C",
+        "text": "To encrypt the data permanently"
+      },
+      {
+        "letter": "D",
+        "text": "To compress the data to save memory"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A hash function converts a key into an integer index used to locate where the corresponding value should be stored or looked up in the hash table's array.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Collision Handling",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What is a 'collision' in a hash table?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "When two different keys hash to the same index"
+      },
+      {
+        "letter": "B",
+        "text": "When the hash table runs out of memory"
+      },
+      {
+        "letter": "C",
+        "text": "When a key is deleted"
+      },
+      {
+        "letter": "D",
+        "text": "When the hash function returns a negative number"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "A collision occurs when two distinct keys are mapped by the hash function to the same bucket/index, requiring a strategy to store both.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Load Factor",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What does 'load factor' refer to in a hash table?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "The number of collisions that have occurred"
+      },
+      {
+        "letter": "B",
+        "text": "The ratio of the number of stored elements to the number of buckets (slots) in the table"
+      },
+      {
+        "letter": "C",
+        "text": "The average key length"
+      },
+      {
+        "letter": "D",
+        "text": "The maximum size the table can ever reach"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Load factor is defined as (number of entries) / (number of buckets), and it indicates how full the hash table is.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Applications",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "Which of the following is a common real-world application of hash tables?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Maintaining strict FIFO order of tasks"
+      },
+      {
+        "letter": "B",
+        "text": "Implementing dictionaries/maps for fast key-based lookup, such as counting word frequencies"
+      },
+      {
+        "letter": "C",
+        "text": "Sorting large datasets"
+      },
+      {
+        "letter": "D",
+        "text": "Representing hierarchical file systems"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Hash tables underlie dictionary/map data structures, providing average O(1) lookup, insertion, and deletion by key, making them ideal for tasks like frequency counting.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Hash Functions",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What property should a good hash function have with respect to distributing keys across buckets?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "It should map most keys to the same bucket"
+      },
+      {
+        "letter": "B",
+        "text": "It should distribute keys as uniformly as possible across the available buckets to minimize collisions"
+      },
+      {
+        "letter": "C",
+        "text": "It should be as slow as possible"
+      },
+      {
+        "letter": "D",
+        "text": "It should always produce the same output regardless of input"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A good hash function spreads keys evenly across buckets, reducing the likelihood of collisions and keeping operations close to O(1) on average.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Collision Handling",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What is 'chaining' as a collision resolution technique?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Each bucket stores a linked list (or similar structure) of all elements that hash to that index"
+      },
+      {
+        "letter": "B",
+        "text": "Colliding elements are simply discarded"
+      },
+      {
+        "letter": "C",
+        "text": "The hash table doubles in size on every collision"
+      },
+      {
+        "letter": "D",
+        "text": "Colliding elements overwrite the existing element"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Chaining resolves collisions by having each bucket hold a list (commonly a linked list) of all key-value pairs that hash to that same index.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Load Factor",
+    "difficulty": "EASY",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain why a high load factor in a hash table using chaining tends to degrade average lookup performance.",
+    "expectedConcepts": [
+      "load factor is entries divided by buckets",
+      "higher load factor means chains (linked lists) at each bucket grow longer on average",
+      "longer chains require more comparisons during lookup",
+      "average lookup time becomes proportional to load factor, moving away from O(1)"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Applications",
+    "difficulty": "EASY",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain why hash tables are commonly used to implement a 'set' data structure (storing unique elements with fast membership testing).",
+    "expectedConcepts": [
+      "hash table provides average O(1) insertion and lookup",
+      "checking membership just requires hashing the element and checking the corresponding bucket",
+      "duplicates are naturally handled since inserting the same key again does not create a new entry",
+      "this is much faster on average than a linear scan through a list, O(n)"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Hash Functions",
+    "difficulty": "EASY",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how a simple hash function for strings might compute an index for a hash table of size m (e.g., using character codes).",
+    "expectedConcepts": [
+      "initialize an accumulator value, e.g., to 0",
+      "iterate over each character in the string",
+      "update the accumulator using the character's numeric code, often combined with a multiplier (polynomial hashing) to spread influence",
+      "after processing all characters, take the accumulator modulo m to fit within the table's bucket range",
+      "resulting value is used as the index/bucket for that key"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Collision Handling",
+    "difficulty": "EASY",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how insertion works in a hash table that uses linear probing for collision resolution.",
+    "expectedConcepts": [
+      "compute the initial index by hashing the key",
+      "check if that slot is empty",
+      "if occupied, move to the next slot (index + 1, wrapping around with modulo)",
+      "repeat probing sequentially until an empty slot is found",
+      "insert the key-value pair at that empty slot"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Collision Handling",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "What is 'open addressing' as a family of collision resolution strategies?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Storing all colliding elements in a separate external file"
+      },
+      {
+        "letter": "B",
+        "text": "Resolving collisions by probing for another open slot within the same array, using techniques like linear or quadratic probing"
+      },
+      {
+        "letter": "C",
+        "text": "Always resizing the table immediately upon collision"
+      },
+      {
+        "letter": "D",
+        "text": "Ignoring collisions entirely"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Open addressing resolves a collision by searching for another empty slot in the array itself (rather than using external chains), following a defined probing sequence.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Load Factor",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "Why do hash tables typically resize (rehash) once the load factor exceeds a certain threshold (e.g., 0.7)?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "To reduce the number of keys stored"
+      },
+      {
+        "letter": "B",
+        "text": "To keep the load factor low, maintaining average O(1) performance for operations by reducing collision likelihood"
+      },
+      {
+        "letter": "C",
+        "text": "Resizing is unnecessary and never done in practice"
+      },
+      {
+        "letter": "D",
+        "text": "To convert the hash table into a tree"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "As load factor grows, collisions become more frequent and operations slow down; resizing to a larger table and rehashing existing keys restores a lower load factor and keeps average operations close to O(1).",
+    "maxScore": 1
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Applications",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "How are hash tables typically used to detect duplicate elements in a collection efficiently?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "By sorting the collection first, which is always required"
+      },
+      {
+        "letter": "B",
+        "text": "By inserting each element into a hash set and checking if it already exists before inserting, achieving average O(n) total time for n elements"
+      },
+      {
+        "letter": "C",
+        "text": "By comparing every pair of elements, which is the only method"
+      },
+      {
+        "letter": "D",
+        "text": "Hash tables cannot be used for duplicate detection"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Iterating through the collection once and checking/inserting each element into a hash set allows O(1) average-time duplicate checks per element, giving O(n) total average time instead of O(n^2) for pairwise comparison.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Hash Functions",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "If two different keys always produce the same hash code from a hash function, what is this pair called, and is it avoidable in general?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "A 'perfect pair'; always avoidable"
+      },
+      {
+        "letter": "B",
+        "text": "A 'collision'; in general it cannot be entirely avoided for arbitrary key spaces larger than the table (pigeonhole principle), though a good hash function minimizes frequency"
+      },
+      {
+        "letter": "C",
+        "text": "A 'duplicate key'; the hash table rejects one automatically"
+      },
+      {
+        "letter": "D",
+        "text": "An 'overflow'; only occurs in arrays, not hash tables"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "This is a collision; by the pigeonhole principle, when the number of possible keys exceeds the number of buckets, some collisions are mathematically unavoidable, so a good hash function aims to minimize their frequency rather than eliminate them entirely.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Collision Handling",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "What potential downside does linear probing have compared to chaining, particularly as the load factor increases?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Linear probing always uses more memory than chaining"
+      },
+      {
+        "letter": "B",
+        "text": "Linear probing can suffer from 'clustering,' where consecutive occupied slots grow into long runs, increasing average probe length"
+      },
+      {
+        "letter": "C",
+        "text": "Linear probing cannot be implemented in an array"
+      },
+      {
+        "letter": "D",
+        "text": "Linear probing has no downsides"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Linear probing tends to create clusters of consecutive filled slots (primary clustering), which increases the average number of probes needed for insertion and lookup as the table fills up.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Load Factor",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "In a hash table using open addressing, why must the load factor be kept strictly below 1 (i.e., number of entries less than number of slots)?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "It is not actually required"
+      },
+      {
+        "letter": "B",
+        "text": "Because in open addressing every entry occupies its own physical slot in the array, so the table cannot hold more entries than it has slots"
+      },
+      {
+        "letter": "C",
+        "text": "Open addressing can exceed a load factor of 1 without issue"
+      },
+      {
+        "letter": "D",
+        "text": "Load factor is irrelevant to open addressing"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Unlike chaining, open addressing stores each entry directly in the array with no external structure, so once all slots are filled (load factor = 1), no more entries can be inserted without resizing.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Applications",
+    "difficulty": "MEDIUM",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain how a hash table can be used to efficiently count the frequency of each word in a large text document.",
+    "expectedConcepts": [
+      "use each unique word as a key in a hash map",
+      "initialize count to 0 (or use a default) when a word is first seen",
+      "increment the corresponding value each time the word is encountered again",
+      "hash map lookup/update is average O(1), giving overall O(n) time for n words",
+      "final map holds each word paired with its total frequency"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Hash Functions",
+    "difficulty": "MEDIUM",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain why using a poor hash function (e.g., one that maps most keys to the same few buckets) undermines the average O(1) performance benefit of hash tables.",
+    "expectedConcepts": [
+      "poor distribution causes many keys to collide into the same buckets",
+      "this creates long chains or long probe sequences",
+      "operations degrade toward O(n) in the worst case since it resembles a linear structure",
+      "O(1) average performance assumes a roughly uniform distribution of keys across buckets"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Collision Handling",
+    "difficulty": "MEDIUM",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how lookup works in a hash table that uses chaining for collision resolution, when searching for a given key.",
+    "expectedConcepts": [
+      "compute the bucket index by applying the hash function to the key",
+      "access the linked list (or chain) stored at that bucket index",
+      "traverse the chain comparing each stored key to the target key",
+      "if a match is found, return its associated value",
+      "if the end of the chain is reached without a match, report that the key is not present"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Load Factor",
+    "difficulty": "MEDIUM",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step what happens when a hash table using chaining is resized (rehashed) after its load factor exceeds a threshold.",
+    "expectedConcepts": [
+      "allocate a new, larger underlying array (commonly double the previous size)",
+      "iterate over every existing key-value pair in the old table",
+      "recompute each key's hash index relative to the new table's size",
+      "insert each pair into the appropriate bucket of the new array",
+      "discard the old array once all entries are moved",
+      "this operation costs O(n) but happens infrequently, keeping amortized cost low"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Load Factor",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "What is the average-case time complexity of search, insert, and delete in a hash table with chaining, assuming a good hash function and load factor maintained as a bounded constant?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(log n)"
+      },
+      {
+        "letter": "B",
+        "text": "O(1) average, since the expected chain length is bounded by the constant load factor"
+      },
+      {
+        "letter": "C",
+        "text": "O(n) always"
+      },
+      {
+        "letter": "D",
+        "text": "O(n log n)"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "With a well-distributed hash function and load factor kept bounded (e.g., below a constant threshold via resizing), the expected number of elements per bucket remains constant, giving O(1) average-case operations.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Applications",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "In implementing an LRU (Least Recently Used) cache efficiently in O(1) time for both get and put operations, which combination of data structures is typically used, and what role does the hash table play?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Only an array, sorted by recency"
+      },
+      {
+        "letter": "B",
+        "text": "A hash table (for O(1) key lookup) combined with a doubly linked list (to track and update recency order in O(1))"
+      },
+      {
+        "letter": "C",
+        "text": "A hash table alone is sufficient for O(1) recency tracking"
+      },
+      {
+        "letter": "D",
+        "text": "A binary search tree alone"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "The hash table maps keys directly to their corresponding nodes in a doubly linked list in O(1), while the doubly linked list maintains recency order and allows O(1) removal/reinsertion at the ends, together achieving O(1) get and put.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Hash Functions",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "Why is it generally undesirable to use a mutable value that can change as the sole basis for an object's hash code, when that object is used as a dictionary key?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "It has no downside and is standard practice"
+      },
+      {
+        "letter": "B",
+        "text": "If the value used for hashing changes after insertion, the key may hash to a different bucket than where it was originally stored, making it unfindable on future lookups"
+      },
+      {
+        "letter": "C",
+        "text": "Mutable values always produce perfect hash distributions"
+      },
+      {
+        "letter": "D",
+        "text": "Mutable objects cannot be hashed at all in any language"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A hash table relies on a key's hash code remaining consistent while it is stored; if the hashed value changes after insertion, subsequent lookups compute a different bucket index and fail to find the entry, effectively losing it.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Collision Handling",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "Comparing chaining and open addressing under a high load factor (close to or above 1), which statement is accurate?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Open addressing works fine even above load factor 1"
+      },
+      {
+        "letter": "B",
+        "text": "Chaining can still function (with degraded performance as chains lengthen) even above load factor 1, whereas open addressing cannot store more entries than available slots"
+      },
+      {
+        "letter": "C",
+        "text": "Both fail identically above load factor 1"
+      },
+      {
+        "letter": "D",
+        "text": "Neither is affected by load factor"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Chaining allows unlimited entries per bucket (at the cost of longer lists and slower lookups) so it can technically exceed a load factor of 1, while open addressing physically cannot store more entries than there are slots in the array.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Load Factor",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "What is 'double hashing,' and why is it often preferred over linear probing for open addressing?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Applying the same hash function twice in a row"
+      },
+      {
+        "letter": "B",
+        "text": "Using a second, independent hash function to determine the probe step size, which reduces clustering compared to linear probing's fixed step of 1"
+      },
+      {
+        "letter": "C",
+        "text": "It means the table is hashed by two separate hash tables simultaneously"
+      },
+      {
+        "letter": "D",
+        "text": "Double hashing is equivalent to chaining"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Double hashing computes the probe interval using a second hash function rather than a fixed step, which spreads out probe sequences differently for different keys and reduces the clustering problem seen with linear probing.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Applications",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "Why are hash tables generally unsuitable for operations that require maintaining sorted order or performing efficient range queries (e.g., 'find all keys between X and Y')?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Hash tables cannot store more than a few elements"
+      },
+      {
+        "letter": "B",
+        "text": "A hash function intentionally scatters keys across buckets based on their hash value, destroying any inherent ordering relationship between keys, so there's no efficient way to traverse keys in sorted order"
+      },
+      {
+        "letter": "C",
+        "text": "Hash tables always store elements in sorted order automatically"
+      },
+      {
+        "letter": "D",
+        "text": "Range queries are equally efficient in hash tables and balanced BSTs"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Because a hash function maps keys to bucket indices based on hash value rather than key order, there is no relationship between a key's value and its physical location, making sorted traversal or range queries inefficient compared to structures like balanced BSTs.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Hash Functions",
+    "difficulty": "HARD",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain the relationship between hash functions and the pigeonhole principle, and why this means collisions cannot be entirely eliminated for arbitrary large key spaces mapped to a fixed-size table.",
+    "expectedConcepts": [
+      "pigeonhole principle: if more items exist than containers, at least one container must hold more than one item",
+      "hash function maps a potentially unbounded key space to a fixed number of buckets",
+      "once the number of possible distinct keys exceeds the number of buckets, some collisions are mathematically guaranteed",
+      "good hash functions minimize collision frequency and their clustering effects, but cannot eliminate them entirely"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Collision Handling",
+    "difficulty": "HARD",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain what 'secondary clustering' is in the context of quadratic probing, and how it differs from the 'primary clustering' seen in linear probing.",
+    "expectedConcepts": [
+      "primary clustering: consecutive filled slots merge into large blocks under linear probing since all colliding keys follow the same fixed probe sequence",
+      "quadratic probing uses increasing step sizes (e.g., 1,4,9,...) to reduce primary clustering",
+      "secondary clustering: keys that hash to the same initial index still follow the identical probe sequence in quadratic probing, clustering together even though they don't form contiguous blocks",
+      "secondary clustering is generally less severe than primary clustering but still degrades performance for keys sharing the same initial hash"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Load Factor",
+    "difficulty": "HARD",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how you would decide when and how to resize a hash table that uses open addressing with linear probing, to avoid performance degradation and eventual insertion failure.",
+    "expectedConcepts": [
+      "track the current load factor (entries / total slots) after each insertion",
+      "define a threshold (e.g., 0.7) above which resizing is triggered",
+      "when threshold is exceeded, allocate a new array roughly double the current size",
+      "rehash every existing key by recomputing its index (and reapplying probing) relative to the new array size",
+      "insert all rehashed entries into the new array",
+      "discard the old array; future insertions use the new, larger table with lower load factor"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Hashing",
+    "subtopic": "Applications",
+    "difficulty": "HARD",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe step by step how you would use a hash table to find the first non-repeating character in a string.",
+    "expectedConcepts": [
+      "iterate through the string once, using a hash map to count the frequency of each character",
+      "for each character, increment its count in the hash map (average O(1) per operation)",
+      "after building the frequency map, iterate through the string a second time in original order",
+      "for each character, check its count in the hash map",
+      "return the first character whose count equals 1",
+      "overall achieves O(n) time due to the two linear passes plus O(1) average hash map operations"
+    ],
+    "maxScore": 5
+  }
+]

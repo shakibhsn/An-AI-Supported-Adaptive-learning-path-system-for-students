@@ -3381,12 +3381,11 @@
     // now enabled for every VIDEO/PLAYLIST material across all three courses.
     let EMBED_TEST_TOPICS = null;
 
-    // Randomized Adaptive Assessment rollout gate (same phased-rollout
-    // pattern as EMBED_TEST_TOPICS above): only topics with a real, seeded
-    // 30-question assessment bank get the "Adaptive Assessment" entry point.
-    // Currently just the representative topic (DSA -> Arrays); add more
-    // topic names here once their question banks are authored and seeded.
-    let ASSESSMENT_ENABLED_TOPICS = new Set(['Arrays']);
+    // Representative topic (Arrays) verified clean - the full 30-question
+    // question bank now exists for every DSA/OOP/SPL topic, so the
+    // "Adaptive Assessment" entry point is enabled everywhere (null = no gate,
+    // same convention as EMBED_TEST_TOPICS above).
+    let ASSESSMENT_ENABLED_TOPICS = null;
 
     async function renderMaterials(course) {
       const panel = document.getElementById('materialsPanel');
@@ -3455,7 +3454,7 @@
                 class="text-[11px] font-bold text-purple-700 bg-purple-50 hover:bg-purple-100 border border-purple-200 px-3 py-1.5 rounded-lg transition">
                 Practice ${escapeHtml(t.topicName)} (adapts to your level) →
               </button>
-              ${ASSESSMENT_ENABLED_TOPICS.has(t.topicName) ? `
+              ${(!ASSESSMENT_ENABLED_TOPICS || ASSESSMENT_ENABLED_TOPICS.has(t.topicName)) ? `
               <button data-assess-topic-id="${t.topicId}" data-assess-topic-name="${escapeHtml(t.topicName)}"
                 class="text-[11px] font-bold text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 px-3 py-1.5 rounded-lg transition">
                 Adaptive Assessment (Easy → Hard) →

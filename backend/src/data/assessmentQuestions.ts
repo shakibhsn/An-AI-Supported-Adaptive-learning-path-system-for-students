@@ -16,6 +16,16 @@
  */
 
 import { CourseCode } from './topicMapping';
+// Remaining topics' question banks (7 DSA + 10 OOP + 10 SPL = 810 questions),
+// authored to the exact same structure/quality bar as ARRAYS_QUESTIONS below
+// (10 EASY + 10 MEDIUM + 10 HARD per topic, 6 MCQ + 2 SHORT_ANSWER +
+// 2 PROBLEM_SOLVING per tier), validated programmatically for structure,
+// subtopic correctness, and cross-topic duplicate-free content before being
+// wired in here. Kept as JSON (rather than the mcq()/sa()/prob() call style
+// used for Arrays) simply because of their size - same AssessQuestion shape.
+import dsaExtra from './assessmentQuestions.dsaExtra.json';
+import oopQuestions from './assessmentQuestions.oop.json';
+import splQuestions from './assessmentQuestions.spl.json';
 
 export type AssessDifficulty = 'EASY' | 'MEDIUM' | 'HARD';
 export type AssessType = 'MCQ' | 'SHORT_ANSWER' | 'PROBLEM_SOLVING';
@@ -35,35 +45,46 @@ export interface AssessQuestion {
   maxScore?: number;
 }
 
-function mcq(
-  subtopic: string,
-  difficulty: AssessDifficulty,
-  question: string,
-  opts: [string, string, string, string],
-  correctAnswer: string,
-  explanation: string,
-): AssessQuestion {
-  const letters = ['A', 'B', 'C', 'D'];
-  return {
-    topic: 'Arrays',
-    subtopic,
-    difficulty,
-    questionType: 'MCQ',
-    question,
-    options: opts.map((text, i) => ({ letter: letters[i], text })),
-    correctAnswer,
-    explanation,
-    maxScore: 1,
-  };
+// Factory so each topic's block can destructure its own mcq/sa/prob without
+// repeating the topic name on every single call (the original Arrays-only
+// version hardcoded 'Arrays' here; this generalizes it for every other
+// topic added below, with zero changes needed to the already-written and
+// tested Arrays content further down).
+function questionHelpers(topic: string) {
+  function mcq(
+    subtopic: string,
+    difficulty: AssessDifficulty,
+    question: string,
+    opts: [string, string, string, string],
+    correctAnswer: string,
+    explanation: string,
+  ): AssessQuestion {
+    const letters = ['A', 'B', 'C', 'D'];
+    return {
+      topic,
+      subtopic,
+      difficulty,
+      questionType: 'MCQ',
+      question,
+      options: opts.map((text, i) => ({ letter: letters[i], text })),
+      correctAnswer,
+      explanation,
+      maxScore: 1,
+    };
+  }
+
+  function sa(subtopic: string, difficulty: AssessDifficulty, question: string, expectedConcepts: string[]): AssessQuestion {
+    return { topic, subtopic, difficulty, questionType: 'SHORT_ANSWER', question, expectedConcepts, maxScore: 2 };
+  }
+
+  function prob(subtopic: string, difficulty: AssessDifficulty, question: string, expectedConcepts: string[]): AssessQuestion {
+    return { topic, subtopic, difficulty, questionType: 'PROBLEM_SOLVING', question, expectedConcepts, maxScore: 5 };
+  }
+
+  return { mcq, sa, prob };
 }
 
-function sa(subtopic: string, difficulty: AssessDifficulty, question: string, expectedConcepts: string[]): AssessQuestion {
-  return { topic: 'Arrays', subtopic, difficulty, questionType: 'SHORT_ANSWER', question, expectedConcepts, maxScore: 2 };
-}
-
-function prob(subtopic: string, difficulty: AssessDifficulty, question: string, expectedConcepts: string[]): AssessQuestion {
-  return { topic: 'Arrays', subtopic, difficulty, questionType: 'PROBLEM_SOLVING', question, expectedConcepts, maxScore: 5 };
-}
+const { mcq, sa, prob } = questionHelpers('Arrays');
 
 const ARRAYS_QUESTIONS: AssessQuestion[] = [
   // ===== EASY (10: 6 MCQ + 2 SA + 2 PS) =====
@@ -141,5 +162,7 @@ const ARRAYS_QUESTIONS: AssessQuestion[] = [
 ];
 
 export const ASSESSMENT_QUESTIONS: Partial<Record<CourseCode, AssessQuestion[]>> = {
-  DSA: ARRAYS_QUESTIONS,
+  DSA: [...ARRAYS_QUESTIONS, ...(dsaExtra as AssessQuestion[])],
+  OOP: oopQuestions as AssessQuestion[],
+  SPL: splQuestions as AssessQuestion[],
 };
