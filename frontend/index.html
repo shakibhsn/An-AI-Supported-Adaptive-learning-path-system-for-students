@@ -2876,7 +2876,17 @@
         applyUserToUI(me);
         await loadCourseIds();
         const hash = (location.hash || '').replace('#', '');
-        const start = (/^(s\d+[a-c]?|screen_[a-z]+)$/.test(hash) && hash !== 's01') ? hash : 's02';
+        // screen_assess/screen_diag/screen_practice only render correctly
+        // when a student's in-memory click (Adaptive Assessment button,
+        // "Start Diagnostic", etc.) has just set up their live quiz state
+        // (assessTopicId, activeDiagQuestions, ...) - none of that survives
+        // a hard refresh, so landing directly on one of these mid-flow
+        // screens from a fresh page load shows an empty shell instead of
+        // silently restoring it. Fall back to the topic list (Materials)
+        // they'd have launched the quiz from instead.
+        const UNRESTORABLE_ON_REFRESH = new Set(['screen_assess', 'screen_diag', 'screen_practice']);
+        const validHash = /^(s\d+[a-c]?|screen_[a-z]+)$/.test(hash) && hash !== 's01';
+        const start = validHash && !UNRESTORABLE_ON_REFRESH.has(hash) ? hash : (validHash ? 's09' : 's02');
         history.replaceState({ screen: start }, '', '#' + start);
         _activateScreen(start);
       } catch (_) {
@@ -3732,24 +3742,16 @@
     // ================= PRACTICE ENGINE =================
     let activePracticeQuestions = []; // fetched from backend, replaces the old hardcoded arrays
 
+    // "Practice" everywhere in the app (nav sidebar, dashboard cards, topic
+    // tables) used to dump every question in the whole course into one flat,
+    // undifferentiated list (dozens of questions, no structure). That's now
+    // replaced by the real per-topic Adaptive Assessment (10 Easy questions,
+    // pass 80% to unlock Medium, pass 85% to unlock Hard) - so "Practice"
+    // now takes the student to the topic list where every topic has that
+    // exact flow, instead of launching the old flat quiz screen directly.
     async function startPractice(course) {
-      currentPracticeCourse = course;
-      currentPracticeIndex = 0;
-      practiceAnswered = {};
-      document.getElementById('adaptiveBanner').hidden = true;
-
-      try {
-        const courseId = courseIdCache[course];
-        activePracticeQuestions = await apiFetch(`/courses/${courseId}/practice`);
-        renderPracticeQuestion();
-        switchScreen('screen_practice');
-
-        document.getElementById('pTabDsa').className = course === 'dsa' ? 'text-xs font-bold px-3 py-1.5 rounded-lg bg-blue-600 text-white' : 'text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200';
-        document.getElementById('pTabOop').className = course === 'oop' ? 'text-xs font-bold px-3 py-1.5 rounded-lg bg-blue-600 text-white' : 'text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200';
-        document.getElementById('pTabSpl').className = course === 'spl' ? 'text-xs font-bold px-3 py-1.5 rounded-lg bg-blue-600 text-white' : 'text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200';
-      } catch (err) {
-        alert('Could not load practice questions: ' + err.message);
-      }
+      switchContentTab(course);
+      switchScreen('s09');
     }
 
     // Adaptive, single-topic practice (Section 9-11): serves whatever
