@@ -1994,6 +1994,86 @@
       </div>
     </div>
 
+    <!-- ================= RANDOMIZED ADAPTIVE ASSESSMENT (Easy -> Medium -> Hard, level-locked) ================= -->
+    <div id="screen_assess" class="screen-view">
+      <div class="max-w-3xl mx-auto space-y-6">
+
+        <!-- SUB-VIEW: difficulty selection hub -->
+        <div id="assessHubView">
+          <div class="hub-card rounded-2xl p-5 mb-6">
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-600">Adaptive Assessment</span>
+            <h2 id="assessHubTitle" class="text-xl font-bold text-slate-900">Topic</h2>
+            <p class="text-xs text-slate-500 mt-1">Each level is 10 randomly-selected questions from that difficulty's question bank. Pass Easy to unlock Medium, pass Medium to unlock Hard.</p>
+          </div>
+          <div id="assessHubLevels" class="space-y-3"></div>
+        </div>
+
+        <!-- SUB-VIEW: active quiz -->
+        <div id="assessQuizView" class="hidden space-y-6">
+          <div class="hub-card rounded-2xl p-5 flex items-center justify-between">
+            <div>
+              <span id="assessCourseBadge" class="text-xs font-bold uppercase tracking-wider text-amber-600">Assessment</span>
+              <div id="assessCounter" class="text-lg font-bold text-slate-900">Question 1 of 10</div>
+            </div>
+          </div>
+
+          <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+            <div id="assessProgressBar" class="bg-amber-500 h-2 rounded-full transition-all duration-300" style="width: 10%"></div>
+          </div>
+
+          <div class="hub-card rounded-xl p-3 flex items-center justify-between gap-1 overflow-x-auto">
+            <span class="text-xs font-bold text-slate-400 mr-2 shrink-0">Questions:</span>
+            <div id="assessChips" class="flex items-center gap-1.5 w-full justify-between"></div>
+          </div>
+
+          <div class="hub-card rounded-2xl p-6 md:p-8 space-y-6">
+            <div>
+              <span id="assessSubtopicTag" class="inline-block text-xs font-bold px-2.5 py-1 rounded bg-amber-50 text-amber-800 border border-amber-200 mb-3">Subtopic</span>
+              <h3 id="assessQuestionText" class="text-lg md:text-xl font-bold text-slate-900 leading-snug">Question text goes here</h3>
+            </div>
+
+            <div id="assessOptionsContainer" class="space-y-3"></div>
+            <textarea id="assessTextAnswer" class="hidden w-full border border-slate-200 rounded-xl p-3 text-sm" rows="4" placeholder="Type your answer…"></textarea>
+
+            <div class="flex items-center justify-between pt-6 border-t border-slate-100">
+              <button id="assessPrevBtn" onclick="navigateAssess(-1)" class="text-xs font-bold text-slate-500 hover:text-slate-800 px-4 py-2 disabled:opacity-30">← Previous</button>
+              <button id="assessNextBtn" onclick="navigateAssess(1)" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow-sm transition">Next →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUB-VIEW: result -->
+        <div id="assessResultView" class="hidden">
+          <div class="hub-card rounded-2xl p-6 md:p-8 space-y-5">
+            <div>
+              <span id="assessResultBadge" class="text-xs font-bold uppercase tracking-wider">Assessment Complete</span>
+              <h2 id="assessResultTitle" class="text-2xl font-bold text-slate-900">Easy Assessment Completed</h2>
+            </div>
+            <div class="flex items-center gap-6">
+              <div>
+                <div class="text-[11px] text-slate-400 uppercase font-semibold">Score</div>
+                <div id="assessResultScore" class="text-3xl font-extrabold text-slate-900">8/10</div>
+              </div>
+              <div>
+                <div class="text-[11px] text-slate-400 uppercase font-semibold">Percentage</div>
+                <div id="assessResultPercentage" class="text-3xl font-extrabold text-slate-900">80%</div>
+              </div>
+            </div>
+            <div id="assessResultUnlockMsg" class="text-sm font-semibold p-3 rounded-xl"></div>
+            <div>
+              <h4 class="text-sm font-bold text-slate-900 mb-2">Subtopic Breakdown</h4>
+              <div id="assessResultBreakdown" class="space-y-2"></div>
+            </div>
+            <div class="flex gap-3 pt-4 border-t border-slate-100">
+              <button onclick="renderAssessmentHub()" class="text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 px-4 py-2.5 rounded-xl transition">← Back to Levels</button>
+              <button onclick="switchScreen('s09')" class="text-xs font-bold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 px-4 py-2.5 rounded-xl transition">Go to Materials for weak areas</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
     <!-- ================= SCREEN 11: FOLLOW-UP ASSESSMENT (DSA, OOP, SPL SEPARATELY - 5 QS EACH) ================= -->
     <div id="s11" class="screen-view">
       <div class="max-w-3xl mx-auto space-y-6">
@@ -3301,6 +3381,13 @@
     // now enabled for every VIDEO/PLAYLIST material across all three courses.
     let EMBED_TEST_TOPICS = null;
 
+    // Randomized Adaptive Assessment rollout gate (same phased-rollout
+    // pattern as EMBED_TEST_TOPICS above): only topics with a real, seeded
+    // 30-question assessment bank get the "Adaptive Assessment" entry point.
+    // Currently just the representative topic (DSA -> Arrays); add more
+    // topic names here once their question banks are authored and seeded.
+    let ASSESSMENT_ENABLED_TOPICS = new Set(['Arrays']);
+
     async function renderMaterials(course) {
       const panel = document.getElementById('materialsPanel');
       if (!panel) return;
@@ -3363,10 +3450,17 @@
               <span class="text-[11px] text-slate-400 font-semibold">${t.materials.length} resource${t.materials.length === 1 ? '' : 's'}</span>
             </div>
             <div class="space-y-2">${items}</div>
-            <button data-adaptive-topic-id="${t.topicId}" data-adaptive-topic-name="${escapeHtml(t.topicName)}"
-              class="text-[11px] font-bold text-purple-700 bg-purple-50 hover:bg-purple-100 border border-purple-200 px-3 py-1.5 rounded-lg transition">
-              Practice ${escapeHtml(t.topicName)} (adapts to your level) →
-            </button>`;
+            <div class="flex flex-wrap gap-2">
+              <button data-adaptive-topic-id="${t.topicId}" data-adaptive-topic-name="${escapeHtml(t.topicName)}"
+                class="text-[11px] font-bold text-purple-700 bg-purple-50 hover:bg-purple-100 border border-purple-200 px-3 py-1.5 rounded-lg transition">
+                Practice ${escapeHtml(t.topicName)} (adapts to your level) →
+              </button>
+              ${ASSESSMENT_ENABLED_TOPICS.has(t.topicName) ? `
+              <button data-assess-topic-id="${t.topicId}" data-assess-topic-name="${escapeHtml(t.topicName)}"
+                class="text-[11px] font-bold text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 px-3 py-1.5 rounded-lg transition">
+                Adaptive Assessment (Easy → Hard) →
+              </button>` : ''}
+            </div>`;
           panel.appendChild(card);
         }
 
@@ -3385,6 +3479,12 @@
         panel.querySelectorAll('[data-adaptive-topic-id]').forEach((btn) => {
           btn.addEventListener('click', () => {
             startAdaptivePractice(course, btn.dataset.adaptiveTopicId, btn.dataset.adaptiveTopicName);
+          });
+        });
+
+        panel.querySelectorAll('[data-assess-topic-id]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            openAssessmentHub(course, btn.dataset.assessTopicId, btn.dataset.assessTopicName);
           });
         });
 
@@ -3796,6 +3896,205 @@
         currentPracticeIndex = newIdx;
         renderPracticeQuestion();
       }
+    }
+
+    // ================= RANDOMIZED ADAPTIVE ASSESSMENT ENGINE =================
+    // Separate, additive feature from the practice/diagnostic engines above -
+    // level-locked EASY(80%)->MEDIUM(85%)->HARD, real backend-scored, resume-
+    // safe on refresh (the backend returns the SAME in-progress attempt).
+    let assessCourse = null, assessTopicId = null, assessTopicName = null;
+    let assessAttemptId = null, assessDifficulty = null;
+    let assessQuestions = []; // [{id, questionType, question, subtopic, options?, maxScore}]
+    let assessIndex = 0;
+    let assessAnswers = {}; // index -> { selectedAnswer } | { answerText }
+
+    function showAssessSubView(name) {
+      ['assessHubView', 'assessQuizView', 'assessResultView'].forEach((id) => {
+        document.getElementById(id).classList.toggle('hidden', id !== name);
+      });
+    }
+
+    async function openAssessmentHub(course, topicId, topicName) {
+      assessCourse = course;
+      assessTopicId = topicId;
+      assessTopicName = topicName;
+      switchScreen('screen_assess');
+      await renderAssessmentHub();
+    }
+
+    async function renderAssessmentHub() {
+      showAssessSubView('assessHubView');
+      document.getElementById('assessHubTitle').textContent = `${assessTopicName} - ${assessCourse.toUpperCase()}`;
+      const levelsEl = document.getElementById('assessHubLevels');
+      levelsEl.innerHTML = '<p class="text-sm text-slate-500">Loading assessment levels…</p>';
+
+      try {
+        const state = await apiFetch(`/topics/${assessTopicId}/assessment/state`);
+        const order = ['EASY', 'MEDIUM', 'HARD'];
+        const colors = { EASY: 'emerald', MEDIUM: 'amber', HARD: 'red' };
+        levelsEl.innerHTML = order.map((d) => {
+          const s = state.difficulties[d];
+          const c = colors[d];
+          const resumeNote = state.activeAttempt && state.activeAttempt.difficulty === d ? '<span class="text-[10px] font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded ml-2">In progress - resume</span>' : '';
+          return `
+            <div class="hub-card rounded-2xl p-5 flex items-center justify-between ${!s.unlocked ? 'opacity-60' : ''}">
+              <div>
+                <div class="flex items-center">
+                  <span class="text-sm font-bold text-slate-900">${d.charAt(0) + d.slice(1).toLowerCase()}</span>
+                  ${resumeNote}
+                </div>
+                <p class="text-xs text-slate-500 mt-0.5">
+                  ${s.unlocked ? '10 questions' : `Locked - requires ≥ ${state.difficulties[order[order.indexOf(d) - 1]]?.passThreshold ?? ''}% on ${order[order.indexOf(d) - 1]}`}
+                  ${s.bestPercentage !== null ? ` · Best: ${s.bestPercentage}%` : ''}
+                </p>
+              </div>
+              <button ${s.unlocked ? '' : 'disabled'} data-start-difficulty="${d}"
+                class="text-xs font-bold text-white px-4 py-2 rounded-xl transition ${s.unlocked ? `bg-${c}-600 hover:bg-${c}-700` : 'bg-slate-300 cursor-not-allowed'}">
+                ${s.unlocked ? (state.activeAttempt && state.activeAttempt.difficulty === d ? 'Resume →' : 'Start →') : '🔒 Locked'}
+              </button>
+            </div>`;
+        }).join('');
+
+        levelsEl.querySelectorAll('[data-start-difficulty]').forEach((btn) => {
+          btn.addEventListener('click', () => startAssessLevel(btn.dataset.startDifficulty));
+        });
+      } catch (err) {
+        levelsEl.innerHTML = `<div class="hub-card rounded-2xl p-6 text-sm text-red-600">Could not load assessment levels: ${escapeHtml(err.message)}</div>`;
+      }
+    }
+
+    async function startAssessLevel(difficulty) {
+      try {
+        const result = await apiFetch(`/topics/${assessTopicId}/assessment/start`, { method: 'POST', body: { difficulty } });
+        assessAttemptId = result.attemptId;
+        assessDifficulty = result.difficulty;
+        assessQuestions = result.questions;
+        assessIndex = 0;
+        assessAnswers = {};
+        showAssessSubView('assessQuizView');
+        renderAssessQuestion();
+        ActivityTracker.start('QUIZ', { courseId: courseIdCache[assessCourse], topicId: assessTopicId });
+      } catch (err) {
+        alert('Could not start the assessment: ' + err.message);
+      }
+    }
+
+    function renderAssessQuestion() {
+      const q = assessQuestions[assessIndex];
+      document.getElementById('assessCourseBadge').textContent = `${assessCourse.toUpperCase()} · ${assessDifficulty} Assessment`;
+      document.getElementById('assessCounter').textContent = `Question ${assessIndex + 1} of ${assessQuestions.length}`;
+      document.getElementById('assessProgressBar').style.width = `${((assessIndex + 1) / assessQuestions.length) * 100}%`;
+      document.getElementById('assessSubtopicTag').textContent = `Subtopic: ${q.subtopic || assessTopicName}`;
+      document.getElementById('assessQuestionText').textContent = q.question;
+
+      const chips = document.getElementById('assessChips');
+      chips.innerHTML = '';
+      assessQuestions.forEach((_, i) => {
+        const btn = document.createElement('button');
+        const isDone = assessAnswers[i] !== undefined;
+        const isCurrent = i === assessIndex;
+        btn.textContent = i + 1;
+        btn.className = `w-7 h-7 rounded-lg text-xs font-bold transition ${isCurrent ? 'bg-amber-600 text-white shadow-sm' : isDone ? 'bg-amber-100 text-amber-800 border border-amber-300' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`;
+        btn.onclick = () => { assessIndex = i; renderAssessQuestion(); };
+        chips.appendChild(btn);
+      });
+
+      const optionsContainer = document.getElementById('assessOptionsContainer');
+      const textArea = document.getElementById('assessTextAnswer');
+
+      if (q.questionType === 'MCQ') {
+        textArea.classList.add('hidden');
+        optionsContainer.classList.remove('hidden');
+        optionsContainer.innerHTML = '';
+        const selectedLetter = assessAnswers[assessIndex]?.selectedAnswer;
+        q.options.forEach((opt) => {
+          const isSelected = selectedLetter === opt.letter;
+          const div = document.createElement('div');
+          div.className = `flex items-center p-4 border rounded-xl cursor-pointer transition ${isSelected ? 'border-2 border-amber-600 bg-amber-50/60 shadow-sm' : 'border-slate-200 hover:bg-amber-50/30 bg-white'}`;
+          div.onclick = () => { assessAnswers[assessIndex] = { selectedAnswer: opt.letter }; renderAssessQuestion(); };
+          div.innerHTML = `
+            <span class="w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs mr-3.5 ${isSelected ? 'bg-amber-600 text-white' : 'bg-slate-100 text-slate-700'}">${opt.letter}</span>
+            <span class="text-sm ${isSelected ? 'font-semibold text-slate-900' : 'text-slate-800'}">${escapeHtml(opt.text)}</span>
+            ${isSelected ? '<span class="ml-auto text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded">Selected</span>' : ''}`;
+          optionsContainer.appendChild(div);
+        });
+      } else {
+        optionsContainer.classList.add('hidden');
+        optionsContainer.innerHTML = '';
+        textArea.classList.remove('hidden');
+        textArea.value = assessAnswers[assessIndex]?.answerText || '';
+        textArea.oninput = () => { assessAnswers[assessIndex] = { answerText: textArea.value }; };
+      }
+
+      document.getElementById('assessPrevBtn').disabled = assessIndex === 0;
+      const nextBtn = document.getElementById('assessNextBtn');
+      if (assessIndex === assessQuestions.length - 1) {
+        nextBtn.textContent = 'Submit Assessment →';
+        nextBtn.onclick = submitCurrentAssessment;
+      } else {
+        nextBtn.textContent = 'Next →';
+        nextBtn.onclick = () => navigateAssess(1);
+      }
+    }
+
+    function navigateAssess(delta) {
+      const newIdx = assessIndex + delta;
+      if (newIdx >= 0 && newIdx < assessQuestions.length) {
+        assessIndex = newIdx;
+        renderAssessQuestion();
+      }
+    }
+
+    async function submitCurrentAssessment() {
+      const nextBtn = document.getElementById('assessNextBtn');
+      const originalLabel = nextBtn.textContent;
+      nextBtn.textContent = 'Scoring your assessment…';
+      nextBtn.disabled = true;
+
+      try {
+        const answers = assessQuestions.map((q, i) => ({ questionId: q.id, ...(assessAnswers[i] || {}) }));
+        const result = await apiFetch(`/assessment-attempts/${assessAttemptId}/submit`, { method: 'POST', body: { answers } });
+        ActivityTracker.end();
+        renderAssessResult(result);
+      } catch (err) {
+        alert('Could not submit the assessment: ' + err.message);
+      } finally {
+        nextBtn.textContent = originalLabel;
+        nextBtn.disabled = false;
+      }
+    }
+
+    function renderAssessResult(result) {
+      showAssessSubView('assessResultView');
+      const passed = result.passed;
+      document.getElementById('assessResultBadge').textContent = passed === false ? 'Below Pass Threshold' : 'Assessment Complete';
+      document.getElementById('assessResultBadge').className = `text-xs font-bold uppercase tracking-wider ${passed === false ? 'text-red-600' : 'text-emerald-600'}`;
+      document.getElementById('assessResultTitle').textContent = `${result.difficulty.charAt(0) + result.difficulty.slice(1).toLowerCase()} Assessment Completed`;
+      document.getElementById('assessResultScore').textContent = `${result.score}/${result.maxScore}`;
+      document.getElementById('assessResultPercentage').textContent = `${result.percentage}%`;
+
+      const unlockMsg = document.getElementById('assessResultUnlockMsg');
+      if (result.unlockedNextDifficulty) {
+        unlockMsg.className = 'text-sm font-semibold p-3 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200';
+        unlockMsg.textContent = `${result.unlockedNextDifficulty.charAt(0) + result.unlockedNextDifficulty.slice(1).toLowerCase()} Unlocked ✓`;
+      } else if (result.passThreshold !== null && !result.passed) {
+        unlockMsg.className = 'text-sm font-semibold p-3 rounded-xl bg-amber-50 text-amber-800 border border-amber-200';
+        unlockMsg.textContent = `Score below the ${result.passThreshold}% threshold - the next level stays locked. Review the weak subtopics below and retry when ready.`;
+      } else {
+        unlockMsg.className = 'text-sm font-semibold p-3 rounded-xl bg-slate-50 text-slate-700 border border-slate-200';
+        unlockMsg.textContent = result.difficulty === 'HARD' ? 'Hard level result recorded.' : '';
+      }
+
+      const breakdownEl = document.getElementById('assessResultBreakdown');
+      const entries = Object.entries(result.subtopicBreakdown || {});
+      breakdownEl.innerHTML = entries.length === 0 ? '<p class="text-xs text-slate-400">No subtopic data.</p>' : entries.map(([subtopic, v]) => {
+        const isWeak = (result.weakSubtopics || []).includes(subtopic);
+        return `
+          <div class="flex items-center justify-between p-3 bg-white border border-slate-100 rounded-xl">
+            <span class="text-sm font-semibold text-slate-800">${escapeHtml(subtopic)}${isWeak ? ' <span class=\'text-[10px] font-bold text-red-600\'>(weak area)</span>' : ''}</span>
+            <span class="text-xs text-slate-500">${v.percentage}%</span>
+          </div>`;
+      }).join('');
     }
 
     // ================= FOLLOW-UP ASSESSMENT ENGINE (SEPARATE FOR DSA, OOP, SPL) =================

@@ -21,6 +21,7 @@ import bcrypt from 'bcryptjs';
 import { CANONICAL_TOPICS, PREREQUISITES, CourseCode } from '../src/data/topicMapping';
 import { SEED_QUESTIONS } from '../src/data/seedQuestions';
 import { EXPANDED_QUESTIONS } from '../src/data/expandedQuestions';
+import { ASSESSMENT_QUESTIONS } from '../src/data/assessmentQuestions';
 import { LEARNING_MATERIALS } from '../src/data/learningMaterials';
 
 const prisma = new PrismaClient();
@@ -33,9 +34,18 @@ const COURSES: { code: CourseCode; name: string; description: string }[] = [
 
 async function main() {
   console.log('Wiping existing seeded data...');
+  await prisma.assessmentAttempt.deleteMany();
   await prisma.aIInteraction.deleteMany();
   await prisma.followUpAttempt.deleteMany();
   await prisma.practiceAttempt.deleteMany();
+  // These two were missing from the wipe list even though the docstring
+  // above claims "wipes and recreates all seeded tables first" - harmless
+  // while the DB had little Playwright-test activity data, but a real
+  // FK-violation bug once PracticeQuestionAttempt/LearningActivity rows
+  // accumulate (both reference practiceQuestion/topic/course, deleted
+  // below). Fixing here since it silently blocks every future reseed.
+  await prisma.practiceQuestionAttempt.deleteMany();
+  await prisma.learningActivity.deleteMany();
   await prisma.materialCompletion.deleteMany();
   await prisma.learningMaterial.deleteMany();
   await prisma.learningPathItem.deleteMany();
@@ -159,6 +169,41 @@ async function main() {
       seeded++;
     }
     console.log(`Seeded ${seeded} expanded (EASY/HARD) practice questions for ${c.code}.`);
+  }
+
+  // Randomized Adaptive Assessment question bank (see src/data/assessmentQuestions.ts).
+  // Stored in the same PracticeQuestion table (reuses the existing schema/
+  // indexes) - rows here are distinguished by having a non-null `subtopic`,
+  // which ordinary practice/expanded questions never set.
+  for (const c of COURSES) {
+    const assessmentQs = ASSESSMENT_QUESTIONS[c.code];
+    if (!assessmentQs) continue;
+    let seeded = 0;
+    for (const q of assessmentQs) {
+      const topic = topicByName[`${c.code}:${q.topic}`];
+      if (!topic) {
+        console.warn(`WARNING: no topic found for "${q.topic}" in ${c.code} - skipping assessment question: ${q.question.slice(0, 60)}`);
+        continue;
+      }
+      await prisma.practiceQuestion.create({
+        data: {
+          courseId: courseByCode[c.code].id,
+          topicId: topic.id,
+          question: q.question,
+          options: (q.options as unknown as object) ?? [],
+          correctAnswer: q.correctAnswer ?? '',
+          explanation: q.explanation ?? undefined,
+          isFollowUp: false,
+          difficulty: q.difficulty,
+          questionType: q.questionType,
+          subtopic: q.subtopic,
+          expectedConcepts: (q.expectedConcepts as unknown as object) ?? undefined,
+          maxScore: q.maxScore ?? 1,
+        },
+      });
+      seeded++;
+    }
+    console.log(`Seeded ${seeded} randomized-assessment questions for ${c.code}.`);
   }
 
   // Curated learning materials (Section 15-18). Extensible: edit

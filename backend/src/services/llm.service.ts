@@ -159,6 +159,22 @@ const CHAT_STYLE_INSTRUCTIONS: Record<string, string> = {
   step_by_step: 'The student asked for a STEP-BY-STEP walkthrough: number each step in order, and keep each step to one clear action or idea.',
 };
 
+// Randomized Adaptive Assessment (Section 7/short-answer scoring): evaluates
+// a single SHORT_ANSWER/PROBLEM_SOLVING response against an expected-concept
+// rubric. Additive use of the SAME callLlm/provider transport already used
+// by personalize/chat/analyzeProgress above - no new provider, no change to
+// those three functions.
+const SHORT_ANSWER_EVAL_SYSTEM_PROMPT = `You are grading a student's short written answer to a computer science question, against a rubric of expected concepts.
+
+Score strictly based on how many of the expected concepts the student's answer actually demonstrates understanding of - do not reward answers that merely restate the question, and do not penalize different wording that still conveys the same concept.
+
+Return VALID JSON ONLY, no markdown fences, no preamble, matching exactly this shape:
+{
+  "earnedScore": <number, 0 to maxScore, may be fractional>,
+  "matchedConcepts": ["<expected concept the answer demonstrated>"],
+  "feedback": "<one or two sentence, specific, constructive feedback to the student>"
+}`;
+
 const PROGRESS_ANALYSIS_SYSTEM_PROMPT = `You are StudyGuard AI, analyzing a student's real, backend-supplied learning data.
 
 You will receive actual stored numbers: topic mastery percentages, learning activity minutes by category, practice accuracy, and follow-up assessment results. This is the complete and only truth about the student - you have no other information.
@@ -314,6 +330,54 @@ export interface ProgressAnalysisResult {
   source: 'llm' | 'fallback';
   analysis: string;
   error?: string;
+}
+
+export interface ShortAnswerEvalInput {
+  question: string;
+  studentAnswer: string;
+  expectedConcepts: string[];
+  maxScore: number;
+}
+
+export interface ShortAnswerEvalResult {
+  success: boolean;
+  source: 'llm' | 'fallback';
+  earnedScore: number;
+  matchedConcepts: string[];
+  feedback: string;
+  error?: string;
+}
+
+export async function evaluateShortAnswer(input: ShortAnswerEvalInput): Promise<ShortAnswerEvalResult> {
+  try {
+    const text = await callLlm({
+      system: SHORT_ANSWER_EVAL_SYSTEM_PROMPT,
+      user: JSON.stringify(input, null, 2),
+      maxTokens: 300,
+      jsonMode: true,
+    });
+    const data = extractJson(text) as { earnedScore?: number; matchedConcepts?: string[]; feedback?: string };
+    const earnedScore = Math.max(0, Math.min(input.maxScore, Number(data.earnedScore) || 0));
+    return {
+      success: true,
+      source: 'llm',
+      earnedScore,
+      matchedConcepts: Array.isArray(data.matchedConcepts) ? data.matchedConcepts : [],
+      feedback: data.feedback || '',
+    };
+  } catch (err) {
+    // Section 7: an AI failure must never break the assessment - the
+    // controller falls back to keywordFallbackScore() (assessment.service.ts)
+    // when success is false, so this branch just reports the failure honestly.
+    return {
+      success: false,
+      source: 'fallback',
+      earnedScore: 0,
+      matchedConcepts: [],
+      feedback: '',
+      error: err instanceof Error ? err.message : String(err),
+    };
+  }
 }
 
 export async function analyzeProgress(input: ProgressAnalysisInput): Promise<ProgressAnalysisResult> {
