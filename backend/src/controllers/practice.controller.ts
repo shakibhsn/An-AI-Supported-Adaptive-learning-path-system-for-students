@@ -7,7 +7,12 @@ import { recommendDifficulty, Difficulty, AttemptRecord } from '../services/adap
 
 export async function getPractice(req: Request, res: Response) {
   const { topicId } = req.query;
-  const where: { courseId: string; topicId?: string } = { courseId: req.params.courseId };
+  // subtopic: null excludes the Randomized Adaptive Assessment question bank
+  // (assessmentQuestions.ts - tagged with a subtopic, unlike every other
+  // practice question) so this flat, undifferentiated practice list keeps
+  // showing exactly what it always showed, unaffected by that separate,
+  // level-locked feature living in the same table.
+  const where: { courseId: string; topicId?: string; subtopic: null } = { courseId: req.params.courseId, subtopic: null };
   if (typeof topicId === 'string') where.topicId = topicId;
 
   const questions = await prisma.practiceQuestion.findMany({ where, include: { topic: true } });
@@ -75,8 +80,11 @@ export async function getAdaptivePractice(req: AuthenticatedRequest, res: Respon
     recommendation.recommendedDifficulty,
     ...(['EASY', 'MEDIUM', 'HARD'] as Difficulty[]).filter((d) => d !== recommendation.recommendedDifficulty),
   ];
+  // subtopic: null - same exclusion as getPractice above, keeps the
+  // Randomized Adaptive Assessment bank out of this separate rolling-window
+  // engine's pool.
   const fetchPool = (difficulty: Difficulty) =>
-    prisma.practiceQuestion.findMany({ where: { topicId, isFollowUp: false, difficulty }, include: { topic: true } });
+    prisma.practiceQuestion.findMany({ where: { topicId, isFollowUp: false, difficulty, subtopic: null }, include: { topic: true } });
 
   let pool: Awaited<ReturnType<typeof fetchPool>> = [];
   let servedDifficulty: Difficulty = recommendation.recommendedDifficulty;
