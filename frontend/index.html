@@ -366,7 +366,7 @@
           <div class="flex items-center gap-1.5 pl-2 border-l border-slate-200">
             <div
               class="flex items-center gap-2 bg-slate-50 hover:bg-slate-100 p-1.5 pr-2.5 rounded-xl border border-slate-200/80 transition cursor-pointer"
-              onclick="switchScreen('s02')" title="View Student Dashboard">
+              onclick="switchScreen('s14')" title="View Student Profile">
               <div id="profileInitials"
                 class="w-7 h-7 rounded-lg bg-gradient-to-tr from-blue-700 via-blue-600 to-indigo-600 text-white flex items-center justify-center font-extrabold text-[11px] shadow-2xs ring-1 ring-blue-200">
                 —
@@ -477,14 +477,20 @@
                 </div>
                 <input id="loginPassword" type="password" value="" placeholder="••••••••" required
                   autocomplete="current-password"
-                  class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition">
+                  class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-14 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition">
+                <button type="button" onclick="togglePasswordField('loginPassword', this)"
+                  class="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-bold text-blue-600 hover:underline">Show</button>
               </div>
             </div>
 
             <div id="authConfirmPasswordField" class="hidden">
               <label class="block text-xs font-bold text-slate-700 mb-1.5">Confirm Password</label>
-              <input id="signupConfirmPassword" type="password" placeholder="••••••••"
-                class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition">
+              <div class="relative">
+                <input id="signupConfirmPassword" type="password" placeholder="••••••••"
+                  class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-4 pr-14 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition">
+                <button type="button" onclick="togglePasswordField('signupConfirmPassword', this)"
+                  class="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-bold text-blue-600 hover:underline">Show</button>
+              </div>
             </div>
 
             <div class="pt-2">
@@ -2328,6 +2334,184 @@
       </div>
     </div>
 
+    <!-- ================= SCREEN 14: STUDENT PROFILE / ACCOUNT ================= -->
+    <div id="s14" class="screen-view">
+      <div class="max-w-4xl mx-auto space-y-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-2xl md:text-3xl font-bold text-slate-900">Student Profile</h2>
+            <p class="text-sm text-slate-500">Your account and real learning progress.</p>
+          </div>
+          <button onclick="switchScreen('s02')"
+            class="text-xs font-bold text-blue-600 bg-blue-50 border border-blue-200 px-4 py-2 rounded-xl hover:bg-blue-100 transition">
+            ← Back to Dashboard
+          </button>
+        </div>
+
+        <!-- ACCOUNT INFORMATION -->
+        <div class="hub-card rounded-2xl p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-base font-bold text-slate-900">Account Information</h3>
+            <button id="profileEditToggleBtn" onclick="startEditProfile()"
+              class="text-xs font-bold text-blue-600 bg-blue-50 border border-blue-200 px-3 py-1.5 rounded-lg hover:bg-blue-100 transition">
+              Edit Profile
+            </button>
+          </div>
+
+          <div id="profileViewMode" class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wide">Name</div>
+              <div id="profileFieldName" class="text-sm font-semibold text-slate-900 mt-1">—</div>
+            </div>
+            <div>
+              <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wide">Student ID</div>
+              <div id="profileFieldStudentId" class="text-sm font-semibold text-slate-900 mt-1">—</div>
+            </div>
+            <div>
+              <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wide">Email</div>
+              <div id="profileFieldEmail" class="text-sm font-semibold text-slate-900 mt-1">—</div>
+            </div>
+            <div>
+              <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wide">Password</div>
+              <div class="flex items-center gap-3 mt-1">
+                <span class="text-sm font-semibold text-slate-900 tracking-widest">••••••••••••</span>
+                <button onclick="openChangePasswordModal()" class="text-xs font-bold text-blue-600 hover:underline">Change Password</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="profileEditMode" class="hidden grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="sm:col-span-2">
+              <label class="block text-xs font-bold text-slate-700 mb-1.5">Name</label>
+              <input id="profileEditName" type="text" maxlength="100"
+                class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition">
+            </div>
+            <div id="profileEditError" class="sm:col-span-2 hidden text-xs font-semibold text-red-600 bg-red-50 border border-red-200 rounded-lg p-2.5"></div>
+            <div class="sm:col-span-2 flex gap-2">
+              <button onclick="saveEditProfile()"
+                class="text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition">Save Changes</button>
+              <button onclick="cancelEditProfile()"
+                class="text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-lg transition">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- LEARNING SUMMARY -->
+        <div class="hub-card rounded-2xl p-6">
+          <h3 class="text-base font-bold text-slate-900 mb-4">Learning Summary</h3>
+          <div id="profileSummaryGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <p class="text-sm text-slate-500 col-span-full">Loading…</p>
+          </div>
+        </div>
+
+        <!-- COURSE-WISE PROGRESS -->
+        <div class="hub-card rounded-2xl p-6">
+          <h3 class="text-base font-bold text-slate-900 mb-4">Course-wise Progress</h3>
+          <div id="profileCourseProgress" class="space-y-4">
+            <p class="text-sm text-slate-500">Loading…</p>
+          </div>
+        </div>
+
+        <!-- TOPIC MASTERY (condensed - full grid lives on the Progress Hub) -->
+        <div class="hub-card rounded-2xl p-6">
+          <div class="flex items-center justify-between mb-1">
+            <h3 class="text-base font-bold text-slate-900">Topic Mastery</h3>
+            <button onclick="switchScreen('s13')" class="text-xs font-bold text-blue-600 hover:underline">View Full Mastery Map →</button>
+          </div>
+          <p class="text-xs text-slate-500 mb-4">Real status per topic you've engaged with, from your stored assessment data.</p>
+          <div id="profileTopicMastery" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <p class="text-sm text-slate-500 col-span-full">Loading…</p>
+          </div>
+        </div>
+
+        <!-- CURRENT LEARNING FOCUS -->
+        <div class="hub-card rounded-2xl p-6">
+          <h3 class="text-base font-bold text-slate-900 mb-4">Current Learning Focus</h3>
+          <div id="profileCurrentFocus" class="space-y-3">
+            <p class="text-sm text-slate-500">Loading…</p>
+          </div>
+        </div>
+
+        <!-- LEARNING TIME SUMMARY -->
+        <div class="hub-card rounded-2xl p-6">
+          <h3 class="text-base font-bold text-slate-900 mb-1">Learning Time Summary</h3>
+          <p class="text-xs text-slate-500 mb-4">Real, tracked active learning time - not a claim about exact external video-watch time.</p>
+          <div id="profileLearningTime" class="space-y-2">
+            <p class="text-sm text-slate-500">Loading…</p>
+          </div>
+        </div>
+
+        <!-- ASSESSMENT IMPROVEMENT -->
+        <div class="hub-card rounded-2xl p-6">
+          <h3 class="text-base font-bold text-slate-900 mb-4">Assessment Improvement</h3>
+          <div id="profileAssessmentImprovement" class="space-y-3">
+            <p class="text-sm text-slate-500">Loading…</p>
+          </div>
+        </div>
+
+        <!-- RECENT ACTIVITY / COMPLETED TASKS -->
+        <div class="hub-card rounded-2xl p-6">
+          <h3 class="text-base font-bold text-slate-900 mb-4">Recent Activity</h3>
+          <div id="profileActivityFeed" class="space-y-5">
+            <p class="text-sm text-slate-500">Loading…</p>
+          </div>
+        </div>
+
+        <div class="flex justify-end pb-2">
+          <button onclick="handleLogout()"
+            class="text-xs font-bold text-red-600 bg-red-50 hover:bg-red-100 border border-red-200 px-4 py-2.5 rounded-xl transition">
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHANGE PASSWORD MODAL -->
+    <div id="changePasswordModal" class="hidden fixed inset-0 z-[90] flex items-center justify-center p-4 bg-slate-900/40">
+      <div class="bg-white rounded-2xl shadow-xl max-w-sm w-full p-6 space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-base font-bold text-slate-900">Change Password</h3>
+          <button onclick="closeChangePasswordModal()" class="text-slate-400 hover:text-slate-700 text-lg leading-none">✕</button>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1.5">Current Password</label>
+          <div class="relative">
+            <input id="cpCurrent" type="password" autocomplete="current-password"
+              class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pr-14 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition">
+            <button type="button" onclick="togglePasswordField('cpCurrent', this)"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-bold text-blue-600 hover:underline">Show</button>
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1.5">New Password</label>
+          <div class="relative">
+            <input id="cpNew" type="password" autocomplete="new-password"
+              class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pr-14 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition">
+            <button type="button" onclick="togglePasswordField('cpNew', this)"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-bold text-blue-600 hover:underline">Show</button>
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1.5">Confirm New Password</label>
+          <div class="relative">
+            <input id="cpConfirm" type="password" autocomplete="new-password"
+              class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pr-14 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition">
+            <button type="button" onclick="togglePasswordField('cpConfirm', this)"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-bold text-blue-600 hover:underline">Show</button>
+          </div>
+        </div>
+        <div id="cpMessage" class="hidden text-xs font-semibold rounded-lg p-2.5"></div>
+        <div class="flex gap-2 pt-1">
+          <button id="cpSubmitBtn" onclick="submitChangePassword()"
+            class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs py-2.5 rounded-xl transition disabled:opacity-60">
+            Change Password
+          </button>
+          <button onclick="closeChangePasswordModal()"
+            class="text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 px-4 py-2.5 rounded-xl transition">Cancel</button>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <!-- ================= SCRIPTS: REAL BACKEND INTEGRATION ================= -->
@@ -3069,6 +3253,7 @@
       if (screenId === 's07') renderGaps('dsa');
       if (screenId === 's02') renderDashboard();
       if (screenId === 's09') switchContentTab(currentChatCourse || 'dsa');
+      if (screenId === 's14') renderProfileScreen();
 
       const activityFor = SCREEN_ACTIVITY[screenId];
       if (activityFor) {
@@ -4667,6 +4852,342 @@
     // NOTE: no longer auto-rendering the follow-up quiz on page load - that
     // only made sense with the old hardcoded arrays. Now startFollowup()
     // fetches real data first, so rendering happens after that call instead.
+
+    // ================= STUDENT PROFILE / ACCOUNT =================
+    // Every number/status below comes straight from an existing endpoint
+    // (progress, mastery-map, activity summary) or the new read-only
+    // /profile/* endpoints added alongside them - nothing here is invented,
+    // and nothing duplicates a calculation that already exists elsewhere
+    // (topic mastery reuses the same TopicMastery rows the Progress Hub
+    // reads, course progress reuses GET /api/progress, etc).
+
+    // Reusable password show/hide toggle - used by login, signup, and the
+    // Change Password modal, all with the identical Show <-> Hide behavior.
+    function togglePasswordField(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      const hidden = input.type === 'password';
+      input.type = hidden ? 'text' : 'password';
+      btn.textContent = hidden ? 'Hide' : 'Show';
+    }
+
+    async function renderProfileScreen() {
+      renderProfileAccountInfo();
+      cancelEditProfile();
+      renderProfileSummary();
+      renderProfileCourseProgress();
+      renderProfileTopicMastery();
+      renderProfileCurrentFocus();
+      renderProfileAssessmentImprovement();
+      renderProfileActivityFeed();
+    }
+
+    function renderProfileAccountInfo() {
+      if (!currentUser) return;
+      document.getElementById('profileFieldName').textContent = currentUser.name || '—';
+      document.getElementById('profileFieldStudentId').textContent = currentUser.studentId || '—';
+      document.getElementById('profileFieldEmail').textContent = currentUser.email || '—';
+    }
+
+    // ---- Profile editing (name only - Section 11) ----
+    function startEditProfile() {
+      document.getElementById('profileEditName').value = currentUser?.name || '';
+      document.getElementById('profileEditError').classList.add('hidden');
+      document.getElementById('profileViewMode').classList.add('hidden');
+      document.getElementById('profileEditToggleBtn').classList.add('hidden');
+      document.getElementById('profileEditMode').classList.remove('hidden');
+    }
+
+    function cancelEditProfile() {
+      document.getElementById('profileViewMode').classList.remove('hidden');
+      document.getElementById('profileEditToggleBtn').classList.remove('hidden');
+      document.getElementById('profileEditMode').classList.add('hidden');
+    }
+
+    async function saveEditProfile() {
+      const errEl = document.getElementById('profileEditError');
+      errEl.classList.add('hidden');
+      const name = document.getElementById('profileEditName').value.trim();
+      if (!name) {
+        errEl.textContent = 'Name is required.';
+        errEl.classList.remove('hidden');
+        return;
+      }
+      try {
+        const updated = await apiFetch('/auth/profile', { method: 'POST', body: { name } });
+        applyUserToUI({ ...currentUser, name: updated.name });
+        renderProfileAccountInfo();
+        cancelEditProfile();
+      } catch (err) {
+        errEl.textContent = err.message || 'Could not update your profile.';
+        errEl.classList.remove('hidden');
+      }
+    }
+
+    // ---- Change Password (Section: password change) ----
+    function openChangePasswordModal() {
+      ['cpCurrent', 'cpNew', 'cpConfirm'].forEach((id) => {
+        const el = document.getElementById(id);
+        el.value = '';
+        el.type = 'password';
+      });
+      document.querySelectorAll('#changePasswordModal button[onclick^="togglePasswordField"]').forEach((b) => { b.textContent = 'Show'; });
+      const msg = document.getElementById('cpMessage');
+      msg.classList.add('hidden');
+      document.getElementById('changePasswordModal').classList.remove('hidden');
+    }
+
+    function closeChangePasswordModal() {
+      document.getElementById('changePasswordModal').classList.add('hidden');
+    }
+
+    async function submitChangePassword() {
+      const currentPassword = document.getElementById('cpCurrent').value;
+      const newPassword = document.getElementById('cpNew').value;
+      const confirmNewPassword = document.getElementById('cpConfirm').value;
+      const msg = document.getElementById('cpMessage');
+      const btn = document.getElementById('cpSubmitBtn');
+
+      const showMsg = (text, ok) => {
+        msg.textContent = text;
+        msg.className = `text-xs font-semibold rounded-lg p-2.5 ${ok ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-red-50 text-red-800 border border-red-200'}`;
+      };
+
+      if (!currentPassword || !newPassword || !confirmNewPassword) {
+        showMsg('All fields are required.', false);
+        return;
+      }
+      if (newPassword !== confirmNewPassword) {
+        showMsg('New passwords do not match.', false);
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Changing…';
+      try {
+        const result = await apiFetch('/auth/change-password', { method: 'POST', body: { currentPassword, newPassword, confirmNewPassword } });
+        showMsg(result.message || 'Password changed successfully.', true);
+        setTimeout(closeChangePasswordModal, 1500);
+      } catch (err) {
+        showMsg(err.message || 'Could not change your password.', false);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Change Password';
+      }
+    }
+
+    // ---- Learning Summary (Section 2) ----
+    const SUMMARY_STAT_META = [
+      { key: 'overallProgress', label: 'Overall Progress', fmt: (v) => (v === null ? 'No data yet' : `${v}%`) },
+      { key: 'learningTimeSeconds', label: 'Learning Time', fmt: (v) => fmtMinutes(v) },
+      { key: 'coursesStudied', label: 'Courses Studied', fmt: (v) => String(v) },
+      { key: 'topicsStudied', label: 'Topics Studied', fmt: (v) => String(v) },
+      { key: 'topicsMastered', label: 'Topics Mastered', fmt: (v) => String(v) },
+      { key: 'assessmentsCompleted', label: 'Assessments Completed', fmt: (v) => String(v) },
+      { key: 'practiceCompleted', label: 'Practice Completed', fmt: (v) => String(v) },
+    ];
+
+    async function renderProfileSummary() {
+      const grid = document.getElementById('profileSummaryGrid');
+      try {
+        const summary = await apiFetch('/profile/summary');
+        grid.innerHTML = SUMMARY_STAT_META.map((m) => `
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-100">
+            <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wide">${m.label}</div>
+            <div class="text-xl font-extrabold text-slate-900 mt-1">${m.fmt(summary[m.key])}</div>
+          </div>
+        `).join('');
+        renderProfileLearningTime(summary.activityByType);
+      } catch (err) {
+        grid.innerHTML = `<p class="text-sm text-red-600 col-span-full">Could not load your learning summary: ${escapeHtml(err.message)}</p>`;
+      }
+    }
+
+    // ---- Learning Time Summary (Section 6) ----
+    const ACTIVITY_TYPE_LABEL = {
+      MATERIAL_VIEW: 'Video / Playlist',
+      PRACTICE: 'Practice',
+      QUIZ: 'Assessment',
+      READING: 'Reading',
+      AI_INTERACTION: 'AI Interaction',
+    };
+
+    function renderProfileLearningTime(byType) {
+      const el = document.getElementById('profileLearningTime');
+      // Only real activity types this student actually has time logged in -
+      // never show a category that doesn't exist in their data.
+      const rows = (byType || []).filter((r) => r.totalSeconds > 0);
+      if (rows.length === 0) {
+        el.innerHTML = '<p class="text-sm text-slate-500">No tracked learning activity yet - start a diagnostic, practice set, or material to begin tracking.</p>';
+        return;
+      }
+      const total = rows.reduce((sum, r) => sum + r.totalSeconds, 0);
+      el.innerHTML = rows
+        .sort((a, b) => b.totalSeconds - a.totalSeconds)
+        .map((r) => `
+          <div class="flex items-center justify-between text-sm py-1.5 border-b border-slate-50 last:border-0">
+            <span class="text-slate-700 font-medium">${ACTIVITY_TYPE_LABEL[r.activityType] || r.activityType}</span>
+            <span class="font-bold text-slate-900">${fmtMinutes(r.totalSeconds)}</span>
+          </div>
+        `).join('') + `
+          <div class="flex items-center justify-between text-sm pt-2.5 mt-1 border-t border-slate-200">
+            <span class="font-bold text-slate-900">Total Active Learning Time</span>
+            <span class="font-extrabold text-blue-700">${fmtMinutes(total)}</span>
+          </div>`;
+    }
+
+    // ---- Course-wise Progress (Section 3) - reuses GET /api/progress, the
+    // exact same source of truth the rest of the app uses for course averages. ----
+    async function renderProfileCourseProgress() {
+      const el = document.getElementById('profileCourseProgress');
+      try {
+        const rows = await apiFetch('/progress');
+        el.innerHTML = rows.map((c) => `
+          <div>
+            <div class="flex items-center justify-between text-sm mb-1">
+              <span class="font-bold text-slate-800">${escapeHtml(c.courseCode)}</span>
+              <span class="font-semibold text-slate-500">${c.averageMastery === null ? 'Not started' : c.averageMastery + '%'}</span>
+            </div>
+            <div class="w-full bg-slate-100 rounded-full h-2">
+              <div class="bg-blue-600 h-2 rounded-full" style="width:${c.averageMastery || 0}%"></div>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        el.innerHTML = `<p class="text-sm text-red-600">Could not load course progress: ${escapeHtml(err.message)}</p>`;
+      }
+    }
+
+    // ---- Topic Mastery, condensed (Section 4) - reuses the SAME
+    // mastery-map endpoint the Progress Hub uses; only shows topics the
+    // student has actually engaged with (skips "Not Started"). ----
+    async function renderProfileTopicMastery() {
+      const el = document.getElementById('profileTopicMastery');
+      try {
+        const perCourse = await Promise.all(
+          ['dsa', 'oop', 'spl'].map(async (c) => ({ course: c, data: await apiFetch(`/courses/${courseIdCache[c]}/mastery-map`) })),
+        );
+        const rows = [];
+        for (const { course, data } of perCourse) {
+          for (const t of data.topics) {
+            if (t.status === 'Not Started') continue;
+            rows.push({ course, ...t });
+          }
+        }
+        if (rows.length === 0) {
+          el.innerHTML = '<p class="text-sm text-slate-500 col-span-full">No topics assessed yet - complete a diagnostic or assessment to see mastery here.</p>';
+          return;
+        }
+        el.innerHTML = rows.map((t) => `
+          <div class="flex items-center gap-3 p-3 rounded-xl border border-slate-100 bg-white">
+            <span class="text-lg leading-none">${t.emoji}</span>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-sm font-bold text-slate-900 truncate">${t.course.toUpperCase()} — ${escapeHtml(t.topic)}</span>
+                <span class="text-xs font-semibold text-slate-500 shrink-0">${t.score}%</span>
+              </div>
+              <span class="${badgeClassForStatus(t.status)} inline-block px-2 py-0.5 rounded-full text-[10px] font-bold mt-1">${t.status}</span>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        el.innerHTML = `<p class="text-sm text-red-600 col-span-full">Could not load topic mastery: ${escapeHtml(err.message)}</p>`;
+      }
+    }
+
+    // ---- Current Learning Focus (Section 5) ----
+    async function renderProfileCurrentFocus() {
+      const el = document.getElementById('profileCurrentFocus');
+      try {
+        const { focuses } = await apiFetch('/profile/focus');
+        if (focuses.length === 0) {
+          el.innerHTML = '<p class="text-sm text-slate-500">No active learning path yet - generate one from the AI Study Plan screen to see your current focus here.</p>';
+          return;
+        }
+        el.innerHTML = focuses.map((f) => `
+          <div class="p-4 rounded-xl bg-amber-50/60 border border-amber-200">
+            <div class="text-xs font-bold text-amber-700 uppercase tracking-wide">${escapeHtml(f.courseCode)}</div>
+            <div class="text-sm font-extrabold text-slate-900 mt-0.5">${escapeHtml(f.topic)}</div>
+            <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">${escapeHtml(f.reason)}</p>
+          </div>
+        `).join('');
+      } catch (err) {
+        el.innerHTML = `<p class="text-sm text-red-600">Could not load your current focus: ${escapeHtml(err.message)}</p>`;
+      }
+    }
+
+    // ---- Assessment Improvement (Section 9) ----
+    async function renderProfileAssessmentImprovement() {
+      const el = document.getElementById('profileAssessmentImprovement');
+      try {
+        const { results } = await apiFetch('/profile/assessment-improvement');
+        if (results.length === 0) {
+          el.innerHTML = '<p class="text-sm text-slate-500">No assessments completed yet.</p>';
+          return;
+        }
+        el.innerHTML = results.map((r) => `
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-100">
+            <div class="text-sm font-bold text-slate-900 mb-1.5">${escapeHtml(r.topic)}</div>
+            ${r.hasPrevious ? `
+              <div class="flex items-center gap-4 text-xs text-slate-600">
+                <span>Initial Assessment: <span class="font-bold text-slate-800">${r.initialPercentage}%</span></span>
+                <span>Latest Assessment: <span class="font-bold text-slate-800">${r.latestPercentage}%</span></span>
+                <span class="font-bold ${r.improvement >= 0 ? 'text-emerald-600' : 'text-red-600'}">${r.improvement >= 0 ? '+' : ''}${r.improvement} points</span>
+              </div>
+            ` : `<p class="text-xs text-slate-500">No previous assessment available. Latest score: <span class="font-bold text-slate-800">${r.latestPercentage}%</span></p>`}
+          </div>
+        `).join('');
+      } catch (err) {
+        el.innerHTML = `<p class="text-sm text-red-600">Could not load assessment improvement: ${escapeHtml(err.message)}</p>`;
+      }
+    }
+
+    // ---- Recent Activity / Completed Tasks (Sections 7-8, merged into one
+    // real chronological feed rather than two separate lists of the same data) ----
+    function dayLabelFor(dateStr) {
+      const d = new Date(dateStr);
+      const now = new Date();
+      const startOf = (x) => new Date(x.getFullYear(), x.getMonth(), x.getDate());
+      const diffDays = Math.round((startOf(now) - startOf(d)) / 86400000);
+      if (diffDays === 0) return 'Today';
+      if (diffDays === 1) return 'Yesterday';
+      return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: d.getFullYear() !== now.getFullYear() ? 'numeric' : undefined });
+    }
+
+    async function renderProfileActivityFeed() {
+      const el = document.getElementById('profileActivityFeed');
+      try {
+        const { items, hasMore } = await apiFetch('/profile/activity?limit=20');
+        if (items.length === 0) {
+          el.innerHTML = '<p class="text-sm text-slate-500">No activity yet - complete a material, practice set, or assessment to see it here.</p>';
+          return;
+        }
+        const groups = new Map();
+        for (const item of items) {
+          const label = dayLabelFor(item.timestamp);
+          if (!groups.has(label)) groups.set(label, []);
+          groups.get(label).push(item);
+        }
+        el.innerHTML = [...groups.entries()].map(([label, group]) => `
+          <div>
+            <div class="text-xs font-bold text-slate-400 uppercase tracking-wide mb-2 pb-1 border-b border-slate-100">${label}</div>
+            <div class="space-y-2">
+              ${group.map((it) => `
+                <div class="flex items-start gap-2">
+                  <span class="text-emerald-600 font-bold text-sm shrink-0">✓</span>
+                  <div class="min-w-0">
+                    <div class="text-sm font-semibold text-slate-800">${escapeHtml(it.label)}</div>
+                    ${it.subLabel ? `<div class="text-xs text-slate-500">${escapeHtml(it.subLabel)}</div>` : ''}
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `).join('') + (hasMore ? '<p class="text-xs text-slate-400 text-center pt-1">Showing your most recent activity.</p>' : '');
+      } catch (err) {
+        el.innerHTML = `<p class="text-sm text-red-600">Could not load recent activity: ${escapeHtml(err.message)}</p>`;
+      }
+    }
   </script>
 </body>
 

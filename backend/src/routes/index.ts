@@ -11,6 +11,7 @@ import progressRoutes from './progress.routes';
 import activityRoutes from './activity.routes';
 import insightsRoutes from './insights.routes';
 import assessmentRoutes from './assessment.routes';
+import profileRoutes from './profile.routes';
 
 const router = Router();
 
@@ -26,5 +27,6 @@ router.use('/progress', progressRoutes);
 router.use('/', activityRoutes); // exposes /activity/start, /activity/:id/heartbeat, /activity/:id/end, /activity/instant, /activity/summary
 router.use('/', insightsRoutes); // exposes /courses/:id/mastery-map, /courses/:id/learning-profile, /courses/:id/path-history
 router.use('/', assessmentRoutes); // exposes /topics/:id/assessment/state, /topics/:id/assessment/start, /assessment-attempts/:id/submit
+router.use('/profile', profileRoutes); // exposes /profile/summary, /profile/activity, /profile/focus, /profile/assessment-improvement
 
 export default router;
