@@ -601,44 +601,50 @@
       </div>
     </div>
 
-    <!-- ================= SCREEN 02: DASHBOARD (STUDENT: SAHMED223210) ================= -->
+    <!-- ================= SCREEN 02: STUDENT OVERVIEW ================= -->
     <div id="s02" class="screen-view">
       <div class="space-y-6">
-        <!-- Header Banner -->
+        <!-- Greeting -->
         <div
-          class="hub-card rounded-2xl p-6 md:p-8 bg-gradient-to-r from-white via-sky-50/50 to-white flex flex-col md:flex-row md:items-center justify-between gap-4">
+          class="hub-card rounded-2xl p-6 md:p-8 bg-gradient-to-r from-white via-brand-50/40 to-white flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <div class="flex items-center gap-2 mb-1">
-              <span
-                class="text-xs font-bold uppercase tracking-wider text-brand-500 bg-brand-50 px-2.5 py-0.5 rounded-full border border-brand-100">Fall
-                Semester 2026</span>
-              <span id="dashStudentId" class="text-xs text-slate-500 font-medium">Student ID: —</span>
-            </div>
-            <h2 id="dashGreeting" class="text-2xl md:text-3xl font-bold text-slate-900">Welcome back</h2>
-            <p class="text-sm text-slate-500 mt-1">
-              Track your course mastery percentages below, identify your weak topics, and take diagnostic assessments to
-              close academic gaps.
-            </p>
+            <span
+              class="text-xs font-bold uppercase tracking-wider text-brand-500 bg-brand-50 px-2.5 py-0.5 rounded-full border border-brand-100">Fall
+              Semester 2026</span>
+            <h2 id="dashGreeting" class="text-2xl md:text-3xl font-bold text-slate-900 mt-2">Welcome back</h2>
+            <p class="text-sm text-slate-500 mt-1">Here's an overview of your learning journey.</p>
           </div>
-          <div class="flex items-center gap-3">
-            <button onclick="openWeakTopicSelector('dsa')"
-              class="bg-brand-500 hover:bg-brand-700 text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-sm transition">
-              Identify Weak Areas
-            </button>
-            <button onclick="switchScreen('s13')"
-              class="bg-white hover:bg-slate-50 text-slate-700 font-semibold text-sm px-4 py-2.5 rounded-xl border border-slate-200 transition">
-              Detailed Progress Hub
-            </button>
-          </div>
+          <button onclick="switchScreen('s13')" class="btn-secondary text-sm px-4 py-2.5 rounded-xl transition">
+            View Full Progress
+          </button>
         </div>
 
-        <!-- 3 ENROLLED COURSE CARDS WITH INDIVIDUAL COURSE MASTERY PERCENTAGES -->
-        <div>
-          <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center justify-between">
-            <span>Enrolled Academic Courses & Mastery</span>
-            <span class="text-xs font-medium text-slate-500">Separate topic-level mastery tracked per course</span>
-          </h3>
+        <!-- STUDENT PROFILE OVERVIEW -->
+        <div class="hub-card rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="flex items-center gap-4 min-w-0">
+            <div id="ovProfileInitials"
+              class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-brand-600 to-brand-800 text-white flex items-center justify-center font-extrabold text-lg shadow-sm shrink-0">
+              —
+            </div>
+            <div class="min-w-0">
+              <div id="ovProfileName" class="text-base font-bold text-slate-900 truncate">—</div>
+              <div class="text-xs text-slate-500 font-medium">Student · United International University · CSE
+                Department</div>
+              <div class="flex items-center gap-2 mt-1 text-xs text-slate-500">
+                <span id="ovProfileStudentId">Student ID: —</span>
+                <span>·</span>
+                <span id="ovProfileEmail" class="truncate">—</span>
+              </div>
+            </div>
+          </div>
+          <button onclick="switchScreen('s14')"
+            class="btn-secondary text-xs px-3.5 py-2 rounded-xl transition shrink-0">View Full Profile →</button>
+        </div>
 
+        <!-- MY ENROLLED COURSES -->
+        <div>
+          <h3 class="text-lg font-bold text-slate-800 mb-1">My Enrolled Courses</h3>
+          <p class="text-xs text-slate-500 mb-4">Courses you're currently studying.</p>
           <div id="dashCourseGrid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <!-- Course cards are rendered by renderDashboard() from GET /api/courses
                  + GET /api/progress/:id - one template per enrolled course. -->
@@ -646,43 +652,33 @@
           </div>
         </div>
 
-        <!-- Dashboard Summary Stats Row -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="hub-card rounded-xl p-4 flex items-center gap-4">
-            <div class="w-10 h-10 rounded-lg bg-brand-50 text-brand-600 flex items-center justify-center shrink-0">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <div>
-              <div class="text-xs font-medium text-slate-500">Diagnostic Testing</div>
-              <div class="text-sm font-bold text-slate-800">10 Questions Per Course</div>
-            </div>
+        <!-- LEARNING SUMMARY -->
+        <div class="hub-card rounded-2xl p-6">
+          <h3 class="text-base font-bold text-slate-900 mb-4">Learning Summary</h3>
+          <div id="ovLearningSummary" class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <p class="text-sm text-slate-500 col-span-full">Loading…</p>
           </div>
-          <div class="hub-card rounded-xl p-4 flex items-center gap-4">
-            <div class="w-10 h-10 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-              </svg>
-            </div>
-            <div>
-              <div class="text-xs font-medium text-slate-500">Targeted Practice</div>
-              <div class="text-sm font-bold text-slate-800">10 Practice Qs with Feedback</div>
-            </div>
+        </div>
+
+        <!-- CURRENT LEARNING TARGET (flagship component) -->
+        <div>
+          <h3 class="text-lg font-bold text-slate-800 mb-1">Current Learning Target</h3>
+          <p class="text-xs text-slate-500 mb-4">The next step in your adaptive learning path - not simply your
+            lowest score.</p>
+          <div id="ovCurrentTarget" class="space-y-4">
+            <p class="text-sm text-slate-500">Loading…</p>
           </div>
-          <div class="hub-card rounded-xl p-4 flex items-center gap-4">
-            <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-              </svg>
-            </div>
-            <div>
-              <div class="text-xs font-medium text-slate-500">Separated Progress</div>
-              <div class="text-sm font-bold text-slate-800">Independent DSA, OOP & SPL Hubs</div>
-            </div>
+        </div>
+
+        <!-- RECENT LEARNING ACTIVITY -->
+        <div class="hub-card rounded-2xl p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-base font-bold text-slate-900">Recent Learning Activity</h3>
+            <button onclick="switchScreen('s14')" class="text-xs font-bold text-brand-600 hover:underline">View All
+              Activity →</button>
+          </div>
+          <div id="ovRecentActivity" class="space-y-3">
+            <p class="text-sm text-slate-500">Loading…</p>
           </div>
         </div>
       </div>
@@ -3141,12 +3137,21 @@
       const initEl = document.getElementById('profileInitials');
       const metaEl = document.getElementById('profileMeta');
       const greetEl = document.getElementById('dashGreeting');
-      const sidEl = document.getElementById('dashStudentId');
       if (nameEl) nameEl.textContent = user.name || user.email || 'Student';
       if (initEl) initEl.textContent = initialsOf(user.name);
       if (metaEl) metaEl.textContent = `${user.studentId || '—'} • UIU`;
       if (greetEl) greetEl.textContent = `${greetingFor(new Date())}, ${firstNameOf(user.name)}`;
-      if (sidEl) sidEl.textContent = `Student ID: ${user.studentId || '—'}`;
+
+      // Student Overview's Profile Overview snippet (Section 10)
+      const ovName = document.getElementById('ovProfileName');
+      const ovInit = document.getElementById('ovProfileInitials');
+      const ovSid = document.getElementById('ovProfileStudentId');
+      const ovEmail = document.getElementById('ovProfileEmail');
+      if (ovName) ovName.textContent = user.name || user.email || 'Student';
+      if (ovInit) ovInit.textContent = initialsOf(user.name);
+      if (ovSid) ovSid.textContent = `Student ID: ${user.studentId || '—'}`;
+      if (ovEmail) ovEmail.textContent = user.email || '—';
+
       const welcome = document.getElementById('aiChatWelcome');
       if (welcome) welcome.innerHTML = `<span class="font-bold text-slate-900">Adaptive Learning Path AI:</span> Hi ${escapeHtml(firstNameOf(user.name))}! I am your AI academic tutor for DSA, OOP, and SPL. Click a quick prompt above or ask your own question about your weak topics.`;
     }
@@ -3224,7 +3229,7 @@
     // GET /api/progress. Replaces the three hardcoded 42/75/82% cards and
     // the malformed grid they lived in.
     const COURSE_THEME = {
-      DSA: { accent: 'blue', bar: 'bg-brand-400', tint: 'bg-brand-50/50 border-brand-100', btn: 'bg-brand-500 hover:bg-brand-700', ovBtn: 'bg-brand-50 hover:bg-brand-100 text-brand-800 border-brand-200' },
+      DSA: { accent: 'brand', bar: 'bg-brand-400', tint: 'bg-brand-50/50 border-brand-100', btn: 'bg-brand-500 hover:bg-brand-700', ovBtn: 'bg-brand-50 hover:bg-brand-100 text-brand-800 border-brand-200' },
       OOP: { accent: 'amber', bar: 'bg-amber-500', tint: 'bg-amber-50/50 border-amber-100', btn: 'bg-brand-500 hover:bg-brand-700', ovBtn: 'bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-200' },
       SPL: { accent: 'emerald', bar: 'bg-emerald-500', tint: 'bg-emerald-50/50 border-emerald-100', btn: 'bg-brand-500 hover:bg-brand-700', ovBtn: 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-200' },
     };
@@ -3297,25 +3302,135 @@
                 </div>
               </div>
             </div>
-            <div class="space-y-2 pt-2 border-t border-slate-100">
-              <button data-act="overview" class="w-full ${theme.ovBtn} border font-bold text-xs py-2.5 rounded-xl transition shadow-2xs">${code} Course Overview &rarr;</button>
-              <button data-act="diag" class="w-full ${theme.btn} text-white font-semibold text-xs py-2.5 rounded-xl transition shadow-sm">Take ${code} Diagnostic (10 Qs) &rarr;</button>
-              <div class="grid grid-cols-3 gap-2">
-                <button data-act="weak" class="bg-sky-50 hover:bg-sky-100 text-sky-800 font-semibold text-xs py-2 rounded-xl border border-sky-200 transition">Weak Topics</button>
-                <button data-act="practice" class="bg-slate-50 hover:bg-slate-100 text-slate-700 font-semibold text-xs py-2 rounded-xl border border-slate-200 transition">Practice</button>
-                <button data-act="materials" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-semibold text-xs py-2 rounded-xl border border-emerald-200 transition">Materials</button>
-              </div>
+            <div class="pt-2 border-t border-slate-100">
+              <button data-act="view-course" class="w-full ${theme.btn} text-white font-bold text-xs py-2.5 rounded-xl transition shadow-sm">View Course &rarr;</button>
             </div>`;
-          card.querySelector('[data-act="overview"]').onclick = () => { switchScreen('s03'); switchOverviewTab(key); };
-          card.querySelector('[data-act="diag"]').onclick = () => startDiag(key);
-          card.querySelector('[data-act="weak"]').onclick = () => openWeakTopicSelector(key);
-          card.querySelector('[data-act="practice"]').onclick = () => startPractice(key);
-          card.querySelector('[data-act="materials"]').onclick = () => { switchContentTab(key); switchScreen('s09'); };
+          card.querySelector('[data-act="view-course"]').onclick = () => { switchScreen('s03'); switchOverviewTab(key); };
           grid.appendChild(card);
         }
       } catch (err) {
         grid.innerHTML = `<p class="text-sm text-red-600 col-span-full">Could not load your courses: ${escapeHtml(err.message)}</p>`;
       }
+    }
+
+    // ---- Student Overview: Learning Summary (condensed - full breakdown on Profile) ----
+    async function renderOverviewSummary() {
+      const el = document.getElementById('ovLearningSummary');
+      if (!el) return;
+      try {
+        const summary = await apiFetch('/profile/summary');
+        const items = [
+          { label: 'Overall Progress', value: summary.overallProgress === null ? 'No data yet' : `${summary.overallProgress}%` },
+          { label: 'Learning Time', value: fmtMinutes(summary.learningTimeSeconds) },
+          { label: 'Topics Mastered', value: String(summary.topicsMastered) },
+          { label: 'Assessments Completed', value: String(summary.assessmentsCompleted) },
+        ];
+        el.innerHTML = items.map((i) => `
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-100">
+            <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wide">${i.label}</div>
+            <div class="text-xl font-extrabold text-slate-900 mt-1">${i.value}</div>
+          </div>
+        `).join('');
+      } catch (err) {
+        el.innerHTML = `<p class="text-sm text-red-600 col-span-full">Could not load your learning summary: ${escapeHtml(err.message)}</p>`;
+      }
+    }
+
+    // ---- Student Overview: Current Learning Target (flagship component,
+    // Section 18/19). Reuses GET /profile/focus (the real next-pending-item
+    // from the student's actual active adaptive learning path, not simply
+    // the lowest mastery score) plus GET /learning-path/:courseId to find
+    // the surrounding prev/next steps for the connected-path visualization. ----
+    function pathNodeHtml(name, isCurrent) {
+      if (isCurrent) {
+        return `<div class="flex flex-col items-center shrink-0">
+          <span class="px-3 py-1.5 rounded-xl bg-brand-600 text-white text-xs font-bold shadow-sm ring-2 ring-accent ring-offset-2">${escapeHtml(name)}</span>
+          <span class="text-[9px] font-bold text-brand-600 uppercase mt-1 tracking-wide">Current</span>
+        </div>`;
+      }
+      return `<span class="px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-500 text-xs font-semibold shrink-0">${escapeHtml(name)}</span>`;
+    }
+    function pathArrowHtml() {
+      return `<svg class="w-4 h-4 text-brand-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>`;
+    }
+
+    async function renderCurrentLearningTarget() {
+      const el = document.getElementById('ovCurrentTarget');
+      if (!el) return;
+      try {
+        const { focuses } = await apiFetch('/profile/focus');
+        if (focuses.length === 0) {
+          el.innerHTML = `<div class="hub-card rounded-2xl p-6 md:p-8 text-center">
+            <p class="text-sm text-slate-600 mb-3">Complete a diagnostic assessment to get your personalized learning target.</p>
+            <button onclick="openWeakTopicSelector('dsa')" class="btn-primary text-xs px-4 py-2.5 rounded-xl transition">Start Diagnostic →</button>
+          </div>`;
+          return;
+        }
+        const cards = await Promise.all(focuses.map(async (f) => {
+          const key = f.courseCode.toLowerCase();
+          let prevName = null, nextName = null;
+          try {
+            const path = await apiFetch(`/learning-path/${courseIdCache[key]}`);
+            const idx = path.items.findIndex((i) => i.topicId === f.topicId);
+            if (idx > 0) prevName = path.items[idx - 1].topic.name;
+            if (idx >= 0 && idx < path.items.length - 1) nextName = path.items[idx + 1].topic.name;
+          } catch (_) { /* path not generated yet - just skip the strip context */ }
+
+          return `
+            <div class="hub-card rounded-2xl p-6 md:p-8 bg-lavender/50 border-brand-100">
+              <div class="flex items-start justify-between gap-4 flex-wrap">
+                <div class="min-w-0">
+                  <span class="text-xs font-bold uppercase tracking-wider text-brand-600">${escapeHtml(f.courseCode)}</span>
+                  <h4 class="text-xl md:text-2xl font-extrabold text-slate-900 mt-1">${escapeHtml(f.topic)}</h4>
+                  ${f.currentMastery !== null ? `<div class="text-sm font-bold text-brand-700 mt-0.5">${f.currentMastery}% Mastery</div>` : '<div class="text-sm font-semibold text-slate-500 mt-0.5">Not yet assessed</div>'}
+                  <p class="text-xs text-slate-600 mt-2 max-w-lg leading-relaxed">${escapeHtml(f.reason)}</p>
+                </div>
+                <button onclick="switchContentTab('${key}'); switchScreen('s09');" class="btn-primary text-xs px-4 py-2.5 rounded-xl shrink-0 transition">Continue Learning →</button>
+              </div>
+              <div class="flex items-center gap-2 mt-6 overflow-x-auto pb-1">
+                ${prevName ? pathNodeHtml(prevName, false) + pathArrowHtml() : ''}
+                ${pathNodeHtml(f.topic, true)}
+                ${nextName ? pathArrowHtml() + pathNodeHtml(nextName, false) : ''}
+              </div>
+            </div>`;
+        }));
+        el.innerHTML = cards.join('');
+      } catch (err) {
+        el.innerHTML = `<p class="text-sm text-red-600">Could not load your current learning target: ${escapeHtml(err.message)}</p>`;
+      }
+    }
+
+    // ---- Student Overview: Recent Learning Activity (condensed - full
+    // day-grouped timeline lives on the Profile page) ----
+    async function renderOverviewActivity() {
+      const el = document.getElementById('ovRecentActivity');
+      if (!el) return;
+      try {
+        const { items } = await apiFetch('/profile/activity?limit=5');
+        if (items.length === 0) {
+          el.innerHTML = '<p class="text-sm text-slate-500">No activity yet - complete a material, practice set, or assessment to see it here.</p>';
+          return;
+        }
+        el.innerHTML = items.map((it) => `
+          <div class="flex items-start gap-2.5">
+            <span class="text-emerald-600 font-bold text-sm shrink-0 mt-0.5">✓</span>
+            <div class="min-w-0 flex-1">
+              <div class="text-sm font-semibold text-slate-800">${escapeHtml(it.label)}</div>
+              ${it.subLabel ? `<div class="text-xs text-slate-500">${escapeHtml(it.subLabel)}</div>` : ''}
+            </div>
+            <div class="text-[10px] text-slate-400 shrink-0 whitespace-nowrap">${new Date(it.timestamp).toLocaleDateString()}</div>
+          </div>
+        `).join('');
+      } catch (err) {
+        el.innerHTML = `<p class="text-sm text-red-600">Could not load recent activity: ${escapeHtml(err.message)}</p>`;
+      }
+    }
+
+    function renderStudentOverview() {
+      renderDashboard();
+      renderOverviewSummary();
+      renderCurrentLearningTarget();
+      renderOverviewActivity();
     }
 
     function escapeHtml(s) {
@@ -3364,7 +3479,7 @@
       // (their non-DSA tabs are loaded on-demand by their own tab switchers).
       if (screenId === 's13') { currentProgressCourse = 'dsa'; renderProgressTab('dsa'); renderMasteryMap('dsa'); renderPathHistory('dsa'); renderLearningProfile('dsa'); }
       if (screenId === 's07') renderGaps('dsa');
-      if (screenId === 's02') renderDashboard();
+      if (screenId === 's02') renderStudentOverview();
       if (screenId === 's09') switchContentTab(currentChatCourse || 'dsa');
       if (screenId === 's14') renderProfileScreen();
 
