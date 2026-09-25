@@ -398,6 +398,18 @@
             Materials
           </button>
 
+          <!-- Assessments (Section 32) - a real dedicated destination as of
+               UI redesign Stage 5/6, separate from Materials. -->
+          <button id="navAssessments" onclick="switchScreen('s19'); switchAssessmentsTab('dsa');"
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-white hover:text-red-700 hover:shadow-2xs transition-all duration-150">
+            <svg class="w-3.5 h-3.5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4">
+              </path>
+            </svg>
+            Assessments
+          </button>
+
           <!-- Progress Hub -->
           <button id="navProgress" onclick="switchScreen('s13')"
             class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-white hover:text-brand-700 hover:shadow-2xs transition-all duration-150">
@@ -1929,6 +1941,43 @@
       </div>
     </div>
 
+    <!-- ================= SCREEN 19: ASSESSMENTS (real dedicated destination
+         for Diagnostic / Adaptive Assessment / Follow-up - UI redesign Stage
+         5/6: "Learn" (Materials) and "Measure" (this screen) are now
+         structurally separate, not one Adaptive Assessment button living
+         inside a materials card. No new engine logic - this screen only
+         routes to the existing diagnostic/adaptive-assessment/follow-up
+         flows that were already built and tested. ================= -->
+    <div id="s19" class="screen-view">
+      <div class="max-w-4xl mx-auto space-y-6">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2 text-xs text-slate-500">
+            <span class="hover:underline cursor-pointer" onclick="switchScreen('s02')">Dashboard</span>
+            <span>›</span>
+            <span class="font-semibold text-slate-800">Assessments</span>
+          </div>
+          <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200">
+            <button id="assessmentsTabDsa" onclick="switchAssessmentsTab('dsa')"
+              class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-brand-500 text-white shadow-xs transition">DSA</button>
+            <button id="assessmentsTabOop" onclick="switchAssessmentsTab('oop')"
+              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">OOP</button>
+            <button id="assessmentsTabSpl" onclick="switchAssessmentsTab('spl')"
+              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">SPL</button>
+          </div>
+        </div>
+
+        <div class="hub-card rounded-2xl p-6">
+          <h2 class="text-xl md:text-2xl font-bold text-slate-900">Assessments</h2>
+          <p class="text-sm text-slate-500 mt-1">Diagnostic, topic-level, and follow-up checks - measuring what you've
+            learned, separate from learning materials.</p>
+        </div>
+
+        <div id="assessmentsHubBody" class="space-y-6">
+          <p class="text-sm text-slate-500">Loading…</p>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <!-- ================= SCRIPTS: REAL BACKEND INTEGRATION ================= -->
@@ -2559,7 +2608,7 @@
         // mid-flow/parameterized screens from a fresh page load shows an
         // empty shell instead of silently restoring it. Each falls back to
         // the screen it's normally launched from instead.
-        const UNRESTORABLE_ON_REFRESH = { screen_assess: 's09', screen_diag: 's09', screen_practice: 's09', s03: 's02', s06: 's02', s17: 's16' };
+        const UNRESTORABLE_ON_REFRESH = { screen_assess: 's09', screen_diag: 's09', screen_practice: 's09', s03: 's02', s06: 's02', s17: 's16', s19: 's02' };
         const validHash = /^(s\d+[a-c]?|screen_[a-z]+)$/.test(hash) && hash !== 's01';
         // No specific destination requested (fresh load, no hash) - route a
         // still-fully-undiagnosed student to onboarding instead of an empty
@@ -2985,6 +3034,7 @@
           <div class="flex flex-wrap gap-2.5">
             <button onclick="switchScreen('s07'); switchGapTab('${course}');" class="btn-secondary text-xs px-4 py-2.5 rounded-xl transition">Learning Path &amp; Gaps</button>
             <button onclick="switchContentTab('${course}'); switchScreen('s09');" class="btn-secondary text-xs px-4 py-2.5 rounded-xl transition">Learning Materials</button>
+            <button onclick="switchScreen('s19'); switchAssessmentsTab('${course}');" class="btn-secondary text-xs px-4 py-2.5 rounded-xl transition">Assessments</button>
             <button onclick="switchScreen('s13'); switchProgressTab('${course}Tab');" class="btn-secondary text-xs px-4 py-2.5 rounded-xl transition">Progress</button>
           </div>
 
@@ -2998,6 +3048,88 @@
         `;
       } catch (err) {
         body.innerHTML = `<p class="text-sm text-red-600">Could not load this course: ${escapeHtml(err.message)}</p>`;
+      }
+    }
+
+    // ---- Assessments hub (Section 28/29 - "Learn" vs "Measure" are
+    // structurally separate screens now). No new engine: routes to the
+    // exact same diagnostic/adaptive-assessment/follow-up flows already
+    // built and tested; this is purely a real-data index page over them. ----
+    async function switchAssessmentsTab(course) {
+      ['dsa', 'oop', 'spl'].forEach((c) => {
+        document.getElementById(`assessmentsTab${c.charAt(0).toUpperCase()}${c.slice(1)}`).className =
+          "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
+      });
+      const theme = OVERVIEW_TAB_THEME[course] || OVERVIEW_TAB_THEME.dsa;
+      document.getElementById(`assessmentsTab${course.charAt(0).toUpperCase()}${course.slice(1)}`).className =
+        `px-3.5 py-1.5 rounded-lg text-xs font-bold ${theme.pill} text-white shadow-xs transition`;
+      await renderAssessmentsHub(course);
+    }
+
+    async function renderAssessmentsHub(course) {
+      const body = document.getElementById('assessmentsHubBody');
+      if (!body) return;
+      body.innerHTML = '<p class="text-sm text-slate-500">Loading…</p>';
+      try {
+        const courseId = courseIdCache[course];
+        const [progressAll, topics] = await Promise.all([
+          apiFetch('/progress'),
+          apiFetch(`/courses/${courseId}/topics`),
+        ]);
+        const prog = progressAll.find((p) => p.courseId === courseId) || { topicsAssessed: 0 };
+        const diagnosed = (prog.topicsAssessed || 0) > 0;
+
+        const topicStates = await Promise.all(topics.map(async (t) => {
+          try { return { topic: t, state: await apiFetch(`/topics/${t.id}/assessment/state`) }; }
+          catch (_) { return { topic: t, state: null }; }
+        }));
+
+        const chip = (label, val) => `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${val != null ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-400 border border-slate-200'}">${label}${val != null ? ': ' + val + '%' : ''}</span>`;
+        const topicRows = topicStates.map(({ topic, state }) => {
+          const d = state?.difficulties;
+          return `
+            <div class="flex items-center justify-between p-3.5 rounded-xl border border-slate-100 bg-white">
+              <div class="min-w-0">
+                <div class="text-sm font-bold text-slate-900">${escapeHtml(topic.name)}</div>
+                <div class="flex items-center gap-1.5 mt-1.5">${chip('Easy', d?.EASY?.bestPercentage)}${chip('Medium', d?.MEDIUM?.bestPercentage)}${chip('Hard', d?.HARD?.bestPercentage)}</div>
+              </div>
+              <button data-open-assess-topic="${topic.id}" data-open-assess-name="${escapeHtml(topic.name)}" class="text-xs font-bold text-brand-600 hover:underline shrink-0">Open Assessment →</button>
+            </div>`;
+        }).join('');
+
+        body.innerHTML = `
+          <div class="hub-card rounded-2xl p-6">
+            <div class="flex items-center justify-between gap-4 flex-wrap">
+              <div>
+                <h3 class="text-base font-bold text-slate-900">Diagnostic Assessment</h3>
+                <p class="text-xs text-slate-500 mt-0.5">${diagnosed ? 'Completed - retake anytime to refresh your baseline.' : '10 questions, ~5-8 min. Establishes your starting mastery per topic.'}</p>
+              </div>
+              <button onclick="startDiag('${course}')" class="btn-secondary text-xs px-4 py-2.5 rounded-xl transition shrink-0">${diagnosed ? 'Retake Diagnostic →' : 'Take Diagnostic →'}</button>
+            </div>
+          </div>
+
+          <div class="hub-card rounded-2xl p-6">
+            <h3 class="text-base font-bold text-slate-900 mb-1">Topic Assessments</h3>
+            <p class="text-xs text-slate-500 mb-4">Each topic: Easy → Medium → Hard, level-locked. Pass a tier to unlock the next.</p>
+            <div class="space-y-2">${topicRows || '<p class="text-sm text-slate-500">No topics found.</p>'}</div>
+          </div>
+
+          <div class="hub-card rounded-2xl p-6">
+            <div class="flex items-center justify-between gap-4 flex-wrap">
+              <div>
+                <h3 class="text-base font-bold text-slate-900">Follow-up Assessment</h3>
+                <p class="text-xs text-slate-500 mt-0.5">A short check on topics you've practiced, to verify real improvement.</p>
+              </div>
+              <button onclick="startFollowup('${course}')" class="btn-secondary text-xs px-4 py-2.5 rounded-xl transition shrink-0">Start Follow-up →</button>
+            </div>
+          </div>
+        `;
+
+        body.querySelectorAll('[data-open-assess-topic]').forEach((btn) => {
+          btn.addEventListener('click', () => openAssessmentHub(course, btn.dataset.openAssessTopic, btn.dataset.openAssessName));
+        });
+      } catch (err) {
+        body.innerHTML = `<p class="text-sm text-red-600">Could not load assessments: ${escapeHtml(err.message)}</p>`;
       }
     }
 
@@ -3254,12 +3386,6 @@
     // now enabled for every VIDEO/PLAYLIST material across all three courses.
     let EMBED_TEST_TOPICS = null;
 
-    // Representative topic (Arrays) verified clean - the full 30-question
-    // question bank now exists for every DSA/OOP/SPL topic, so the
-    // "Adaptive Assessment" entry point is enabled everywhere (null = no gate,
-    // same convention as EMBED_TEST_TOPICS above).
-    let ASSESSMENT_ENABLED_TOPICS = null;
-
     async function renderMaterials(course) {
       const panel = document.getElementById('materialsPanel');
       if (!panel) return;
@@ -3290,8 +3416,9 @@
         panel.innerHTML = '';
         for (const t of topics) {
           const card = document.createElement('div');
-          card.className = 'hub-card rounded-2xl p-5 md:p-6 space-y-3';
-          const items = t.materials.map((m) => {
+          card.className = 'hub-card rounded-2xl p-5 md:p-6 space-y-4';
+
+          const materialHtml = (m) => {
             const meta = MATERIAL_TYPE_META[m.type] || MATERIAL_TYPE_META.OTHER;
             const isRec = rec.has(m.title);
             const topicEnabled = !EMBED_TEST_TOPICS || EMBED_TEST_TOPICS.has(t.topicName);
@@ -3315,23 +3442,36 @@
                 </div>
                 ${embeddable ? `<div class="yt-embed-slot" data-slot-for="${m.id}"></div>` : ''}
               </div>`;
-          }).join('');
+          };
+
+          // Learning Materials Workspace (Section 22): group each topic's
+          // resources into Videos / Reading / Practice instead of one flat
+          // mixed list - the same real materials, just organized by what
+          // kind of learning activity they are.
+          const videos = t.materials.filter((m) => m.type === 'VIDEO' || m.type === 'PLAYLIST');
+          const reading = t.materials.filter((m) => m.type === 'ARTICLE' || m.type === 'DOCUMENT' || m.type === 'OTHER');
+          const practiceResources = t.materials.filter((m) => m.type === 'PRACTICE');
+
+          const section = (label, mats) => mats.length === 0 ? '' : `
+            <div>
+              <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wide mb-1.5">${label}</div>
+              <div class="space-y-2">${mats.map(materialHtml).join('')}</div>
+            </div>`;
+
           card.innerHTML = `
             <div class="flex items-center justify-between">
               <h3 class="text-base font-bold text-slate-900">${escapeHtml(t.topicName)}</h3>
               <span class="text-[11px] text-slate-400 font-semibold">${t.materials.length} resource${t.materials.length === 1 ? '' : 's'}</span>
             </div>
-            <div class="space-y-2">${items}</div>
-            <div class="flex flex-wrap gap-2">
+            ${section('Videos', videos)}
+            ${section('Reading', reading)}
+            <div>
+              <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wide mb-1.5">Practice</div>
+              ${practiceResources.length ? `<div class="space-y-2 mb-2">${practiceResources.map(materialHtml).join('')}</div>` : ''}
               <button data-adaptive-topic-id="${t.topicId}" data-adaptive-topic-name="${escapeHtml(t.topicName)}"
                 class="text-[11px] font-bold text-brand-700 bg-brand-50 hover:bg-brand-100 border border-brand-200 px-3 py-1.5 rounded-lg transition">
-                Practice ${escapeHtml(t.topicName)} (adapts to your level) →
+                Practice ${escapeHtml(t.topicName)} (adapts to your level, instant feedback) →
               </button>
-              ${(!ASSESSMENT_ENABLED_TOPICS || ASSESSMENT_ENABLED_TOPICS.has(t.topicName)) ? `
-              <button data-assess-topic-id="${t.topicId}" data-assess-topic-name="${escapeHtml(t.topicName)}"
-                class="text-[11px] font-bold text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 px-3 py-1.5 rounded-lg transition">
-                Adaptive Assessment (Easy → Hard) →
-              </button>` : ''}
             </div>`;
           panel.appendChild(card);
         }
@@ -3351,12 +3491,6 @@
         panel.querySelectorAll('[data-adaptive-topic-id]').forEach((btn) => {
           btn.addEventListener('click', () => {
             startAdaptivePractice(course, btn.dataset.adaptiveTopicId, btn.dataset.adaptiveTopicName);
-          });
-        });
-
-        panel.querySelectorAll('[data-assess-topic-id]').forEach((btn) => {
-          btn.addEventListener('click', () => {
-            openAssessmentHub(course, btn.dataset.assessTopicId, btn.dataset.assessTopicName);
           });
         });
 
