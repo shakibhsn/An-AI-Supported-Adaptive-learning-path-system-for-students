@@ -1825,6 +1825,110 @@
       </div>
     </div>
 
+    <!-- ================= NEW STUDENT ONBOARDING (UI redesign Stage 4) - new
+         signups (or anyone with zero diagnostic data anywhere) land here
+         instead of an empty Student Overview: Welcome -> Course Selection ->
+         Diagnostic Entry -> (real diagnostic + result, reusing the existing
+         screen_diag/s06 engine) -> Path Ready -> Student Overview. ================= -->
+
+    <!-- SCREEN 15: WELCOME -->
+    <div id="s15" class="screen-view">
+      <div class="max-w-xl mx-auto mt-8 md:mt-16">
+        <div class="hub-card rounded-2xl p-8 md:p-10 text-center">
+          <div
+            class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-brand-600 to-brand-800 text-white flex items-center justify-center font-black text-xl shadow-md mx-auto mb-5">
+            SG</div>
+          <h2 class="text-2xl md:text-3xl font-bold text-slate-900">Welcome to Adaptive Learning Path</h2>
+          <p class="text-sm text-slate-500 mt-3 leading-relaxed max-w-md mx-auto">
+            Let's understand your current learning level and build a learning path that adapts to your progress.
+          </p>
+          <p class="text-xs font-bold text-slate-400 uppercase tracking-wide mt-8 mb-3">Your learning path will be
+            based on</p>
+          <div class="grid grid-cols-2 gap-3 text-left">
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-100 flex items-center gap-2.5">
+              <svg class="w-4 h-4 text-brand-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span class="text-xs font-bold text-slate-700">Assessment</span>
+            </div>
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-100 flex items-center gap-2.5">
+              <svg class="w-4 h-4 text-brand-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+              <span class="text-xs font-bold text-slate-700">Topic Mastery</span>
+            </div>
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-100 flex items-center gap-2.5">
+              <svg class="w-4 h-4 text-brand-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+              </svg>
+              <span class="text-xs font-bold text-slate-700">Practice Performance</span>
+            </div>
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-100 flex items-center gap-2.5">
+              <svg class="w-4 h-4 text-brand-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+              </svg>
+              <span class="text-xs font-bold text-slate-700">Learning Progress</span>
+            </div>
+          </div>
+          <button onclick="switchScreen('s16'); renderOnboardCourseSelection();"
+            class="btn-primary text-sm px-8 py-3.5 rounded-xl mt-8 w-full transition">Get Started →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREEN 16: COURSE SELECTION -->
+    <div id="s16" class="screen-view">
+      <div class="max-w-xl mx-auto mt-8 md:mt-16">
+        <div class="hub-card rounded-2xl p-8 md:p-10">
+          <h2 class="text-xl md:text-2xl font-bold text-slate-900">Choose Your Courses</h2>
+          <p class="text-sm text-slate-500 mt-1 mb-6">Select the courses you're currently studying.</p>
+          <div id="onboardCourseList" class="space-y-3">
+            <p class="text-sm text-slate-500">Loading courses…</p>
+          </div>
+          <button onclick="beginOnboardingDiagnostics()"
+            class="btn-primary text-sm px-8 py-3.5 rounded-xl mt-6 w-full transition">Continue →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREEN 17: DIAGNOSTIC ENTRY -->
+    <div id="s17" class="screen-view">
+      <div class="max-w-xl mx-auto mt-8 md:mt-16">
+        <div class="hub-card rounded-2xl p-8 md:p-10 text-center">
+          <h2 class="text-xl md:text-2xl font-bold text-slate-900">Let's understand your current level</h2>
+          <p class="text-sm text-slate-500 mt-2 mb-6">Before creating your learning path, complete a short diagnostic
+            assessment.</p>
+          <div id="onboardDiagInfo" class="grid grid-cols-2 gap-3 text-left mb-8"></div>
+          <button id="onboardStartDiagBtn" class="btn-primary text-sm px-8 py-3.5 rounded-xl w-full transition">Start
+            Diagnostic →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREEN 18: PATH READY -->
+    <div id="s18" class="screen-view">
+      <div class="max-w-xl mx-auto mt-8 md:mt-16">
+        <div class="hub-card rounded-2xl p-8 md:p-10 text-center">
+          <div
+            class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-5">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h2 class="text-xl md:text-2xl font-bold text-slate-900">Your personalized learning path is ready</h2>
+          <p class="text-sm text-slate-500 mt-2 mb-8 max-w-sm mx-auto">Based on your real diagnostic results, we've
+            built an adaptive learning path for each course you assessed.</p>
+          <button onclick="finishOnboarding()"
+            class="btn-primary text-sm px-8 py-3.5 rounded-xl w-full transition">View Learning Path →</button>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <!-- ================= SCRIPTS: REAL BACKEND INTEGRATION ================= -->
@@ -2284,9 +2388,13 @@
         errorBox.classList.add('hidden');
         if (result.user) applyUserToUI(result.user);
         await loadCourseIds();
-        // Start the history stack at the dashboard - no stray "back to login" entry.
-        history.replaceState({ screen: 's02' }, '', '#s02');
-        _activateScreen('s02');
+        // A student with zero diagnostic data anywhere (brand new signup, or
+        // a returning student who abandoned onboarding earlier) lands on the
+        // Welcome screen instead of an empty Student Overview (Section 13).
+        const startScreen = (await shouldShowOnboarding()) ? 's15' : 's02';
+        // Start the history stack there - no stray "back to login" entry.
+        history.replaceState({ screen: startScreen }, '', '#' + startScreen);
+        _activateScreen(startScreen);
       } catch (err) {
         errorText.textContent = err.message || 'Your email or password is incorrect.';
         errorBox.classList.remove('hidden');
@@ -2304,6 +2412,7 @@
       clearAuthToken();
       clearCourseIdCache();
       currentUser = null;
+      onboardingQueue = [];
       resetProfileUI();
       history.replaceState({ screen: 's01' }, '', '#s01');
       _activateScreen('s01');
@@ -2311,6 +2420,66 @@
       const form = document.getElementById('loginForm');
       if (form) form.reset();
       toggleAuthMode('login');
+    }
+
+    // ================= NEW STUDENT ONBOARDING (Section 13) =================
+    // Gated on real data (no diagnostic attempts anywhere - GET /progress's
+    // topicsAssessed across every course), not a signup-only flag, so a
+    // returning student who abandoned onboarding partway still gets routed
+    // back in rather than landing on a half-empty Student Overview.
+    let onboardingQueue = []; // remaining course keys (e.g. ['dsa','spl']) still needing their diagnostic this session
+
+    async function shouldShowOnboarding() {
+      try {
+        const progress = await apiFetch('/progress');
+        return progress.every((p) => (p.topicsAssessed || 0) === 0);
+      } catch (_) { return false; }
+    }
+
+    async function renderOnboardCourseSelection() {
+      const el = document.getElementById('onboardCourseList');
+      try {
+        const courses = await apiFetch('/courses');
+        el.innerHTML = courses.map((c) => `
+          <label class="flex items-center justify-between p-4 border-2 border-brand-200 bg-brand-50/30 rounded-xl cursor-pointer transition hover:bg-brand-50">
+            <div>
+              <div class="text-sm font-bold text-slate-900">${escapeHtml(c.code)}</div>
+              <div class="text-xs text-slate-500">${escapeHtml(c.name)}</div>
+            </div>
+            <input type="checkbox" checked data-course-key="${c.code.toLowerCase()}" class="onboard-course-check w-5 h-5 text-brand-600 rounded border-slate-300">
+          </label>
+        `).join('');
+      } catch (err) {
+        el.innerHTML = `<p class="text-sm text-red-600">Could not load courses: ${escapeHtml(err.message)}</p>`;
+      }
+    }
+
+    function beginOnboardingDiagnostics() {
+      const checked = [...document.querySelectorAll('.onboard-course-check:checked')].map((c) => c.dataset.courseKey);
+      onboardingQueue = checked.length > 0 ? checked : ['dsa', 'oop', 'spl'];
+      advanceOnboarding();
+    }
+
+    function advanceOnboarding() {
+      if (onboardingQueue.length === 0) {
+        switchScreen('s18');
+        return;
+      }
+      const course = onboardingQueue[0]; // stays queued until its diagnostic actually completes
+      const code = course.toUpperCase();
+      document.getElementById('onboardDiagInfo').innerHTML = `
+        <div class="p-3 rounded-xl bg-slate-50 border border-slate-100"><div class="text-[11px] text-slate-400 font-bold uppercase">Course</div><div class="text-sm font-bold text-slate-800">${code}</div></div>
+        <div class="p-3 rounded-xl bg-slate-50 border border-slate-100"><div class="text-[11px] text-slate-400 font-bold uppercase">Questions</div><div class="text-sm font-bold text-slate-800">10</div></div>
+        <div class="p-3 rounded-xl bg-slate-50 border border-slate-100"><div class="text-[11px] text-slate-400 font-bold uppercase">Type</div><div class="text-sm font-bold text-slate-800">Diagnostic Assessment</div></div>
+        <div class="p-3 rounded-xl bg-slate-50 border border-slate-100"><div class="text-[11px] text-slate-400 font-bold uppercase">Estimated Time</div><div class="text-sm font-bold text-slate-800">~5-8 min</div></div>
+      `;
+      document.getElementById('onboardStartDiagBtn').onclick = () => startDiag(course);
+      switchScreen('s17');
+    }
+
+    function finishOnboarding() {
+      onboardingQueue = [];
+      switchScreen('s02');
     }
 
     // ================= CURRENT USER + PROFILE UI =================
@@ -2390,9 +2559,13 @@
         // mid-flow/parameterized screens from a fresh page load shows an
         // empty shell instead of silently restoring it. Each falls back to
         // the screen it's normally launched from instead.
-        const UNRESTORABLE_ON_REFRESH = { screen_assess: 's09', screen_diag: 's09', screen_practice: 's09', s03: 's02', s06: 's02' };
+        const UNRESTORABLE_ON_REFRESH = { screen_assess: 's09', screen_diag: 's09', screen_practice: 's09', s03: 's02', s06: 's02', s17: 's16' };
         const validHash = /^(s\d+[a-c]?|screen_[a-z]+)$/.test(hash) && hash !== 's01';
-        const start = validHash ? (UNRESTORABLE_ON_REFRESH[hash] || hash) : 's02';
+        // No specific destination requested (fresh load, no hash) - route a
+        // still-fully-undiagnosed student to onboarding instead of an empty
+        // Student Overview. A valid hash always wins (never interrupt a
+        // student mid-navigation elsewhere with an onboarding redirect).
+        const start = validHash ? (UNRESTORABLE_ON_REFRESH[hash] || hash) : ((await shouldShowOnboarding()) ? 's15' : 's02');
         history.replaceState({ screen: start }, '', '#' + start);
         _activateScreen(start);
       } catch (_) {
@@ -2651,7 +2824,7 @@
     // AND pushes a real history entry so the browser Back/Forward buttons
     // and the in-app Back button all work. _activateScreen() does the DOM
     // work only and is what the popstate handler calls (no extra push).
-    const SCREENS_NO_BACK = ['s01', 's02'];
+    const SCREENS_NO_BACK = ['s01', 's02', 's15', 's16', 's17', 's18'];
 
     // Screens that represent real learning activity, and which activityType
     // covers them - _activateScreen starts/stops the tracker automatically
@@ -3419,7 +3592,25 @@
       document.getElementById('diagResultCourseBtnLabel').textContent = `${code} Course Overview →`;
       document.getElementById('diagResultCourseBtn').onclick = () => { switchScreen('s03'); switchOverviewTab(course); };
       document.getElementById('diagResultRetakeBtn').onclick = () => startDiag(course);
-      document.getElementById('diagResultGapsBtn').onclick = () => { switchScreen('s07'); switchGapTab(course); };
+
+      // Mid-onboarding, this diagnostic was one step in the queue (Section
+      // 13/17) - generate the real path for it (same GET-then-POST the AI
+      // Study Plan screen already does) and advance instead of the normal
+      // "view gap analysis" destination.
+      const gapsBtn = document.getElementById('diagResultGapsBtn');
+      if (onboardingQueue.length > 0 && onboardingQueue[0] === course) {
+        gapsBtn.textContent = onboardingQueue.length > 1 ? 'Continue Setup →' : 'Finish Setup →';
+        gapsBtn.onclick = async () => {
+          gapsBtn.disabled = true;
+          try { await apiFetch('/learning-path/generate', { method: 'POST', body: { courseId: courseIdCache[course] } }); } catch (_) { /* no weak topics yet is fine - onboarding still proceeds */ }
+          gapsBtn.disabled = false;
+          onboardingQueue.shift();
+          advanceOnboarding();
+        };
+      } else {
+        gapsBtn.textContent = 'View Learning Gap Analysis (Next Step) →';
+        gapsBtn.onclick = () => { switchScreen('s07'); switchGapTab(course); };
+      }
     }
 
     // ================= PRACTICE ENGINE =================
