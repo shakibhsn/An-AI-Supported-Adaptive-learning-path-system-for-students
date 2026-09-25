@@ -684,702 +684,37 @@
       </div>
     </div>
 
-    <!-- ================= SCREEN 03: COURSE OVERVIEW (DSA, OOP, SPL SEPARATELY) ================= -->
+    <!-- ================= SCREEN 03: COURSE PAGE (real data - UI redesign
+         Stage 3 rebuilt this from a 100% hardcoded/decorative prototype
+         screen: fake topic names, fake percentages, never wired to the
+         backend) ================= -->
     <div id="s03" class="screen-view">
-      <div class="space-y-6">
+      <div class="max-w-5xl mx-auto space-y-6">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2 text-xs text-slate-500">
             <span class="hover:underline cursor-pointer" onclick="switchScreen('s02')">Dashboard</span>
             <span>›</span>
-            <span id="overviewBreadcrumbText" class="font-semibold text-slate-800">DSA Course Overview</span>
+            <span id="overviewBreadcrumbText" class="font-semibold text-slate-800">Course Page</span>
           </div>
           <!-- Course Selector Pills -->
           <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200">
             <button id="overviewTabDsa" onclick="switchOverviewTab('dsa')"
               class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-brand-500 text-white shadow-xs transition">
-              DSA Overview (42%)
+              DSA
             </button>
             <button id="overviewTabOop" onclick="switchOverviewTab('oop')"
               class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-              OOP Overview (75%)
+              OOP
             </button>
             <button id="overviewTabSpl" onclick="switchOverviewTab('spl')"
               class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-              SPL Overview (82%)
+              SPL
             </button>
           </div>
         </div>
 
-        <!-- ================= DSA OVERVIEW ================= -->
-        <div id="overviewDsa" class="space-y-6">
-          <div
-            class="hub-card rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border-l-4 border-l-red-500">
-            <div>
-              <div class="flex items-center gap-2 mb-2">
-                <span
-                  class="inline-block px-2.5 py-0.5 rounded-full bg-brand-50 text-brand-700 text-xs font-bold border border-brand-100">
-                  CSE Department • Core Course
-                </span>
-                <span class="badge-critical px-2.5 py-0.5 rounded-full text-xs font-bold">Course Mastery: 42% (Needs
-                  Attention)</span>
-              </div>
-              <h2 class="text-2xl md:text-3xl font-bold text-slate-900">Data Structures & Algorithms (DSA)</h2>
-              <p class="text-sm text-slate-500 mt-1 max-w-2xl leading-relaxed">
-                Linear linked structures, recursion tree frames, hierarchical binary search trees and graph traversals.
-                Your diagnostic indicates critical gaps in Linked List head manipulations and Tree child linking.
-              </p>
-            </div>
-            <button onclick="switchScreen('s03'); switchOverviewTab('dsa');"
-              class="w-full bg-brand-50 hover:bg-brand-100 text-brand-800 font-bold text-xs py-2.5 rounded-xl border border-brand-200 transition flex items-center justify-center gap-1.5 shadow-2xs">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                </path>
-              </svg>
-              DSA Course Overview (10 Topics) →
-            </button>
-            <button onclick="startDiag('dsa')"
-              class="bg-brand-500 hover:bg-brand-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition whitespace-nowrap">
-              Take Diagnostic Assessment (10 Qs) →
-            </button>
-          </div>
-
-          <div class="hub-card rounded-2xl p-6 overflow-hidden">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="text-base font-bold text-slate-900">DSA Topic Syllabus & Priority Breakdown (10 Topics)</h3>
-              <button onclick="startPractice('dsa')" class="text-xs font-bold text-brand-500 hover:underline">Launch
-                Practice Hub →</button>
-            </div>
-            <div class="overflow-x-auto">
-              <table class="w-full text-left text-sm">
-                <thead class="bg-slate-50 text-slate-500 text-xs uppercase border-y border-slate-100">
-                  <tr>
-                    <th class="py-3 px-4">Topic Name</th>
-                    <th class="py-3 px-4">Category</th>
-                    <th class="py-3 px-4">Diagnostic Status</th>
-                    <th class="py-3 px-4 text-right">Action</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-100">
-                  <tr>
-                    <td class="py-3 px-4 font-semibold text-slate-800">1. Arrays & Dynamic Sizing</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">Linear Structures</td>
-                    <td class="py-3 px-4 text-xs font-bold text-emerald-600">Fundamental • Mastered (80%)</td>
-                    <td class="py-3 px-4 text-right"><button onclick="startPractice('dsa')"
-                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
-                  </tr>
-                  <tr class="bg-red-50/20">
-                    <td class="py-3 px-4 font-semibold text-slate-900">2. Singly & Doubly Linked Lists</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">Pointer Structures</td>
-                    <td class="py-3 px-4 text-xs font-bold text-red-600">High Risk Gap (35%)</td>
-                    <td class="py-3 px-4 text-right"> <button onclick="switchScreen('s03'); switchOverviewTab('dsa');"
-                        class="w-full bg-brand-50 hover:bg-brand-100 text-brand-800 font-bold text-xs py-2.5 rounded-xl border border-brand-200 transition flex items-center justify-center gap-1.5 shadow-2xs">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                          </path>
-                        </svg>
-                        DSA Course Overview (10 Topics) →
-                      </button>
-                      <button onclick="startDiag('dsa')"
-                        class="text-xs bg-brand-500 text-white font-semibold px-3 py-1 rounded-lg hover:bg-brand-700">Test
-                        Topic</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="py-3 px-4 font-semibold text-slate-800">3. Stacks & Expression Parsing</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">LIFO Structures</td>
-                    <td class="py-3 px-4 text-xs font-bold text-amber-600">Moderate Gap (60%)</td>
-                    <td class="py-3 px-4 text-right"><button onclick="startPractice('dsa')"
-                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
-                  </tr>
-                  <tr>
-                    <td class="py-3 px-4 font-semibold text-slate-800">4. Queues & Circular Buffers</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">FIFO Structures</td>
-                    <td class="py-3 px-4 text-xs font-bold text-emerald-600">Fundamental (75%)</td>
-                    <td class="py-3 px-4 text-right"><button onclick="startPractice('dsa')"
-                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
-                  </tr>
-                  <tr class="bg-red-50/20">
-                    <td class="py-3 px-4 font-semibold text-slate-900">5. Recursion & Call Stacks</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">Algorithmic Paradigm</td>
-                    <td class="py-3 px-4 text-xs font-bold text-red-600">High Risk Gap (40%)</td>
-                    <td class="py-3 px-4 text-right"> <button onclick="switchScreen('s03'); switchOverviewTab('dsa');"
-                        class="w-full bg-brand-50 hover:bg-brand-100 text-brand-800 font-bold text-xs py-2.5 rounded-xl border border-brand-200 transition flex items-center justify-center gap-1.5 shadow-2xs">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                          </path>
-                        </svg>
-                        DSA Course Overview (10 Topics) →
-                      </button>
-                      <button onclick="startDiag('dsa')"
-                        class="text-xs bg-brand-500 text-white font-semibold px-3 py-1 rounded-lg hover:bg-brand-700">Test
-                        Topic</button>
-                    </td>
-                  </tr>
-                  <tr class="bg-red-50/20">
-                    <td class="py-3 px-4 font-semibold text-slate-900">6. Binary Trees & Traversals</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">Hierarchical Trees</td>
-                    <td class="py-3 px-4 text-xs font-bold text-red-600">High Risk Gap (30%)</td>
-                    <td class="py-3 px-4 text-right"> <button onclick="switchScreen('s03'); switchOverviewTab('dsa');"
-                        class="w-full bg-brand-50 hover:bg-brand-100 text-brand-800 font-bold text-xs py-2.5 rounded-xl border border-brand-200 transition flex items-center justify-center gap-1.5 shadow-2xs">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                          </path>
-                        </svg>
-                        DSA Course Overview (10 Topics) →
-                      </button>
-                      <button onclick="startDiag('dsa')"
-                        class="text-xs bg-brand-500 text-white font-semibold px-3 py-1 rounded-lg hover:bg-brand-700">Test
-                        Topic</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="py-3 px-4 font-semibold text-slate-800">7. Binary Search Trees (BST)</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">Ordered Search Trees</td>
-                    <td class="py-3 px-4 text-xs font-bold text-amber-600">Developing (50%)</td>
-                    <td class="py-3 px-4 text-right"><button onclick="startPractice('dsa')"
-                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
-                  </tr>
-                  <tr>
-                    <td class="py-3 px-4 font-semibold text-slate-800">8. Tree Height & Depth Calculations</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">Tree Analytics</td>
-                    <td class="py-3 px-4 text-xs font-bold text-amber-600">Developing (55%)</td>
-                    <td class="py-3 px-4 text-right"><button onclick="startPractice('dsa')"
-                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
-                  </tr>
-                  <tr>
-                    <td class="py-3 px-4 font-semibold text-slate-800">9. Graph Traversals (BFS & DFS)</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">Non-linear Graphs</td>
-                    <td class="py-3 px-4 text-xs font-bold text-emerald-600">Developing (65%)</td>
-                    <td class="py-3 px-4 text-right"><button onclick="startPractice('dsa')"
-                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
-                  </tr>
-                  <tr>
-                    <td class="py-3 px-4 font-semibold text-slate-800">10. Hash Tables & Collision Handling</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">Associative Structures</td>
-                    <td class="py-3 px-4 text-xs font-bold text-emerald-600">Fundamental (70%)</td>
-                    <td class="py-3 px-4 text-right"><button onclick="startPractice('dsa')"
-                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- ================= OOP OVERVIEW ================= -->
-        <div id="overviewOop" class="hidden space-y-6">
-          <div
-            class="hub-card rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border-l-4 border-l-amber-500">
-            <div>
-              <div class="flex items-center gap-2 mb-2">
-                <span
-                  class="inline-block px-2.5 py-0.5 rounded-full bg-brand-50 text-brand-700 text-xs font-bold border border-brand-100">
-                  CSE Department • Core Course
-                </span>
-                <span class="badge-developing px-2.5 py-0.5 rounded-full text-xs font-bold">Course Mastery: 75%
-                  (Developing)</span>
-              </div>
-              <h2 class="text-2xl md:text-3xl font-bold text-slate-900">Object-Oriented Programming (OOP)</h2>
-              <p class="text-sm text-slate-500 mt-1 max-w-2xl leading-relaxed">
-                Encapsulation, inheritance hierarchies, dynamic runtime polymorphism, interface contracts and robust
-                exception handling. While fundamentals are solid, advanced polymorphism and abstract decoupling require
-                refinement.
-              </p>
-            </div>
-            <button onclick="switchScreen('s03'); switchOverviewTab('oop');"
-              class="w-full bg-amber-50 hover:bg-amber-100 text-amber-800 font-bold text-xs py-2.5 rounded-xl border border-amber-200 transition flex items-center justify-center gap-1.5 shadow-2xs">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                </path>
-              </svg>
-              OOP Course Overview (10 Topics) →
-            </button>
-            <button onclick="startDiag('oop')"
-              class="bg-brand-500 hover:bg-brand-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition whitespace-nowrap">
-              Take Diagnostic Assessment (10 Qs) →
-            </button>
-          </div>
-
-          <div class="hub-card rounded-2xl p-6 overflow-hidden">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="text-base font-bold text-slate-900">OOP Topic Syllabus & Priority Breakdown (10 Topics)</h3>
-              <button onclick="startPractice('oop')" class="text-xs font-bold text-brand-500 hover:underline">Launch
-                Practice Hub →</button>
-            </div>
-            <div class="overflow-x-auto">
-              <table class="w-full text-left text-sm">
-                <thead class="bg-slate-50 text-slate-500 text-xs uppercase border-y border-slate-100">
-                  <tr>
-                    <th class="py-3 px-4">Topic Name</th>
-                    <th class="py-3 px-4">Category</th>
-                    <th class="py-3 px-4">Diagnostic Status</th>
-                    <th class="py-3 px-4 text-right">Action</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-100">
-                  <tr>
-                    <td class="py-3 px-4 font-semibold text-slate-800">1. Classes, Objects & Instances</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">Object Model</td>
-                    <td class="py-3 px-4 text-xs font-bold text-emerald-600">Fundamental • Mastered (90%)</td>
-                    <td class="py-3 px-4 text-right"><button onclick="startPractice('oop')"
-                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
-                  </tr>
-                  <tr>
-                    <td class="py-3 px-4 font-semibold text-slate-800">2. Encapsulation & Data Hiding</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">Access Control</td>
-                    <td class="py-3 px-4 text-xs font-bold text-emerald-600">Solid Baseline (85%)</td>
-                    <td class="py-3 px-4 text-right"><button onclick="startPractice('oop')"
-                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
-                  </tr>
-                  <tr>
-                    <td class="py-3 px-4 font-semibold text-slate-800">3. Access Modifiers (private, protected)</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">Visibility Rules</td>
-                    <td class="py-3 px-4 text-xs font-bold text-emerald-600">Mastered (80%)</td>
-                    <td class="py-3 px-4 text-right"><button onclick="startPractice('oop')"
-                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
-                  </tr>
-                  <tr>
-                    <td class="py-3 px-4 font-semibold text-slate-800">4. Constructors & Destructors</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">Lifecycle Management</td>
-                    <td class="py-3 px-4 text-xs font-bold text-emerald-600">Solid Baseline (85%)</td>
-                    <td class="py-3 px-4 text-right"><button onclick="startPractice('oop')"
-                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
-                  </tr>
-                  <tr>
-                    <td class="py-3 px-4 font-semibold text-slate-800">5. Class Inheritance (IS-A Hierarchy)</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">Code Reusability</td>
-                    <td class="py-3 px-4 text-xs font-bold text-emerald-600">Solid Baseline (80%)</td>
-                    <td class="py-3 px-4 text-right"><button onclick="startPractice('oop')"
-                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
-                  </tr>
-                  <tr class="bg-amber-50/30">
-                    <td class="py-3 px-4 font-semibold text-slate-900">6. Dynamic Polymorphism & Method Dispatch</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">Runtime Dispatch</td>
-                    <td class="py-3 px-4 text-xs font-bold text-red-600">High Risk Gap (35%)</td>
-                    <td class="py-3 px-4 text-right"> <button onclick="switchScreen('s03'); switchOverviewTab('oop');"
-                        class="w-full bg-amber-50 hover:bg-amber-100 text-amber-800 font-bold text-xs py-2.5 rounded-xl border border-amber-200 transition flex items-center justify-center gap-1.5 shadow-2xs">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                          </path>
-                        </svg>
-                        OOP Course Overview (10 Topics) →
-                      </button>
-                      <button onclick="startDiag('oop')"
-                        class="text-xs bg-brand-500 text-white font-semibold px-3 py-1 rounded-lg hover:bg-brand-700">Test
-                        Topic</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="py-3 px-4 font-semibold text-slate-800">7. Method Overloading & Signatures</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">Compile-Time Binding</td>
-                    <td class="py-3 px-4 text-xs font-bold text-emerald-600">Mastered (85%)</td>
-                    <td class="py-3 px-4 text-right"><button onclick="startPractice('oop')"
-                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
-                  </tr>
-                  <tr>
-                    <td class="py-3 px-4 font-semibold text-slate-800">8. Abstract Classes & Methods</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">Architectural Blueprints</td>
-                    <td class="py-3 px-4 text-xs font-bold text-amber-600">Developing (60%)</td>
-                    <td class="py-3 px-4 text-right"><button onclick="startPractice('oop')"
-                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
-                  </tr>
-                  <tr class="bg-amber-50/30">
-                    <td class="py-3 px-4 font-semibold text-slate-900">9. Interfaces & Multiple Type Contracts</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">Decoupled Contracts</td>
-                    <td class="py-3 px-4 text-xs font-bold text-red-600">High Risk Gap (40%)</td>
-                    <td class="py-3 px-4 text-right"> <button onclick="switchScreen('s03'); switchOverviewTab('oop');"
-                        class="w-full bg-amber-50 hover:bg-amber-100 text-amber-800 font-bold text-xs py-2.5 rounded-xl border border-amber-200 transition flex items-center justify-center gap-1.5 shadow-2xs">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                          </path>
-                        </svg>
-                        OOP Course Overview (10 Topics) →
-                      </button>
-                      <button onclick="startDiag('oop')"
-                        class="text-xs bg-brand-500 text-white font-semibold px-3 py-1 rounded-lg hover:bg-brand-700">Test
-                        Topic</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="py-3 px-4 font-semibold text-slate-800">10. Exception Handling & Finally Blocks</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">Fault Tolerance</td>
-                    <td class="py-3 px-4 text-xs font-bold text-emerald-600">Solid Baseline (85%)</td>
-                    <td class="py-3 px-4 text-right"><button onclick="startPractice('oop')"
-                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- ================= SPL OVERVIEW ================= -->
-        <div id="overviewSpl" class="hidden space-y-6">
-          <div
-            class="hub-card rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border-l-4 border-l-emerald-500">
-            <div>
-              <div class="flex items-center gap-2 mb-2">
-                <span
-                  class="inline-block px-2.5 py-0.5 rounded-full bg-brand-50 text-brand-700 text-xs font-bold border border-brand-100">
-                  CSE Department • Core Course
-                </span>
-                <span class="badge-mastered px-2.5 py-0.5 rounded-full text-xs font-bold">Course Mastery: 82% (On
-                  Track)</span>
-              </div>
-              <h2 class="text-2xl md:text-3xl font-bold text-slate-900">Structured Programming Language (SPL)</h2>
-              <p class="text-sm text-slate-500 mt-1 max-w-2xl leading-relaxed">
-                C low-level syntax, pointers, byte-scaled pointer arithmetic, dynamic heap memory (malloc/free) and
-                struct memory alignment. Overall performance is high, with specific gaps in pointer byte scaling and
-                use-after-free risks.
-              </p>
-            </div>
-            <button onclick="switchScreen('s03'); switchOverviewTab('spl');"
-              class="w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs py-2.5 rounded-xl border border-emerald-200 transition flex items-center justify-center gap-1.5 shadow-2xs">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                </path>
-              </svg>
-              SPL Course Overview (10 Topics) →
-            </button>
-            <button onclick="startDiag('spl')"
-              class="bg-brand-500 hover:bg-brand-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition whitespace-nowrap">
-              Take Diagnostic Assessment (10 Qs) →
-            </button>
-          </div>
-
-          <div class="hub-card rounded-2xl p-6 overflow-hidden">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="text-base font-bold text-slate-900">SPL Topic Syllabus & Priority Breakdown (10 Topics)</h3>
-              <button onclick="startPractice('spl')" class="text-xs font-bold text-brand-500 hover:underline">Launch
-                Practice Hub →</button>
-            </div>
-            <div class="overflow-x-auto">
-              <table class="w-full text-left text-sm">
-                <thead class="bg-slate-50 text-slate-500 text-xs uppercase border-y border-slate-100">
-                  <tr>
-                    <th class="py-3 px-4">Topic Name</th>
-                    <th class="py-3 px-4">Category</th>
-                    <th class="py-3 px-4">Diagnostic Status</th>
-                    <th class="py-3 px-4 text-right">Action</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-100">
-                  <tr>
-                    <td class="py-3 px-4 font-semibold text-slate-800">1. C Fundamental Data Types & Modifiers</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">Memory Representation</td>
-                    <td class="py-3 px-4 text-xs font-bold text-emerald-600">Mastered (95%)</td>
-                    <td class="py-3 px-4 text-right"><button onclick="startPractice('spl')"
-                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
-                  </tr>
-                  <tr>
-                    <td class="py-3 px-4 font-semibold text-slate-800">2. Conditionals & Iterative Loops</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">Control Flow</td>
-                    <td class="py-3 px-4 text-xs font-bold text-emerald-600">Mastered (92%)</td>
-                    <td class="py-3 px-4 text-right"><button onclick="startPractice('spl')"
-                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
-                  </tr>
-                  <tr>
-                    <td class="py-3 px-4 font-semibold text-slate-800">3. Functions, Parameters & Return Types</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">Modular Design</td>
-                    <td class="py-3 px-4 text-xs font-bold text-emerald-600">Mastered (88%)</td>
-                    <td class="py-3 px-4 text-right"><button onclick="startPractice('spl')"
-                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
-                  </tr>
-                  <tr>
-                    <td class="py-3 px-4 font-semibold text-slate-800">4. Pointers & Memory Address Referencing</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">Direct Addressing</td>
-                    <td class="py-3 px-4 text-xs font-bold text-amber-600">Developing (65%)</td>
-                    <td class="py-3 px-4 text-right"><button onclick="startPractice('spl')"
-                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
-                  </tr>
-                  <tr class="bg-emerald-50/30">
-                    <td class="py-3 px-4 font-semibold text-slate-900">5. Pointer Dereferencing & Indirection</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">Memory Manipulation</td>
-                    <td class="py-3 px-4 text-xs font-bold text-amber-600">Developing (60%)</td>
-                    <td class="py-3 px-4 text-right"><button onclick="startPractice('spl')"
-                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
-                  </tr>
-                  <tr class="bg-red-50/20">
-                    <td class="py-3 px-4 font-semibold text-slate-900">6. Pointer Arithmetic & Byte Scaling</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">Byte Offset Scaling</td>
-                    <td class="py-3 px-4 text-xs font-bold text-red-600">High Risk Gap (32%)</td>
-                    <td class="py-3 px-4 text-right"> <button onclick="switchScreen('s03'); switchOverviewTab('spl');"
-                        class="w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs py-2.5 rounded-xl border border-emerald-200 transition flex items-center justify-center gap-1.5 shadow-2xs">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                          </path>
-                        </svg>
-                        SPL Course Overview (10 Topics) →
-                      </button>
-                      <button onclick="startDiag('spl')"
-                        class="text-xs bg-brand-500 text-white font-semibold px-3 py-1 rounded-lg hover:bg-brand-700">Test
-                        Topic</button>
-                    </td>
-                  </tr>
-                  <tr class="bg-red-50/20">
-                    <td class="py-3 px-4 font-semibold text-slate-900">7. Dynamic Heap Memory (malloc, calloc, free)
-                    </td>
-                    <td class="py-3 px-4 text-xs text-slate-500">Dynamic Allocation</td>
-                    <td class="py-3 px-4 text-xs font-bold text-red-600">High Risk Gap (38%)</td>
-                    <td class="py-3 px-4 text-right"> <button onclick="switchScreen('s03'); switchOverviewTab('spl');"
-                        class="w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs py-2.5 rounded-xl border border-emerald-200 transition flex items-center justify-center gap-1.5 shadow-2xs">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                          </path>
-                        </svg>
-                        SPL Course Overview (10 Topics) →
-                      </button>
-                      <button onclick="startDiag('spl')"
-                        class="text-xs bg-brand-500 text-white font-semibold px-3 py-1 rounded-lg hover:bg-brand-700">Test
-                        Topic</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="py-3 px-4 font-semibold text-slate-800">8. Dangling Pointers & Memory Leak Safety</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">Heap Safety</td>
-                    <td class="py-3 px-4 text-xs font-bold text-amber-600">Developing (55%)</td>
-                    <td class="py-3 px-4 text-right"><button onclick="startPractice('spl')"
-                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
-                  </tr>
-                  <tr>
-                    <td class="py-3 px-4 font-semibold text-slate-800">9. C Character Strings & Null Terminators</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">Byte Arrays</td>
-                    <td class="py-3 px-4 text-xs font-bold text-emerald-600">Mastered (85%)</td>
-                    <td class="py-3 px-4 text-right"><button onclick="startPractice('spl')"
-                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
-                  </tr>
-                  <tr>
-                    <td class="py-3 px-4 font-semibold text-slate-800">10. Structures & Arrow Operator (->)</td>
-                    <td class="py-3 px-4 text-xs text-slate-500">Aggregate Data</td>
-                    <td class="py-3 px-4 text-xs font-bold text-emerald-600">Mastered (90%)</td>
-                    <td class="py-3 px-4 text-right"><button onclick="startPractice('spl')"
-                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ================= SCREEN 04: IDENTIFY WEAK AREAS ================= -->
-    <div id="s04" class="screen-view">
-      <div class="max-w-4xl mx-auto space-y-6">
-        <div class="flex items-center gap-2 text-xs text-slate-500">
-          <span class="hover:underline cursor-pointer" onclick="switchScreen('s02')">Dashboard</span>
-          <span>›</span>
-          <span class="font-semibold text-slate-800">Identify Suspected Weak Areas</span>
-        </div>
-
-        <div class="hub-card rounded-2xl p-6 md:p-8">
-          <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-500 flex items-center justify-center mb-4">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-            </svg>
-          </div>
-          <h2 class="text-2xl font-bold text-slate-900">Tell us what topics you are struggling with</h2>
-          <p class="text-sm text-slate-500 mt-1 mb-6 leading-relaxed">
-            Select the course below to view all of its academic topics. Check any concepts where you feel uncertain. The
-            10-question diagnostic will verify your selections.
-          </p>
-
-          <div class="flex border-b border-slate-200 gap-2 mb-6">
-            <button onclick="switchWeakCourseTab('dsa')" id="weakTabDsa"
-              class="px-5 py-2.5 text-sm font-bold border-b-2 border-brand-500 text-brand-500">
-              DSA Topics (10)
-            </button>
-            <button onclick="switchWeakCourseTab('oop')" id="weakTabOop"
-              class="px-5 py-2.5 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800">
-              OOP Topics (10)
-            </button>
-            <button onclick="switchWeakCourseTab('spl')" id="weakTabSpl"
-              class="px-5 py-2.5 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800">
-              SPL Topics (10)
-            </button>
-          </div>
-
-          <!-- ALL 10 DSA TOPICS -->
-          <div id="weakTopicsDsa" class="space-y-2.5 mb-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
-              <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-semibold text-slate-800">1. Arrays & Dynamic Sizing</span>
-              </label>
-              <label class="flex items-center p-3 border-2 border-brand-400 bg-brand-50/50 rounded-xl cursor-pointer">
-                <input type="checkbox" checked class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-bold text-slate-900">2. Singly Linked Lists</span>
-                <span
-                  class="ml-auto text-[10px] text-red-600 font-bold bg-red-100 px-1.5 py-0.5 rounded">Selected</span>
-              </label>
-              <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-semibold text-slate-800">3. Doubly & Circular Linked Lists</span>
-              </label>
-              <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-semibold text-slate-800">4. Stacks & Expression Parsing</span>
-              </label>
-              <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-semibold text-slate-800">5. Queues & Circular Buffers</span>
-              </label>
-              <label class="flex items-center p-3 border-2 border-brand-400 bg-brand-50/50 rounded-xl cursor-pointer">
-                <input type="checkbox" checked class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-bold text-slate-900">6. Recursion & Call Stacks</span>
-                <span
-                  class="ml-auto text-[10px] text-red-600 font-bold bg-red-100 px-1.5 py-0.5 rounded">Selected</span>
-              </label>
-              <label class="flex items-center p-3 border-2 border-brand-400 bg-brand-50/50 rounded-xl cursor-pointer">
-                <input type="checkbox" checked class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-bold text-slate-900">7. Binary Trees & Traversals</span>
-                <span
-                  class="ml-auto text-[10px] text-red-600 font-bold bg-red-100 px-1.5 py-0.5 rounded">Selected</span>
-              </label>
-              <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-semibold text-slate-800">8. Binary Search Trees (BST)</span>
-              </label>
-              <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-semibold text-slate-800">9. Graph Traversals (BFS & DFS)</span>
-              </label>
-              <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-semibold text-slate-800">10. Hashing & Collision Handling</span>
-              </label>
-            </div>
-          </div>
-
-          <!-- ALL 10 OOP TOPICS -->
-          <div id="weakTopicsOop" class="hidden space-y-2.5 mb-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
-              <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-semibold text-slate-800">1. Classes, Objects & Instances</span>
-              </label>
-              <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-semibold text-slate-800">2. Encapsulation & Data Hiding</span>
-              </label>
-              <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-semibold text-slate-800">3. Access Modifiers (private, protected)</span>
-              </label>
-              <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-semibold text-slate-800">4. Constructors & Destructors</span>
-              </label>
-              <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-semibold text-slate-800">5. Class Inheritance (IS-A Hierarchy)</span>
-              </label>
-              <label class="flex items-center p-3 border-2 border-brand-400 bg-brand-50/50 rounded-xl cursor-pointer">
-                <input type="checkbox" checked class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-bold text-slate-900">6. Polymorphism & Dynamic Dispatch</span>
-                <span
-                  class="ml-auto text-[10px] text-red-600 font-bold bg-red-100 px-1.5 py-0.5 rounded">Selected</span>
-              </label>
-              <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-semibold text-slate-800">7. Method Overloading vs Overriding</span>
-              </label>
-              <label class="flex items-center p-3 border-2 border-brand-400 bg-brand-50/50 rounded-xl cursor-pointer">
-                <input type="checkbox" checked class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-bold text-slate-900">8. Abstract Classes & Pure Virtual</span>
-                <span
-                  class="ml-auto text-[10px] text-red-600 font-bold bg-red-100 px-1.5 py-0.5 rounded">Selected</span>
-              </label>
-              <label class="flex items-center p-3 border-2 border-brand-400 bg-brand-50/50 rounded-xl cursor-pointer">
-                <input type="checkbox" checked class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-bold text-slate-900">9. Interfaces & Multiple Type Contracts</span>
-                <span
-                  class="ml-auto text-[10px] text-red-600 font-bold bg-red-100 px-1.5 py-0.5 rounded">Selected</span>
-              </label>
-              <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-semibold text-slate-800">10. Exception Handling
-                  (try-catch-finally)</span>
-              </label>
-            </div>
-          </div>
-
-          <!-- ALL 10 SPL TOPICS -->
-          <div id="weakTopicsSpl" class="hidden space-y-2.5 mb-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
-              <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-semibold text-slate-800">1. Variables, Data Types & Formatting</span>
-              </label>
-              <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-semibold text-slate-800">2. Operators, Precedence & Casting</span>
-              </label>
-              <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-semibold text-slate-800">3. Control Flow (if-else, switch)</span>
-              </label>
-              <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-semibold text-slate-800">4. Loops (for, while, do-while)</span>
-              </label>
-              <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-semibold text-slate-800">5. Functions, Prototypes & Scope</span>
-              </label>
-              <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-semibold text-slate-800">6. Arrays & 2D Matrix Manipulation</span>
-              </label>
-              <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-semibold text-slate-800">7. Strings & Null Terminator ('\\0')</span>
-              </label>
-              <label class="flex items-center p-3 border-2 border-brand-400 bg-brand-50/50 rounded-xl cursor-pointer">
-                <input type="checkbox" checked class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-bold text-slate-900">8. Pointers & Memory Dereferencing</span>
-                <span
-                  class="ml-auto text-[10px] text-red-600 font-bold bg-red-100 px-1.5 py-0.5 rounded">Selected</span>
-              </label>
-              <label class="flex items-center p-3 border-2 border-brand-400 bg-brand-50/50 rounded-xl cursor-pointer">
-                <input type="checkbox" checked class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-bold text-slate-900">9. Dynamic Memory (malloc, free)</span>
-                <span
-                  class="ml-auto text-[10px] text-red-600 font-bold bg-red-100 px-1.5 py-0.5 rounded">Selected</span>
-              </label>
-              <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
-                <span class="ml-3 text-xs font-semibold text-slate-800">10. Structures (struct), Unions & Typedef</span>
-              </label>
-            </div>
-          </div>
-
-          <label
-            class="flex items-center p-3.5 border-2 border-dashed border-sky-300 bg-sky-50/40 rounded-xl hover:bg-sky-50 cursor-pointer transition mb-6">
-            <input type="radio" name="autoOpt" class="w-4 h-4 text-brand-500 border-slate-300">
-            <span class="ml-3 text-sm font-bold text-sky-900">"I don't know / Discover all gaps objectively across the
-              course"</span>
-            <span class="ml-auto text-xs bg-sky-200 text-sky-800 font-bold px-2 py-0.5 rounded">Recommended</span>
-          </label>
-
-          <div class="flex items-center justify-between pt-4 border-t border-slate-100">
-            <button onclick="switchScreen('s02')" class="text-sm font-semibold text-slate-600">Cancel</button>
-            <button id="startDiagBtnFromWeak" onclick="startCurrentWeakCourseDiag()"
-              class="bg-brand-500 hover:bg-brand-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
-              Begin Diagnostic Quiz for Selected Course →
-            </button>
-          </div>
+        <div id="courseOverviewBody" class="space-y-6">
+          <p class="text-sm text-slate-500">Loading course…</p>
         </div>
       </div>
     </div>
@@ -1448,118 +783,53 @@
       </div>
     </div>
 
-    <!-- ================= SCREEN 06A: SUBMIT QUIZ RESULT (DSA) ================= -->
-    <div id="s06a" class="screen-view">
+    <!-- ================= SCREEN 06: DIAGNOSTIC RESULT (one dynamic screen for
+         DSA/OOP/SPL - merged from 3 near-identical copies, UI redesign Stage 3) ================= -->
+    <div id="s06" class="screen-view">
       <div class="max-w-3xl mx-auto space-y-6">
-        <div class="hub-card rounded-2xl p-6 md:p-8 border-t-4 border-red-500">
+        <div id="diagResultCard" class="hub-card rounded-2xl p-6 md:p-8 border-t-4 border-red-500">
           <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
             <div>
-              <span class="text-xs font-bold text-red-600 uppercase tracking-wider">Assessment Evaluation
-                Complete</span>
-              <h2 class="text-2xl md:text-3xl font-bold text-slate-900">DSA Diagnostic Results</h2>
-              <p class="text-sm text-slate-500" id="diagResult_dsa_meta">- Questions Evaluated</p>
+              <span id="diagResultLabel" class="text-xs font-bold text-red-600 uppercase tracking-wider">Assessment
+                Evaluation Complete</span>
+              <h2 id="diagResultTitle" class="text-2xl md:text-3xl font-bold text-slate-900">Diagnostic Results</h2>
+              <p class="text-sm text-slate-500" id="diagResultMeta">- Questions Evaluated</p>
             </div>
-            <div class="bg-red-50 border border-red-200 rounded-2xl p-4 text-center">
+            <div id="diagResultScoreBox" class="bg-red-50 border border-red-200 rounded-2xl p-4 text-center">
               <div class="text-xs font-bold text-red-600 uppercase">Diagnostic Score</div>
-              <div class="text-3xl font-extrabold text-red-700" id="diagResult_dsa_score">- / -</div>
-              <div class="text-[11px] text-red-600 font-medium" id="diagResult_dsa_accuracy">-% Accuracy</div>
+              <div class="text-3xl font-extrabold text-red-700" id="diagResultScore">- / -</div>
+              <div class="text-[11px] text-red-600 font-medium" id="diagResultAccuracy">-% Accuracy</div>
             </div>
           </div>
 
           <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 mb-6">
             <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Diagnostic Summary</h4>
-            <p class="text-sm text-slate-600 leading-relaxed" id="diagResult_dsa_summary">
+            <p class="text-sm text-slate-600 leading-relaxed" id="diagResultSummary">
               Calculating your results...
             </p>
           </div>
 
           <h4 class="text-sm font-bold text-slate-900 mb-3">Topic-Level Diagnostic Breakdown</h4>
-          <div class="space-y-2.5 mb-6" id="diagResult_dsa_breakdown">
+          <div class="space-y-2.5 mb-6" id="diagResultBreakdown">
             <!-- Populated dynamically by renderDiagnosticResult() from the real backend response -->
           </div>
 
           <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-slate-100">
-            <button onclick="switchScreen('s03'); switchOverviewTab('dsa');"
+            <button id="diagResultCourseBtn"
               class="w-full bg-brand-50 hover:bg-brand-100 text-brand-800 font-bold text-xs py-2.5 rounded-xl border border-brand-200 transition flex items-center justify-center gap-1.5 shadow-2xs">
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
                 </path>
               </svg>
-              DSA Course Overview (10 Topics) →
+              <span id="diagResultCourseBtnLabel">Course Overview →</span>
             </button>
-            <button onclick="startDiag('dsa')" class="text-xs font-bold text-slate-600 hover:text-slate-900">
+            <button id="diagResultRetakeBtn" class="text-xs font-bold text-slate-600 hover:text-slate-900">
               Retake Diagnostic Assessment
             </button>
-            <button onclick="switchScreen('s07')"
+            <button id="diagResultGapsBtn"
               class="w-full sm:w-auto bg-brand-500 hover:bg-brand-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
               View Learning Gap Analysis (Next Step) →
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ================= SCREEN 06B: SUBMIT QUIZ RESULT (OOP) ================= -->
-    <div id="s06b" class="screen-view">
-      <div class="max-w-3xl mx-auto space-y-6">
-        <div class="hub-card rounded-2xl p-6 md:p-8 border-t-4 border-amber-500">
-          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-            <div>
-              <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">Assessment Evaluation
-                Complete</span>
-              <h2 class="text-2xl md:text-3xl font-bold text-slate-900">OOP Diagnostic Results</h2>
-              <p class="text-sm text-slate-500" id="diagResult_oop_meta">- Questions Evaluated</p>
-            </div>
-            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 text-center">
-              <div class="text-xs font-bold text-amber-600 uppercase">Diagnostic Score</div>
-              <div class="text-3xl font-extrabold text-amber-700" id="diagResult_oop_score">- / -</div>
-              <div class="text-[11px] text-amber-600 font-medium" id="diagResult_oop_accuracy">-% Accuracy</div>
-            </div>
-          </div>
-
-          <div class="space-y-2.5 mb-6" id="diagResult_oop_breakdown">
-            <!-- Populated dynamically by renderDiagnosticResult() -->
-          </div>
-
-          <div class="flex items-center justify-between pt-4 border-t border-slate-100">
-            <button onclick="switchScreen('s02')" class="text-xs font-bold text-slate-600">Back to Dashboard</button>
-            <button onclick="startPractice('oop')"
-              class="bg-brand-500 hover:bg-brand-700 text-white font-bold text-sm px-6 py-2.5 rounded-xl shadow-md">
-              Start OOP Practice (10 Questions) →
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ================= SCREEN 06C: SUBMIT QUIZ RESULT (SPL) ================= -->
-    <div id="s06c" class="screen-view">
-      <div class="max-w-3xl mx-auto space-y-6">
-        <div class="hub-card rounded-2xl p-6 md:p-8 border-t-4 border-emerald-500">
-          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-            <div>
-              <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Assessment Evaluation
-                Complete</span>
-              <h2 class="text-2xl md:text-3xl font-bold text-slate-900">SPL Diagnostic Results</h2>
-              <p class="text-sm text-slate-500" id="diagResult_spl_meta">- Questions Evaluated</p>
-            </div>
-            <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 text-center">
-              <div class="text-xs font-bold text-emerald-600 uppercase">Diagnostic Score</div>
-              <div class="text-3xl font-extrabold text-emerald-700" id="diagResult_spl_score">- / -</div>
-              <div class="text-[11px] text-emerald-600 font-medium" id="diagResult_spl_accuracy">-% Accuracy</div>
-            </div>
-          </div>
-
-          <div class="space-y-2.5 mb-6" id="diagResult_spl_breakdown">
-            <!-- Populated dynamically by renderDiagnosticResult() -->
-          </div>
-
-          <div class="flex items-center justify-between pt-4 border-t border-slate-100">
-            <button onclick="switchScreen('s02')" class="text-xs font-bold text-slate-600">Back to Dashboard</button>
-            <button onclick="startPractice('spl')"
-              class="bg-brand-500 hover:bg-brand-700 text-white font-bold text-sm px-6 py-2.5 rounded-xl shadow-md">
-              Start SPL Practice (10 Questions) →
             </button>
           </div>
         </div>
@@ -1592,104 +862,38 @@
           </div>
         </div>
 
-        <!-- DSA LEARNING GAPS -->
-        <div id="gapsDsa" class="hub-card rounded-2xl p-6 md:p-8">
-          <div class="w-12 h-12 rounded-xl bg-red-50 text-red-600 flex items-center justify-center mb-4">
+        <!-- LEARNING GAPS - one dynamic body for DSA/OOP/SPL (UI redesign
+             Stage 3 merged this from 3 near-identical copies), restyled by
+             switchGapTab()/renderGaps() below. -->
+        <div id="gapsBody" class="hub-card rounded-2xl p-6 md:p-8">
+          <div id="gapsIcon" class="w-12 h-12 rounded-xl bg-red-50 text-red-600 flex items-center justify-center mb-4">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
             </svg>
           </div>
           <div class="flex items-center gap-2 mb-1">
-            <span
+            <span id="gapsDiagnosisLabel"
               class="text-xs font-bold uppercase tracking-wider text-brand-500 bg-brand-50 px-2.5 py-0.5 rounded-full border border-brand-100">DSA
               Academic Diagnosis</span>
-            <span id="gapsDsaCountBadge" class="badge-critical px-2.5 py-0.5 rounded-full text-xs font-bold">- Gaps
+            <span id="gapsCountBadge" class="badge-critical px-2.5 py-0.5 rounded-full text-xs font-bold">- Gaps
               Identified</span>
           </div>
-          <h2 class="text-2xl md:text-3xl font-bold text-slate-900">Identified Academic Learning Gaps: DSA</h2>
+          <h2 id="gapsTitle" class="text-2xl md:text-3xl font-bold text-slate-900">Identified Academic Learning Gaps
+          </h2>
           <p class="text-sm text-slate-500 mt-1 mb-6">
             Topics below are ranked by your real diagnostic mastery scores, worst first.
           </p>
 
-          <div class="space-y-4 mb-6" id="gapsDsaList">
+          <div class="space-y-4 mb-6" id="gapsList">
             <!-- Populated dynamically by renderGaps() from GET /api/courses/:id/gaps -->
           </div>
 
           <div class="flex items-center justify-between pt-4 border-t border-slate-100">
-            <button onclick="switchScreen('s06a')" class="text-xs font-bold text-slate-600">← Back to DSA
-              Results</button>
-            <button onclick="switchScreen('s08'); switchPlanTab('dsa');"
+            <button id="gapsBackToResultsBtn" class="text-xs font-bold text-slate-600">← Back to Results</button>
+            <button id="gapsGeneratePlanBtn"
               class="bg-brand-500 hover:bg-brand-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
-              Generate DSA AI Study Plan →
-            </button>
-          </div>
-        </div>
-
-        <!-- OOP LEARNING GAPS -->
-        <div id="gapsOop" class="hidden hub-card rounded-2xl p-6 md:p-8">
-          <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center mb-4">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-            </svg>
-          </div>
-          <div class="flex items-center gap-2 mb-1">
-            <span
-              class="text-xs font-bold uppercase tracking-wider text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">OOP
-              Academic Diagnosis</span>
-            <span id="gapsOopCountBadge" class="badge-critical px-2.5 py-0.5 rounded-full text-xs font-bold">- Gaps
-              Identified</span>
-          </div>
-          <h2 class="text-2xl md:text-3xl font-bold text-slate-900">Identified Academic Learning Gaps: OOP</h2>
-          <p class="text-sm text-slate-500 mt-1 mb-6">
-            Topics below are ranked by your real diagnostic mastery scores, worst first.
-          </p>
-
-          <div class="space-y-4 mb-6" id="gapsOopList">
-            <!-- Populated dynamically by renderGaps() -->
-          </div>
-
-          <div class="flex items-center justify-between pt-4 border-t border-slate-100">
-            <button onclick="switchScreen('s06b')" class="text-xs font-bold text-slate-600">← Back to OOP
-              Results</button>
-            <button onclick="switchScreen('s08'); switchPlanTab('oop');"
-              class="bg-brand-500 hover:bg-brand-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
-              Generate OOP AI Study Plan →
-            </button>
-          </div>
-        </div>
-
-        <!-- SPL LEARNING GAPS -->
-        <div id="gapsSpl" class="hidden hub-card rounded-2xl p-6 md:p-8">
-          <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-            </svg>
-          </div>
-          <div class="flex items-center gap-2 mb-1">
-            <span
-              class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">SPL
-              Academic Diagnosis</span>
-            <span id="gapsSplCountBadge" class="badge-critical px-2.5 py-0.5 rounded-full text-xs font-bold">- Gaps
-              Identified</span>
-          </div>
-          <h2 class="text-2xl md:text-3xl font-bold text-slate-900">Identified Academic Learning Gaps: SPL</h2>
-          <p class="text-sm text-slate-500 mt-1 mb-6">
-            Topics below are ranked by your real diagnostic mastery scores, worst first.
-          </p>
-
-          <div class="space-y-4 mb-6" id="gapsSplList">
-            <!-- Populated dynamically by renderGaps() -->
-          </div>
-
-          <div class="flex items-center justify-between pt-4 border-t border-slate-100">
-            <button onclick="switchScreen('s06c')" class="text-xs font-bold text-slate-600">← Back to SPL
-              Results</button>
-            <button onclick="switchScreen('s08'); switchPlanTab('spl');"
-              class="bg-brand-500 hover:bg-brand-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
-              Generate SPL AI Study Plan →
+              Generate AI Study Plan →
             </button>
           </div>
         </div>
@@ -3178,17 +2382,17 @@
         applyUserToUI(me);
         await loadCourseIds();
         const hash = (location.hash || '').replace('#', '');
-        // screen_assess/screen_diag/screen_practice only render correctly
-        // when a student's in-memory click (Adaptive Assessment button,
-        // "Start Diagnostic", etc.) has just set up their live quiz state
-        // (assessTopicId, activeDiagQuestions, ...) - none of that survives
-        // a hard refresh, so landing directly on one of these mid-flow
-        // screens from a fresh page load shows an empty shell instead of
-        // silently restoring it. Fall back to the topic list (Materials)
-        // they'd have launched the quiz from instead.
-        const UNRESTORABLE_ON_REFRESH = new Set(['screen_assess', 'screen_diag', 'screen_practice']);
+        // Some screens only render correctly when a student's in-memory
+        // click (Adaptive Assessment button, "Start Diagnostic", "View
+        // Course", ...) has just set up live state (assessTopicId,
+        // activeDiagQuestions, which course tab is selected, ...) - none of
+        // that survives a hard refresh, so landing directly on one of these
+        // mid-flow/parameterized screens from a fresh page load shows an
+        // empty shell instead of silently restoring it. Each falls back to
+        // the screen it's normally launched from instead.
+        const UNRESTORABLE_ON_REFRESH = { screen_assess: 's09', screen_diag: 's09', screen_practice: 's09', s03: 's02', s06: 's02' };
         const validHash = /^(s\d+[a-c]?|screen_[a-z]+)$/.test(hash) && hash !== 's01';
-        const start = validHash && !UNRESTORABLE_ON_REFRESH.has(hash) ? hash : (validHash ? 's09' : 's02');
+        const start = validHash ? (UNRESTORABLE_ON_REFRESH[hash] || hash) : 's02';
         history.replaceState({ screen: start }, '', '#' + start);
         _activateScreen(start);
       } catch (_) {
@@ -3221,8 +2425,6 @@
       oop: {},
       spl: {}
     };
-
-    let selectedWeakCourse = 'dsa';
 
     // ================= DASHBOARD (fully data-driven) =================
     // One card per enrolled course, built from GET /api/courses +
@@ -3354,6 +2556,39 @@
       return `<svg class="w-4 h-4 text-brand-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>`;
     }
 
+    // Builds one Current Learning Target card (Section 18/19) for a single
+    // real focus entry from GET /profile/focus - shared by the Student
+    // Overview (renders one per course with an active path) and the Course
+    // Page (renders just the one for that course).
+    async function buildFocusCardHtml(f) {
+      const key = f.courseCode.toLowerCase();
+      let prevName = null, nextName = null;
+      try {
+        const path = await apiFetch(`/learning-path/${courseIdCache[key]}`);
+        const idx = path.items.findIndex((i) => i.topicId === f.topicId);
+        if (idx > 0) prevName = path.items[idx - 1].topic.name;
+        if (idx >= 0 && idx < path.items.length - 1) nextName = path.items[idx + 1].topic.name;
+      } catch (_) { /* path not generated yet - just skip the strip context */ }
+
+      return `
+        <div class="hub-card rounded-2xl p-6 md:p-8 bg-lavender/50 border-brand-100">
+          <div class="flex items-start justify-between gap-4 flex-wrap">
+            <div class="min-w-0">
+              <span class="text-xs font-bold uppercase tracking-wider text-brand-600">${escapeHtml(f.courseCode)}</span>
+              <h4 class="text-xl md:text-2xl font-extrabold text-slate-900 mt-1">${escapeHtml(f.topic)}</h4>
+              ${f.currentMastery !== null ? `<div class="text-sm font-bold text-brand-700 mt-0.5">${f.currentMastery}% Mastery</div>` : '<div class="text-sm font-semibold text-slate-500 mt-0.5">Not yet assessed</div>'}
+              <p class="text-xs text-slate-600 mt-2 max-w-lg leading-relaxed">${escapeHtml(f.reason)}</p>
+            </div>
+            <button onclick="switchContentTab('${key}'); switchScreen('s09');" class="btn-primary text-xs px-4 py-2.5 rounded-xl shrink-0 transition">Continue Learning →</button>
+          </div>
+          <div class="flex items-center gap-2 mt-6 overflow-x-auto pb-1">
+            ${prevName ? pathNodeHtml(prevName, false) + pathArrowHtml() : ''}
+            ${pathNodeHtml(f.topic, true)}
+            ${nextName ? pathArrowHtml() + pathNodeHtml(nextName, false) : ''}
+          </div>
+        </div>`;
+    }
+
     async function renderCurrentLearningTarget() {
       const el = document.getElementById('ovCurrentTarget');
       if (!el) return;
@@ -3362,38 +2597,11 @@
         if (focuses.length === 0) {
           el.innerHTML = `<div class="hub-card rounded-2xl p-6 md:p-8 text-center">
             <p class="text-sm text-slate-600 mb-3">Complete a diagnostic assessment to get your personalized learning target.</p>
-            <button onclick="openWeakTopicSelector('dsa')" class="btn-primary text-xs px-4 py-2.5 rounded-xl transition">Start Diagnostic →</button>
+            <button onclick="startDiag('dsa')" class="btn-primary text-xs px-4 py-2.5 rounded-xl transition">Start Diagnostic →</button>
           </div>`;
           return;
         }
-        const cards = await Promise.all(focuses.map(async (f) => {
-          const key = f.courseCode.toLowerCase();
-          let prevName = null, nextName = null;
-          try {
-            const path = await apiFetch(`/learning-path/${courseIdCache[key]}`);
-            const idx = path.items.findIndex((i) => i.topicId === f.topicId);
-            if (idx > 0) prevName = path.items[idx - 1].topic.name;
-            if (idx >= 0 && idx < path.items.length - 1) nextName = path.items[idx + 1].topic.name;
-          } catch (_) { /* path not generated yet - just skip the strip context */ }
-
-          return `
-            <div class="hub-card rounded-2xl p-6 md:p-8 bg-lavender/50 border-brand-100">
-              <div class="flex items-start justify-between gap-4 flex-wrap">
-                <div class="min-w-0">
-                  <span class="text-xs font-bold uppercase tracking-wider text-brand-600">${escapeHtml(f.courseCode)}</span>
-                  <h4 class="text-xl md:text-2xl font-extrabold text-slate-900 mt-1">${escapeHtml(f.topic)}</h4>
-                  ${f.currentMastery !== null ? `<div class="text-sm font-bold text-brand-700 mt-0.5">${f.currentMastery}% Mastery</div>` : '<div class="text-sm font-semibold text-slate-500 mt-0.5">Not yet assessed</div>'}
-                  <p class="text-xs text-slate-600 mt-2 max-w-lg leading-relaxed">${escapeHtml(f.reason)}</p>
-                </div>
-                <button onclick="switchContentTab('${key}'); switchScreen('s09');" class="btn-primary text-xs px-4 py-2.5 rounded-xl shrink-0 transition">Continue Learning →</button>
-              </div>
-              <div class="flex items-center gap-2 mt-6 overflow-x-auto pb-1">
-                ${prevName ? pathNodeHtml(prevName, false) + pathArrowHtml() : ''}
-                ${pathNodeHtml(f.topic, true)}
-                ${nextName ? pathArrowHtml() + pathNodeHtml(nextName, false) : ''}
-              </div>
-            </div>`;
-        }));
+        const cards = await Promise.all(focuses.map(buildFocusCardHtml));
         el.innerHTML = cards.join('');
       } catch (err) {
         el.innerHTML = `<p class="text-sm text-red-600">Could not load your current learning target: ${escapeHtml(err.message)}</p>`;
@@ -3521,32 +2729,102 @@
     });
 
     // ================= COURSE OVERVIEW TAB SWITCHER =================
+    const OVERVIEW_TAB_THEME = {
+      dsa: { pill: 'bg-brand-500', name: 'DSA' },
+      oop: { pill: 'bg-amber-600', name: 'OOP' },
+      spl: { pill: 'bg-emerald-600', name: 'SPL' },
+    };
+
     function switchOverviewTab(course) {
-      document.getElementById('overviewDsa').classList.add('hidden');
-      document.getElementById('overviewOop').classList.add('hidden');
-      document.getElementById('overviewSpl').classList.add('hidden');
+      ['dsa', 'oop', 'spl'].forEach((c) => {
+        document.getElementById(`overviewTab${c.charAt(0).toUpperCase() + c.slice(1)}`).className =
+          "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
+      });
+      const theme = OVERVIEW_TAB_THEME[course] || OVERVIEW_TAB_THEME.dsa;
+      document.getElementById(`overviewTab${course.charAt(0).toUpperCase() + course.slice(1)}`).className =
+        `px-3.5 py-1.5 rounded-lg text-xs font-bold ${theme.pill} text-white shadow-xs transition`;
 
-      const dsaBtn = document.getElementById('overviewTabDsa');
-      const oopBtn = document.getElementById('overviewTabOop');
-      const splBtn = document.getElementById('overviewTabSpl');
       const breadcrumb = document.getElementById('overviewBreadcrumbText');
+      if (breadcrumb) breadcrumb.textContent = `${theme.name} Course Page`;
 
-      dsaBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
-      oopBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
-      splBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
+      renderCoursePage(course);
+    }
 
-      if (course === 'dsa') {
-        document.getElementById('overviewDsa').classList.remove('hidden');
-        dsaBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold bg-brand-500 text-white shadow-xs transition";
-        if (breadcrumb) breadcrumb.textContent = "DSA Course Overview";
-      } else if (course === 'oop') {
-        document.getElementById('overviewOop').classList.remove('hidden');
-        oopBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold bg-amber-600 text-white shadow-xs transition";
-        if (breadcrumb) breadcrumb.textContent = "OOP Course Overview";
-      } else {
-        document.getElementById('overviewSpl').classList.remove('hidden');
-        splBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 text-white shadow-xs transition";
-        if (breadcrumb) breadcrumb.textContent = "SPL Course Overview";
+    // ---- Course Page body (real data - UI redesign Stage 3) ----
+    async function renderCoursePage(course) {
+      const body = document.getElementById('courseOverviewBody');
+      if (!body) return;
+      body.innerHTML = '<p class="text-sm text-slate-500">Loading course…</p>';
+      try {
+        const courseId = courseIdCache[course];
+        const [courses, progressAll, topics, masteryMapData, focusData] = await Promise.all([
+          apiFetch('/courses'),
+          apiFetch('/progress'),
+          apiFetch(`/courses/${courseId}/topics`),
+          apiFetch(`/courses/${courseId}/mastery-map`),
+          apiFetch('/profile/focus'),
+        ]);
+
+        const courseRow = courses.find((c) => c.code.toLowerCase() === course);
+        const prog = progressAll.find((p) => p.courseId === courseId) || { averageMastery: null, topicsAssessed: 0 };
+        const avg = prog.averageMastery == null ? null : Math.round(prog.averageMastery);
+        const assessed = prog.topicsAssessed || 0;
+        const badge = masteryBadge(avg ?? 0, assessed);
+        const theme = COURSE_THEME[course.toUpperCase()] || COURSE_THEME.DSA;
+        const myFocus = focusData.focuses.find((f) => f.courseCode.toLowerCase() === course);
+        const masteryByTopicId = new Map(masteryMapData.topics.map((t) => [t.topicId, t]));
+
+        const topicsRows = topics.map((t) => {
+          const m = masteryByTopicId.get(t.id);
+          const isCurrent = myFocus && myFocus.topicId === t.id;
+          let statusLabel, statusCls;
+          if (isCurrent) { statusLabel = 'Current'; statusCls = 'bg-brand-600 text-white'; }
+          else if (!m || m.status === 'Not Started') { statusLabel = 'Not Assessed'; statusCls = 'bg-slate-100 text-slate-500 border border-slate-200'; }
+          else { statusLabel = m.status; statusCls = badgeClassForStatus(m.status); }
+          return `
+            <div class="flex items-center justify-between p-3.5 rounded-xl border ${isCurrent ? 'border-brand-300 bg-brand-50/50' : 'border-slate-100 bg-white'}">
+              <div class="min-w-0">
+                <div class="text-sm font-bold text-slate-900">${escapeHtml(t.name)}</div>
+                <div class="text-xs text-slate-500">${m && m.score !== null ? m.score + '% mastery' : 'No diagnostic data yet'}</div>
+              </div>
+              <div class="flex items-center gap-3 shrink-0">
+                <span class="${statusCls} px-2.5 py-0.5 rounded-full text-xs font-bold">${statusLabel}</span>
+                <button onclick="switchContentTab('${course}'); switchScreen('s09');" class="text-xs font-bold text-brand-600 hover:underline">Study →</button>
+              </div>
+            </div>`;
+        }).join('');
+
+        const focusCardHtml = myFocus ? await buildFocusCardHtml(myFocus) : '';
+
+        body.innerHTML = `
+          <div class="hub-card rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border-l-4 border-l-${theme.accent}-500">
+            <div>
+              <div class="flex items-center gap-2 mb-2">
+                <span class="inline-block px-2.5 py-0.5 rounded-full bg-brand-50 text-brand-700 text-xs font-bold border border-brand-100">CSE Department • Core Course</span>
+                <span class="${badge.cls} px-2.5 py-0.5 rounded-full text-xs font-bold">${avg == null ? 'Not yet assessed' : `Course Mastery: ${avg}%`}</span>
+              </div>
+              <h2 class="text-2xl md:text-3xl font-bold text-slate-900">${escapeHtml(courseRow?.name || course.toUpperCase())}</h2>
+              <p class="text-sm text-slate-500 mt-1 max-w-2xl leading-relaxed">${escapeHtml(courseRow?.description || '')}</p>
+            </div>
+            ${assessed === 0 ? `<button onclick="startDiag('${course}')" class="bg-brand-500 hover:bg-brand-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition whitespace-nowrap">Take Diagnostic Assessment (10 Qs) →</button>` : ''}
+          </div>
+
+          <div class="flex flex-wrap gap-2.5">
+            <button onclick="switchScreen('s07'); switchGapTab('${course}');" class="btn-secondary text-xs px-4 py-2.5 rounded-xl transition">Learning Path &amp; Gaps</button>
+            <button onclick="switchContentTab('${course}'); switchScreen('s09');" class="btn-secondary text-xs px-4 py-2.5 rounded-xl transition">Learning Materials</button>
+            <button onclick="switchScreen('s13'); switchProgressTab('${course}Tab');" class="btn-secondary text-xs px-4 py-2.5 rounded-xl transition">Progress</button>
+          </div>
+
+          ${focusCardHtml}
+
+          <div class="hub-card rounded-2xl p-6">
+            <h3 class="text-base font-bold text-slate-900 mb-1">Topics (${topics.length})</h3>
+            <p class="text-xs text-slate-500 mb-4">Real mastery and status from your stored assessment data.</p>
+            <div class="space-y-2">${topicsRows || '<p class="text-sm text-slate-500">No topics found for this course.</p>'}</div>
+          </div>
+        `;
+      } catch (err) {
+        body.innerHTML = `<p class="text-sm text-red-600">Could not load this course: ${escapeHtml(err.message)}</p>`;
       }
     }
 
@@ -3562,8 +2840,8 @@
     // Replaces the old hardcoded "2 gaps" narrative entirely - shows
     // however many weak topics the student's real diagnostic surfaced.
     async function renderGaps(course) {
-      const listEl = document.getElementById(`gaps${course.charAt(0).toUpperCase() + course.slice(1)}List`);
-      const countBadge = document.getElementById(`gaps${course.charAt(0).toUpperCase() + course.slice(1)}CountBadge`);
+      const listEl = document.getElementById('gapsList');
+      const countBadge = document.getElementById('gapsCountBadge');
       if (!listEl) return;
 
       try {
@@ -3599,33 +2877,32 @@
       }
     }
 
+    const GAP_TAB_THEME = {
+      dsa: { pill: 'bg-brand-500', icon: 'bg-red-50 text-red-600', label: 'text-brand-500 bg-brand-50 border-brand-100', name: 'DSA' },
+      oop: { pill: 'bg-amber-600', icon: 'bg-amber-50 text-amber-600', label: 'text-amber-700 bg-amber-50 border-amber-200', name: 'OOP' },
+      spl: { pill: 'bg-emerald-600', icon: 'bg-emerald-50 text-emerald-600', label: 'text-emerald-700 bg-emerald-50 border-emerald-200', name: 'SPL' },
+    };
+
     function switchGapTab(course) {
-      document.getElementById('gapsDsa').classList.add('hidden');
-      document.getElementById('gapsOop').classList.add('hidden');
-      document.getElementById('gapsSpl').classList.add('hidden');
+      ['dsa', 'oop', 'spl'].forEach((c) => {
+        document.getElementById(`gapTab${c.charAt(0).toUpperCase() + c.slice(1)}`).className =
+          "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
+      });
+      const theme = GAP_TAB_THEME[course] || GAP_TAB_THEME.dsa;
+      document.getElementById(`gapTab${course.charAt(0).toUpperCase() + course.slice(1)}`).className =
+        `px-3.5 py-1.5 rounded-lg text-xs font-bold ${theme.pill} text-white shadow-xs transition`;
 
-      const dsaBtn = document.getElementById('gapTabDsa');
-      const oopBtn = document.getElementById('gapTabOop');
-      const splBtn = document.getElementById('gapTabSpl');
       const breadcrumb = document.getElementById('gapsBreadcrumbText');
+      if (breadcrumb) breadcrumb.textContent = `${theme.name} Learning Gap Analysis`;
+      document.getElementById('gapsIcon').className = `w-12 h-12 rounded-xl ${theme.icon} flex items-center justify-center mb-4`;
+      document.getElementById('gapsDiagnosisLabel').className = `text-xs font-bold uppercase tracking-wider ${theme.label} px-2.5 py-0.5 rounded-full border`;
+      document.getElementById('gapsDiagnosisLabel').textContent = `${theme.name} Academic Diagnosis`;
+      document.getElementById('gapsTitle').textContent = `Identified Academic Learning Gaps: ${theme.name}`;
+      document.getElementById('gapsBackToResultsBtn').textContent = `← Back to ${theme.name} Results`;
+      document.getElementById('gapsBackToResultsBtn').onclick = () => switchScreen('s06');
+      document.getElementById('gapsGeneratePlanBtn').textContent = `Generate ${theme.name} AI Study Plan →`;
+      document.getElementById('gapsGeneratePlanBtn').onclick = () => { switchScreen('s08'); switchPlanTab(course); };
 
-      dsaBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
-      oopBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
-      splBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
-
-      if (course === 'dsa') {
-        document.getElementById('gapsDsa').classList.remove('hidden');
-        dsaBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold bg-brand-500 text-white shadow-xs transition";
-        if (breadcrumb) breadcrumb.textContent = "DSA Learning Gap Analysis";
-      } else if (course === 'oop') {
-        document.getElementById('gapsOop').classList.remove('hidden');
-        oopBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold bg-amber-600 text-white shadow-xs transition";
-        if (breadcrumb) breadcrumb.textContent = "OOP Learning Gap Analysis";
-      } else {
-        document.getElementById('gapsSpl').classList.remove('hidden');
-        splBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 text-white shadow-xs transition";
-        if (breadcrumb) breadcrumb.textContent = "SPL Learning Gap Analysis";
-      }
       renderGaps(course);
     }
 
@@ -3945,38 +3222,15 @@
     }
 
     // ================= WEAK TOPIC TAB SWITCHER =================
+    // The old dedicated "Identify Weak Areas" screen (s04) was retired in
+    // the UI redesign (Stage 3) - it was 100% decorative/hardcoded (fake
+    // checkbox selections never wired to any submit) and its one real
+    // behavior is now the Course Page itself, which surfaces real weak
+    // topics inline. Kept this function name (called from the nav bar's
+    // "Weak Topics" button) so that one entry point didn't need updating.
     function openWeakTopicSelector(course) {
-      switchWeakCourseTab(course);
-      switchScreen('s04');
-    }
-
-    function switchWeakCourseTab(course) {
-      selectedWeakCourse = course;
-      document.getElementById('weakTopicsDsa').classList.add('hidden');
-      document.getElementById('weakTopicsOop').classList.add('hidden');
-      document.getElementById('weakTopicsSpl').classList.add('hidden');
-
-      document.getElementById('weakTabDsa').className = "px-5 py-2.5 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800";
-      document.getElementById('weakTabOop').className = "px-5 py-2.5 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800";
-      document.getElementById('weakTabSpl').className = "px-5 py-2.5 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800";
-
-      if (course === 'dsa') {
-        document.getElementById('weakTopicsDsa').classList.remove('hidden');
-        document.getElementById('weakTabDsa').className = "px-5 py-2.5 text-sm font-bold border-b-2 border-brand-500 text-brand-500";
-        document.getElementById('startDiagBtnFromWeak').textContent = "Begin DSA Diagnostic Assessment (10 Qs) →";
-      } else if (course === 'oop') {
-        document.getElementById('weakTopicsOop').classList.remove('hidden');
-        document.getElementById('weakTabOop').className = "px-5 py-2.5 text-sm font-bold border-b-2 border-brand-500 text-brand-500";
-        document.getElementById('startDiagBtnFromWeak').textContent = "Begin OOP Diagnostic Assessment (10 Qs) →";
-      } else {
-        document.getElementById('weakTopicsSpl').classList.remove('hidden');
-        document.getElementById('weakTabSpl').className = "px-5 py-2.5 text-sm font-bold border-b-2 border-brand-500 text-brand-500";
-        document.getElementById('startDiagBtnFromWeak').textContent = "Begin SPL Diagnostic Assessment (10 Qs) →";
-      }
-    }
-
-    function startCurrentWeakCourseDiag() {
-      startDiag(selectedWeakCourse);
+      switchScreen('s03');
+      switchOverviewTab(course);
     }
 
     // ================= DIAGNOSTIC ASSESSMENT ENGINE =================
@@ -4107,10 +3361,7 @@
           body: { courseId, answers },
         });
         renderDiagnosticResult(currentDiagCourse, result);
-
-        if (currentDiagCourse === 'dsa') switchScreen('s06a');
-        else if (currentDiagCourse === 'oop') switchScreen('s06b');
-        else switchScreen('s06c');
+        switchScreen('s06');
       } catch (err) {
         alert('Could not submit your diagnostic: ' + err.message);
       } finally {
@@ -4119,23 +3370,37 @@
       }
     }
 
-    // Populates the real result screen (s06a/b/c) from the actual backend
-    // response - replaces the old predefined result screens entirely.
+    // Populates the single merged diagnostic-result screen (s06 - UI redesign
+    // Stage 3 merged this from 3 near-identical per-course copies, s06a/b/c)
+    // from the actual backend response.
+    const DIAG_RESULT_THEME = {
+      dsa: { border: 'border-red-500', label: 'text-red-600', box: 'bg-red-50 border-red-200', boxLabel: 'text-red-600', score: 'text-red-700', accuracy: 'text-red-600' },
+      oop: { border: 'border-amber-500', label: 'text-amber-600', box: 'bg-amber-50 border-amber-200', boxLabel: 'text-amber-600', score: 'text-amber-700', accuracy: 'text-amber-600' },
+      spl: { border: 'border-emerald-500', label: 'text-emerald-600', box: 'bg-emerald-50 border-emerald-200', boxLabel: 'text-emerald-600', score: 'text-emerald-700', accuracy: 'text-emerald-600' },
+    };
+
     function renderDiagnosticResult(course, result) {
-      document.getElementById(`diagResult_${course}_meta`).textContent = `${result.totalQuestions} Questions Evaluated`;
-      document.getElementById(`diagResult_${course}_score`).textContent = `${result.score} / ${result.totalQuestions}`;
+      const code = course.toUpperCase();
+      const theme = DIAG_RESULT_THEME[course] || DIAG_RESULT_THEME.dsa;
+
+      document.getElementById('diagResultCard').className = `hub-card rounded-2xl p-6 md:p-8 border-t-4 ${theme.border}`;
+      document.getElementById('diagResultLabel').className = `text-xs font-bold ${theme.label} uppercase tracking-wider`;
+      document.getElementById('diagResultTitle').textContent = `${code} Diagnostic Results`;
+      document.getElementById('diagResultMeta').textContent = `${result.totalQuestions} Questions Evaluated`;
+      document.getElementById('diagResultScoreBox').className = `${theme.box} border rounded-2xl p-4 text-center`;
+      document.getElementById('diagResultScore').className = `text-3xl font-extrabold ${theme.score}`;
+      document.getElementById('diagResultScore').textContent = `${result.score} / ${result.totalQuestions}`;
       const accuracy = Math.round((result.score / result.totalQuestions) * 100);
-      document.getElementById(`diagResult_${course}_accuracy`).textContent = `${accuracy}% Accuracy`;
+      document.getElementById('diagResultAccuracy').className = `text-[11px] ${theme.accuracy} font-medium`;
+      document.getElementById('diagResultAccuracy').textContent = `${accuracy}% Accuracy`;
 
-      const summaryEl = document.getElementById(`diagResult_${course}_summary`);
-      if (summaryEl) {
-        const weakest = result.weakTopics.slice(0, 2).map((t) => `${t.topic} (${t.score}%)`).join(' and ');
-        summaryEl.innerHTML = result.weakTopics.length > 0
-          ? `Your most urgent areas to address are <span class="font-semibold text-red-600">${weakest}</span>.`
-          : `Great work - no critical weak areas were identified in this assessment.`;
-      }
+      const summaryEl = document.getElementById('diagResultSummary');
+      const weakest = result.weakTopics.slice(0, 2).map((t) => `${t.topic} (${t.score}%)`).join(' and ');
+      summaryEl.innerHTML = result.weakTopics.length > 0
+        ? `Your most urgent areas to address are <span class="font-semibold text-red-600">${weakest}</span>.`
+        : `Great work - no critical weak areas were identified in this assessment.`;
 
-      const breakdown = document.getElementById(`diagResult_${course}_breakdown`);
+      const breakdown = document.getElementById('diagResultBreakdown');
       breakdown.innerHTML = '';
       const sortedTopics = Object.values(result.topicScores).sort((a, b) => b.score - a.score);
       for (const t of sortedTopics) {
@@ -4150,6 +3415,11 @@
         `;
         breakdown.appendChild(row);
       }
+
+      document.getElementById('diagResultCourseBtnLabel').textContent = `${code} Course Overview →`;
+      document.getElementById('diagResultCourseBtn').onclick = () => { switchScreen('s03'); switchOverviewTab(course); };
+      document.getElementById('diagResultRetakeBtn').onclick = () => startDiag(course);
+      document.getElementById('diagResultGapsBtn').onclick = () => { switchScreen('s07'); switchGapTab(course); };
     }
 
     // ================= PRACTICE ENGINE =================
