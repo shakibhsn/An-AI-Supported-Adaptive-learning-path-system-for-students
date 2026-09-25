@@ -6,24 +6,93 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>An AI-Supported Adaptive Learning Path System for Students</title>
   <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <script>
+    // Design-system color tokens (UI redesign, Stage 1). Named so every page
+    // pulls from the same palette instead of one-off hex/brand-500 strings.
+    // Semantic status colors (emerald/amber/red used for mastery badges)
+    // deliberately kept as Tailwind's built-ins - they're already close to
+    // the spec's success/warning colors and changing them isn't in scope.
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#F1ECFF',
+              100: '#E4D9FF',
+              200: '#C9B3FF',
+              300: '#A87EFF',
+              400: '#8A5BF7',
+              500: '#6C3EF4',
+              600: '#5F31E8',
+              700: '#5425D8',
+              800: '#431DAE',
+              900: '#341788',
+            },
+            lavender: '#F1ECFF',
+            accent: {
+              DEFAULT: '#FFD84D',
+              soft: '#FFF6CC',
+            },
+            canvas: '#F7F5FC',
+            ink: {
+              DEFAULT: '#252633',
+              soft: '#6F7180',
+            },
+            hairline: '#E5E1EE',
+          },
+        },
+      },
+    };
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
     rel="stylesheet">
   <style>
     body {
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: #F1F5F9;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #F7F5FC;
       background-image:
-        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(37, 99, 235, 0.08), transparent 70%),
-        radial-gradient(ellipse 60% 40% at 95% 10%, rgba(14, 165, 233, 0.08), transparent 70%),
-        radial-gradient(circle at 10% 90%, rgba(99, 102, 241, 0.06), transparent 60%),
-        radial-gradient(circle at 85% 85%, rgba(56, 189, 248, 0.05), transparent 60%),
-        radial-gradient(#CBD5E1 1.2px, transparent 1.2px);
-      background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 26px 26px;
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(108, 62, 244, 0.07), transparent 70%),
+        radial-gradient(ellipse 60% 40% at 95% 10%, rgba(255, 216, 77, 0.10), transparent 70%),
+        radial-gradient(circle at 10% 90%, rgba(108, 62, 244, 0.05), transparent 60%),
+        radial-gradient(#E5E1EE 1.2px, transparent 1.2px);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 26px 26px;
       background-attachment: fixed;
-      color: #1E293B;
+      color: #252633;
+    }
+
+    /* Reusable button/badge primitives (UI redesign design system - Stage 1).
+       New pages should use these instead of one-off Tailwind strings so the
+       whole app reads as one product. */
+    .btn-primary {
+      background: #6C3EF4;
+      color: #fff;
+      font-weight: 700;
+      transition: background-color 0.15s ease, transform 0.1s ease;
+    }
+
+    .btn-primary:hover {
+      background: #5425D8;
+    }
+
+    .btn-secondary {
+      background: #F1ECFF;
+      color: #5425D8;
+      font-weight: 700;
+      border: 1px solid #E4D9FF;
+      transition: background-color 0.15s ease;
+    }
+
+    .btn-secondary:hover {
+      background: #E4D9FF;
+    }
+
+    .badge-accent {
+      background: #FFF6CC;
+      color: #92700A;
+      border: 1px solid #FFE79A;
     }
 
     .mono {
@@ -170,6 +239,28 @@
     html.dark-mode .hover\:bg-slate-200:hover {
       background-color: #3b4a60 !important;
     }
+
+    /* New design-system tokens (Stage 1) - lavender is a pale brand surface
+       that needs a dark-mode equivalent, same pattern as .bg-slate-50 above. */
+    html.dark-mode .bg-lavender,
+    html.dark-mode .bg-brand-50 {
+      background-color: #2a2142 !important;
+    }
+
+    html.dark-mode .border-brand-100,
+    html.dark-mode .border-brand-200 {
+      border-color: #4a3a80 !important;
+    }
+
+    html.dark-mode .btn-secondary {
+      background: #2a2142;
+      color: #C9B3FF;
+      border-color: #4a3a80;
+    }
+
+    html.dark-mode .btn-secondary:hover {
+      background: #362a52;
+    }
   </style>
   <script>
     (() => {
@@ -187,7 +278,7 @@
   <!-- ================= ULTRA-MODERN SLEEK GLASSMORPHIC HEADER ================= -->
   <header class="sticky top-0 z-50 transition-all">
     <!-- Top Micro Gradient Hairline -->
-    <div class="h-[2.5px] w-full bg-gradient-to-r from-blue-600 via-indigo-500 to-sky-400"></div>
+    <div class="h-[2.5px] w-full bg-gradient-to-r from-brand-500 via-brand-600 to-sky-400"></div>
 
     <div
       class="bg-white/95 backdrop-blur-xl border-b border-slate-200/90 px-4 sm:px-8 py-2.5 shadow-[0_4px_24px_-4px_rgba(15,23,42,0.06)]">
@@ -198,7 +289,7 @@
           title="Go to Dashboard">
           <div class="relative">
             <div
-              class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-blue-700 via-blue-600 to-indigo-600 text-white flex items-center justify-center font-black text-lg shadow-md shadow-blue-600/30 group-hover:scale-105 transition-all duration-200 ring-2 ring-blue-100">
+              class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-700 via-brand-500 to-brand-700 text-white flex items-center justify-center font-black text-lg shadow-md shadow-brand-500/30 group-hover:scale-105 transition-all duration-200 ring-2 ring-brand-100">
               SG
             </div>
             <span class="absolute -top-1 -right-1 flex h-3 w-3">
@@ -210,14 +301,14 @@
           <div>
             <div class="flex items-center gap-2">
               <span
-                class="font-extrabold text-slate-900 text-base tracking-tight group-hover:text-blue-600 transition-colors">Adaptive
+                class="font-extrabold text-slate-900 text-base tracking-tight group-hover:text-brand-500 transition-colors">Adaptive
                 Learning Path</span>
               <span
-                class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shadow-2xs tracking-wider">EDUCATION
+                class="bg-gradient-to-r from-brand-500 to-brand-700 text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shadow-2xs tracking-wider">EDUCATION
                 HUB</span>
             </div>
             <p class="text-[11px] text-slate-500 font-medium flex items-center gap-1.5 mt-0.5">
-              <svg class="w-3 h-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-3 h-3 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
                 </path>
@@ -232,8 +323,8 @@
           class="hidden lg:flex items-center gap-1 bg-slate-100/90 p-1.5 rounded-2xl border border-slate-200/80 shadow-2xs text-xs font-bold text-slate-600">
           <!-- Dashboard -->
           <button id="navDashboard" onclick="switchScreen('s02')"
-            class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-white hover:text-blue-700 hover:shadow-2xs transition-all duration-150">
-            <svg class="w-3.5 h-3.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-white hover:text-brand-700 hover:shadow-2xs transition-all duration-150">
+            <svg class="w-3.5 h-3.5 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
               </path>
@@ -243,8 +334,8 @@
 
           <!-- Course Overview (Renamed exactly as requested!) -->
           <button id="navCourseOverview" onclick="switchScreen('s03'); switchOverviewTab('dsa');"
-            class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-white hover:text-blue-700 hover:shadow-2xs transition-all duration-150">
-            <svg class="w-3.5 h-3.5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-white hover:text-brand-700 hover:shadow-2xs transition-all duration-150">
+            <svg class="w-3.5 h-3.5 text-brand-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
               </path>
@@ -254,7 +345,7 @@
 
           <!-- Weak Topics -->
           <button id="navWeakTopics" onclick="openWeakTopicSelector('dsa')"
-            class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-white hover:text-blue-700 hover:shadow-2xs transition-all duration-150">
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-white hover:text-brand-700 hover:shadow-2xs transition-all duration-150">
             <svg class="w-3.5 h-3.5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z">
               </path>
@@ -264,8 +355,8 @@
 
           <!-- Diagnostic Quiz -->
           <button id="navDiagQuiz" onclick="startDiag('dsa')"
-            class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-white hover:text-blue-700 hover:shadow-2xs transition-all duration-150">
-            <svg class="w-3.5 h-3.5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-white hover:text-brand-700 hover:shadow-2xs transition-all duration-150">
+            <svg class="w-3.5 h-3.5 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4">
               </path>
@@ -275,7 +366,7 @@
 
           <!-- Practice Hub -->
           <button id="navPracticeHub" onclick="startPractice('dsa')"
-            class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-white hover:text-blue-700 hover:shadow-2xs transition-all duration-150">
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-white hover:text-brand-700 hover:shadow-2xs transition-all duration-150">
             <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
@@ -286,8 +377,8 @@
 
           <!-- AI Study Plan -->
           <button id="navAiPlan" onclick="switchScreen('s08'); switchPlanTab('dsa');"
-            class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-white hover:text-purple-700 hover:shadow-2xs transition-all duration-150">
-            <svg class="w-3.5 h-3.5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-white hover:text-brand-700 hover:shadow-2xs transition-all duration-150">
+            <svg class="w-3.5 h-3.5 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z">
               </path>
@@ -309,7 +400,7 @@
 
           <!-- Progress Hub -->
           <button id="navProgress" onclick="switchScreen('s13')"
-            class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-white hover:text-blue-700 hover:shadow-2xs transition-all duration-150">
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-white hover:text-brand-700 hover:shadow-2xs transition-all duration-150">
             <svg class="w-3.5 h-3.5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
@@ -324,12 +415,12 @@
 
           <!-- QUICK AI ASSISTANT LAUNCHER CHIP -->
           <button onclick="switchScreen('s09')" title="Open Adaptive Learning Path AI Assistant"
-            class="hidden md:flex items-center gap-1.5 bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 border border-blue-200/80 text-blue-700 font-bold text-xs px-3 py-2 rounded-xl transition-all shadow-2xs">
+            class="hidden md:flex items-center gap-1.5 bg-gradient-to-r from-brand-50 to-brand-50 hover:from-brand-100 hover:to-brand-100 border border-brand-200/80 text-brand-700 font-bold text-xs px-3 py-2 rounded-xl transition-all shadow-2xs">
             <span class="flex h-2 w-2 relative">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-300 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
             </span>
-            <svg class="w-3.5 h-3.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-3.5 h-3.5 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z">
               </path>
@@ -339,7 +430,7 @@
 
           <button id="themeToggle" type="button" onclick="toggleTheme()" aria-label="Switch to dark mode"
             title="Switch to dark mode"
-            class="theme-toggle flex items-center justify-center w-9 h-9 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-600 hover:text-blue-600 transition shadow-2xs">
+            class="theme-toggle flex items-center justify-center w-9 h-9 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-600 hover:text-brand-500 transition shadow-2xs">
             <svg class="theme-icon-sun w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
               aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -355,7 +446,7 @@
 
           <!-- GLOBAL BACK BUTTON (history-aware; hidden on login + dashboard) -->
           <button id="globalBackBtn" onclick="goBack()" title="Go back" style="display:none"
-            class="items-center gap-1.5 text-xs font-bold bg-slate-50 hover:bg-white border border-slate-200 hover:border-blue-400 rounded-xl px-3 py-2 text-slate-700 shadow-2xs transition">
+            class="items-center gap-1.5 text-xs font-bold bg-slate-50 hover:bg-white border border-slate-200 hover:border-brand-300 rounded-xl px-3 py-2 text-slate-700 shadow-2xs transition">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
@@ -368,7 +459,7 @@
               class="flex items-center gap-2 bg-slate-50 hover:bg-slate-100 p-1.5 pr-2.5 rounded-xl border border-slate-200/80 transition cursor-pointer"
               onclick="switchScreen('s14')" title="View Student Profile">
               <div id="profileInitials"
-                class="w-7 h-7 rounded-lg bg-gradient-to-tr from-blue-700 via-blue-600 to-indigo-600 text-white flex items-center justify-center font-extrabold text-[11px] shadow-2xs ring-1 ring-blue-200">
+                class="w-7 h-7 rounded-lg bg-gradient-to-tr from-brand-700 via-brand-500 to-brand-700 text-white flex items-center justify-center font-extrabold text-[11px] shadow-2xs ring-1 ring-brand-200">
                 —
               </div>
               <div class="text-left hidden sm:block leading-tight">
@@ -402,15 +493,15 @@
       <div class="min-h-[750px] flex items-center justify-center relative">
 
         <!-- DECORATIVE AMBIENT GLOWS -->
-        <div class="absolute w-72 h-72 bg-blue-500/10 rounded-full blur-3xl pointer-events-none -top-10 -left-10"></div>
-        <div class="absolute w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none -bottom-10 -right-10">
+        <div class="absolute w-72 h-72 bg-brand-400/10 rounded-full blur-3xl pointer-events-none -top-10 -left-10"></div>
+        <div class="absolute w-72 h-72 bg-brand-600/10 rounded-full blur-3xl pointer-events-none -bottom-10 -right-10">
         </div>
 
         <div
-          class="hub-card w-full max-w-md rounded-3xl p-8 md:p-10 border border-blue-100 shadow-xl shadow-blue-900/5 relative overflow-hidden text-center bg-white/95 backdrop-blur z-10">
+          class="hub-card w-full max-w-md rounded-3xl p-8 md:p-10 border border-brand-100 shadow-xl shadow-brand-900/5 relative overflow-hidden text-center bg-white/95 backdrop-blur z-10">
 
           <div
-            class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-blue-700 via-blue-600 to-indigo-600 text-white flex items-center justify-center font-black text-2xl mx-auto mb-4 shadow-lg shadow-blue-600/30 ring-4 ring-blue-50">
+            class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-700 via-brand-500 to-brand-700 text-white flex items-center justify-center font-black text-2xl mx-auto mb-4 shadow-lg shadow-brand-500/30 ring-4 ring-brand-50">
             SG
           </div>
           <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight mb-1">Student Portal Login</h2>
@@ -420,9 +511,9 @@
           <!-- AUTH MODE TOGGLE (Login / Sign Up) -->
           <div class="flex justify-center gap-1 mb-5 bg-slate-100 p-1 rounded-xl text-xs font-bold">
             <button type="button" onclick="toggleAuthMode('login')" id="authTabLogin"
-              class="flex-1 py-2 rounded-lg bg-white text-blue-700 shadow-2xs transition">Log In</button>
+              class="flex-1 py-2 rounded-lg bg-white text-brand-700 shadow-2xs transition">Log In</button>
             <button type="button" onclick="toggleAuthMode('signup')" id="authTabSignup"
-              class="flex-1 py-2 rounded-lg text-slate-500 hover:text-blue-700 transition">Sign Up</button>
+              class="flex-1 py-2 rounded-lg text-slate-500 hover:text-brand-700 transition">Sign Up</button>
           </div>
 
           <!-- ERROR ALERT BANNER -->
@@ -440,12 +531,12 @@
               <div>
                 <label class="block text-xs font-bold text-slate-700 mb-1.5">Full Name</label>
                 <input id="signupName" type="text" placeholder="Your full name"
-                  class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition">
+                  class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition">
               </div>
               <div>
                 <label class="block text-xs font-bold text-slate-700 mb-1.5">Student ID</label>
                 <input id="signupStudentId" type="text" placeholder="e.g. 223210"
-                  class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition">
+                  class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition">
               </div>
             </div>
 
@@ -461,7 +552,7 @@
                 </div>
                 <input id="loginEmail" type="email" value="" placeholder="e.g. yourname@bscse.uiu.ac.bd" required
                   autocomplete="username"
-                  class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition">
+                  class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition">
               </div>
             </div>
 
@@ -477,9 +568,9 @@
                 </div>
                 <input id="loginPassword" type="password" value="" placeholder="••••••••" required
                   autocomplete="current-password"
-                  class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-14 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition">
+                  class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-14 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition">
                 <button type="button" onclick="togglePasswordField('loginPassword', this)"
-                  class="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-bold text-blue-600 hover:underline">Show</button>
+                  class="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-bold text-brand-500 hover:underline">Show</button>
               </div>
             </div>
 
@@ -487,15 +578,15 @@
               <label class="block text-xs font-bold text-slate-700 mb-1.5">Confirm Password</label>
               <div class="relative">
                 <input id="signupConfirmPassword" type="password" placeholder="••••••••"
-                  class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-4 pr-14 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition">
+                  class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-4 pr-14 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition">
                 <button type="button" onclick="togglePasswordField('signupConfirmPassword', this)"
-                  class="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-bold text-blue-600 hover:underline">Show</button>
+                  class="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-bold text-brand-500 hover:underline">Show</button>
               </div>
             </div>
 
             <div class="pt-2">
               <button type="submit" id="authSubmitBtn"
-                class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold text-sm py-3.5 rounded-xl transition shadow-md shadow-blue-600/25 hover:shadow-lg hover:shadow-blue-600/35 hover:-translate-y-0.5 disabled:opacity-60">
+                class="w-full bg-gradient-to-r from-brand-500 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white font-bold text-sm py-3.5 rounded-xl transition shadow-md shadow-brand-500/25 hover:shadow-lg hover:shadow-brand-500/35 hover:-translate-y-0.5 disabled:opacity-60">
                 Login
               </button>
             </div>
@@ -519,7 +610,7 @@
           <div>
             <div class="flex items-center gap-2 mb-1">
               <span
-                class="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-100">Fall
+                class="text-xs font-bold uppercase tracking-wider text-brand-500 bg-brand-50 px-2.5 py-0.5 rounded-full border border-brand-100">Fall
                 Semester 2026</span>
               <span id="dashStudentId" class="text-xs text-slate-500 font-medium">Student ID: —</span>
             </div>
@@ -531,7 +622,7 @@
           </div>
           <div class="flex items-center gap-3">
             <button onclick="openWeakTopicSelector('dsa')"
-              class="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-sm transition">
+              class="bg-brand-500 hover:bg-brand-700 text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-sm transition">
               Identify Weak Areas
             </button>
             <button onclick="switchScreen('s13')"
@@ -558,9 +649,11 @@
         <!-- Dashboard Summary Stats Row -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div class="hub-card rounded-xl p-4 flex items-center gap-4">
-            <div
-              class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg">
-              🎯
+            <div class="w-10 h-10 rounded-lg bg-brand-50 text-brand-600 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
             </div>
             <div>
               <div class="text-xs font-medium text-slate-500">Diagnostic Testing</div>
@@ -568,8 +661,11 @@
             </div>
           </div>
           <div class="hub-card rounded-xl p-4 flex items-center gap-4">
-            <div class="w-10 h-10 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center font-bold text-lg">
-              📝
+            <div class="w-10 h-10 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+              </svg>
             </div>
             <div>
               <div class="text-xs font-medium text-slate-500">Targeted Practice</div>
@@ -577,9 +673,12 @@
             </div>
           </div>
           <div class="hub-card rounded-xl p-4 flex items-center gap-4">
-            <div
-              class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-lg">
-              📈</div>
+            <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+              </svg>
+            </div>
             <div>
               <div class="text-xs font-medium text-slate-500">Separated Progress</div>
               <div class="text-sm font-bold text-slate-800">Independent DSA, OOP & SPL Hubs</div>
@@ -601,7 +700,7 @@
           <!-- Course Selector Pills -->
           <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200">
             <button id="overviewTabDsa" onclick="switchOverviewTab('dsa')"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-blue-600 text-white shadow-xs transition">
+              class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-brand-500 text-white shadow-xs transition">
               DSA Overview (42%)
             </button>
             <button id="overviewTabOop" onclick="switchOverviewTab('oop')"
@@ -622,7 +721,7 @@
             <div>
               <div class="flex items-center gap-2 mb-2">
                 <span
-                  class="inline-block px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 text-xs font-bold border border-blue-100">
+                  class="inline-block px-2.5 py-0.5 rounded-full bg-brand-50 text-brand-700 text-xs font-bold border border-brand-100">
                   CSE Department • Core Course
                 </span>
                 <span class="badge-critical px-2.5 py-0.5 rounded-full text-xs font-bold">Course Mastery: 42% (Needs
@@ -635,7 +734,7 @@
               </p>
             </div>
             <button onclick="switchScreen('s03'); switchOverviewTab('dsa');"
-              class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs py-2.5 rounded-xl border border-indigo-200 transition flex items-center justify-center gap-1.5 shadow-2xs">
+              class="w-full bg-brand-50 hover:bg-brand-100 text-brand-800 font-bold text-xs py-2.5 rounded-xl border border-brand-200 transition flex items-center justify-center gap-1.5 shadow-2xs">
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
@@ -644,7 +743,7 @@
               DSA Course Overview (10 Topics) →
             </button>
             <button onclick="startDiag('dsa')"
-              class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition whitespace-nowrap">
+              class="bg-brand-500 hover:bg-brand-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition whitespace-nowrap">
               Take Diagnostic Assessment (10 Qs) →
             </button>
           </div>
@@ -652,7 +751,7 @@
           <div class="hub-card rounded-2xl p-6 overflow-hidden">
             <div class="flex items-center justify-between mb-4">
               <h3 class="text-base font-bold text-slate-900">DSA Topic Syllabus & Priority Breakdown (10 Topics)</h3>
-              <button onclick="startPractice('dsa')" class="text-xs font-bold text-blue-600 hover:underline">Launch
+              <button onclick="startPractice('dsa')" class="text-xs font-bold text-brand-500 hover:underline">Launch
                 Practice Hub →</button>
             </div>
             <div class="overflow-x-auto">
@@ -671,14 +770,14 @@
                     <td class="py-3 px-4 text-xs text-slate-500">Linear Structures</td>
                     <td class="py-3 px-4 text-xs font-bold text-emerald-600">Fundamental • Mastered (80%)</td>
                     <td class="py-3 px-4 text-right"><button onclick="startPractice('dsa')"
-                        class="text-xs text-blue-600 font-semibold hover:underline">Practice</button></td>
+                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
                   </tr>
                   <tr class="bg-red-50/20">
                     <td class="py-3 px-4 font-semibold text-slate-900">2. Singly & Doubly Linked Lists</td>
                     <td class="py-3 px-4 text-xs text-slate-500">Pointer Structures</td>
                     <td class="py-3 px-4 text-xs font-bold text-red-600">High Risk Gap (35%)</td>
                     <td class="py-3 px-4 text-right"> <button onclick="switchScreen('s03'); switchOverviewTab('dsa');"
-                        class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs py-2.5 rounded-xl border border-indigo-200 transition flex items-center justify-center gap-1.5 shadow-2xs">
+                        class="w-full bg-brand-50 hover:bg-brand-100 text-brand-800 font-bold text-xs py-2.5 rounded-xl border border-brand-200 transition flex items-center justify-center gap-1.5 shadow-2xs">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
@@ -687,7 +786,7 @@
                         DSA Course Overview (10 Topics) →
                       </button>
                       <button onclick="startDiag('dsa')"
-                        class="text-xs bg-blue-600 text-white font-semibold px-3 py-1 rounded-lg hover:bg-blue-700">Test
+                        class="text-xs bg-brand-500 text-white font-semibold px-3 py-1 rounded-lg hover:bg-brand-700">Test
                         Topic</button>
                     </td>
                   </tr>
@@ -696,21 +795,21 @@
                     <td class="py-3 px-4 text-xs text-slate-500">LIFO Structures</td>
                     <td class="py-3 px-4 text-xs font-bold text-amber-600">Moderate Gap (60%)</td>
                     <td class="py-3 px-4 text-right"><button onclick="startPractice('dsa')"
-                        class="text-xs text-blue-600 font-semibold hover:underline">Practice</button></td>
+                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
                   </tr>
                   <tr>
                     <td class="py-3 px-4 font-semibold text-slate-800">4. Queues & Circular Buffers</td>
                     <td class="py-3 px-4 text-xs text-slate-500">FIFO Structures</td>
                     <td class="py-3 px-4 text-xs font-bold text-emerald-600">Fundamental (75%)</td>
                     <td class="py-3 px-4 text-right"><button onclick="startPractice('dsa')"
-                        class="text-xs text-blue-600 font-semibold hover:underline">Practice</button></td>
+                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
                   </tr>
                   <tr class="bg-red-50/20">
                     <td class="py-3 px-4 font-semibold text-slate-900">5. Recursion & Call Stacks</td>
                     <td class="py-3 px-4 text-xs text-slate-500">Algorithmic Paradigm</td>
                     <td class="py-3 px-4 text-xs font-bold text-red-600">High Risk Gap (40%)</td>
                     <td class="py-3 px-4 text-right"> <button onclick="switchScreen('s03'); switchOverviewTab('dsa');"
-                        class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs py-2.5 rounded-xl border border-indigo-200 transition flex items-center justify-center gap-1.5 shadow-2xs">
+                        class="w-full bg-brand-50 hover:bg-brand-100 text-brand-800 font-bold text-xs py-2.5 rounded-xl border border-brand-200 transition flex items-center justify-center gap-1.5 shadow-2xs">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
@@ -719,7 +818,7 @@
                         DSA Course Overview (10 Topics) →
                       </button>
                       <button onclick="startDiag('dsa')"
-                        class="text-xs bg-blue-600 text-white font-semibold px-3 py-1 rounded-lg hover:bg-blue-700">Test
+                        class="text-xs bg-brand-500 text-white font-semibold px-3 py-1 rounded-lg hover:bg-brand-700">Test
                         Topic</button>
                     </td>
                   </tr>
@@ -728,7 +827,7 @@
                     <td class="py-3 px-4 text-xs text-slate-500">Hierarchical Trees</td>
                     <td class="py-3 px-4 text-xs font-bold text-red-600">High Risk Gap (30%)</td>
                     <td class="py-3 px-4 text-right"> <button onclick="switchScreen('s03'); switchOverviewTab('dsa');"
-                        class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs py-2.5 rounded-xl border border-indigo-200 transition flex items-center justify-center gap-1.5 shadow-2xs">
+                        class="w-full bg-brand-50 hover:bg-brand-100 text-brand-800 font-bold text-xs py-2.5 rounded-xl border border-brand-200 transition flex items-center justify-center gap-1.5 shadow-2xs">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
@@ -737,7 +836,7 @@
                         DSA Course Overview (10 Topics) →
                       </button>
                       <button onclick="startDiag('dsa')"
-                        class="text-xs bg-blue-600 text-white font-semibold px-3 py-1 rounded-lg hover:bg-blue-700">Test
+                        class="text-xs bg-brand-500 text-white font-semibold px-3 py-1 rounded-lg hover:bg-brand-700">Test
                         Topic</button>
                     </td>
                   </tr>
@@ -746,28 +845,28 @@
                     <td class="py-3 px-4 text-xs text-slate-500">Ordered Search Trees</td>
                     <td class="py-3 px-4 text-xs font-bold text-amber-600">Developing (50%)</td>
                     <td class="py-3 px-4 text-right"><button onclick="startPractice('dsa')"
-                        class="text-xs text-blue-600 font-semibold hover:underline">Practice</button></td>
+                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
                   </tr>
                   <tr>
                     <td class="py-3 px-4 font-semibold text-slate-800">8. Tree Height & Depth Calculations</td>
                     <td class="py-3 px-4 text-xs text-slate-500">Tree Analytics</td>
                     <td class="py-3 px-4 text-xs font-bold text-amber-600">Developing (55%)</td>
                     <td class="py-3 px-4 text-right"><button onclick="startPractice('dsa')"
-                        class="text-xs text-blue-600 font-semibold hover:underline">Practice</button></td>
+                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
                   </tr>
                   <tr>
                     <td class="py-3 px-4 font-semibold text-slate-800">9. Graph Traversals (BFS & DFS)</td>
                     <td class="py-3 px-4 text-xs text-slate-500">Non-linear Graphs</td>
                     <td class="py-3 px-4 text-xs font-bold text-emerald-600">Developing (65%)</td>
                     <td class="py-3 px-4 text-right"><button onclick="startPractice('dsa')"
-                        class="text-xs text-blue-600 font-semibold hover:underline">Practice</button></td>
+                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
                   </tr>
                   <tr>
                     <td class="py-3 px-4 font-semibold text-slate-800">10. Hash Tables & Collision Handling</td>
                     <td class="py-3 px-4 text-xs text-slate-500">Associative Structures</td>
                     <td class="py-3 px-4 text-xs font-bold text-emerald-600">Fundamental (70%)</td>
                     <td class="py-3 px-4 text-right"><button onclick="startPractice('dsa')"
-                        class="text-xs text-blue-600 font-semibold hover:underline">Practice</button></td>
+                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
                   </tr>
                 </tbody>
               </table>
@@ -782,7 +881,7 @@
             <div>
               <div class="flex items-center gap-2 mb-2">
                 <span
-                  class="inline-block px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 text-xs font-bold border border-blue-100">
+                  class="inline-block px-2.5 py-0.5 rounded-full bg-brand-50 text-brand-700 text-xs font-bold border border-brand-100">
                   CSE Department • Core Course
                 </span>
                 <span class="badge-developing px-2.5 py-0.5 rounded-full text-xs font-bold">Course Mastery: 75%
@@ -805,7 +904,7 @@
               OOP Course Overview (10 Topics) →
             </button>
             <button onclick="startDiag('oop')"
-              class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition whitespace-nowrap">
+              class="bg-brand-500 hover:bg-brand-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition whitespace-nowrap">
               Take Diagnostic Assessment (10 Qs) →
             </button>
           </div>
@@ -813,7 +912,7 @@
           <div class="hub-card rounded-2xl p-6 overflow-hidden">
             <div class="flex items-center justify-between mb-4">
               <h3 class="text-base font-bold text-slate-900">OOP Topic Syllabus & Priority Breakdown (10 Topics)</h3>
-              <button onclick="startPractice('oop')" class="text-xs font-bold text-blue-600 hover:underline">Launch
+              <button onclick="startPractice('oop')" class="text-xs font-bold text-brand-500 hover:underline">Launch
                 Practice Hub →</button>
             </div>
             <div class="overflow-x-auto">
@@ -832,35 +931,35 @@
                     <td class="py-3 px-4 text-xs text-slate-500">Object Model</td>
                     <td class="py-3 px-4 text-xs font-bold text-emerald-600">Fundamental • Mastered (90%)</td>
                     <td class="py-3 px-4 text-right"><button onclick="startPractice('oop')"
-                        class="text-xs text-blue-600 font-semibold hover:underline">Practice</button></td>
+                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
                   </tr>
                   <tr>
                     <td class="py-3 px-4 font-semibold text-slate-800">2. Encapsulation & Data Hiding</td>
                     <td class="py-3 px-4 text-xs text-slate-500">Access Control</td>
                     <td class="py-3 px-4 text-xs font-bold text-emerald-600">Solid Baseline (85%)</td>
                     <td class="py-3 px-4 text-right"><button onclick="startPractice('oop')"
-                        class="text-xs text-blue-600 font-semibold hover:underline">Practice</button></td>
+                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
                   </tr>
                   <tr>
                     <td class="py-3 px-4 font-semibold text-slate-800">3. Access Modifiers (private, protected)</td>
                     <td class="py-3 px-4 text-xs text-slate-500">Visibility Rules</td>
                     <td class="py-3 px-4 text-xs font-bold text-emerald-600">Mastered (80%)</td>
                     <td class="py-3 px-4 text-right"><button onclick="startPractice('oop')"
-                        class="text-xs text-blue-600 font-semibold hover:underline">Practice</button></td>
+                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
                   </tr>
                   <tr>
                     <td class="py-3 px-4 font-semibold text-slate-800">4. Constructors & Destructors</td>
                     <td class="py-3 px-4 text-xs text-slate-500">Lifecycle Management</td>
                     <td class="py-3 px-4 text-xs font-bold text-emerald-600">Solid Baseline (85%)</td>
                     <td class="py-3 px-4 text-right"><button onclick="startPractice('oop')"
-                        class="text-xs text-blue-600 font-semibold hover:underline">Practice</button></td>
+                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
                   </tr>
                   <tr>
                     <td class="py-3 px-4 font-semibold text-slate-800">5. Class Inheritance (IS-A Hierarchy)</td>
                     <td class="py-3 px-4 text-xs text-slate-500">Code Reusability</td>
                     <td class="py-3 px-4 text-xs font-bold text-emerald-600">Solid Baseline (80%)</td>
                     <td class="py-3 px-4 text-right"><button onclick="startPractice('oop')"
-                        class="text-xs text-blue-600 font-semibold hover:underline">Practice</button></td>
+                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
                   </tr>
                   <tr class="bg-amber-50/30">
                     <td class="py-3 px-4 font-semibold text-slate-900">6. Dynamic Polymorphism & Method Dispatch</td>
@@ -876,7 +975,7 @@
                         OOP Course Overview (10 Topics) →
                       </button>
                       <button onclick="startDiag('oop')"
-                        class="text-xs bg-blue-600 text-white font-semibold px-3 py-1 rounded-lg hover:bg-blue-700">Test
+                        class="text-xs bg-brand-500 text-white font-semibold px-3 py-1 rounded-lg hover:bg-brand-700">Test
                         Topic</button>
                     </td>
                   </tr>
@@ -885,14 +984,14 @@
                     <td class="py-3 px-4 text-xs text-slate-500">Compile-Time Binding</td>
                     <td class="py-3 px-4 text-xs font-bold text-emerald-600">Mastered (85%)</td>
                     <td class="py-3 px-4 text-right"><button onclick="startPractice('oop')"
-                        class="text-xs text-blue-600 font-semibold hover:underline">Practice</button></td>
+                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
                   </tr>
                   <tr>
                     <td class="py-3 px-4 font-semibold text-slate-800">8. Abstract Classes & Methods</td>
                     <td class="py-3 px-4 text-xs text-slate-500">Architectural Blueprints</td>
                     <td class="py-3 px-4 text-xs font-bold text-amber-600">Developing (60%)</td>
                     <td class="py-3 px-4 text-right"><button onclick="startPractice('oop')"
-                        class="text-xs text-blue-600 font-semibold hover:underline">Practice</button></td>
+                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
                   </tr>
                   <tr class="bg-amber-50/30">
                     <td class="py-3 px-4 font-semibold text-slate-900">9. Interfaces & Multiple Type Contracts</td>
@@ -908,7 +1007,7 @@
                         OOP Course Overview (10 Topics) →
                       </button>
                       <button onclick="startDiag('oop')"
-                        class="text-xs bg-blue-600 text-white font-semibold px-3 py-1 rounded-lg hover:bg-blue-700">Test
+                        class="text-xs bg-brand-500 text-white font-semibold px-3 py-1 rounded-lg hover:bg-brand-700">Test
                         Topic</button>
                     </td>
                   </tr>
@@ -917,7 +1016,7 @@
                     <td class="py-3 px-4 text-xs text-slate-500">Fault Tolerance</td>
                     <td class="py-3 px-4 text-xs font-bold text-emerald-600">Solid Baseline (85%)</td>
                     <td class="py-3 px-4 text-right"><button onclick="startPractice('oop')"
-                        class="text-xs text-blue-600 font-semibold hover:underline">Practice</button></td>
+                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
                   </tr>
                 </tbody>
               </table>
@@ -932,7 +1031,7 @@
             <div>
               <div class="flex items-center gap-2 mb-2">
                 <span
-                  class="inline-block px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 text-xs font-bold border border-blue-100">
+                  class="inline-block px-2.5 py-0.5 rounded-full bg-brand-50 text-brand-700 text-xs font-bold border border-brand-100">
                   CSE Department • Core Course
                 </span>
                 <span class="badge-mastered px-2.5 py-0.5 rounded-full text-xs font-bold">Course Mastery: 82% (On
@@ -955,7 +1054,7 @@
               SPL Course Overview (10 Topics) →
             </button>
             <button onclick="startDiag('spl')"
-              class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition whitespace-nowrap">
+              class="bg-brand-500 hover:bg-brand-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition whitespace-nowrap">
               Take Diagnostic Assessment (10 Qs) →
             </button>
           </div>
@@ -963,7 +1062,7 @@
           <div class="hub-card rounded-2xl p-6 overflow-hidden">
             <div class="flex items-center justify-between mb-4">
               <h3 class="text-base font-bold text-slate-900">SPL Topic Syllabus & Priority Breakdown (10 Topics)</h3>
-              <button onclick="startPractice('spl')" class="text-xs font-bold text-blue-600 hover:underline">Launch
+              <button onclick="startPractice('spl')" class="text-xs font-bold text-brand-500 hover:underline">Launch
                 Practice Hub →</button>
             </div>
             <div class="overflow-x-auto">
@@ -982,35 +1081,35 @@
                     <td class="py-3 px-4 text-xs text-slate-500">Memory Representation</td>
                     <td class="py-3 px-4 text-xs font-bold text-emerald-600">Mastered (95%)</td>
                     <td class="py-3 px-4 text-right"><button onclick="startPractice('spl')"
-                        class="text-xs text-blue-600 font-semibold hover:underline">Practice</button></td>
+                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
                   </tr>
                   <tr>
                     <td class="py-3 px-4 font-semibold text-slate-800">2. Conditionals & Iterative Loops</td>
                     <td class="py-3 px-4 text-xs text-slate-500">Control Flow</td>
                     <td class="py-3 px-4 text-xs font-bold text-emerald-600">Mastered (92%)</td>
                     <td class="py-3 px-4 text-right"><button onclick="startPractice('spl')"
-                        class="text-xs text-blue-600 font-semibold hover:underline">Practice</button></td>
+                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
                   </tr>
                   <tr>
                     <td class="py-3 px-4 font-semibold text-slate-800">3. Functions, Parameters & Return Types</td>
                     <td class="py-3 px-4 text-xs text-slate-500">Modular Design</td>
                     <td class="py-3 px-4 text-xs font-bold text-emerald-600">Mastered (88%)</td>
                     <td class="py-3 px-4 text-right"><button onclick="startPractice('spl')"
-                        class="text-xs text-blue-600 font-semibold hover:underline">Practice</button></td>
+                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
                   </tr>
                   <tr>
                     <td class="py-3 px-4 font-semibold text-slate-800">4. Pointers & Memory Address Referencing</td>
                     <td class="py-3 px-4 text-xs text-slate-500">Direct Addressing</td>
                     <td class="py-3 px-4 text-xs font-bold text-amber-600">Developing (65%)</td>
                     <td class="py-3 px-4 text-right"><button onclick="startPractice('spl')"
-                        class="text-xs text-blue-600 font-semibold hover:underline">Practice</button></td>
+                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
                   </tr>
                   <tr class="bg-emerald-50/30">
                     <td class="py-3 px-4 font-semibold text-slate-900">5. Pointer Dereferencing & Indirection</td>
                     <td class="py-3 px-4 text-xs text-slate-500">Memory Manipulation</td>
                     <td class="py-3 px-4 text-xs font-bold text-amber-600">Developing (60%)</td>
                     <td class="py-3 px-4 text-right"><button onclick="startPractice('spl')"
-                        class="text-xs text-blue-600 font-semibold hover:underline">Practice</button></td>
+                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
                   </tr>
                   <tr class="bg-red-50/20">
                     <td class="py-3 px-4 font-semibold text-slate-900">6. Pointer Arithmetic & Byte Scaling</td>
@@ -1026,7 +1125,7 @@
                         SPL Course Overview (10 Topics) →
                       </button>
                       <button onclick="startDiag('spl')"
-                        class="text-xs bg-blue-600 text-white font-semibold px-3 py-1 rounded-lg hover:bg-blue-700">Test
+                        class="text-xs bg-brand-500 text-white font-semibold px-3 py-1 rounded-lg hover:bg-brand-700">Test
                         Topic</button>
                     </td>
                   </tr>
@@ -1045,7 +1144,7 @@
                         SPL Course Overview (10 Topics) →
                       </button>
                       <button onclick="startDiag('spl')"
-                        class="text-xs bg-blue-600 text-white font-semibold px-3 py-1 rounded-lg hover:bg-blue-700">Test
+                        class="text-xs bg-brand-500 text-white font-semibold px-3 py-1 rounded-lg hover:bg-brand-700">Test
                         Topic</button>
                     </td>
                   </tr>
@@ -1054,21 +1153,21 @@
                     <td class="py-3 px-4 text-xs text-slate-500">Heap Safety</td>
                     <td class="py-3 px-4 text-xs font-bold text-amber-600">Developing (55%)</td>
                     <td class="py-3 px-4 text-right"><button onclick="startPractice('spl')"
-                        class="text-xs text-blue-600 font-semibold hover:underline">Practice</button></td>
+                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
                   </tr>
                   <tr>
                     <td class="py-3 px-4 font-semibold text-slate-800">9. C Character Strings & Null Terminators</td>
                     <td class="py-3 px-4 text-xs text-slate-500">Byte Arrays</td>
                     <td class="py-3 px-4 text-xs font-bold text-emerald-600">Mastered (85%)</td>
                     <td class="py-3 px-4 text-right"><button onclick="startPractice('spl')"
-                        class="text-xs text-blue-600 font-semibold hover:underline">Practice</button></td>
+                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
                   </tr>
                   <tr>
                     <td class="py-3 px-4 font-semibold text-slate-800">10. Structures & Arrow Operator (->)</td>
                     <td class="py-3 px-4 text-xs text-slate-500">Aggregate Data</td>
                     <td class="py-3 px-4 text-xs font-bold text-emerald-600">Mastered (90%)</td>
                     <td class="py-3 px-4 text-right"><button onclick="startPractice('spl')"
-                        class="text-xs text-blue-600 font-semibold hover:underline">Practice</button></td>
+                        class="text-xs text-brand-500 font-semibold hover:underline">Practice</button></td>
                   </tr>
                 </tbody>
               </table>
@@ -1088,9 +1187,12 @@
         </div>
 
         <div class="hub-card rounded-2xl p-6 md:p-8">
-          <div
-            class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xl mb-4">
-            🔍</div>
+          <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-500 flex items-center justify-center mb-4">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+            </svg>
+          </div>
           <h2 class="text-2xl font-bold text-slate-900">Tell us what topics you are struggling with</h2>
           <p class="text-sm text-slate-500 mt-1 mb-6 leading-relaxed">
             Select the course below to view all of its academic topics. Check any concepts where you feel uncertain. The
@@ -1099,7 +1201,7 @@
 
           <div class="flex border-b border-slate-200 gap-2 mb-6">
             <button onclick="switchWeakCourseTab('dsa')" id="weakTabDsa"
-              class="px-5 py-2.5 text-sm font-bold border-b-2 border-blue-600 text-blue-600">
+              class="px-5 py-2.5 text-sm font-bold border-b-2 border-brand-500 text-brand-500">
               DSA Topics (10)
             </button>
             <button onclick="switchWeakCourseTab('oop')" id="weakTabOop"
@@ -1116,49 +1218,49 @@
           <div id="weakTopicsDsa" class="space-y-2.5 mb-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
               <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-slate-300">
+                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-semibold text-slate-800">1. Arrays & Dynamic Sizing</span>
               </label>
-              <label class="flex items-center p-3 border-2 border-blue-500 bg-blue-50/50 rounded-xl cursor-pointer">
-                <input type="checkbox" checked class="w-4 h-4 text-blue-600 rounded border-slate-300">
+              <label class="flex items-center p-3 border-2 border-brand-400 bg-brand-50/50 rounded-xl cursor-pointer">
+                <input type="checkbox" checked class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-bold text-slate-900">2. Singly Linked Lists</span>
                 <span
                   class="ml-auto text-[10px] text-red-600 font-bold bg-red-100 px-1.5 py-0.5 rounded">Selected</span>
               </label>
               <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-slate-300">
+                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-semibold text-slate-800">3. Doubly & Circular Linked Lists</span>
               </label>
               <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-slate-300">
+                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-semibold text-slate-800">4. Stacks & Expression Parsing</span>
               </label>
               <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-slate-300">
+                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-semibold text-slate-800">5. Queues & Circular Buffers</span>
               </label>
-              <label class="flex items-center p-3 border-2 border-blue-500 bg-blue-50/50 rounded-xl cursor-pointer">
-                <input type="checkbox" checked class="w-4 h-4 text-blue-600 rounded border-slate-300">
+              <label class="flex items-center p-3 border-2 border-brand-400 bg-brand-50/50 rounded-xl cursor-pointer">
+                <input type="checkbox" checked class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-bold text-slate-900">6. Recursion & Call Stacks</span>
                 <span
                   class="ml-auto text-[10px] text-red-600 font-bold bg-red-100 px-1.5 py-0.5 rounded">Selected</span>
               </label>
-              <label class="flex items-center p-3 border-2 border-blue-500 bg-blue-50/50 rounded-xl cursor-pointer">
-                <input type="checkbox" checked class="w-4 h-4 text-blue-600 rounded border-slate-300">
+              <label class="flex items-center p-3 border-2 border-brand-400 bg-brand-50/50 rounded-xl cursor-pointer">
+                <input type="checkbox" checked class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-bold text-slate-900">7. Binary Trees & Traversals</span>
                 <span
                   class="ml-auto text-[10px] text-red-600 font-bold bg-red-100 px-1.5 py-0.5 rounded">Selected</span>
               </label>
               <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-slate-300">
+                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-semibold text-slate-800">8. Binary Search Trees (BST)</span>
               </label>
               <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-slate-300">
+                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-semibold text-slate-800">9. Graph Traversals (BFS & DFS)</span>
               </label>
               <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-slate-300">
+                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-semibold text-slate-800">10. Hashing & Collision Handling</span>
               </label>
             </div>
@@ -1168,49 +1270,49 @@
           <div id="weakTopicsOop" class="hidden space-y-2.5 mb-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
               <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-slate-300">
+                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-semibold text-slate-800">1. Classes, Objects & Instances</span>
               </label>
               <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-slate-300">
+                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-semibold text-slate-800">2. Encapsulation & Data Hiding</span>
               </label>
               <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-slate-300">
+                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-semibold text-slate-800">3. Access Modifiers (private, protected)</span>
               </label>
               <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-slate-300">
+                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-semibold text-slate-800">4. Constructors & Destructors</span>
               </label>
               <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-slate-300">
+                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-semibold text-slate-800">5. Class Inheritance (IS-A Hierarchy)</span>
               </label>
-              <label class="flex items-center p-3 border-2 border-blue-500 bg-blue-50/50 rounded-xl cursor-pointer">
-                <input type="checkbox" checked class="w-4 h-4 text-blue-600 rounded border-slate-300">
+              <label class="flex items-center p-3 border-2 border-brand-400 bg-brand-50/50 rounded-xl cursor-pointer">
+                <input type="checkbox" checked class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-bold text-slate-900">6. Polymorphism & Dynamic Dispatch</span>
                 <span
                   class="ml-auto text-[10px] text-red-600 font-bold bg-red-100 px-1.5 py-0.5 rounded">Selected</span>
               </label>
               <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-slate-300">
+                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-semibold text-slate-800">7. Method Overloading vs Overriding</span>
               </label>
-              <label class="flex items-center p-3 border-2 border-blue-500 bg-blue-50/50 rounded-xl cursor-pointer">
-                <input type="checkbox" checked class="w-4 h-4 text-blue-600 rounded border-slate-300">
+              <label class="flex items-center p-3 border-2 border-brand-400 bg-brand-50/50 rounded-xl cursor-pointer">
+                <input type="checkbox" checked class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-bold text-slate-900">8. Abstract Classes & Pure Virtual</span>
                 <span
                   class="ml-auto text-[10px] text-red-600 font-bold bg-red-100 px-1.5 py-0.5 rounded">Selected</span>
               </label>
-              <label class="flex items-center p-3 border-2 border-blue-500 bg-blue-50/50 rounded-xl cursor-pointer">
-                <input type="checkbox" checked class="w-4 h-4 text-blue-600 rounded border-slate-300">
+              <label class="flex items-center p-3 border-2 border-brand-400 bg-brand-50/50 rounded-xl cursor-pointer">
+                <input type="checkbox" checked class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-bold text-slate-900">9. Interfaces & Multiple Type Contracts</span>
                 <span
                   class="ml-auto text-[10px] text-red-600 font-bold bg-red-100 px-1.5 py-0.5 rounded">Selected</span>
               </label>
               <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-slate-300">
+                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-semibold text-slate-800">10. Exception Handling
                   (try-catch-finally)</span>
               </label>
@@ -1221,47 +1323,47 @@
           <div id="weakTopicsSpl" class="hidden space-y-2.5 mb-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
               <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-slate-300">
+                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-semibold text-slate-800">1. Variables, Data Types & Formatting</span>
               </label>
               <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-slate-300">
+                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-semibold text-slate-800">2. Operators, Precedence & Casting</span>
               </label>
               <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-slate-300">
+                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-semibold text-slate-800">3. Control Flow (if-else, switch)</span>
               </label>
               <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-slate-300">
+                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-semibold text-slate-800">4. Loops (for, while, do-while)</span>
               </label>
               <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-slate-300">
+                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-semibold text-slate-800">5. Functions, Prototypes & Scope</span>
               </label>
               <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-slate-300">
+                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-semibold text-slate-800">6. Arrays & 2D Matrix Manipulation</span>
               </label>
               <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-slate-300">
+                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-semibold text-slate-800">7. Strings & Null Terminator ('\\0')</span>
               </label>
-              <label class="flex items-center p-3 border-2 border-blue-500 bg-blue-50/50 rounded-xl cursor-pointer">
-                <input type="checkbox" checked class="w-4 h-4 text-blue-600 rounded border-slate-300">
+              <label class="flex items-center p-3 border-2 border-brand-400 bg-brand-50/50 rounded-xl cursor-pointer">
+                <input type="checkbox" checked class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-bold text-slate-900">8. Pointers & Memory Dereferencing</span>
                 <span
                   class="ml-auto text-[10px] text-red-600 font-bold bg-red-100 px-1.5 py-0.5 rounded">Selected</span>
               </label>
-              <label class="flex items-center p-3 border-2 border-blue-500 bg-blue-50/50 rounded-xl cursor-pointer">
-                <input type="checkbox" checked class="w-4 h-4 text-blue-600 rounded border-slate-300">
+              <label class="flex items-center p-3 border-2 border-brand-400 bg-brand-50/50 rounded-xl cursor-pointer">
+                <input type="checkbox" checked class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-bold text-slate-900">9. Dynamic Memory (malloc, free)</span>
                 <span
                   class="ml-auto text-[10px] text-red-600 font-bold bg-red-100 px-1.5 py-0.5 rounded">Selected</span>
               </label>
               <label class="flex items-center p-3 border border-slate-200 rounded-xl hover:bg-sky-50/50 cursor-pointer">
-                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-slate-300">
+                <input type="checkbox" class="w-4 h-4 text-brand-500 rounded border-slate-300">
                 <span class="ml-3 text-xs font-semibold text-slate-800">10. Structures (struct), Unions & Typedef</span>
               </label>
             </div>
@@ -1269,7 +1371,7 @@
 
           <label
             class="flex items-center p-3.5 border-2 border-dashed border-sky-300 bg-sky-50/40 rounded-xl hover:bg-sky-50 cursor-pointer transition mb-6">
-            <input type="radio" name="autoOpt" class="w-4 h-4 text-blue-600 border-slate-300">
+            <input type="radio" name="autoOpt" class="w-4 h-4 text-brand-500 border-slate-300">
             <span class="ml-3 text-sm font-bold text-sky-900">"I don't know / Discover all gaps objectively across the
               course"</span>
             <span class="ml-auto text-xs bg-sky-200 text-sky-800 font-bold px-2 py-0.5 rounded">Recommended</span>
@@ -1278,7 +1380,7 @@
           <div class="flex items-center justify-between pt-4 border-t border-slate-100">
             <button onclick="switchScreen('s02')" class="text-sm font-semibold text-slate-600">Cancel</button>
             <button id="startDiagBtnFromWeak" onclick="startCurrentWeakCourseDiag()"
-              class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
+              class="bg-brand-500 hover:bg-brand-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
               Begin Diagnostic Quiz for Selected Course →
             </button>
           </div>
@@ -1291,7 +1393,7 @@
       <div class="max-w-3xl mx-auto space-y-6">
         <div class="hub-card rounded-2xl p-5 flex items-center justify-between">
           <div>
-            <span id="diagCourseBadge" class="text-xs font-bold uppercase tracking-wider text-blue-600">Course
+            <span id="diagCourseBadge" class="text-xs font-bold uppercase tracking-wider text-brand-500">Course
               Diagnostic</span>
             <div id="diagCounter" class="text-lg font-bold text-slate-900">Question 1 of 10</div>
           </div>
@@ -1308,7 +1410,7 @@
         </div>
 
         <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
-          <div id="diagProgressBar" class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: 10%">
+          <div id="diagProgressBar" class="bg-brand-500 h-2 rounded-full transition-all duration-300" style="width: 10%">
           </div>
         </div>
 
@@ -1341,7 +1443,7 @@
                 Mark for Review
               </button>
               <button id="diagNextBtn" onclick="navigateDiag(1)"
-                class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow-sm transition">
+                class="bg-brand-500 hover:bg-brand-700 text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow-sm transition">
                 Next Question →
               </button>
             </div>
@@ -1382,7 +1484,7 @@
 
           <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-slate-100">
             <button onclick="switchScreen('s03'); switchOverviewTab('dsa');"
-              class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs py-2.5 rounded-xl border border-indigo-200 transition flex items-center justify-center gap-1.5 shadow-2xs">
+              class="w-full bg-brand-50 hover:bg-brand-100 text-brand-800 font-bold text-xs py-2.5 rounded-xl border border-brand-200 transition flex items-center justify-center gap-1.5 shadow-2xs">
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
@@ -1394,7 +1496,7 @@
               Retake Diagnostic Assessment
             </button>
             <button onclick="switchScreen('s07')"
-              class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
+              class="w-full sm:w-auto bg-brand-500 hover:bg-brand-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
               View Learning Gap Analysis (Next Step) →
             </button>
           </div>
@@ -1427,7 +1529,7 @@
           <div class="flex items-center justify-between pt-4 border-t border-slate-100">
             <button onclick="switchScreen('s02')" class="text-xs font-bold text-slate-600">Back to Dashboard</button>
             <button onclick="startPractice('oop')"
-              class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm px-6 py-2.5 rounded-xl shadow-md">
+              class="bg-brand-500 hover:bg-brand-700 text-white font-bold text-sm px-6 py-2.5 rounded-xl shadow-md">
               Start OOP Practice (10 Questions) →
             </button>
           </div>
@@ -1460,7 +1562,7 @@
           <div class="flex items-center justify-between pt-4 border-t border-slate-100">
             <button onclick="switchScreen('s02')" class="text-xs font-bold text-slate-600">Back to Dashboard</button>
             <button onclick="startPractice('spl')"
-              class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm px-6 py-2.5 rounded-xl shadow-md">
+              class="bg-brand-500 hover:bg-brand-700 text-white font-bold text-sm px-6 py-2.5 rounded-xl shadow-md">
               Start SPL Practice (10 Questions) →
             </button>
           </div>
@@ -1480,7 +1582,7 @@
           <!-- Course Switcher Pills -->
           <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200">
             <button id="gapTabDsa" onclick="switchGapTab('dsa')"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-blue-600 text-white shadow-xs transition">
+              class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-brand-500 text-white shadow-xs transition">
               DSA Gaps
             </button>
             <button id="gapTabOop" onclick="switchGapTab('oop')"
@@ -1496,12 +1598,15 @@
 
         <!-- DSA LEARNING GAPS -->
         <div id="gapsDsa" class="hub-card rounded-2xl p-6 md:p-8">
-          <div
-            class="w-12 h-12 rounded-xl bg-red-50 text-red-600 flex items-center justify-center font-bold text-xl mb-4">
-            ⚠️</div>
+          <div class="w-12 h-12 rounded-xl bg-red-50 text-red-600 flex items-center justify-center mb-4">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+            </svg>
+          </div>
           <div class="flex items-center gap-2 mb-1">
             <span
-              class="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-100">DSA
+              class="text-xs font-bold uppercase tracking-wider text-brand-500 bg-brand-50 px-2.5 py-0.5 rounded-full border border-brand-100">DSA
               Academic Diagnosis</span>
             <span id="gapsDsaCountBadge" class="badge-critical px-2.5 py-0.5 rounded-full text-xs font-bold">- Gaps
               Identified</span>
@@ -1519,7 +1624,7 @@
             <button onclick="switchScreen('s06a')" class="text-xs font-bold text-slate-600">← Back to DSA
               Results</button>
             <button onclick="switchScreen('s08'); switchPlanTab('dsa');"
-              class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
+              class="bg-brand-500 hover:bg-brand-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
               Generate DSA AI Study Plan →
             </button>
           </div>
@@ -1527,9 +1632,12 @@
 
         <!-- OOP LEARNING GAPS -->
         <div id="gapsOop" class="hidden hub-card rounded-2xl p-6 md:p-8">
-          <div
-            class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold text-xl mb-4">
-            ⚠️</div>
+          <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center mb-4">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+            </svg>
+          </div>
           <div class="flex items-center gap-2 mb-1">
             <span
               class="text-xs font-bold uppercase tracking-wider text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">OOP
@@ -1550,7 +1658,7 @@
             <button onclick="switchScreen('s06b')" class="text-xs font-bold text-slate-600">← Back to OOP
               Results</button>
             <button onclick="switchScreen('s08'); switchPlanTab('oop');"
-              class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
+              class="bg-brand-500 hover:bg-brand-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
               Generate OOP AI Study Plan →
             </button>
           </div>
@@ -1558,9 +1666,12 @@
 
         <!-- SPL LEARNING GAPS -->
         <div id="gapsSpl" class="hidden hub-card rounded-2xl p-6 md:p-8">
-          <div
-            class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xl mb-4">
-            ⚠️</div>
+          <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+            </svg>
+          </div>
           <div class="flex items-center gap-2 mb-1">
             <span
               class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">SPL
@@ -1581,7 +1692,7 @@
             <button onclick="switchScreen('s06c')" class="text-xs font-bold text-slate-600">← Back to SPL
               Results</button>
             <button onclick="switchScreen('s08'); switchPlanTab('spl');"
-              class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
+              class="bg-brand-500 hover:bg-brand-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
               Generate SPL AI Study Plan →
             </button>
           </div>
@@ -1601,7 +1712,7 @@
           <!-- Course Switcher Pills -->
           <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200">
             <button id="planTabDsa" onclick="switchScreen('s08'); switchPlanTab('dsa');"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-blue-600 text-white shadow-xs transition">
+              class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-brand-500 text-white shadow-xs transition">
               DSA Plan (60m)
             </button>
             <button id="planTabOop" onclick="switchScreen('s08'); switchPlanTab('oop');"
@@ -1619,11 +1730,11 @@
         <div id="planDsa" class="hub-card rounded-2xl p-6 md:p-8 bg-gradient-to-br from-white to-sky-50/40">
           <div class="flex items-center gap-3 mb-4">
             <div
-              class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-extrabold text-sm shadow-md">
+              class="w-10 h-10 rounded-xl bg-brand-500 text-white flex items-center justify-center font-extrabold text-sm shadow-md">
               AI
             </div>
             <div>
-              <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">Adaptive Learning Path Engine • DSA
+              <span class="text-xs font-bold text-brand-500 uppercase tracking-wider">Adaptive Learning Path Engine • DSA
                 Track</span>
               <h2 class="text-2xl font-bold text-slate-900">Your AI-Generated Study Plan: DSA</h2>
             </div>
@@ -1646,7 +1757,7 @@
             <span class="text-xs text-slate-500">Plan Duration: <strong id="planDsaDuration">60 Minutes
                 Total</strong></span>
             <button onclick="switchContentTab('dsa'); switchScreen('s09');"
-              class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
+              class="bg-brand-500 hover:bg-brand-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
               Start DSA Plan Now →
             </button>
           </div>
@@ -1744,7 +1855,7 @@
           <!-- Course Selector Pills -->
           <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200">
             <button id="contentTabDsa" onclick="switchContentTab('dsa')"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-blue-600 text-white shadow-xs transition">
+              class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-brand-500 text-white shadow-xs transition">
               DSA Content
             </button>
             <button id="contentTabOop" onclick="switchContentTab('oop')"
@@ -1779,7 +1890,7 @@
             <div class="flex items-center justify-between pb-3 border-b border-slate-100">
               <div class="flex items-center gap-2.5">
                 <div
-                  class="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-700 to-indigo-600 text-white flex items-center justify-center font-black text-xs shadow-sm">
+                  class="w-8 h-8 rounded-xl bg-gradient-to-tr from-brand-700 to-brand-700 text-white flex items-center justify-center font-black text-xs shadow-sm">
                   SG
                 </div>
                 <div>
@@ -1791,7 +1902,7 @@
                 </div>
               </div>
               <span
-                class="text-[10px] font-bold bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full border border-blue-200">
+                class="text-[10px] font-bold bg-brand-50 text-brand-700 px-2 py-0.5 rounded-full border border-brand-200">
                 UIU Copilot
               </span>
             </div>
@@ -1802,7 +1913,7 @@
               </div>
               <div class="flex items-center gap-1 overflow-x-auto pb-1 text-[11px] font-bold">
                 <button id="aiFilterAll" onclick="filterAiPrompts('all')"
-                  class="px-2.5 py-1 rounded-lg bg-blue-600 text-white shadow-2xs">All (15)</button>
+                  class="px-2.5 py-1 rounded-lg bg-brand-500 text-white shadow-2xs">All (15)</button>
                 <button id="aiFilterDsa" onclick="filterAiPrompts('dsa')"
                   class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200">DSA (5)</button>
                 <button id="aiFilterOop" onclick="filterAiPrompts('oop')"
@@ -1822,67 +1933,67 @@
                 <!-- DSA PROMPTS -->
                 <button data-cat="dsa" onclick="handleAiPromptClick('dsa_head')"
                   class="prompt-chip text-[10px] font-medium bg-sky-50 hover:bg-sky-100 text-sky-800 px-2.5 py-1 rounded-lg border border-sky-200 transition text-left">
-                  🔹 Why set newNode->next = head first?
+                  Why set newNode->next = head first?
                 </button>
                 <button data-cat="dsa" onclick="handleAiPromptClick('dsa_o1')"
                   class="prompt-chip text-[10px] font-medium bg-sky-50 hover:bg-sky-100 text-sky-800 px-2.5 py-1 rounded-lg border border-sky-200 transition text-left">
-                  🔹 Why is head deletion O(1) in linked lists?
+                  Why is head deletion O(1) in linked lists?
                 </button>
                 <button data-cat="dsa" onclick="handleAiPromptClick('dsa_bst')"
                   class="prompt-chip text-[10px] font-medium bg-sky-50 hover:bg-sky-100 text-sky-800 px-2.5 py-1 rounded-lg border border-sky-200 transition text-left">
-                  🔹 BST in-order vs pre-order traversal
+                  BST in-order vs pre-order traversal
                 </button>
                 <button data-cat="dsa" onclick="handleAiPromptClick('dsa_cqueue')"
                   class="prompt-chip text-[10px] font-medium bg-sky-50 hover:bg-sky-100 text-sky-800 px-2.5 py-1 rounded-lg border border-sky-200 transition text-left">
-                  🔹 Circular queue modulo (rear+1)%N logic
+                  Circular queue modulo (rear+1)%N logic
                 </button>
                 <button data-cat="dsa" onclick="handleAiPromptClick('dsa_vsarray')"
                   class="prompt-chip text-[10px] font-medium bg-sky-50 hover:bg-sky-100 text-sky-800 px-2.5 py-1 rounded-lg border border-sky-200 transition text-left">
-                  🔹 Why use Linked List instead of Array?
+                  Why use Linked List instead of Array?
                 </button>
 
                 <!-- OOP PROMPTS -->
                 <button data-cat="oop" onclick="handleAiPromptClick('oop_vtable')"
                   class="prompt-chip text-[10px] font-medium bg-amber-50 hover:bg-amber-100 text-amber-900 px-2.5 py-1 rounded-lg border border-amber-200 transition text-left">
-                  🔸 How does VTable Dynamic Dispatch work?
+                  How does VTable Dynamic Dispatch work?
                 </button>
                 <button data-cat="oop" onclick="handleAiPromptClick('oop_interface')"
                   class="prompt-chip text-[10px] font-medium bg-amber-50 hover:bg-amber-100 text-amber-900 px-2.5 py-1 rounded-lg border border-amber-200 transition text-left">
-                  🔸 When to use Interface vs Abstract Class?
+                  When to use Interface vs Abstract Class?
                 </button>
                 <button data-cat="oop" onclick="handleAiPromptClick('oop_super')"
                   class="prompt-chip text-[10px] font-medium bg-amber-50 hover:bg-amber-100 text-amber-900 px-2.5 py-1 rounded-lg border border-amber-200 transition text-left">
-                  🔸 Why super() must be first line in constructor?
+                  Why super() must be first line in constructor?
                 </button>
                 <button data-cat="oop" onclick="handleAiPromptClick('oop_access')"
                   class="prompt-chip text-[10px] font-medium bg-amber-50 hover:bg-amber-100 text-amber-900 px-2.5 py-1 rounded-lg border border-amber-200 transition text-left">
-                  🔸 Protected vs package-private modifiers
+                  Protected vs package-private modifiers
                 </button>
                 <button data-cat="oop" onclick="handleAiPromptClick('oop_encap')"
                   class="prompt-chip text-[10px] font-medium bg-amber-50 hover:bg-amber-100 text-amber-900 px-2.5 py-1 rounded-lg border border-amber-200 transition text-left">
-                  🔸 Best practice: Encapsulation with setters
+                  Best practice: Encapsulation with setters
                 </button>
 
                 <!-- SPL PROMPTS -->
                 <button data-cat="spl" onclick="handleAiPromptClick('spl_bytes')"
                   class="prompt-chip text-[10px] font-medium bg-emerald-50 hover:bg-emerald-100 text-emerald-900 px-2.5 py-1 rounded-lg border border-emerald-200 transition text-left">
-                  🟢 Why ptr + 1 advances by 4 bytes for int*?
+                  Why ptr + 1 advances by 4 bytes for int*?
                 </button>
                 <button data-cat="spl" onclick="handleAiPromptClick('spl_dangling')"
                   class="prompt-chip text-[10px] font-medium bg-emerald-50 hover:bg-emerald-100 text-emerald-900 px-2.5 py-1 rounded-lg border border-emerald-200 transition text-left">
-                  🟢 How to eliminate Dangling Pointers after free()?
+                  How to eliminate Dangling Pointers after free()?
                 </button>
                 <button data-cat="spl" onclick="handleAiPromptClick('spl_deref')"
                   class="prompt-chip text-[10px] font-medium bg-emerald-50 hover:bg-emerald-100 text-emerald-900 px-2.5 py-1 rounded-lg border border-emerald-200 transition text-left">
-                  🟢 Difference between *ptr = 10 and ptr = &val
+                  Difference between *ptr = 10 and ptr = &val
                 </button>
                 <button data-cat="spl" onclick="handleAiPromptClick('spl_malloc')"
                   class="prompt-chip text-[10px] font-medium bg-emerald-50 hover:bg-emerald-100 text-emerald-900 px-2.5 py-1 rounded-lg border border-emerald-200 transition text-left">
-                  🟢 Why must malloc() return be checked against NULL?
+                  Why must malloc() return be checked against NULL?
                 </button>
                 <button data-cat="spl" onclick="handleAiPromptClick('spl_arrow')"
                   class="prompt-chip text-[10px] font-medium bg-emerald-50 hover:bg-emerald-100 text-emerald-900 px-2.5 py-1 rounded-lg border border-emerald-200 transition text-left">
-                  🟢 When to use arrow (->) vs dot (.) in C structs?
+                  When to use arrow (->) vs dot (.) in C structs?
                 </button>
               </div>
             </div>
@@ -1919,9 +2030,9 @@
               <div class="flex items-center gap-2">
                 <input id="aiCustomInput" onkeydown="if(event.key==='Enter') sendAiCustomMessage();" type="text"
                   placeholder="Ask about DSA, OOP, or SPL topics..."
-                  class="flex-1 text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition">
+                  class="flex-1 text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-400/20 focus:border-brand-400 transition">
                 <button id="aiSendBtn" onclick="sendAiCustomMessage()"
-                  class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-3.5 py-2 rounded-xl shadow-xs transition">
+                  class="bg-brand-500 hover:bg-brand-700 text-white font-bold text-xs px-3.5 py-2 rounded-xl shadow-xs transition">
                   Ask
                 </button>
               </div>
@@ -1948,7 +2059,7 @@
           </div>
           <div class="flex items-center gap-2">
             <button onclick="startPractice('dsa')" id="pTabDsa"
-              class="text-xs font-bold px-3 py-1.5 rounded-lg bg-blue-600 text-white">DSA</button>
+              class="text-xs font-bold px-3 py-1.5 rounded-lg bg-brand-500 text-white">DSA</button>
             <button onclick="startPractice('oop')" id="pTabOop"
               class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200">OOP</button>
             <button onclick="startPractice('spl')" id="pTabSpl"
@@ -1959,10 +2070,10 @@
         <!-- ADAPTIVE DIFFICULTY BANNER (Section 9-11) - only shown when this
              session was served by the adaptive per-topic endpoint. -->
         <div id="adaptiveBanner" hidden
-          class="hub-card rounded-xl p-3 flex items-center gap-2 border-l-4 border-purple-400 bg-purple-50/40">
+          class="hub-card rounded-xl p-3 flex items-center gap-2 border-l-4 border-brand-400 bg-brand-50/40">
           <span id="adaptiveDifficultyBadge"
-            class="text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full bg-purple-600 text-white shrink-0">MEDIUM</span>
-          <span id="adaptiveReasonText" class="text-xs text-purple-900"></span>
+            class="text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full bg-brand-600 text-white shrink-0">MEDIUM</span>
+          <span id="adaptiveReasonText" class="text-xs text-brand-900"></span>
         </div>
 
         <div class="hub-card rounded-xl p-3 flex items-center justify-between gap-1 overflow-x-auto">
@@ -1992,7 +2103,7 @@
               ← Previous Question
             </button>
             <button id="practiceNextBtn" onclick="navigatePractice(1)"
-              class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow-sm transition">
+              class="bg-brand-500 hover:bg-brand-700 text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow-sm transition">
               Next Practice Question →
             </button>
           </div>
@@ -2072,7 +2183,7 @@
             </div>
             <div class="flex gap-3 pt-4 border-t border-slate-100">
               <button onclick="renderAssessmentHub()" class="text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 px-4 py-2.5 rounded-xl transition">← Back to Levels</button>
-              <button onclick="switchScreen('s09')" class="text-xs font-bold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 px-4 py-2.5 rounded-xl transition">Go to Materials for weak areas</button>
+              <button onclick="switchScreen('s09')" class="text-xs font-bold text-brand-700 bg-brand-50 hover:bg-brand-100 border border-brand-200 px-4 py-2.5 rounded-xl transition">Go to Materials for weak areas</button>
             </div>
           </div>
         </div>
@@ -2089,7 +2200,7 @@
           <div>
             <div class="flex items-center gap-2 mb-1">
               <span id="followupCourseBadge"
-                class="text-xs font-bold text-blue-600 uppercase tracking-wider bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-100">
+                class="text-xs font-bold text-brand-500 uppercase tracking-wider bg-brand-50 px-2.5 py-0.5 rounded-full border border-brand-100">
                 DSA Verification Assessment
               </span>
               <span
@@ -2103,7 +2214,7 @@
           <!-- Course Pills -->
           <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200">
             <button id="followupTabDsa" onclick="switchFollowupCourse('dsa')"
-              class="px-3 py-1.5 rounded-lg text-xs font-bold bg-blue-600 text-white shadow-xs transition">
+              class="px-3 py-1.5 rounded-lg text-xs font-bold bg-brand-500 text-white shadow-xs transition">
               DSA (5 Qs)
             </button>
             <button id="followupTabOop" onclick="switchFollowupCourse('oop')"
@@ -2133,7 +2244,7 @@
         <div class="hub-card rounded-2xl p-6 md:p-8 space-y-6">
           <div>
             <span id="followupTopicTag"
-              class="inline-block text-xs font-bold px-2.5 py-1 rounded bg-blue-50 text-blue-700 border border-blue-200 mb-3">
+              class="inline-block text-xs font-bold px-2.5 py-1 rounded bg-brand-50 text-brand-700 border border-brand-200 mb-3">
               Topic: Linked List Pointer Mastery
             </span>
             <h3 id="followupQuestionText" class="text-lg md:text-xl font-bold text-slate-900 leading-snug">
@@ -2151,7 +2262,7 @@
               ← Previous Question
             </button>
             <button id="followupNextBtn" onclick="navigateFollowup(1)"
-              class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow-sm transition">
+              class="bg-brand-500 hover:bg-brand-700 text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow-sm transition">
               Next Question →
             </button>
           </div>
@@ -2163,9 +2274,11 @@
     <div id="s12" class="screen-view">
       <div class="max-w-3xl mx-auto space-y-6">
         <div class="hub-card rounded-2xl p-6 md:p-8 border-t-4 border-emerald-500 text-center">
-          <div
-            class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-extrabold text-2xl mx-auto mb-4 shadow-xs">
-            🎉
+          <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-4 shadow-xs">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
           </div>
           <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Gap Successfully Remediated</span>
           <h2 id="beforeAfterTitle" class="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Learning Progress
@@ -2211,7 +2324,7 @@
           <!-- ACTION BUTTONS -->
           <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button onclick="switchScreen('s13')"
-              class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
+              class="w-full sm:w-auto bg-brand-500 hover:bg-brand-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
               View Course Progress Hub →
             </button>
             <button onclick="switchScreen('s02')"
@@ -2232,14 +2345,14 @@
             <p class="text-sm text-slate-500">Independent topic proficiencies and diagnostic records.</p>
           </div>
           <button onclick="switchScreen('s02')"
-            class="text-xs font-bold text-blue-600 bg-blue-50 border border-blue-200 px-4 py-2 rounded-xl hover:bg-blue-100 transition">
+            class="text-xs font-bold text-brand-500 bg-brand-50 border border-brand-200 px-4 py-2 rounded-xl hover:bg-brand-100 transition">
             ← Back to Dashboard
           </button>
         </div>
 
         <div class="flex border-b border-slate-200 gap-2">
           <button onclick="switchProgressTab('dsaTab')" id="dsaTabBtn"
-            class="px-5 py-3 text-sm font-bold border-b-2 border-blue-600 text-blue-600">
+            class="px-5 py-3 text-sm font-bold border-b-2 border-brand-500 text-brand-500">
             DSA Progress
           </button>
           <button onclick="switchProgressTab('oopTab')" id="oopTabBtn"
@@ -2322,7 +2435,7 @@
           <div class="flex items-center justify-between mb-1">
             <h3 class="text-base font-bold text-slate-900">AI Progress Insight</h3>
             <button id="analyzeProgressBtn" onclick="analyzeMyProgress()"
-              class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-sm transition">
+              class="bg-brand-500 hover:bg-brand-700 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-sm transition">
               Analyze My Progress
             </button>
           </div>
@@ -2343,7 +2456,7 @@
             <p class="text-sm text-slate-500">Your account and real learning progress.</p>
           </div>
           <button onclick="switchScreen('s02')"
-            class="text-xs font-bold text-blue-600 bg-blue-50 border border-blue-200 px-4 py-2 rounded-xl hover:bg-blue-100 transition">
+            class="text-xs font-bold text-brand-500 bg-brand-50 border border-brand-200 px-4 py-2 rounded-xl hover:bg-brand-100 transition">
             ← Back to Dashboard
           </button>
         </div>
@@ -2353,7 +2466,7 @@
           <div class="flex items-center justify-between mb-4">
             <h3 class="text-base font-bold text-slate-900">Account Information</h3>
             <button id="profileEditToggleBtn" onclick="startEditProfile()"
-              class="text-xs font-bold text-blue-600 bg-blue-50 border border-blue-200 px-3 py-1.5 rounded-lg hover:bg-blue-100 transition">
+              class="text-xs font-bold text-brand-500 bg-brand-50 border border-brand-200 px-3 py-1.5 rounded-lg hover:bg-brand-100 transition">
               Edit Profile
             </button>
           </div>
@@ -2375,7 +2488,7 @@
               <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wide">Password</div>
               <div class="flex items-center gap-3 mt-1">
                 <span class="text-sm font-semibold text-slate-900 tracking-widest">••••••••••••</span>
-                <button onclick="openChangePasswordModal()" class="text-xs font-bold text-blue-600 hover:underline">Change Password</button>
+                <button onclick="openChangePasswordModal()" class="text-xs font-bold text-brand-500 hover:underline">Change Password</button>
               </div>
             </div>
           </div>
@@ -2384,12 +2497,12 @@
             <div class="sm:col-span-2">
               <label class="block text-xs font-bold text-slate-700 mb-1.5">Name</label>
               <input id="profileEditName" type="text" maxlength="100"
-                class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition">
+                class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition">
             </div>
             <div id="profileEditError" class="sm:col-span-2 hidden text-xs font-semibold text-red-600 bg-red-50 border border-red-200 rounded-lg p-2.5"></div>
             <div class="sm:col-span-2 flex gap-2">
               <button onclick="saveEditProfile()"
-                class="text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition">Save Changes</button>
+                class="text-xs font-bold text-white bg-brand-500 hover:bg-brand-700 px-4 py-2 rounded-lg transition">Save Changes</button>
               <button onclick="cancelEditProfile()"
                 class="text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-lg transition">Cancel</button>
             </div>
@@ -2416,7 +2529,7 @@
         <div class="hub-card rounded-2xl p-6">
           <div class="flex items-center justify-between mb-1">
             <h3 class="text-base font-bold text-slate-900">Topic Mastery</h3>
-            <button onclick="switchScreen('s13')" class="text-xs font-bold text-blue-600 hover:underline">View Full Mastery Map →</button>
+            <button onclick="switchScreen('s13')" class="text-xs font-bold text-brand-500 hover:underline">View Full Mastery Map →</button>
           </div>
           <p class="text-xs text-slate-500 mb-4">Real status per topic you've engaged with, from your stored assessment data.</p>
           <div id="profileTopicMastery" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -2477,33 +2590,33 @@
           <label class="block text-xs font-bold text-slate-700 mb-1.5">Current Password</label>
           <div class="relative">
             <input id="cpCurrent" type="password" autocomplete="current-password"
-              class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pr-14 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition">
+              class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pr-14 text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition">
             <button type="button" onclick="togglePasswordField('cpCurrent', this)"
-              class="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-bold text-blue-600 hover:underline">Show</button>
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-bold text-brand-500 hover:underline">Show</button>
           </div>
         </div>
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1.5">New Password</label>
           <div class="relative">
             <input id="cpNew" type="password" autocomplete="new-password"
-              class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pr-14 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition">
+              class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pr-14 text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition">
             <button type="button" onclick="togglePasswordField('cpNew', this)"
-              class="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-bold text-blue-600 hover:underline">Show</button>
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-bold text-brand-500 hover:underline">Show</button>
           </div>
         </div>
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1.5">Confirm New Password</label>
           <div class="relative">
             <input id="cpConfirm" type="password" autocomplete="new-password"
-              class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pr-14 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition">
+              class="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 pr-14 text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition">
             <button type="button" onclick="togglePasswordField('cpConfirm', this)"
-              class="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-bold text-blue-600 hover:underline">Show</button>
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-bold text-brand-500 hover:underline">Show</button>
           </div>
         </div>
         <div id="cpMessage" class="hidden text-xs font-semibold rounded-lg p-2.5"></div>
         <div class="flex gap-2 pt-1">
           <button id="cpSubmitBtn" onclick="submitChangePassword()"
-            class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs py-2.5 rounded-xl transition disabled:opacity-60">
+            class="flex-1 bg-brand-500 hover:bg-brand-700 text-white font-bold text-xs py-2.5 rounded-xl transition disabled:opacity-60">
             Change Password
           </button>
           <button onclick="closeChangePasswordModal()"
@@ -2799,7 +2912,7 @@
         container.innerHTML = `
           <div class="mt-2 p-4 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-800">
             <p class="font-semibold mb-2">${escapeHtml(message)}</p>
-            <a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 font-bold text-blue-700 hover:underline">Open Playlist on YouTube →</a>
+            <a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 font-bold text-brand-700 hover:underline">Open Playlist on YouTube →</a>
           </div>`;
       }
 
@@ -2931,8 +3044,8 @@
       document.getElementById('authSignupFields').classList.toggle('hidden', !isSignup);
       document.getElementById('authConfirmPasswordField').classList.toggle('hidden', !isSignup);
       document.getElementById('authSubmitBtn').textContent = isSignup ? 'Create Account' : 'Login';
-      document.getElementById('authTabLogin').className = 'flex-1 py-2 rounded-lg transition ' + (isSignup ? 'text-slate-500 hover:text-blue-700' : 'bg-white text-blue-700 shadow-2xs');
-      document.getElementById('authTabSignup').className = 'flex-1 py-2 rounded-lg transition ' + (isSignup ? 'bg-white text-blue-700 shadow-2xs' : 'text-slate-500 hover:text-blue-700');
+      document.getElementById('authTabLogin').className = 'flex-1 py-2 rounded-lg transition ' + (isSignup ? 'text-slate-500 hover:text-brand-700' : 'bg-white text-brand-700 shadow-2xs');
+      document.getElementById('authTabSignup').className = 'flex-1 py-2 rounded-lg transition ' + (isSignup ? 'bg-white text-brand-700 shadow-2xs' : 'text-slate-500 hover:text-brand-700');
       document.getElementById('loginError').classList.add('hidden');
     }
 
@@ -3111,9 +3224,9 @@
     // GET /api/progress. Replaces the three hardcoded 42/75/82% cards and
     // the malformed grid they lived in.
     const COURSE_THEME = {
-      DSA: { accent: 'blue', bar: 'bg-blue-500', tint: 'bg-blue-50/50 border-blue-100', btn: 'bg-blue-600 hover:bg-blue-700', ovBtn: 'bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border-indigo-200' },
-      OOP: { accent: 'amber', bar: 'bg-amber-500', tint: 'bg-amber-50/50 border-amber-100', btn: 'bg-blue-600 hover:bg-blue-700', ovBtn: 'bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-200' },
-      SPL: { accent: 'emerald', bar: 'bg-emerald-500', tint: 'bg-emerald-50/50 border-emerald-100', btn: 'bg-blue-600 hover:bg-blue-700', ovBtn: 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-200' },
+      DSA: { accent: 'blue', bar: 'bg-brand-400', tint: 'bg-brand-50/50 border-brand-100', btn: 'bg-brand-500 hover:bg-brand-700', ovBtn: 'bg-brand-50 hover:bg-brand-100 text-brand-800 border-brand-200' },
+      OOP: { accent: 'amber', bar: 'bg-amber-500', tint: 'bg-amber-50/50 border-amber-100', btn: 'bg-brand-500 hover:bg-brand-700', ovBtn: 'bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-200' },
+      SPL: { accent: 'emerald', bar: 'bg-emerald-500', tint: 'bg-emerald-50/50 border-emerald-100', btn: 'bg-brand-500 hover:bg-brand-700', ovBtn: 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-200' },
     };
 
     function masteryBadge(avg, assessed) {
@@ -3309,7 +3422,7 @@
 
       if (course === 'dsa') {
         document.getElementById('overviewDsa').classList.remove('hidden');
-        dsaBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold bg-blue-600 text-white shadow-xs transition";
+        dsaBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold bg-brand-500 text-white shadow-xs transition";
         if (breadcrumb) breadcrumb.textContent = "DSA Course Overview";
       } else if (course === 'oop') {
         document.getElementById('overviewOop').classList.remove('hidden');
@@ -3387,7 +3500,7 @@
 
       if (course === 'dsa') {
         document.getElementById('gapsDsa').classList.remove('hidden');
-        dsaBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold bg-blue-600 text-white shadow-xs transition";
+        dsaBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold bg-brand-500 text-white shadow-xs transition";
         if (breadcrumb) breadcrumb.textContent = "DSA Learning Gap Analysis";
       } else if (course === 'oop') {
         document.getElementById('gapsOop').classList.remove('hidden');
@@ -3465,11 +3578,11 @@
           const div = document.createElement('div');
           div.className = 'flex gap-4 items-start p-4 bg-white border border-slate-200 rounded-xl shadow-sm';
           div.innerHTML = `
-            <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-700 flex flex-col items-center justify-center font-bold text-xs shrink-0">
+            <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-700 flex flex-col items-center justify-center font-bold text-xs shrink-0">
               <span>${item.minutes || '-'}</span><span class="text-[10px] font-normal">MIN</span>
             </div>
             <div class="flex-1">
-              <span class="text-[10px] font-bold uppercase tracking-wider text-blue-600">Step ${i + 1}</span>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-brand-500">Step ${i + 1}</span>
               <h4 class="text-sm font-bold text-slate-900">${item.activity}</h4>
             </div>
           `;
@@ -3484,7 +3597,7 @@
             <h4 class="text-sm font-bold text-slate-900">${escapeHtml(tg.topic || '')}</h4>
             <p class="text-xs text-slate-600 mt-1"><strong>Why it matters:</strong> ${escapeHtml(tg.whyItMatters || '')}</p>
             <p class="text-xs text-slate-600 mt-1"><strong>How to approach it:</strong> ${escapeHtml(tg.howToApproach || '')}</p>
-            ${recs.length ? `<p class="text-xs text-blue-700 mt-1.5"><strong>Recommended materials:</strong> ${recs.map(escapeHtml).join(' · ')}</p>` : ''}
+            ${recs.length ? `<p class="text-xs text-brand-700 mt-1.5"><strong>Recommended materials:</strong> ${recs.map(escapeHtml).join(' · ')}</p>` : ''}
           `;
           stepsEl.appendChild(div);
         });
@@ -3517,7 +3630,7 @@
 
       if (course === 'dsa') {
         document.getElementById('planDsa').classList.remove('hidden');
-        dsaBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold bg-blue-600 text-white shadow-xs transition";
+        dsaBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold bg-brand-500 text-white shadow-xs transition";
         if (breadcrumb) breadcrumb.textContent = "DSA AI Personalized Study Plan";
       } else if (course === 'oop') {
         document.getElementById('planOop').classList.remove('hidden');
@@ -3539,7 +3652,7 @@
     const MATERIAL_TYPE_META = {
       VIDEO: { label: 'Video', cls: 'bg-rose-50 text-rose-700 border-rose-200' },
       PLAYLIST: { label: 'Playlist', cls: 'bg-violet-50 text-violet-700 border-violet-200' },
-      ARTICLE: { label: 'Article', cls: 'bg-blue-50 text-blue-700 border-blue-200' },
+      ARTICLE: { label: 'Article', cls: 'bg-brand-50 text-brand-700 border-brand-200' },
       PRACTICE: { label: 'Practice', cls: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
       DOCUMENT: { label: 'Docs', cls: 'bg-amber-50 text-amber-700 border-amber-200' },
       OTHER: { label: 'Resource', cls: 'bg-slate-100 text-slate-600 border-slate-200' },
@@ -3550,7 +3663,7 @@
       for (const k of ['dsa', 'oop', 'spl']) {
         const btn = document.getElementById('contentTab' + k.charAt(0).toUpperCase() + k.slice(1));
         if (btn) btn.className = k === course
-          ? 'px-3.5 py-1.5 rounded-lg text-xs font-bold bg-blue-600 text-white shadow-xs transition'
+          ? 'px-3.5 py-1.5 rounded-lg text-xs font-bold bg-brand-500 text-white shadow-xs transition'
           : 'px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition';
       }
       const breadcrumb = document.getElementById('contentBreadcrumbText');
@@ -3619,20 +3732,20 @@
             const topicEnabled = !EMBED_TEST_TOPICS || EMBED_TEST_TOPICS.has(t.topicName);
             const embeddable = topicEnabled && (m.type === 'VIDEO' || m.type === 'PLAYLIST') && parseYouTubeEmbedTarget(m.url);
             return `
-              <div class="p-3 rounded-xl border ${isRec ? 'border-blue-300 bg-blue-50/40' : 'border-slate-100 bg-white'}">
+              <div class="p-3 rounded-xl border ${isRec ? 'border-brand-300 bg-brand-50/40' : 'border-slate-100 bg-white'}">
                 <div class="flex items-start gap-3">
                   <label class="pt-0.5 shrink-0">
-                    <input type="checkbox" class="mat-check w-4 h-4 accent-blue-600 cursor-pointer" data-id="${m.id}" ${m.completed ? 'checked' : ''}>
+                    <input type="checkbox" class="mat-check w-4 h-4 accent-brand-500 cursor-pointer" data-id="${m.id}" ${m.completed ? 'checked' : ''}>
                   </label>
                   <div class="flex-1 min-w-0">
                     <div class="flex items-center gap-2 flex-wrap">
-                      <a href="${escapeHtml(m.url)}" target="_blank" rel="noopener noreferrer" class="mat-link text-sm font-bold text-slate-900 hover:text-blue-700 hover:underline" data-mat-id="${m.id}" data-topic-id="${m.topicId}">${escapeHtml(m.title)}</a>
+                      <a href="${escapeHtml(m.url)}" target="_blank" rel="noopener noreferrer" class="mat-link text-sm font-bold text-slate-900 hover:text-brand-700 hover:underline" data-mat-id="${m.id}" data-topic-id="${m.topicId}">${escapeHtml(m.title)}</a>
                       <span class="text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded border ${meta.cls}">${meta.label}</span>
-                      ${isRec ? '<span class="text-[10px] font-bold text-blue-700 bg-blue-100 px-1.5 py-0.5 rounded">AI pick</span>' : ''}
+                      ${isRec ? '<span class="text-[10px] font-bold text-brand-700 bg-brand-100 px-1.5 py-0.5 rounded">AI pick</span>' : ''}
                     </div>
                     <p class="text-xs text-slate-500 mt-0.5">${escapeHtml(m.description || '')}</p>
                     <p class="text-[11px] text-slate-400 mt-1">${escapeHtml(m.provider || '')}${m.durationMinutes ? ' · ~' + m.durationMinutes + ' min' : ''} · ${escapeHtml((m.difficulty || '').toLowerCase())}</p>
-                    ${embeddable ? `<button type="button" class="yt-embed-open mt-2 text-[11px] font-bold text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 px-2.5 py-1 rounded-lg transition" data-mat-id="${m.id}" data-topic-id="${m.topicId}">▶ Play Inside StudyGuard</button>` : ''}
+                    ${embeddable ? `<button type="button" class="yt-embed-open mt-2 text-[11px] font-bold text-brand-700 bg-brand-50 hover:bg-brand-100 border border-brand-200 px-2.5 py-1 rounded-lg transition" data-mat-id="${m.id}" data-topic-id="${m.topicId}">▶ Play Here</button>` : ''}
                   </div>
                 </div>
                 ${embeddable ? `<div class="yt-embed-slot" data-slot-for="${m.id}"></div>` : ''}
@@ -3646,7 +3759,7 @@
             <div class="space-y-2">${items}</div>
             <div class="flex flex-wrap gap-2">
               <button data-adaptive-topic-id="${t.topicId}" data-adaptive-topic-name="${escapeHtml(t.topicName)}"
-                class="text-[11px] font-bold text-purple-700 bg-purple-50 hover:bg-purple-100 border border-purple-200 px-3 py-1.5 rounded-lg transition">
+                class="text-[11px] font-bold text-brand-700 bg-brand-50 hover:bg-brand-100 border border-brand-200 px-3 py-1.5 rounded-lg transition">
                 Practice ${escapeHtml(t.topicName)} (adapts to your level) →
               </button>
               ${(!ASSESSMENT_ENABLED_TOPICS || ASSESSMENT_ENABLED_TOPICS.has(t.topicName)) ? `
@@ -3734,15 +3847,15 @@
 
       if (course === 'dsa') {
         document.getElementById('weakTopicsDsa').classList.remove('hidden');
-        document.getElementById('weakTabDsa').className = "px-5 py-2.5 text-sm font-bold border-b-2 border-blue-600 text-blue-600";
+        document.getElementById('weakTabDsa').className = "px-5 py-2.5 text-sm font-bold border-b-2 border-brand-500 text-brand-500";
         document.getElementById('startDiagBtnFromWeak').textContent = "Begin DSA Diagnostic Assessment (10 Qs) →";
       } else if (course === 'oop') {
         document.getElementById('weakTopicsOop').classList.remove('hidden');
-        document.getElementById('weakTabOop').className = "px-5 py-2.5 text-sm font-bold border-b-2 border-blue-600 text-blue-600";
+        document.getElementById('weakTabOop').className = "px-5 py-2.5 text-sm font-bold border-b-2 border-brand-500 text-brand-500";
         document.getElementById('startDiagBtnFromWeak').textContent = "Begin OOP Diagnostic Assessment (10 Qs) →";
       } else {
         document.getElementById('weakTopicsSpl').classList.remove('hidden');
-        document.getElementById('weakTabSpl').className = "px-5 py-2.5 text-sm font-bold border-b-2 border-blue-600 text-blue-600";
+        document.getElementById('weakTabSpl').className = "px-5 py-2.5 text-sm font-bold border-b-2 border-brand-500 text-brand-500";
         document.getElementById('startDiagBtnFromWeak').textContent = "Begin SPL Diagnostic Assessment (10 Qs) →";
       }
     }
@@ -3791,9 +3904,9 @@
         const isCurrent = i === currentDiagIndex;
         btn.textContent = i + 1;
         btn.className = `w-7 h-7 rounded-lg text-xs font-bold transition ${isCurrent
-          ? 'bg-blue-600 text-white shadow-sm'
+          ? 'bg-brand-500 text-white shadow-sm'
           : isAnswered
-            ? 'bg-sky-100 text-blue-700 border border-sky-300'
+            ? 'bg-sky-100 text-brand-700 border border-sky-300'
             : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
           }`;
         btn.onclick = () => { currentDiagIndex = i; renderDiagQuestion(); };
@@ -3812,7 +3925,7 @@
         const isSelected = diagAnswers[currentDiagIndex] === opt.letter;
         const div = document.createElement('div');
         div.className = `flex items-center p-4 border rounded-xl cursor-pointer transition ${isSelected
-          ? 'border-2 border-blue-600 bg-blue-50/60 shadow-sm'
+          ? 'border-2 border-brand-500 bg-brand-50/60 shadow-sm'
           : 'border-slate-200 hover:bg-sky-50/40 bg-white'
           }`;
         div.onclick = () => {
@@ -3821,10 +3934,10 @@
         };
 
         div.innerHTML = `
-          <span class="w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs mr-3.5 ${isSelected ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-700'
+          <span class="w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs mr-3.5 ${isSelected ? 'bg-brand-500 text-white' : 'bg-slate-100 text-slate-700'
           }">${opt.letter}</span>
           <span class="text-sm ${isSelected ? 'font-semibold text-slate-900' : 'text-slate-800'}">${opt.text}</span>
-          ${isSelected ? '<span class="ml-auto text-xs font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded">Selected</span>' : ''}
+          ${isSelected ? '<span class="ml-auto text-xs font-bold text-brand-700 bg-brand-100 px-2 py-0.5 rounded">Selected</span>' : ''}
         `;
         container.appendChild(div);
       });
@@ -3837,7 +3950,7 @@
         nextBtn.onclick = submitCurrentDiagnostic;
       } else {
         nextBtn.textContent = "Next Question →";
-        nextBtn.className = "bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow-sm transition";
+        nextBtn.className = "bg-brand-500 hover:bg-brand-700 text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow-sm transition";
         nextBtn.onclick = () => navigateDiag(1);
       }
     }
@@ -3993,7 +4106,7 @@
         const isCurrent = i === currentPracticeIndex;
         btn.textContent = i + 1;
         btn.className = `w-7 h-7 rounded-lg text-xs font-bold transition ${isCurrent
-          ? 'bg-blue-600 text-white shadow-sm'
+          ? 'bg-brand-500 text-white shadow-sm'
           : isDone
             ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
             : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
@@ -4121,7 +4234,7 @@
         levelsEl.innerHTML = order.map((d) => {
           const s = state.difficulties[d];
           const c = colors[d];
-          const resumeNote = state.activeAttempt && state.activeAttempt.difficulty === d ? '<span class="text-[10px] font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded ml-2">In progress - resume</span>' : '';
+          const resumeNote = state.activeAttempt && state.activeAttempt.difficulty === d ? '<span class="text-[10px] font-bold text-brand-700 bg-brand-100 px-2 py-0.5 rounded ml-2">In progress - resume</span>' : '';
           return `
             <div class="hub-card rounded-2xl p-5 flex items-center justify-between ${!s.unlocked ? 'opacity-60' : ''}">
               <div>
@@ -4135,8 +4248,8 @@
                 </p>
               </div>
               <button ${s.unlocked ? '' : 'disabled'} data-start-difficulty="${d}"
-                class="text-xs font-bold text-white px-4 py-2 rounded-xl transition ${s.unlocked ? `bg-${c}-600 hover:bg-${c}-700` : 'bg-slate-300 cursor-not-allowed'}">
-                ${s.unlocked ? (state.activeAttempt && state.activeAttempt.difficulty === d ? 'Resume →' : 'Start →') : '🔒 Locked'}
+                class="text-xs font-bold text-white px-4 py-2 rounded-xl transition inline-flex items-center gap-1.5 ${s.unlocked ? `bg-${c}-600 hover:bg-${c}-700` : 'bg-slate-300 cursor-not-allowed'}">
+                ${s.unlocked ? (state.activeAttempt && state.activeAttempt.difficulty === d ? 'Resume →' : 'Start →') : '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg> Locked'}
               </button>
             </div>`;
         }).join('');
@@ -4319,7 +4432,7 @@
       const badge = document.getElementById('followupCourseBadge');
       if (badge) {
         badge.textContent = `${currentFollowupCourse.toUpperCase()} Verification Assessment`;
-        if (currentFollowupCourse === 'dsa') badge.className = "text-xs font-bold text-blue-600 uppercase tracking-wider bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-100";
+        if (currentFollowupCourse === 'dsa') badge.className = "text-xs font-bold text-brand-500 uppercase tracking-wider bg-brand-50 px-2.5 py-0.5 rounded-full border border-brand-100";
         else if (currentFollowupCourse === 'oop') badge.className = "text-xs font-bold text-amber-700 uppercase tracking-wider bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200";
         else badge.className = "text-xs font-bold text-emerald-700 uppercase tracking-wider bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200";
       }
@@ -4328,7 +4441,7 @@
       const oopTab = document.getElementById('followupTabOop');
       const splTab = document.getElementById('followupTabSpl');
       if (dsaTab && oopTab && splTab) {
-        dsaTab.className = currentFollowupCourse === 'dsa' ? "px-3 py-1.5 rounded-lg text-xs font-bold bg-blue-600 text-white shadow-xs transition" : "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
+        dsaTab.className = currentFollowupCourse === 'dsa' ? "px-3 py-1.5 rounded-lg text-xs font-bold bg-brand-500 text-white shadow-xs transition" : "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
         oopTab.className = currentFollowupCourse === 'oop' ? "px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-600 text-white shadow-xs transition" : "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
         splTab.className = currentFollowupCourse === 'spl' ? "px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 text-white shadow-xs transition" : "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
       }
@@ -4347,7 +4460,7 @@
         const isCurrent = i === currentFollowupIndex;
         btn.textContent = i + 1;
         btn.className = `w-7 h-7 rounded-lg text-xs font-bold transition ${isCurrent
-          ? 'bg-blue-600 text-white shadow-sm'
+          ? 'bg-brand-500 text-white shadow-sm'
           : isDone
             ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
             : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
@@ -4362,7 +4475,7 @@
         const isSelected = courseAnswers[currentFollowupIndex] === opt.letter;
         const div = document.createElement('div');
         div.className = `flex items-center p-4 border rounded-xl cursor-pointer transition ${isSelected
-          ? 'border-2 border-blue-600 bg-blue-50/60 shadow-sm'
+          ? 'border-2 border-brand-500 bg-brand-50/60 shadow-sm'
           : 'border-slate-200 hover:bg-sky-50/40 bg-white'
           }`;
         div.onclick = () => {
@@ -4372,10 +4485,10 @@
         };
 
         div.innerHTML = `
-          <span class="w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs mr-3.5 ${isSelected ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-700'
+          <span class="w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs mr-3.5 ${isSelected ? 'bg-brand-500 text-white' : 'bg-slate-100 text-slate-700'
           }">${opt.letter}</span>
           <span class="text-sm ${isSelected ? 'font-semibold text-slate-900' : 'text-slate-800'}">${opt.text}</span>
-          ${isSelected ? '<span class="ml-auto text-xs font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded">Selected</span>' : ''}
+          ${isSelected ? '<span class="ml-auto text-xs font-bold text-brand-700 bg-brand-100 px-2 py-0.5 rounded">Selected</span>' : ''}
         `;
         container.appendChild(div);
       });
@@ -4388,7 +4501,7 @@
         nextBtn.onclick = submitFollowupQuiz;
       } else {
         nextBtn.textContent = "Next Question →";
-        nextBtn.className = "bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow-sm transition";
+        nextBtn.className = "bg-brand-500 hover:bg-brand-700 text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow-sm transition";
         nextBtn.onclick = () => navigateFollowup(1);
       }
     }
@@ -4496,7 +4609,7 @@
         statsEl.innerHTML = `
           <div class="hub-card rounded-2xl p-5">
             <div class="text-xs font-semibold text-slate-500 mb-1">${course.toUpperCase()} Overall Mastery</div>
-            <div class="text-3xl font-bold text-blue-600">${avg}%</div>
+            <div class="text-3xl font-bold text-brand-500">${avg}%</div>
           </div>
           <div class="hub-card rounded-2xl p-5">
             <div class="text-xs font-semibold text-slate-500 mb-1">Topics Mastered</div>
@@ -4515,7 +4628,7 @@
         detailsEl.innerHTML = progress.map((t) => `
           <div>
             <div class="flex justify-between text-xs font-semibold mb-1">
-              <span class="${t.improvement ? 'text-blue-700 font-bold' : ''}">${t.topic}${t.improvement ? ' (Remediated!)' : ''}</span>
+              <span class="${t.improvement ? 'text-brand-700 font-bold' : ''}">${t.topic}${t.improvement ? ' (Remediated!)' : ''}</span>
               <span class="${textColor(t.status)} font-bold">${t.currentMastery}% ${t.status}${t.previousMastery !== null ? ` (▲ from ${t.previousMastery}%)` : ''}</span>
             </div>
             <div class="w-full bg-slate-100 rounded-full h-2"><div class="${barColor(t.status)} h-2 rounded-full" style="width: ${t.currentMastery}%"></div></div>
@@ -4538,7 +4651,7 @@
       document.getElementById('splTabBtn').className = "px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800";
 
       document.getElementById(tabId).classList.remove('hidden');
-      document.getElementById(tabId + 'Btn').className = "px-5 py-3 text-sm font-bold border-b-2 border-blue-600 text-blue-600";
+      document.getElementById(tabId + 'Btn').className = "px-5 py-3 text-sm font-bold border-b-2 border-brand-500 text-brand-500";
 
       currentProgressCourse = tabId.replace('Tab', '');
       renderProgressTab(currentProgressCourse);
@@ -4554,6 +4667,17 @@
       'Needs Improvement': 'bg-orange-500', 'Weak/Critical': 'bg-red-600', 'Not Started': 'bg-slate-300',
     };
 
+    // A plain color dot standing in for the backend's mastery-map `emoji`
+    // field (🟢🟡🟠🔴⚪) - the API still sends it (harmless, unused), the
+    // frontend just no longer renders emoji anywhere (UI redesign, Stage 1).
+    const MASTERY_MAP_DOT = {
+      Mastered: 'bg-emerald-500', Developing: 'bg-amber-500',
+      'Needs Improvement': 'bg-orange-500', 'Weak/Critical': 'bg-red-600', 'Not Started': 'bg-slate-300',
+    };
+    function statusDotHtml(status) {
+      return `<span class="inline-block w-2.5 h-2.5 rounded-full ${MASTERY_MAP_DOT[status] || 'bg-slate-300'} shrink-0" aria-hidden="true"></span>`;
+    }
+
     async function renderMasteryMap(course) {
       const grid = document.getElementById('masteryMapGrid');
       if (!grid) return;
@@ -4563,7 +4687,7 @@
         const data = await apiFetch(`/courses/${courseId}/mastery-map`);
         grid.innerHTML = data.topics.map((t) => `
           <div class="flex items-center gap-3 p-3 rounded-xl border border-slate-100 bg-white" title="${escapeHtml(t.reason || '')}">
-            <span class="text-lg leading-none">${t.emoji}</span>
+            ${statusDotHtml(t.status)}
             <div class="flex-1 min-w-0">
               <div class="flex items-center justify-between gap-2">
                 <span class="text-sm font-bold text-slate-900 truncate">${escapeHtml(t.topic)}</span>
@@ -4623,9 +4747,9 @@
           const isNew = c.status === 'new';
           rows.push(`
             <div class="flex items-center gap-2 text-sm py-1">
-              <span class="${isNew ? 'text-purple-600' : 'text-blue-600'} font-bold">${isNew ? '★' : '→'}</span>
+              <span class="${isNew ? 'text-accent' : 'text-brand-500'} font-bold">${isNew ? '<svg class="w-3.5 h-3.5 inline" fill="currentColor" viewBox="0 0 24 24"><path d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.562.562 0 00-.586 0L6.98 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.562.562 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/></svg>' : '→'}</span>
               <span class="text-slate-800 font-medium">${escapeHtml(c.topic)}</span>
-              ${isNew ? '<span class="text-[10px] font-bold text-purple-700 bg-purple-50 border border-purple-200 px-1.5 py-0.5 rounded-full">New</span>' : ''}
+              ${isNew ? '<span class="text-[10px] font-bold text-brand-700 bg-brand-50 border border-brand-200 px-1.5 py-0.5 rounded-full">New</span>' : ''}
             </div>`);
         }
         body.innerHTML = rows.join('') || '<p class="text-sm text-slate-500">Your path is fully up to date.</p>';
@@ -4751,7 +4875,7 @@
         if (result.source === 'fallback') {
           aiBubble.className += ' opacity-80';
         }
-        aiBubble.innerHTML = `<span class="font-bold text-blue-700">Adaptive Learning Path AI:</span> ${result.reply}`;
+        aiBubble.innerHTML = `<span class="font-bold text-brand-700">Adaptive Learning Path AI:</span> ${result.reply}`;
         log.appendChild(aiBubble);
         log.scrollTop = log.scrollHeight;
       } catch (err) {
@@ -4772,7 +4896,7 @@
 
       const log = document.getElementById('aiChatLog');
       const userBubble = document.createElement('div');
-      userBubble.className = "bg-blue-50 text-blue-900 p-3 rounded-xl rounded-tr-none ml-4 font-semibold border border-blue-100 text-xs";
+      userBubble.className = "bg-brand-50 text-brand-900 p-3 rounded-xl rounded-tr-none ml-4 font-semibold border border-brand-100 text-xs";
       userBubble.textContent = info.q;
       log.appendChild(userBubble);
       log.scrollTop = log.scrollHeight;
@@ -4791,8 +4915,8 @@
       oopBtn.className = "px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200";
       splBtn.className = "px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200";
 
-      if (cat === 'all') allBtn.className = "px-2.5 py-1 rounded-lg bg-blue-600 text-white shadow-2xs";
-      else if (cat === 'dsa') dsaBtn.className = "px-2.5 py-1 rounded-lg bg-blue-600 text-white shadow-2xs";
+      if (cat === 'all') allBtn.className = "px-2.5 py-1 rounded-lg bg-brand-500 text-white shadow-2xs";
+      else if (cat === 'dsa') dsaBtn.className = "px-2.5 py-1 rounded-lg bg-brand-500 text-white shadow-2xs";
       else if (cat === 'oop') oopBtn.className = "px-2.5 py-1 rounded-lg bg-amber-600 text-white shadow-2xs";
       else if (cat === 'spl') splBtn.className = "px-2.5 py-1 rounded-lg bg-emerald-600 text-white shadow-2xs";
 
@@ -4819,7 +4943,7 @@
 
       const log = document.getElementById('aiChatLog');
       const userBubble = document.createElement('div');
-      userBubble.className = "bg-blue-50 text-blue-900 p-3 rounded-xl rounded-tr-none ml-4 font-semibold border border-blue-100 text-xs";
+      userBubble.className = "bg-brand-50 text-brand-900 p-3 rounded-xl rounded-tr-none ml-4 font-semibold border border-brand-100 text-xs";
       userBubble.textContent = text;
       log.appendChild(userBubble);
       input.value = '';
@@ -4841,7 +4965,7 @@
     function explainAtMyLevel(style) {
       const log = document.getElementById('aiChatLog');
       const userBubble = document.createElement('div');
-      userBubble.className = "bg-blue-50 text-blue-900 p-3 rounded-xl rounded-tr-none ml-4 font-semibold border border-blue-100 text-xs";
+      userBubble.className = "bg-brand-50 text-brand-900 p-3 rounded-xl rounded-tr-none ml-4 font-semibold border border-brand-100 text-xs";
       userBubble.textContent = `${EXPLAIN_STYLE_LABEL[style]}: ${currentChatTopic}`;
       log.appendChild(userBubble);
       log.scrollTop = log.scrollHeight;
@@ -5032,7 +5156,7 @@
         `).join('') + `
           <div class="flex items-center justify-between text-sm pt-2.5 mt-1 border-t border-slate-200">
             <span class="font-bold text-slate-900">Total Active Learning Time</span>
-            <span class="font-extrabold text-blue-700">${fmtMinutes(total)}</span>
+            <span class="font-extrabold text-brand-700">${fmtMinutes(total)}</span>
           </div>`;
     }
 
@@ -5049,7 +5173,7 @@
               <span class="font-semibold text-slate-500">${c.averageMastery === null ? 'Not started' : c.averageMastery + '%'}</span>
             </div>
             <div class="w-full bg-slate-100 rounded-full h-2">
-              <div class="bg-blue-600 h-2 rounded-full" style="width:${c.averageMastery || 0}%"></div>
+              <div class="bg-brand-500 h-2 rounded-full" style="width:${c.averageMastery || 0}%"></div>
             </div>
           </div>
         `).join('');
@@ -5080,7 +5204,7 @@
         }
         el.innerHTML = rows.map((t) => `
           <div class="flex items-center gap-3 p-3 rounded-xl border border-slate-100 bg-white">
-            <span class="text-lg leading-none">${t.emoji}</span>
+            ${statusDotHtml(t.status)}
             <div class="flex-1 min-w-0">
               <div class="flex items-center justify-between gap-2">
                 <span class="text-sm font-bold text-slate-900 truncate">${t.course.toUpperCase()} — ${escapeHtml(t.topic)}</span>
