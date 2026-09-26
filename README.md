@@ -1,4 +1,4 @@
-#An AI-Supported Adaptive Learning Path System for Students
+An AI-Supported Adaptive Learning Path System for Students
 
 A real, working full-stack application: a student signs up, takes a diagnostic, gets a
 deterministically-computed adaptive learning path, studies curated materials, practices
