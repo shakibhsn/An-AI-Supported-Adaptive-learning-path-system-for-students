@@ -23,7 +23,6 @@
  *      weak are left out entirely.
  */
 
-import { CourseCode, PREREQUISITES } from '../data/topicMapping';
 import { MasteryStatus, RankedTopic } from './mastery.service';
 
 export interface TopicMasterySnapshot {
@@ -61,12 +60,17 @@ function computeDepth(topic: string, prereqMap: Record<string, string | null>, c
   return depth;
 }
 
+/**
+ * prereqMap: topic name -> the ONE topic name that should be mastered first
+ * (or null). The database (Topic.prerequisiteTopicId) is the source of
+ * truth for this - see learningPath.service.ts's getPrerequisiteMap, which
+ * builds this shape from the DB for any course, hardcoded or not.
+ */
 export function generateLearningPath(
-  course: CourseCode,
+  prereqMap: Record<string, string | null>,
   weakTopics: RankedTopic[],
   allMastery: TopicMasterySnapshot[]
 ): LearningPathItem[] {
-  const prereqMap = PREREQUISITES[course];
   const masteryByTopic = new Map(allMastery.map((m) => [m.topic, m]));
 
   // 1. Collect the full required set: every weak topic plus every

@@ -4,7 +4,7 @@ import { AuthenticatedRequest } from '../middleware/auth.middleware';
 import { getActivitySummary } from '../services/activity.service';
 import { reasonForWeakTopic, reasonForRevisionTopic } from '../services/recommendation.service';
 import { MasteryStatus } from '../services/mastery.service';
-import { PREREQUISITES, CourseCode } from '../data/topicMapping';
+import { getPrerequisiteMap } from '../services/learningPath.service';
 
 // GET /api/profile/summary
 // Every number here is a real aggregate over the student's own rows - no
@@ -152,7 +152,7 @@ export async function getCurrentFocus(req: AuthenticatedRequest, res: Response) 
     if (!nextItem) continue;
 
     const mastery = await prisma.topicMastery.findUnique({ where: { userId_topicId: { userId, topicId: nextItem.topicId } } });
-    const prereqMap = PREREQUISITES[course.code as CourseCode] || {};
+    const prereqMap = await getPrerequisiteMap(course.id);
     const unlocks = new Map<string, string>();
     for (const [topic, prereq] of Object.entries(prereqMap)) if (prereq) unlocks.set(prereq, topic);
 

@@ -10,7 +10,6 @@
 import { prisma } from '../prisma';
 import { rankWeakTopics, TopicScore } from './mastery.service';
 import { generateLearningPath, TopicMasterySnapshot } from './adaptiveEngine.service';
-import { CourseCode } from '../data/topicMapping';
 
 export type RegenerateResult =
   | { status: 'ok'; path: Awaited<ReturnType<typeof loadActivePath>> }
@@ -22,6 +21,20 @@ async function loadActivePath(userId: string, courseId: string) {
     where: { userId, courseId, status: 'active' },
     include: { items: { include: { topic: true }, orderBy: { sequenceOrder: 'asc' } } },
   });
+}
+
+// The database (Topic.prerequisiteTopicId) is the single source of truth for
+// prerequisites - this works for any course, not just the ones that happen
+// to have a hardcoded entry somewhere. Shaped as { topicName -> prereq
+// topicName | null } to match exactly what the adaptive engine expects.
+export async function getPrerequisiteMap(courseId: string): Promise<Record<string, string | null>> {
+  const topics = await prisma.topic.findMany({ where: { courseId } });
+  const nameById = new Map(topics.map((t) => [t.id, t.name]));
+  const map: Record<string, string | null> = {};
+  for (const t of topics) {
+    map[t.name] = t.prerequisiteTopicId ? nameById.get(t.prerequisiteTopicId) ?? null : null;
+  }
+  return map;
 }
 
 export async function regeneratePath(userId: string, courseId: string): Promise<RegenerateResult> {
@@ -53,7 +66,8 @@ export async function regeneratePath(userId: string, courseId: string): Promise<
 
   if (weakTopics.length === 0) return { status: 'all_mastered' };
 
-  const pathItems = generateLearningPath(course.code as CourseCode, weakTopics, allMastery);
+  const prereqMap = await getPrerequisiteMap(courseId);
+  const pathItems = generateLearningPath(prereqMap, weakTopics, allMastery);
   const topicByName = new Map(masteryRows.map((m) => [m.topic.name, m.topic]));
 
   await prisma.learningPath.create({

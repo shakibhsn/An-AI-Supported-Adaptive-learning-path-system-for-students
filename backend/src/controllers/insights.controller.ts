@@ -4,7 +4,6 @@ import { AuthenticatedRequest } from '../middleware/auth.middleware';
 import { classifyStatus, MASTERY_THRESHOLDS, MasteryStatus } from '../services/mastery.service';
 import { reasonForWeakTopic, reasonForRevisionTopic, comparePaths } from '../services/recommendation.service';
 import { getActivitySummary } from '../services/activity.service';
-import { PREREQUISITES, CourseCode } from '../data/topicMapping';
 
 const STATUS_EMOJI: Record<MasteryStatus | 'Not Started', string> = {
   Mastered: '\u{1F7E2}', // 🟢
@@ -24,11 +23,17 @@ export async function getMasteryMap(req: AuthenticatedRequest, res: Response) {
   const masteryRows = await prisma.topicMastery.findMany({ where: { userId: req.user.userId, courseId: course.id } });
   const masteryByTopicId = new Map(masteryRows.map((m) => [m.topicId, m]));
 
-  // Reverse-prerequisite lookup: "X is a prerequisite for Y" (for the reason string).
-  const prereqMap = PREREQUISITES[course.code as CourseCode] || {};
+  // Reverse-prerequisite lookup: "X is a prerequisite for Y" (for the reason
+  // string). Built straight from the DB's Topic.prerequisiteTopicId - the
+  // single source of truth - using the `topics` already fetched above, so
+  // this works for any course without a hardcoded entry.
+  const nameById = new Map(topics.map((t) => [t.id, t.name]));
   const unlocks = new Map<string, string>();
-  for (const [topic, prereq] of Object.entries(prereqMap)) {
-    if (prereq) unlocks.set(prereq, topic);
+  for (const t of topics) {
+    if (t.prerequisiteTopicId) {
+      const prereqName = nameById.get(t.prerequisiteTopicId);
+      if (prereqName) unlocks.set(prereqName, t.name);
+    }
   }
 
   const map = topics.map((t) => {

@@ -5,6 +5,7 @@
 
 import { calculateTopicScores, rankWeakTopics, classifyStatus, AnswerRecord } from '../src/services/mastery.service';
 import { generateLearningPath, TopicMasterySnapshot } from '../src/services/adaptiveEngine.service';
+import { PREREQUISITES } from '../src/data/topicMapping';
 
 let passed = 0;
 let failed = 0;
@@ -82,7 +83,7 @@ const allMastery: TopicMasterySnapshot[] = [
   { topic: 'Trees', score: 30, status: 'Weak/Critical' },
 ];
 
-const path = generateLearningPath('DSA', ranked, allMastery);
+const path = generateLearningPath(PREREQUISITES.DSA, ranked, allMastery);
 // Depth 0 (no prerequisite): Arrays (revision, Mastered) and Recursion (genuinely weak) -
 //   revision-before-weak tiebreak puts Arrays first.
 // Depth 1: Trees and Linked Lists - both genuinely weak, worst score first (Trees 30 < Linked Lists 35).
@@ -106,7 +107,7 @@ const updatedMastery: TopicMasterySnapshot[] = [
 const updatedRanked = rankWeakTopics(
   Object.fromEntries(updatedMastery.map((m) => [m.topic, { ...m, correct: 0, total: 0 }]))
 );
-const updatedPath = generateLearningPath('DSA', updatedRanked, updatedMastery);
+const updatedPath = generateLearningPath(PREREQUISITES.DSA, updatedRanked, updatedMastery);
 assertEqual(
   updatedPath.map((p) => p.topic),
   ['Recursion', 'Trees'],

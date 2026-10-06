@@ -346,6 +346,17 @@
             Course Overview
           </button>
 
+          <!-- My Courses (Phase 2 - full course list, kept off the Overview page) -->
+          <button id="navMyCourses" onclick="switchScreen('s20')"
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-white hover:text-brand-700 hover:shadow-2xs transition-all duration-150">
+            <svg class="w-3.5 h-3.5 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 19.5A2.5 2.5 0 016.5 17H20M4 19.5A2.5 2.5 0 016.5 22H20V4a2 2 0 00-2-2H6.5A2.5 2.5 0 004 4.5v15z">
+              </path>
+            </svg>
+            My Courses
+          </button>
+
           <!-- Weak Topics -->
           <button id="navWeakTopics" onclick="openWeakTopicSelector('dsa')"
             class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-white hover:text-brand-700 hover:shadow-2xs transition-all duration-150">
@@ -530,6 +541,14 @@
               d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
           </svg>
           Course Overview
+        </button>
+        <button onclick="switchScreen('s20'); closeMobileMenu();"
+          class="flex items-center gap-2.5 py-3 text-sm font-semibold text-slate-700">
+          <svg class="w-4 h-4 text-brand-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 19.5A2.5 2.5 0 016.5 17H20M4 19.5A2.5 2.5 0 016.5 22H20V4a2 2 0 00-2-2H6.5A2.5 2.5 0 004 4.5v15z" />
+          </svg>
+          My Courses
         </button>
         <button onclick="openWeakTopicSelector('dsa'); closeMobileMenu();"
           class="flex items-center gap-2.5 py-3 text-sm font-semibold text-slate-700">
@@ -748,11 +767,17 @@
 
         <!-- MY ENROLLED COURSES -->
         <div>
-          <h3 class="text-lg font-bold text-slate-800 mb-1">My Enrolled Courses</h3>
-          <p class="text-xs text-slate-500 mb-4">Courses you're currently studying.</p>
+          <div class="flex items-center justify-between mb-1">
+            <h3 class="text-lg font-bold text-slate-800">My Courses</h3>
+            <button onclick="switchScreen('s20')"
+              class="text-xs font-bold text-brand-600 hover:text-brand-800 transition shrink-0">View All Courses &rarr;</button>
+          </div>
+          <p class="text-xs text-slate-500 mb-4">A quick look at a few of your courses - see the full list on the My Courses page.</p>
           <div id="dashCourseGrid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <!-- Course cards are rendered by renderDashboard() from GET /api/courses
-                 + GET /api/progress/:id - one template per enrolled course. -->
+                 + GET /api/progress/:id - a short preview only (see buildCourseCard).
+                 The full list lives on the dedicated My Courses screen (s20) so this
+                 stays clean as more courses are added. -->
             <p class="text-sm text-slate-500 col-span-full">Loading your courses&hellip;</p>
           </div>
         </div>
@@ -2085,6 +2110,46 @@
       </div>
     </div>
 
+    <!-- ================= SCREEN 20: MY COURSES (Phase 2 - scalable course
+         architecture). Dedicated destination for ALL enrolled courses, so
+         the Student Overview page can stay a short preview no matter how
+         many courses the system supports. Reuses the exact same
+         GET /courses + GET /progress + GET /courses/:id/gaps data and the
+         same card template as the Overview preview. ================= -->
+    <div id="s20" class="screen-view">
+      <div class="max-w-6xl mx-auto space-y-6">
+        <div class="flex items-center gap-2 text-xs text-slate-500">
+          <span class="hover:underline cursor-pointer" onclick="switchScreen('s02')">Dashboard</span>
+          <span>›</span>
+          <span class="font-semibold text-slate-800">My Courses</span>
+        </div>
+
+        <div class="hub-card rounded-2xl p-6">
+          <h2 class="text-xl md:text-2xl font-bold text-slate-900">My Courses</h2>
+          <p class="text-sm text-slate-500 mt-1">Every course you have access to, with your real mastery and status for each.</p>
+        </div>
+
+        <div class="hub-card rounded-2xl p-4 flex flex-col sm:flex-row gap-3">
+          <input id="myCoursesSearch" type="text" placeholder="Search courses by name or code…"
+            oninput="renderMyCoursesGrid()"
+            class="flex-1 text-sm px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-200 focus:border-brand-400" />
+          <select id="myCoursesStatusFilter" onchange="renderMyCoursesGrid()"
+            class="text-sm px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-200 focus:border-brand-400 bg-white">
+            <option value="all">All statuses</option>
+            <option value="mastered">Mastered</option>
+            <option value="in_progress">In Progress</option>
+            <option value="needs_attention">Needs Attention</option>
+            <option value="not_assessed">Not Assessed</option>
+          </select>
+        </div>
+
+        <div id="myCoursesGrid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <p class="text-sm text-slate-500 col-span-full">Loading your courses&hellip;</p>
+        </div>
+        <p id="myCoursesEmpty" class="hidden text-sm text-slate-500 text-center py-8">No courses match your search/filter.</p>
+      </div>
+    </div>
+
   </main>
 
   <!-- ================= SCRIPTS: REAL BACKEND INTEGRATION ================= -->
@@ -2794,72 +2859,144 @@
       return { label: 'Needs Attention', cls: 'badge-critical' };
     }
 
+// Shared by the Student Overview preview and the full My Courses page, so
+    // both read the exact same real data and render identical cards - adding
+    // a course never requires touching this twice (Phase 2: scalable course
+    // architecture).
+    async function loadCoursesWithProgress() {
+      const [courses, progress] = await Promise.all([
+        apiFetch('/courses'),
+        apiFetch('/progress'),
+      ]);
+      const progById = Object.fromEntries(progress.map((p) => [p.courseId, p]));
+
+      // per-course weak-topic names - only for courses that actually have
+      // diagnostic data (avoids a guaranteed 400 from /gaps otherwise).
+      const gapsById = {};
+      await Promise.all(courses.map(async (c) => {
+        if (!progById[c.id] || (progById[c.id].topicsAssessed || 0) === 0) { gapsById[c.id] = null; return; }
+        try {
+          const g = await apiFetch(`/courses/${c.id}/gaps`);
+          gapsById[c.id] = (g.ranked || []).map((t) => t.topic);
+        } catch (_) { gapsById[c.id] = null; }
+      }));
+
+      return { courses, progById, gapsById };
+    }
+
+    function courseStatusBadge(avg, assessed) {
+      return masteryBadge(avg ?? 0, assessed);
+    }
+
+    function buildCourseCardEl(c, progById, gapsById) {
+      const code = c.code.toUpperCase();
+      const key = c.code.toLowerCase();
+      const theme = COURSE_THEME[code] || COURSE_THEME.DSA;
+      const p = progById[c.id] || { averageMastery: null, topicsAssessed: 0 };
+      const assessed = p.topicsAssessed || 0;
+      const avg = p.averageMastery == null ? null : Math.round(p.averageMastery);
+      const badge = courseStatusBadge(avg, assessed);
+      const weak = gapsById[c.id];
+
+      const weakLine = assessed === 0
+        ? 'No diagnostic data yet'
+        : (weak && weak.length > 0 ? `Weak: ${weak.slice(0, 3).join(', ')}` : 'All assessed topics on track');
+
+      const card = document.createElement('div');
+      card.className = 'hub-card rounded-2xl p-6 flex flex-col justify-between hover:shadow-lg transition';
+      card.innerHTML = `
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs font-semibold text-${theme.accent}-600">${code}</span>
+            <span class="text-[11px] font-semibold ${badge.cls} px-2 py-0.5 rounded-full">${badge.label}</span>
+          </div>
+          <h4 class="text-xl font-bold text-slate-900 mb-2">${code} &mdash; ${escapeHtml(c.name)}</h4>
+          <p class="text-xs text-slate-500 mb-4 leading-relaxed">${escapeHtml(c.description || '')}</p>
+          <div class="mb-4 ${theme.tint} border rounded-xl p-3.5">
+            <div class="flex justify-between items-center text-xs font-semibold mb-1.5">
+              <span class="text-slate-700 font-bold">Course Mastery</span>
+              <span class="text-${theme.accent}-700 font-extrabold text-sm">${avg == null ? 'Take diagnostic' : avg + '%'}</span>
+            </div>
+            <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
+              <div class="${theme.bar} h-2.5 rounded-full" style="width:${avg == null ? 0 : avg}%"></div>
+            </div>
+            <div class="flex justify-between text-[11px] text-slate-500 mt-2">
+              <span>${escapeHtml(weakLine)}</span>
+              <span class="font-semibold">${assessed} topic${assessed === 1 ? '' : 's'} assessed</span>
+            </div>
+          </div>
+        </div>
+        <div class="pt-2 border-t border-slate-100">
+          <button data-act="view-course" class="w-full ${theme.btn} text-white font-bold text-xs py-2.5 rounded-xl transition shadow-sm">View Course &rarr;</button>
+        </div>`;
+      card.querySelector('[data-act="view-course"]').onclick = () => { switchScreen('s03'); switchOverviewTab(key); };
+      return card;
+    }
+
+    // Student Overview shows a short preview only (Phase 2: do not let the
+    // enrolled-courses list grow unbounded on the main page) - the full list
+    // always lives one click away on My Courses (s20).
+    const OVERVIEW_COURSE_PREVIEW_LIMIT = 3;
+
     async function renderDashboard() {
       const grid = document.getElementById('dashCourseGrid');
       if (!grid) return;
       try {
-        const [courses, progress] = await Promise.all([
-          apiFetch('/courses'),
-          apiFetch('/progress'),
-        ]);
-        const progById = Object.fromEntries(progress.map((p) => [p.courseId, p]));
-
-        // per-course weak-topic names - only for courses that actually have
-        // diagnostic data (avoids a guaranteed 400 from /gaps otherwise).
-        const gapsById = {};
-        await Promise.all(courses.map(async (c) => {
-          if (!progById[c.id] || (progById[c.id].topicsAssessed || 0) === 0) { gapsById[c.id] = null; return; }
-          try {
-            const g = await apiFetch(`/courses/${c.id}/gaps`);
-            gapsById[c.id] = (g.ranked || []).map((t) => t.topic);
-          } catch (_) { gapsById[c.id] = null; }
-        }));
-
+        const { courses, progById, gapsById } = await loadCoursesWithProgress();
         grid.innerHTML = '';
-        for (const c of courses) {
-          const code = c.code.toUpperCase();
-          const key = c.code.toLowerCase();
-          const theme = COURSE_THEME[code] || COURSE_THEME.DSA;
-          const p = progById[c.id] || { averageMastery: null, topicsAssessed: 0 };
-          const assessed = p.topicsAssessed || 0;
-          const avg = p.averageMastery == null ? null : Math.round(p.averageMastery);
-          const badge = masteryBadge(avg ?? 0, assessed);
-          const weak = gapsById[c.id];
-
-          const weakLine = assessed === 0
-            ? 'No diagnostic data yet'
-            : (weak && weak.length > 0 ? `Weak: ${weak.slice(0, 3).join(', ')}` : 'All assessed topics on track');
-
-          const card = document.createElement('div');
-          card.className = 'hub-card rounded-2xl p-6 flex flex-col justify-between hover:shadow-lg transition';
-          card.innerHTML = `
-            <div>
-              <div class="flex items-center justify-between mb-1">
-                <span class="text-xs font-semibold text-${theme.accent}-600">${code}</span>
-                <span class="text-[11px] font-semibold ${badge.cls} px-2 py-0.5 rounded-full">${badge.label}</span>
-              </div>
-              <h4 class="text-xl font-bold text-slate-900 mb-2">${code} &mdash; ${escapeHtml(c.name)}</h4>
-              <p class="text-xs text-slate-500 mb-4 leading-relaxed">${escapeHtml(c.description || '')}</p>
-              <div class="mb-4 ${theme.tint} border rounded-xl p-3.5">
-                <div class="flex justify-between items-center text-xs font-semibold mb-1.5">
-                  <span class="text-slate-700 font-bold">Course Mastery</span>
-                  <span class="text-${theme.accent}-700 font-extrabold text-sm">${avg == null ? 'Take diagnostic' : avg + '%'}</span>
-                </div>
-                <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
-                  <div class="${theme.bar} h-2.5 rounded-full" style="width:${avg == null ? 0 : avg}%"></div>
-                </div>
-                <div class="flex justify-between text-[11px] text-slate-500 mt-2">
-                  <span>${escapeHtml(weakLine)}</span>
-                  <span class="font-semibold">${assessed} topic${assessed === 1 ? '' : 's'} assessed</span>
-                </div>
-              </div>
-            </div>
-            <div class="pt-2 border-t border-slate-100">
-              <button data-act="view-course" class="w-full ${theme.btn} text-white font-bold text-xs py-2.5 rounded-xl transition shadow-sm">View Course &rarr;</button>
-            </div>`;
-          card.querySelector('[data-act="view-course"]').onclick = () => { switchScreen('s03'); switchOverviewTab(key); };
-          grid.appendChild(card);
+        for (const c of courses.slice(0, OVERVIEW_COURSE_PREVIEW_LIMIT)) {
+          grid.appendChild(buildCourseCardEl(c, progById, gapsById));
         }
+      } catch (err) {
+        grid.innerHTML = `<p class="text-sm text-red-600 col-span-full">Could not load your courses: ${escapeHtml(err.message)}</p>`;
+      }
+    }
+
+    // ---- My Courses (Phase 2: dedicated page for ALL enrolled courses,
+    // keeps the Student Overview page clean no matter how many courses
+    // exist). Reuses the exact same loader + card builder as the overview
+    // preview, plus a simple client-side search/status filter. ----
+    let myCoursesData = null; // cached { courses, progById, gapsById } so filtering doesn't refetch
+
+    function myCourseStatusKey(c, progById) {
+      const p = progById[c.id] || { averageMastery: null, topicsAssessed: 0 };
+      const assessed = p.topicsAssessed || 0;
+      const avg = p.averageMastery == null ? null : Math.round(p.averageMastery);
+      if (assessed === 0) return 'not_assessed';
+      if (avg >= 80) return 'mastered';
+      if (avg >= 40) return 'in_progress';
+      return 'needs_attention';
+    }
+
+    function renderMyCoursesGrid() {
+      const grid = document.getElementById('myCoursesGrid');
+      const empty = document.getElementById('myCoursesEmpty');
+      if (!grid || !myCoursesData) return;
+      const { courses, progById, gapsById } = myCoursesData;
+
+      const query = (document.getElementById('myCoursesSearch')?.value || '').trim().toLowerCase();
+      const statusFilter = document.getElementById('myCoursesStatusFilter')?.value || 'all';
+
+      const filtered = courses.filter((c) => {
+        const matchesQuery = !query || c.name.toLowerCase().includes(query) || c.code.toLowerCase().includes(query);
+        const matchesStatus = statusFilter === 'all' || myCourseStatusKey(c, progById) === statusFilter;
+        return matchesQuery && matchesStatus;
+      });
+
+      grid.innerHTML = '';
+      for (const c of filtered) {
+        grid.appendChild(buildCourseCardEl(c, progById, gapsById));
+      }
+      empty.classList.toggle('hidden', filtered.length > 0);
+    }
+
+    async function renderMyCourses() {
+      const grid = document.getElementById('myCoursesGrid');
+      if (!grid) return;
+      grid.innerHTML = '<p class="text-sm text-slate-500 col-span-full">Loading your courses&hellip;</p>';
+      try {
+        myCoursesData = await loadCoursesWithProgress();
+        renderMyCoursesGrid();
       } catch (err) {
         grid.innerHTML = `<p class="text-sm text-red-600 col-span-full">Could not load your courses: ${escapeHtml(err.message)}</p>`;
       }
@@ -3040,6 +3177,7 @@
       if (screenId === 's02') renderStudentOverview();
       if (screenId === 's09') switchContentTab(currentChatCourse || 'dsa');
       if (screenId === 's14') renderProfileScreen();
+      if (screenId === 's20') renderMyCourses();
 
       const activityFor = SCREEN_ACTIVITY[screenId];
       if (activityFor) {
