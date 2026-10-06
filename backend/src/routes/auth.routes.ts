@@ -1,14 +1,15 @@
 import { Router } from 'express';
 import * as authController from '../controllers/auth.controller';
 import { requireAuth } from '../middleware/auth.middleware';
+import { asyncHandler } from '../utils/asyncHandler';
 
 const router = Router();
 
-router.post('/register', authController.register);
-router.post('/login', authController.login);
-router.get('/me', requireAuth, authController.me);
-router.post('/logout', requireAuth, authController.logout);
-router.post('/change-password', requireAuth, authController.changePassword);
-router.post('/profile', requireAuth, authController.updateProfile);
+router.post('/register', asyncHandler(authController.register));
+router.post('/login', asyncHandler(authController.login));
+router.get('/me', requireAuth, asyncHandler(authController.me));
+router.post('/logout', requireAuth, asyncHandler(authController.logout));
+router.post('/change-password', requireAuth, asyncHandler(authController.changePassword));
+router.post('/profile', requireAuth, asyncHandler(authController.updateProfile));
 
 export default router;

@@ -2090,8 +2090,15 @@
   <!-- ================= SCRIPTS: REAL BACKEND INTEGRATION ================= -->
   <script>
     // ================= API CONFIGURATION =================
-    // Change this if the backend runs somewhere other than localhost:4000.
-    const API_BASE = 'http://localhost:4000/api';
+    // Local dev always talks to the backend on :4000. Anywhere else
+    // (a real deployment), assume the API is reverse-proxied under /api on
+    // the same origin the frontend was served from, unless overridden by
+    // setting window.__API_BASE__ before this script runs.
+    const API_BASE = window.__API_BASE__ || (
+      ['localhost', '127.0.0.1'].includes(window.location.hostname)
+        ? 'http://localhost:4000/api'
+        : `${window.location.origin}/api`
+    );
 
     function updateThemeToggle() {
       const isDark = document.documentElement.classList.contains('dark-mode');

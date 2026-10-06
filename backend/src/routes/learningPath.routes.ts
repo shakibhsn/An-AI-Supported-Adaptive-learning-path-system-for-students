@@ -5,11 +5,12 @@ import { requireAuth } from '../middleware/auth.middleware';
 import { rankWeakTopics, TopicScore } from '../services/mastery.service';
 import * as learningPathController from '../controllers/learningPath.controller';
 import { Response } from 'express';
+import { asyncHandler } from '../utils/asyncHandler';
 
 const router = Router();
 
 // GET /api/courses/:courseId/gaps - Learning Gap Analysis screen data
-router.get('/courses/:courseId/gaps', requireAuth, async (req: AuthenticatedRequest, res: Response) => {
+router.get('/courses/:courseId/gaps', requireAuth, asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
   if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
   const mastery = await prisma.topicMastery.findMany({
     where: { userId: req.user.userId, courseId: req.params.courseId },
@@ -23,9 +24,9 @@ router.get('/courses/:courseId/gaps', requireAuth, async (req: AuthenticatedRequ
   );
   const ranked = rankWeakTopics(shaped);
   return res.json({ ranked, all: Object.values(shaped).sort((a, b) => a.score - b.score) });
-});
+}));
 
-router.post('/learning-path/generate', requireAuth, learningPathController.generatePath);
-router.get('/learning-path/:courseId', requireAuth, learningPathController.getPath);
+router.post('/learning-path/generate', requireAuth, asyncHandler(learningPathController.generatePath));
+router.get('/learning-path/:courseId', requireAuth, asyncHandler(learningPathController.getPath));
 
 export default router;
