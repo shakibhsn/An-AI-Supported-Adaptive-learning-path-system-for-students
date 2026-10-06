@@ -18,6 +18,10 @@
  */
 
 import { CourseCode } from './topicMapping';
+// Phase 3 (OS/CA/DBMS) - same ExpandedQuestion[] shape, kept as JSON for size.
+import osExpanded from './expandedQuestions.os.json';
+import caExpanded from './expandedQuestions.ca.json';
+import dbmsExpanded from './expandedQuestions.dbms.json';
 
 export type Difficulty = 'EASY' | 'MEDIUM' | 'HARD';
 export type QuestionType = 'MCQ' | 'TRUE_FALSE' | 'CONCEPT' | 'SCENARIO' | 'CODE';
@@ -420,4 +424,7 @@ export const EXPANDED_QUESTIONS: Record<CourseCode, ExpandedQuestion[]> = {
       ['First-In-First-Out (FIFO), the same order they were created', 'Last-In-First-Out (LIFO) - the most recently called function returns (and its frame is removed) first', 'Random order', 'All at once, only when main() exits'], 'B',
       "The call stack is, as the name implies, a stack: the most recently pushed frame (the most recently called, still-running function) is the first one popped when it returns."),
   ],
+  OS: osExpanded as ExpandedQuestion[],
+  CA: caExpanded as ExpandedQuestion[],
+  DBMS: dbmsExpanded as ExpandedQuestion[],
 };

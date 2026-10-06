@@ -24,7 +24,7 @@
  * topic GROUPING is a new (documented) decision.
  */
 
-export type CourseCode = 'DSA' | 'OOP' | 'SPL';
+export type CourseCode = 'DSA' | 'OOP' | 'SPL' | 'OS' | 'CA' | 'DBMS';
 
 export const CANONICAL_TOPICS: Record<CourseCode, string[]> = {
   DSA: ['Arrays', 'Linked Lists', 'Stacks', 'Queues', 'Recursion', 'Trees', 'Graphs', 'Hashing'],
@@ -35,6 +35,23 @@ export const CANONICAL_TOPICS: Record<CourseCode, string[]> = {
   SPL: [
     'Data Types', 'Pointers', 'Dereferencing', 'Arrays & Pointers', 'Dynamic Memory',
     'Deallocation', 'Strings', 'Structures', 'Storage Classes', 'Call Stack',
+  ],
+  // Phase 3 (new CSE core courses). Topic lists adapted from the standard
+  // undergraduate syllabi for each course, sized to match the existing
+  // courses' per-topic content depth (see PREREQUISITES below for the
+  // prerequisite chain each uses).
+  OS: [
+    'OS Fundamentals', 'Processes', 'Threads', 'CPU Scheduling', 'Synchronization',
+    'Deadlocks', 'Memory Management', 'Virtual Memory', 'File Systems',
+  ],
+  CA: [
+    'Computer Organization Fundamentals', 'Number Systems and Data Representation', 'Digital Logic and Boolean Concepts',
+    'CPU Organization', 'Instruction Set Architecture', 'Memory Hierarchy', 'Cache Memory',
+    'I/O Organization', 'Pipelining', 'Performance and Parallelism',
+  ],
+  DBMS: [
+    'Database Fundamentals', 'ER Model', 'Relational Model', 'SQL', 'Relational Algebra',
+    'Functional Dependencies', 'Normalization', 'Transactions', 'Concurrency Control', 'Indexing',
   ],
 };
 
@@ -74,6 +91,46 @@ export const PREREQUISITES: Record<CourseCode, Record<string, string | null>> = 
     'Structures': 'Data Types',
     'Storage Classes': 'Data Types',
     'Call Stack': null,
+  },
+  // Phase 3. Matches the linear OS chain given in the course spec
+  // (OS Fundamentals -> Processes -> Threads -> CPU Scheduling ->
+  // Synchronization -> Deadlocks), with Memory Management/File Systems as
+  // a second branch off OS Fundamentals and Virtual Memory depending on
+  // Memory Management.
+  OS: {
+    'OS Fundamentals': null,
+    'Processes': 'OS Fundamentals',
+    'Threads': 'Processes',
+    'CPU Scheduling': 'Threads',
+    'Synchronization': 'Threads',
+    'Deadlocks': 'Synchronization',
+    'Memory Management': 'OS Fundamentals',
+    'Virtual Memory': 'Memory Management',
+    'File Systems': 'OS Fundamentals',
+  },
+  CA: {
+    'Computer Organization Fundamentals': null,
+    'Number Systems and Data Representation': null,
+    'Digital Logic and Boolean Concepts': 'Number Systems and Data Representation',
+    'CPU Organization': 'Computer Organization Fundamentals',
+    'Instruction Set Architecture': 'CPU Organization',
+    'Memory Hierarchy': 'Computer Organization Fundamentals',
+    'Cache Memory': 'Memory Hierarchy',
+    'I/O Organization': 'Computer Organization Fundamentals',
+    'Pipelining': 'Instruction Set Architecture',
+    'Performance and Parallelism': 'Pipelining',
+  },
+  DBMS: {
+    'Database Fundamentals': null,
+    'ER Model': 'Database Fundamentals',
+    'Relational Model': 'ER Model',
+    'SQL': 'Relational Model',
+    'Relational Algebra': 'Relational Model',
+    'Functional Dependencies': 'Relational Model',
+    'Normalization': 'Functional Dependencies',
+    'Transactions': 'Database Fundamentals',
+    'Concurrency Control': 'Transactions',
+    'Indexing': 'SQL',
   },
 };
 
@@ -153,4 +210,10 @@ export const TOPIC_LABEL_MAP: Record<CourseCode, Record<string, string>> = {
     'Dereference vs Address-of': 'Dereferencing',
     'Struct Pointer Member Access': 'Structures',
   },
+  // Phase 3's OS/CA/DBMS content is authored directly against the
+  // canonical topic names above (no legacy prototype to reconcile labels
+  // against, unlike DSA/OOP/SPL), so there are no raw-label aliases to map.
+  OS: {},
+  CA: {},
+  DBMS: {},
 };

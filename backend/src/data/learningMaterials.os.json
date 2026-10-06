@@ -1,0 +1,308 @@
+{
+  "OS Fundamentals": [
+    {
+      "title": "Introduction to Operating Systems",
+      "description": "What an OS is, its main functions, and the different types of operating systems (batch, time-sharing, real-time).",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/introduction-of-operating-system-set-1/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Neso Academy - Operating System playlist",
+      "description": "Full lecture series covering OS basics, system calls, kernel structure, and dual-mode operation.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@nesoacademy/playlists",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Gate Smashers - Operating System playlists",
+      "description": "OS structure, system calls, and dual-mode operation explained with diagrams.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@GateSmashers/playlists",
+      "provider": "YouTube (Gate Smashers)",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Practice: Operating Systems quiz questions",
+      "description": "Multiple-choice practice questions covering OS fundamentals and core concepts.",
+      "type": "PRACTICE",
+      "url": "https://www.geeksforgeeks.org/quizzes/?category=operating-systems",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "Processes": [
+    {
+      "title": "Process Table and Process Control Block (PCB)",
+      "description": "What a process is, the process states, and what information the PCB stores.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/process-table-and-process-control-block-pcb/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Neso Academy - Operating System playlist (Processes)",
+      "description": "Lectures on process states, context switching, and process creation (fork/exec).",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@nesoacademy/playlists",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Gate Smashers - Operating System playlists",
+      "description": "Process states, context switching, and process creation explained with diagrams.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@GateSmashers/playlists",
+      "provider": "YouTube (Gate Smashers)",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Practice: Operating Systems quiz questions",
+      "description": "Practice questions covering process states, PCBs, and process creation.",
+      "type": "PRACTICE",
+      "url": "https://www.geeksforgeeks.org/quizzes/?category=operating-systems",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "Threads": [
+    {
+      "title": "Thread in Operating System",
+      "description": "What a thread is, how it differs from a process, and multithreading models.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/thread-in-operating-system/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Neso Academy - Operating System playlist (Threads)",
+      "description": "Lectures on threads, multithreading benefits, and user-level vs kernel-level threads.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@nesoacademy/playlists",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Gate Smashers - Operating System playlists",
+      "description": "Threading models (many-to-one, one-to-one, many-to-many) explained with diagrams.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@GateSmashers/playlists",
+      "provider": "YouTube (Gate Smashers)",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Practice: Operating Systems quiz questions",
+      "description": "Practice questions covering threads and multithreading models.",
+      "type": "PRACTICE",
+      "url": "https://www.geeksforgeeks.org/quizzes/?category=operating-systems",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "CPU Scheduling": [
+    {
+      "title": "CPU Scheduling in Operating Systems",
+      "description": "Scheduling criteria and an overview of FCFS, SJF, Round Robin, and priority scheduling.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/cpu-scheduling-in-operating-systems/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Neso Academy - Operating System playlist (CPU Scheduling)",
+      "description": "Worked examples of FCFS, SJF, SRTF, Round Robin, and priority scheduling with Gantt charts.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@nesoacademy/playlists",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Gate Smashers - Operating System playlists",
+      "description": "Scheduling algorithm numericals (turnaround time, waiting time) solved step by step.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@GateSmashers/playlists",
+      "provider": "YouTube (Gate Smashers)",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Practice: Operating Systems quiz questions",
+      "description": "Practice questions covering CPU scheduling algorithms and numerical problems.",
+      "type": "PRACTICE",
+      "url": "https://www.geeksforgeeks.org/quizzes/?category=operating-systems",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "Synchronization": [
+    {
+      "title": "Introduction of Process Synchronization",
+      "description": "The critical-section problem, race conditions, and the three required properties of a correct solution.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/introduction-of-process-synchronization/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Neso Academy - Operating System playlist (Synchronization)",
+      "description": "Mutex locks, semaphores, Peterson's solution, and the producer-consumer problem.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@nesoacademy/playlists",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Gate Smashers - Operating System playlists",
+      "description": "Critical-section problem, mutex locks, and semaphore concepts explained with examples.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@GateSmashers/playlists",
+      "provider": "YouTube (Gate Smashers)",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Practice: Operating Systems quiz questions",
+      "description": "Practice questions covering semaphores, mutex locks, and classical synchronization problems.",
+      "type": "PRACTICE",
+      "url": "https://www.geeksforgeeks.org/quizzes/?category=operating-systems",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "Deadlocks": [
+    {
+      "title": "Introduction of Deadlock in Operating System",
+      "description": "The four necessary conditions for deadlock and an overview of prevention, avoidance, and detection.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/introduction-of-deadlock-in-operating-system/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Neso Academy - Operating System playlist (Deadlocks)",
+      "description": "Deadlock conditions, the Banker's Algorithm, and resource-allocation graphs explained with examples.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@nesoacademy/playlists",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Gate Smashers - Operating System playlists",
+      "description": "Banker's Algorithm safe-sequence numericals solved step by step.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@GateSmashers/playlists",
+      "provider": "YouTube (Gate Smashers)",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Practice: Operating Systems quiz questions",
+      "description": "Practice questions covering deadlock conditions, avoidance, and detection.",
+      "type": "PRACTICE",
+      "url": "https://www.geeksforgeeks.org/quizzes/?category=operating-systems",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "Memory Management": [
+    {
+      "title": "Memory Management in Operating System",
+      "description": "Address binding, contiguous allocation, fragmentation, paging, and segmentation.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/memory-management-in-operating-system/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Neso Academy - Operating System playlist (Memory Management)",
+      "description": "Paging, segmentation, and address translation explained with worked numericals.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@nesoacademy/playlists",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Gate Smashers - Operating System playlists",
+      "description": "Contiguous memory allocation, paging, and segmentation explained with numericals.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@GateSmashers/playlists",
+      "provider": "YouTube (Gate Smashers)",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Practice: Operating Systems quiz questions",
+      "description": "Practice questions covering paging, segmentation, and address translation.",
+      "type": "PRACTICE",
+      "url": "https://www.geeksforgeeks.org/quizzes/?category=operating-systems",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "Virtual Memory": [
+    {
+      "title": "Virtual Memory in Operating System",
+      "description": "Demand paging, page faults, and why virtual memory lets processes exceed physical memory size.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/virtual-memory-in-operating-system/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Neso Academy - Operating System playlist (Virtual Memory)",
+      "description": "Page replacement algorithms (FIFO, LRU, Optimal), Belady's anomaly, and thrashing explained with traces.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@nesoacademy/playlists",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "ADVANCED"
+    },
+    {
+      "title": "Gate Smashers - Operating System playlists",
+      "description": "Page replacement algorithm numericals (FIFO/LRU/Optimal page-fault counting) solved step by step.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@GateSmashers/playlists",
+      "provider": "YouTube (Gate Smashers)",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Practice: Operating Systems quiz questions",
+      "description": "Practice questions covering demand paging, page replacement, and thrashing.",
+      "type": "PRACTICE",
+      "url": "https://www.geeksforgeeks.org/quizzes/?category=operating-systems",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "File Systems": [
+    {
+      "title": "File Systems in Operating System",
+      "description": "File attributes, allocation methods (contiguous, linked, indexed), and directory structures.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/file-systems-in-operating-system/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Neso Academy - Operating System playlist (File Systems)",
+      "description": "File allocation methods, inodes, and free-space management explained with diagrams.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@nesoacademy/playlists",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Gate Smashers - Operating System playlists",
+      "description": "File allocation methods and directory structures compared with worked examples.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@GateSmashers/playlists",
+      "provider": "YouTube (Gate Smashers)",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Practice: Operating Systems quiz questions",
+      "description": "Practice questions covering file allocation methods, inodes, and free-space management.",
+      "type": "PRACTICE",
+      "url": "https://www.geeksforgeeks.org/quizzes/?category=operating-systems",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    }
+  ]
+}

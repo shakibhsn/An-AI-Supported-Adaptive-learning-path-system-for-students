@@ -1,0 +1,962 @@
+[
+  {
+    "topic": "Computer Organization Fundamentals",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "Which of the following best defines computer organization?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "The operational units and their interconnections that implement architectural specifications"
+      },
+      {
+        "letter": "B",
+        "text": "The instruction set visible to the assembly programmer"
+      },
+      {
+        "letter": "C",
+        "text": "The compiler's internal representation"
+      },
+      {
+        "letter": "D",
+        "text": "The algorithmic complexity of a program"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Computer organization is concerned with how hardware operationally realizes the architecture, i.e. the units and interconnections, not the programmer-visible instruction set."
+  },
+  {
+    "topic": "Computer Organization Fundamentals",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: the Von Neumann architecture stores both program instructions and data in the same memory.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "This is the defining feature of the stored-program (Von Neumann) model: a single memory holds both code and data."
+  },
+  {
+    "topic": "Computer Organization Fundamentals",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "A system bus is shared by the CPU, memory, and two I/O controllers. All four attempt to use the bus in the same cycle. What must the system do?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Let all four transfer simultaneously"
+      },
+      {
+        "letter": "B",
+        "text": "Use bus arbitration to grant access to only one device at a time"
+      },
+      {
+        "letter": "C",
+        "text": "Crash"
+      },
+      {
+        "letter": "D",
+        "text": "Disconnect all but the CPU permanently"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Because a shared bus can only carry one transfer at a time, an arbitration mechanism must decide which requester is granted access each cycle."
+  },
+  {
+    "topic": "Computer Organization Fundamentals",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "Why is the 'Von Neumann bottleneck' considered a fundamental limitation rather than a bug that can be fully 'fixed'?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Because any architecture that funnels both instructions and data through one shared pathway to memory faces a communication limit regardless of CPU speed"
+      },
+      {
+        "letter": "B",
+        "text": "Because it is caused by a bug in early compilers"
+      },
+      {
+        "letter": "C",
+        "text": "Because it only affects floating-point instructions"
+      },
+      {
+        "letter": "D",
+        "text": "Because it was solved completely by adding more registers"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "The bottleneck is structural: as long as a single shared bus/memory serves both instructions and data, CPU speed increases alone cannot remove the transfer limit; caching and pipelining only mitigate it."
+  },
+  {
+    "topic": "Number Systems and Data Representation",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "Convert binary 1010 to decimal.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "8"
+      },
+      {
+        "letter": "B",
+        "text": "10"
+      },
+      {
+        "letter": "C",
+        "text": "12"
+      },
+      {
+        "letter": "D",
+        "text": "16"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "1010 = 1*8 + 0*4 + 1*2 + 0*1 = 10."
+  },
+  {
+    "topic": "Number Systems and Data Representation",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: the hexadecimal number system uses 16 distinct digit symbols (0-9 and A-F).",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Hexadecimal is base-16, requiring 16 unique symbols: digits 0-9 and letters A-F representing 10-15."
+  },
+  {
+    "topic": "Number Systems and Data Representation",
+    "difficulty": "HARD",
+    "questionType": "CODE",
+    "question": "What 8-bit two's complement value results from computing 00001100 (12) minus 00010100 (20)?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "11111000"
+      },
+      {
+        "letter": "B",
+        "text": "00001000"
+      },
+      {
+        "letter": "C",
+        "text": "11110111"
+      },
+      {
+        "letter": "D",
+        "text": "00001100"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "12 - 20 = -8. The two's complement 8-bit representation of -8 is 11111000 (invert 00001000 to 11110111, add 1)."
+  },
+  {
+    "topic": "Number Systems and Data Representation",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "Why can IEEE 754 floating point not represent every decimal fraction (e.g. 0.1) exactly?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Because floating point only supports integers"
+      },
+      {
+        "letter": "B",
+        "text": "Because binary fractions can only exactly represent sums of powers of two, and 0.1 is not such a sum"
+      },
+      {
+        "letter": "C",
+        "text": "Because the sign bit consumes needed precision"
+      },
+      {
+        "letter": "D",
+        "text": "Because 0.1 is negative"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Binary floating point stores values as sums of powers of two; 0.1 has no finite binary expansion, so it is only approximated, leading to small representation errors."
+  },
+  {
+    "topic": "Digital Logic and Boolean Concepts",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "Which Boolean operation corresponds to the '+' symbol in Boolean algebra?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "OR"
+      },
+      {
+        "letter": "B",
+        "text": "AND"
+      },
+      {
+        "letter": "C",
+        "text": "NOT"
+      },
+      {
+        "letter": "D",
+        "text": "XOR"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "In Boolean algebra notation, '+' denotes the OR operation and '.' denotes AND."
+  },
+  {
+    "topic": "Digital Logic and Boolean Concepts",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: an XOR gate outputs 1 when its two inputs are different.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "XOR (exclusive OR) outputs 1 exactly when its inputs differ (one is 1 and the other is 0), and 0 when they match."
+  },
+  {
+    "topic": "Digital Logic and Boolean Concepts",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "A combinational circuit is built from a full adder and must add three 1-bit inputs (A, B, Carry-in). Which two outputs does a full adder produce?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Sum and Carry-out"
+      },
+      {
+        "letter": "B",
+        "text": "Product and Remainder"
+      },
+      {
+        "letter": "C",
+        "text": "Sum only"
+      },
+      {
+        "letter": "D",
+        "text": "Carry-in and Carry-out"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "A full adder extends the half-adder by also accepting a carry-in, and produces both a Sum bit and a Carry-out bit."
+  },
+  {
+    "topic": "Digital Logic and Boolean Concepts",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "Why are Karnaugh maps (K-maps) used when simplifying Boolean expressions derived from truth tables?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "They convert Boolean logic into decimal numbers"
+      },
+      {
+        "letter": "B",
+        "text": "They provide a visual grouping method to identify and eliminate redundant terms, producing a minimal sum-of-products expression"
+      },
+      {
+        "letter": "C",
+        "text": "They are required to build any logic gate physically"
+      },
+      {
+        "letter": "D",
+        "text": "They replace the need for truth tables entirely in all cases"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "K-maps arrange truth-table outputs so adjacent cells differ by one variable, letting designers visually group 1s to cancel redundant literals and minimize the expression."
+  },
+  {
+    "topic": "CPU Organization",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "Which unit in the CPU is responsible for decoding instructions and generating the signals that coordinate other components?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "ALU"
+      },
+      {
+        "letter": "B",
+        "text": "Control Unit"
+      },
+      {
+        "letter": "C",
+        "text": "Cache"
+      },
+      {
+        "letter": "D",
+        "text": "RAM"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "The Control Unit decodes instructions and issues the control signals that sequence operations across the CPU."
+  },
+  {
+    "topic": "CPU Organization",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: general-purpose registers are located inside the CPU and provide the fastest storage accessible to the processor.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Registers are built directly into the CPU using the fastest available circuitry, making them faster to access than any cache or memory level."
+  },
+  {
+    "topic": "CPU Organization",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "A CPU designer chooses a hardwired control unit instead of a microprogrammed one for a simple embedded processor. What is the main tradeoff being made?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Faster control signal generation but harder to modify/extend the instruction set later, versus a microprogrammed design that is slower but easily reprogrammed"
+      },
+      {
+        "letter": "B",
+        "text": "No tradeoff exists; they are functionally identical in every respect"
+      },
+      {
+        "letter": "C",
+        "text": "Hardwired control units cannot generate any control signals"
+      },
+      {
+        "letter": "D",
+        "text": "Microprogrammed control is always faster in every case"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Hardwired logic is fast but fixed in silicon, making later changes costly; microprogrammed control trades some speed for the flexibility of updatable stored microcode."
+  },
+  {
+    "topic": "CPU Organization",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "Why do modern CPUs include many general-purpose registers rather than relying solely on main memory for all operand storage?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Registers are slower than memory, so this choice is purely for compatibility"
+      },
+      {
+        "letter": "B",
+        "text": "Registers are implemented in extremely fast on-chip storage, so keeping frequently used operands there avoids the much larger latency of memory access"
+      },
+      {
+        "letter": "C",
+        "text": "Registers use the same technology as hard disks"
+      },
+      {
+        "letter": "D",
+        "text": "It has no effect on performance"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Registers sit at the very top of the memory hierarchy; using them for frequently accessed operands avoids the far higher latency of going to memory for every operation."
+  },
+  {
+    "topic": "Instruction Set Architecture",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What is the main difference between a zero-address instruction format and a three-address format?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Zero-address instructions use an implicit stack for operands; three-address instructions explicitly name source and destination operands"
+      },
+      {
+        "letter": "B",
+        "text": "There is no difference"
+      },
+      {
+        "letter": "C",
+        "text": "Zero-address instructions are only used for I/O"
+      },
+      {
+        "letter": "D",
+        "text": "Three-address format cannot specify a destination"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Zero-address formats (stack-based machines) use an implicit stack for operands, while three-address formats explicitly encode each operand's location."
+  },
+  {
+    "topic": "Instruction Set Architecture",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: in direct addressing mode, the instruction's address field directly contains the memory address of the operand.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Direct addressing means the address field is used as-is to access memory, with no extra indirection step."
+  },
+  {
+    "topic": "Instruction Set Architecture",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "A CPU instruction format has an opcode field and an addressing-mode field that specifies 'register indirect'. What does the CPU do to find the operand?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Use the operand field value directly as the data"
+      },
+      {
+        "letter": "B",
+        "text": "Read the specified register, and treat the value held in that register as the memory address of the actual operand"
+      },
+      {
+        "letter": "C",
+        "text": "Ignore the addressing mode field entirely"
+      },
+      {
+        "letter": "D",
+        "text": "Always access memory address 0"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Register-indirect addressing treats the named register's contents as a pointer: the CPU reads that register, then uses its value as the memory address to fetch the operand."
+  },
+  {
+    "topic": "Instruction Set Architecture",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "Why do RISC architectures typically rely more heavily on compiler optimization than CISC architectures?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Because RISC instructions are so complex that only a compiler can generate them"
+      },
+      {
+        "letter": "B",
+        "text": "Because RISC's simple, uniform instructions shift the burden of generating efficient instruction sequences (e.g. scheduling, register allocation) onto the compiler rather than complex hardware"
+      },
+      {
+        "letter": "C",
+        "text": "Because RISC machines cannot be programmed in assembly"
+      },
+      {
+        "letter": "D",
+        "text": "This statement is false; RISC never relies on compilers"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Since RISC hardware intentionally avoids complex instructions, achieving efficient code (scheduling, register use) becomes the compiler's responsibility instead of being handled by elaborate hardware."
+  },
+  {
+    "topic": "Memory Hierarchy",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "Which is generally true about the cost per byte as you move from registers down to secondary storage?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Cost per byte increases"
+      },
+      {
+        "letter": "B",
+        "text": "Cost per byte decreases"
+      },
+      {
+        "letter": "C",
+        "text": "Cost per byte stays exactly the same"
+      },
+      {
+        "letter": "D",
+        "text": "Cost is unrelated to memory level"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Secondary storage technologies are far cheaper per byte than registers or cache, which is part of why hierarchies pair small/fast with large/cheap memory."
+  },
+  {
+    "topic": "Memory Hierarchy",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: main memory (RAM) is typically larger in capacity but slower than CPU registers.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "RAM trades the extreme speed of on-chip registers for vastly greater capacity, consistent with the general hierarchy tradeoff."
+  },
+  {
+    "topic": "Memory Hierarchy",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "A program repeatedly accesses elements of a large array in a tight loop, reusing the same small set of variables for loop counters. Which locality principle(s) does this best illustrate?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Neither temporal nor spatial locality"
+      },
+      {
+        "letter": "B",
+        "text": "Only spatial locality"
+      },
+      {
+        "letter": "C",
+        "text": "Both temporal locality (reused loop counters) and spatial locality (sequential array access)"
+      },
+      {
+        "letter": "D",
+        "text": "Only temporal locality"
+      }
+    ],
+    "correctAnswer": "C",
+    "explanation": "The reused loop counters demonstrate temporal locality, while the sequential array traversal demonstrates spatial locality - both operating together."
+  },
+  {
+    "topic": "Memory Hierarchy",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "Why does the effectiveness of a memory hierarchy fundamentally rely on the principle of locality of reference?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Because without locality, placing frequently reused data in small fast memories would not improve average access time, since every access would be equally likely to hit any location"
+      },
+      {
+        "letter": "B",
+        "text": "Because locality determines the physical size of the hard disk"
+      },
+      {
+        "letter": "C",
+        "text": "Because locality only matters for networked systems"
+      },
+      {
+        "letter": "D",
+        "text": "Locality of reference has no real effect on hierarchy performance"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Caching only helps because real programs reuse recent/nearby data far more than random chance would predict; without locality, a small fast cache would rarely contain the needed data."
+  },
+  {
+    "topic": "Cache Memory",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What does a 'cache miss' mean?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Requested data is found in cache"
+      },
+      {
+        "letter": "B",
+        "text": "Requested data is NOT found in cache and must be fetched from a slower memory level"
+      },
+      {
+        "letter": "C",
+        "text": "The cache has been physically damaged"
+      },
+      {
+        "letter": "D",
+        "text": "The CPU has crashed"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A miss means the requested item was not present in the cache, requiring a fetch from the next, slower memory level."
+  },
+  {
+    "topic": "Cache Memory",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: a direct-mapped cache allows a given memory block to be stored in any one of several cache lines, chosen freely.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "In direct-mapped cache, each memory block maps to exactly one specific line determined by its address; it has no choice of placement, unlike associative caches."
+  },
+  {
+    "topic": "Cache Memory",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "A set-associative cache has 4 sets, each holding 2 lines (2-way set-associative). A new block maps to set 2, which is already full. Which replacement policy decision is now needed?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "No decision is needed; the whole cache must be cleared"
+      },
+      {
+        "letter": "B",
+        "text": "The cache must decide which of the 2 lines within set 2 to evict, using a policy such as LRU"
+      },
+      {
+        "letter": "C",
+        "text": "The block is simply discarded without being cached"
+      },
+      {
+        "letter": "D",
+        "text": "The block automatically goes to set 3 instead"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Only the lines within the target set compete for replacement; a policy like LRU picks which of that set's 2 lines to evict."
+  },
+  {
+    "topic": "Cache Memory",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "Why does a fully associative cache generally achieve a lower miss rate than a direct-mapped cache of the same total size, but at higher hardware cost?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Because fully associative caches use less memory overall"
+      },
+      {
+        "letter": "B",
+        "text": "Because a block can be placed in any line, avoiding the forced conflict misses that occur in direct-mapped caches when multiple blocks compete for the same line, but this flexibility requires comparing the tag against every line in parallel, needing more comparator hardware"
+      },
+      {
+        "letter": "C",
+        "text": "Because direct-mapped caches cannot store tags at all"
+      },
+      {
+        "letter": "D",
+        "text": "There is no real difference; cost and miss rate are identical"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Full associativity removes the conflict-miss problem by letting any block go anywhere, but checking all lines simultaneously requires a comparator per line, which does not scale cheaply."
+  },
+  {
+    "topic": "I/O Organization",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "Which I/O method involves the CPU repeatedly checking a status register to see if a device is ready?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Interrupt-driven I/O"
+      },
+      {
+        "letter": "B",
+        "text": "Programmed I/O (polling)"
+      },
+      {
+        "letter": "C",
+        "text": "DMA"
+      },
+      {
+        "letter": "D",
+        "text": "Virtual I/O"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Programmed I/O (polling) has the CPU busy-wait, checking a status flag until the device signals readiness."
+  },
+  {
+    "topic": "I/O Organization",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: in interrupt-driven I/O, the CPU can perform other useful work while waiting for a device, instead of continuously polling it.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "This is the key benefit of interrupts over polling: the CPU is only interrupted when the device is actually ready, freeing it otherwise."
+  },
+  {
+    "topic": "I/O Organization",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "A system transfers a large file from disk to memory. If this is done using programmed I/O (polling) one word at a time, what is the main performance problem?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "No problem; polling is always fastest"
+      },
+      {
+        "letter": "B",
+        "text": "The CPU wastes a large number of cycles repeatedly checking the device status instead of doing other useful work, especially for large transfers"
+      },
+      {
+        "letter": "C",
+        "text": "Polling cannot transfer more than one byte total"
+      },
+      {
+        "letter": "D",
+        "text": "Polling requires no CPU involvement at all"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Polling ties up the CPU in a busy-wait loop for the entire transfer, which is especially wasteful for large, slow transfers."
+  },
+  {
+    "topic": "I/O Organization",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "Why does DMA require the DMA controller (not the CPU) to directly manage memory addressing during the transfer?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Because the CPU is physically incapable of ever addressing memory"
+      },
+      {
+        "letter": "B",
+        "text": "Because the entire point of DMA is to offload the repetitive address-generation and data-movement work from the CPU, letting the CPU do other work while the transfer proceeds in the background"
+      },
+      {
+        "letter": "C",
+        "text": "Because DMA controllers do not need to produce addresses"
+      },
+      {
+        "letter": "D",
+        "text": "There is no real reason; it is arbitrary"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "DMA exists specifically to remove the CPU from the data-movement loop; the DMA controller independently generates addresses and moves data so the CPU is free."
+  },
+  {
+    "topic": "Pipelining",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What is the main benefit of pipelining a CPU's instruction execution?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Reduces the total number of instructions needed by a program"
+      },
+      {
+        "letter": "B",
+        "text": "Increases instruction throughput by overlapping execution of multiple instructions at different stages"
+      },
+      {
+        "letter": "C",
+        "text": "Eliminates all hazards automatically"
+      },
+      {
+        "letter": "D",
+        "text": "Removes the need for a control unit"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Pipelining overlaps different stages of successive instructions, which raises the rate at which instructions complete (throughput)."
+  },
+  {
+    "topic": "Pipelining",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: a structural hazard occurs when two instructions in the pipeline need to use the same hardware resource at the same time.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "This is precisely the definition of a structural hazard: contention for a shared, limited hardware resource."
+  },
+  {
+    "topic": "Pipelining",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "A branch instruction's outcome is not known until late in the pipeline. The CPU predicts the branch will be taken and begins fetching instructions from the predicted target. If the prediction turns out wrong, what must happen?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Nothing; wrong predictions have no effect"
+      },
+      {
+        "letter": "B",
+        "text": "The incorrectly fetched instructions must be discarded (squashed/flushed) from the pipeline, and fetching must restart from the correct path, costing a performance penalty"
+      },
+      {
+        "letter": "C",
+        "text": "The CPU must restart the entire program"
+      },
+      {
+        "letter": "D",
+        "text": "The prediction is simply ignored and both paths are kept permanently"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "On a misprediction, the speculatively fetched instructions along the wrong path must be flushed, and the pipeline restarts fetching from the correct target - costing cycles."
+  },
+  {
+    "topic": "Pipelining",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "Why does increasing pipeline depth (more, shorter stages) not always proportionally increase performance, even though it allows a higher clock frequency?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Because clock frequency has nothing to do with pipeline depth"
+      },
+      {
+        "letter": "B",
+        "text": "Because deeper pipelines increase the relative impact and frequency of hazards (especially branch misprediction penalties), which can offset the gains from a faster clock"
+      },
+      {
+        "letter": "C",
+        "text": "Because deeper pipelines automatically reduce the instruction count"
+      },
+      {
+        "letter": "D",
+        "text": "Because pipelining can only ever have exactly 5 stages"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Although more/shorter stages allow a faster clock, they also lengthen the misprediction/hazard penalty in cycles, which can cancel out much of the clock-speed gain."
+  },
+  {
+    "topic": "Performance and Parallelism",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "Which of these is the standard formula for CPU execution time?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Instruction Count x CPI x Clock Cycle Time"
+      },
+      {
+        "letter": "B",
+        "text": "Instruction Count / CPI"
+      },
+      {
+        "letter": "C",
+        "text": "CPI / Clock Cycle Time"
+      },
+      {
+        "letter": "D",
+        "text": "Clock Cycle Time / Instruction Count"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "CPU execution time is the product of the number of instructions executed, the average cycles per instruction, and the duration of one clock cycle."
+  },
+  {
+    "topic": "Performance and Parallelism",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: a higher clock frequency always guarantees better overall CPU performance regardless of CPI or instruction count.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Performance depends on the product of instruction count, CPI, and clock cycle time together; a higher clock frequency with a worse CPI or more instructions can still yield worse overall performance."
+  },
+  {
+    "topic": "Performance and Parallelism",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "A program spends 80% of its execution time in a section that can be perfectly parallelized across many cores, and 20% in an inherently serial section. According to Amdahl's Law, as the number of cores approaches infinity, the maximum possible speedup approaches:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Infinity"
+      },
+      {
+        "letter": "B",
+        "text": "1 / 0.2 = 5"
+      },
+      {
+        "letter": "C",
+        "text": "1 / 0.8 = 1.25"
+      },
+      {
+        "letter": "D",
+        "text": "Exactly 10"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "As the number of processors grows without bound, the parallel portion's time shrinks toward zero, leaving speedup bounded by 1 divided by the serial fraction: 1/0.2 = 5."
+  },
+  {
+    "topic": "Performance and Parallelism",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "Why does Amdahl's Law imply that simply adding more processor cores yields diminishing returns for a fixed workload with a fixed serial fraction?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Because adding cores always decreases performance"
+      },
+      {
+        "letter": "B",
+        "text": "Because the non-parallelizable (serial) portion of the execution time becomes an increasingly dominant, fixed lower bound on total time as the parallel portion shrinks toward zero with enough cores"
+      },
+      {
+        "letter": "C",
+        "text": "Because Amdahl's Law only applies to single-core systems"
+      },
+      {
+        "letter": "D",
+        "text": "Because cores communicate over an infinitely slow network in all cases"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "As more cores shrink the parallel portion's time, the fixed serial portion increasingly dominates total execution time, placing a hard ceiling on further speedup."
+  }
+]

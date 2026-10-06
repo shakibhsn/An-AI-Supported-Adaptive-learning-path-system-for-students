@@ -840,6 +840,18 @@
               class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
               SPL
             </button>
+            <button id="overviewTabOs" onclick="switchOverviewTab('os')"
+              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
+              OS
+            </button>
+            <button id="overviewTabCa" onclick="switchOverviewTab('ca')"
+              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
+              CA
+            </button>
+            <button id="overviewTabDbms" onclick="switchOverviewTab('dbms')"
+              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
+              DBMS
+            </button>
           </div>
         </div>
 
@@ -989,6 +1001,18 @@
               class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
               SPL Gaps
             </button>
+            <button id="gapTabOs" onclick="switchGapTab('os')"
+              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
+              OS Gaps
+            </button>
+            <button id="gapTabCa" onclick="switchGapTab('ca')"
+              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
+              CA Gaps
+            </button>
+            <button id="gapTabDbms" onclick="switchGapTab('dbms')"
+              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
+              DBMS Gaps
+            </button>
           </div>
         </div>
 
@@ -1052,6 +1076,18 @@
             <button id="planTabSpl" onclick="switchScreen('s08'); switchPlanTab('spl');"
               class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
               SPL Plan (60m)
+            </button>
+            <button id="planTabOs" onclick="switchScreen('s08'); switchPlanTab('os');"
+              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
+              OS Plan (60m)
+            </button>
+            <button id="planTabCa" onclick="switchScreen('s08'); switchPlanTab('ca');"
+              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
+              CA Plan (60m)
+            </button>
+            <button id="planTabDbms" onclick="switchScreen('s08'); switchPlanTab('dbms');"
+              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
+              DBMS Plan (60m)
             </button>
           </div>
         </div>
@@ -1168,6 +1204,75 @@
           </div>
         </div>
 
+        <!-- ================= OS STUDY PLAN (Phase 3) ================= -->
+        <div id="planOs" class="hidden hub-card rounded-2xl p-6 md:p-8 bg-gradient-to-br from-white to-sky-50/40">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-xl bg-sky-600 text-white flex items-center justify-center font-extrabold text-sm shadow-md">AI</div>
+            <div>
+              <span class="text-xs font-bold text-sky-700 uppercase tracking-wider">Adaptive Learning Path Engine • OS Track</span>
+              <h2 class="text-2xl font-bold text-slate-900">Your AI-Generated Study Plan: OS</h2>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600 mb-6 leading-relaxed" id="planOsSummary">Generating your personalized plan...</p>
+          <div class="space-y-4 mb-6" id="planOsSteps"></div>
+          <div id="planOsFallbackNotice" class="hidden text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
+            AI personalization is temporarily unavailable - showing a fallback plan based on your learning path order.
+          </div>
+          <div class="flex items-center justify-between pt-4 border-t border-slate-200">
+            <span class="text-xs text-slate-500">Plan Duration: <strong id="planOsDuration">60 Minutes Total</strong></span>
+            <button onclick="switchContentTab('os'); switchScreen('s09');"
+              class="bg-sky-600 hover:bg-sky-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
+              Start Os Plan Now →
+            </button>
+          </div>
+        </div>
+
+        <!-- ================= CA STUDY PLAN (Phase 3) ================= -->
+        <div id="planCa" class="hidden hub-card rounded-2xl p-6 md:p-8 bg-gradient-to-br from-white to-rose-50/40">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-xl bg-rose-600 text-white flex items-center justify-center font-extrabold text-sm shadow-md">AI</div>
+            <div>
+              <span class="text-xs font-bold text-rose-700 uppercase tracking-wider">Adaptive Learning Path Engine • CA Track</span>
+              <h2 class="text-2xl font-bold text-slate-900">Your AI-Generated Study Plan: CA</h2>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600 mb-6 leading-relaxed" id="planCaSummary">Generating your personalized plan...</p>
+          <div class="space-y-4 mb-6" id="planCaSteps"></div>
+          <div id="planCaFallbackNotice" class="hidden text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
+            AI personalization is temporarily unavailable - showing a fallback plan based on your learning path order.
+          </div>
+          <div class="flex items-center justify-between pt-4 border-t border-slate-200">
+            <span class="text-xs text-slate-500">Plan Duration: <strong id="planCaDuration">60 Minutes Total</strong></span>
+            <button onclick="switchContentTab('ca'); switchScreen('s09');"
+              class="bg-rose-600 hover:bg-rose-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
+              Start Ca Plan Now →
+            </button>
+          </div>
+        </div>
+
+        <!-- ================= DBMS STUDY PLAN (Phase 3) ================= -->
+        <div id="planDbms" class="hidden hub-card rounded-2xl p-6 md:p-8 bg-gradient-to-br from-white to-indigo-50/40">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-extrabold text-sm shadow-md">AI</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-700 uppercase tracking-wider">Adaptive Learning Path Engine • DBMS Track</span>
+              <h2 class="text-2xl font-bold text-slate-900">Your AI-Generated Study Plan: DBMS</h2>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600 mb-6 leading-relaxed" id="planDbmsSummary">Generating your personalized plan...</p>
+          <div class="space-y-4 mb-6" id="planDbmsSteps"></div>
+          <div id="planDbmsFallbackNotice" class="hidden text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
+            AI personalization is temporarily unavailable - showing a fallback plan based on your learning path order.
+          </div>
+          <div class="flex items-center justify-between pt-4 border-t border-slate-200">
+            <span class="text-xs text-slate-500">Plan Duration: <strong id="planDbmsDuration">60 Minutes Total</strong></span>
+            <button onclick="switchContentTab('dbms'); switchScreen('s09');"
+              class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
+              Start Dbms Plan Now →
+            </button>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -1195,6 +1300,18 @@
             <button id="contentTabSpl" onclick="switchContentTab('spl')"
               class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
               SPL Content
+            </button>
+            <button id="contentTabOs" onclick="switchContentTab('os')"
+              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
+              OS Content
+            </button>
+            <button id="contentTabCa" onclick="switchContentTab('ca')"
+              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
+              CA Content
+            </button>
+            <button id="contentTabDbms" onclick="switchContentTab('dbms')"
+              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
+              DBMS Content
             </button>
           </div>
         </div>
@@ -1558,6 +1675,18 @@
               class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
               SPL (5 Qs)
             </button>
+            <button id="followupTabOs" onclick="switchFollowupCourse('os')"
+              class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
+              OS (5 Qs)
+            </button>
+            <button id="followupTabCa" onclick="switchFollowupCourse('ca')"
+              class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
+              CA (5 Qs)
+            </button>
+            <button id="followupTabDbms" onclick="switchFollowupCourse('dbms')"
+              class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
+              DBMS (5 Qs)
+            </button>
           </div>
         </div>
 
@@ -1696,6 +1825,18 @@
             class="px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800">
             SPL Progress
           </button>
+          <button onclick="switchProgressTab('osTab')" id="osTabBtn"
+            class="px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800">
+            OS Progress
+          </button>
+          <button onclick="switchProgressTab('caTab')" id="caTabBtn"
+            class="px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800">
+            CA Progress
+          </button>
+          <button onclick="switchProgressTab('dbmsTab')" id="dbmsTabBtn"
+            class="px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800">
+            DBMS Progress
+          </button>
         </div>
 
         <!-- TAB CONTENT: DSA -->
@@ -1735,6 +1876,31 @@
             <div class="space-y-3" id="splProgressDetails">
               <!-- Populated dynamically by renderProgressTab() -->
             </div>
+          </div>
+        </div>
+
+        <!-- TAB CONTENT: OS/CA/DBMS (Phase 3) -->
+        <div id="osTab" class="hidden space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="osProgressStats"></div>
+          <div class="hub-card rounded-2xl p-6">
+            <h3 class="text-base font-bold text-slate-900 mb-4">OS Topic Proficiency Details</h3>
+            <div class="space-y-3" id="osProgressDetails"></div>
+          </div>
+        </div>
+
+        <div id="caTab" class="hidden space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="caProgressStats"></div>
+          <div class="hub-card rounded-2xl p-6">
+            <h3 class="text-base font-bold text-slate-900 mb-4">CA Topic Proficiency Details</h3>
+            <div class="space-y-3" id="caProgressDetails"></div>
+          </div>
+        </div>
+
+        <div id="dbmsTab" class="hidden space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="dbmsProgressStats"></div>
+          <div class="hub-card rounded-2xl p-6">
+            <h3 class="text-base font-bold text-slate-900 mb-4">DBMS Topic Proficiency Details</h3>
+            <div class="space-y-3" id="dbmsProgressDetails"></div>
           </div>
         </div>
 
@@ -2095,6 +2261,12 @@
               class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">OOP</button>
             <button id="assessmentsTabSpl" onclick="switchAssessmentsTab('spl')"
               class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">SPL</button>
+            <button id="assessmentsTabOs" onclick="switchAssessmentsTab('os')"
+              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">OS</button>
+            <button id="assessmentsTabCa" onclick="switchAssessmentsTab('ca')"
+              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">CA</button>
+            <button id="assessmentsTabDbms" onclick="switchAssessmentsTab('dbms')"
+              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">DBMS</button>
           </div>
         </div>
 
@@ -2698,7 +2870,7 @@
 
     function beginOnboardingDiagnostics() {
       const checked = [...document.querySelectorAll('.onboard-course-check:checked')].map((c) => c.dataset.courseKey);
-      onboardingQueue = checked.length > 0 ? checked : ['dsa', 'oop', 'spl'];
+      onboardingQueue = checked.length > 0 ? checked : ALL_COURSE_KEYS;
       advanceOnboarding();
     }
 
@@ -2849,7 +3021,17 @@
       DSA: { accent: 'brand', bar: 'bg-brand-400', tint: 'bg-brand-50/50 border-brand-100', btn: 'bg-brand-500 hover:bg-brand-700', ovBtn: 'bg-brand-50 hover:bg-brand-100 text-brand-800 border-brand-200' },
       OOP: { accent: 'amber', bar: 'bg-amber-500', tint: 'bg-amber-50/50 border-amber-100', btn: 'bg-brand-500 hover:bg-brand-700', ovBtn: 'bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-200' },
       SPL: { accent: 'emerald', bar: 'bg-emerald-500', tint: 'bg-emerald-50/50 border-emerald-100', btn: 'bg-brand-500 hover:bg-brand-700', ovBtn: 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-200' },
+      // Phase 3 (new CSE core courses) - distinct accents from the originals.
+      OS: { accent: 'sky', bar: 'bg-sky-500', tint: 'bg-sky-50/50 border-sky-100', btn: 'bg-brand-500 hover:bg-brand-700', ovBtn: 'bg-sky-50 hover:bg-sky-100 text-sky-800 border-sky-200' },
+      CA: { accent: 'rose', bar: 'bg-rose-500', tint: 'bg-rose-50/50 border-rose-100', btn: 'bg-brand-500 hover:bg-brand-700', ovBtn: 'bg-rose-50 hover:bg-rose-100 text-rose-800 border-rose-200' },
+      DBMS: { accent: 'indigo', bar: 'bg-indigo-500', tint: 'bg-indigo-50/50 border-indigo-100', btn: 'bg-brand-500 hover:bg-brand-700', ovBtn: 'bg-indigo-50 hover:bg-indigo-100 text-indigo-800 border-indigo-200' },
     };
+
+    // Single shared list of course keys every per-course tab switcher loops
+    // over (Course Overview, Gaps, AI Plan, Materials, Assessments,
+    // Progress) - adding a course means updating this one array plus that
+    // screen's tab markup, instead of six separate hardcoded arrays.
+    const ALL_COURSE_KEYS = ['dsa', 'oop', 'spl', 'os', 'ca', 'dbms'];
 
     function masteryBadge(avg, assessed) {
       if (assessed === 0) return { label: 'Not started', cls: 'bg-slate-100 text-slate-500 border border-slate-200' };
@@ -3221,12 +3403,15 @@
       dsa: { pill: 'bg-brand-500', name: 'DSA' },
       oop: { pill: 'bg-amber-600', name: 'OOP' },
       spl: { pill: 'bg-emerald-600', name: 'SPL' },
+      os: { pill: 'bg-sky-600', name: 'OS' },
+      ca: { pill: 'bg-rose-600', name: 'CA' },
+      dbms: { pill: 'bg-indigo-600', name: 'DBMS' },
     };
 
     function switchOverviewTab(course) {
-      ['dsa', 'oop', 'spl'].forEach((c) => {
-        document.getElementById(`overviewTab${c.charAt(0).toUpperCase() + c.slice(1)}`).className =
-          "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
+      ALL_COURSE_KEYS.forEach((c) => {
+        const el = document.getElementById(`overviewTab${c.charAt(0).toUpperCase() + c.slice(1)}`);
+        if (el) el.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
       });
       const theme = OVERVIEW_TAB_THEME[course] || OVERVIEW_TAB_THEME.dsa;
       document.getElementById(`overviewTab${course.charAt(0).toUpperCase() + course.slice(1)}`).className =
@@ -3322,9 +3507,9 @@
     // exact same diagnostic/adaptive-assessment/follow-up flows already
     // built and tested; this is purely a real-data index page over them. ----
     async function switchAssessmentsTab(course) {
-      ['dsa', 'oop', 'spl'].forEach((c) => {
-        document.getElementById(`assessmentsTab${c.charAt(0).toUpperCase()}${c.slice(1)}`).className =
-          "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
+      ALL_COURSE_KEYS.forEach((c) => {
+        const el = document.getElementById(`assessmentsTab${c.charAt(0).toUpperCase()}${c.slice(1)}`);
+        if (el) el.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
       });
       const theme = OVERVIEW_TAB_THEME[course] || OVERVIEW_TAB_THEME.dsa;
       document.getElementById(`assessmentsTab${course.charAt(0).toUpperCase()}${course.slice(1)}`).className =
@@ -3452,12 +3637,15 @@
       dsa: { pill: 'bg-brand-500', icon: 'bg-red-50 text-red-600', label: 'text-brand-500 bg-brand-50 border-brand-100', name: 'DSA' },
       oop: { pill: 'bg-amber-600', icon: 'bg-amber-50 text-amber-600', label: 'text-amber-700 bg-amber-50 border-amber-200', name: 'OOP' },
       spl: { pill: 'bg-emerald-600', icon: 'bg-emerald-50 text-emerald-600', label: 'text-emerald-700 bg-emerald-50 border-emerald-200', name: 'SPL' },
+      os: { pill: 'bg-sky-600', icon: 'bg-sky-50 text-sky-600', label: 'text-sky-700 bg-sky-50 border-sky-200', name: 'OS' },
+      ca: { pill: 'bg-rose-600', icon: 'bg-rose-50 text-rose-600', label: 'text-rose-700 bg-rose-50 border-rose-200', name: 'CA' },
+      dbms: { pill: 'bg-indigo-600', icon: 'bg-indigo-50 text-indigo-600', label: 'text-indigo-700 bg-indigo-50 border-indigo-200', name: 'DBMS' },
     };
 
     function switchGapTab(course) {
-      ['dsa', 'oop', 'spl'].forEach((c) => {
-        document.getElementById(`gapTab${c.charAt(0).toUpperCase() + c.slice(1)}`).className =
-          "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
+      ALL_COURSE_KEYS.forEach((c) => {
+        const el = document.getElementById(`gapTab${c.charAt(0).toUpperCase() + c.slice(1)}`);
+        if (el) el.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
       });
       const theme = GAP_TAB_THEME[course] || GAP_TAB_THEME.dsa;
       document.getElementById(`gapTab${course.charAt(0).toUpperCase() + course.slice(1)}`).className =
@@ -3578,39 +3766,28 @@
     }
 
     function switchPlanTab(course) {
-      document.getElementById('planDsa').classList.add('hidden');
-      document.getElementById('planOop').classList.add('hidden');
-      document.getElementById('planSpl').classList.add('hidden');
-
-      const dsaBtn = document.getElementById('planTabDsa');
-      const oopBtn = document.getElementById('planTabOop');
-      const splBtn = document.getElementById('planTabSpl');
       const breadcrumb = document.getElementById('planBreadcrumbText');
+      ALL_COURSE_KEYS.forEach((c) => {
+        const cap = c.charAt(0).toUpperCase() + c.slice(1);
+        document.getElementById(`plan${cap}`)?.classList.add('hidden');
+        const btn = document.getElementById(`planTab${cap}`);
+        if (btn) btn.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
+      });
 
-      dsaBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
-      oopBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
-      splBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
+      const cap = course.charAt(0).toUpperCase() + course.slice(1);
+      const theme = OVERVIEW_TAB_THEME[course] || OVERVIEW_TAB_THEME.dsa;
+      document.getElementById(`plan${cap}`)?.classList.remove('hidden');
+      const activeBtn = document.getElementById(`planTab${cap}`);
+      if (activeBtn) activeBtn.className = `px-3.5 py-1.5 rounded-lg text-xs font-bold ${theme.pill} text-white shadow-xs transition`;
+      if (breadcrumb) breadcrumb.textContent = `${theme.name} AI Personalized Study Plan`;
 
-      if (course === 'dsa') {
-        document.getElementById('planDsa').classList.remove('hidden');
-        dsaBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold bg-brand-500 text-white shadow-xs transition";
-        if (breadcrumb) breadcrumb.textContent = "DSA AI Personalized Study Plan";
-      } else if (course === 'oop') {
-        document.getElementById('planOop').classList.remove('hidden');
-        oopBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold bg-amber-600 text-white shadow-xs transition";
-        if (breadcrumb) breadcrumb.textContent = "OOP AI Personalized Study Plan";
-      } else {
-        document.getElementById('planSpl').classList.remove('hidden');
-        splBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 text-white shadow-xs transition";
-        if (breadcrumb) breadcrumb.textContent = "SPL AI Personalized Study Plan";
-      }
       renderAiPlan(course);
     }
 
     // ================= LEARNING MATERIALS (SCREEN 09) =================
     // Titles the AI plan recommended, per course code - populated by
     // renderAiPlan() so renderMaterials() can highlight them (Section 18).
-    const recommendedMaterialTitles = { dsa: new Set(), oop: new Set(), spl: new Set() };
+    const recommendedMaterialTitles = Object.fromEntries(ALL_COURSE_KEYS.map((c) => [c, new Set()]));
 
     const MATERIAL_TYPE_META = {
       VIDEO: { label: 'Video', cls: 'bg-rose-50 text-rose-700 border-rose-200' },
@@ -3623,7 +3800,7 @@
 
     function switchContentTab(course) {
       currentChatCourse = course;
-      for (const k of ['dsa', 'oop', 'spl']) {
+      for (const k of ALL_COURSE_KEYS) {
         const btn = document.getElementById('contentTab' + k.charAt(0).toUpperCase() + k.slice(1));
         if (btn) btn.className = k === course
           ? 'px-3.5 py-1.5 rounded-lg text-xs font-bold bg-brand-500 text-white shadow-xs transition'
@@ -3950,6 +4127,9 @@
       dsa: { border: 'border-red-500', label: 'text-red-600', box: 'bg-red-50 border-red-200', boxLabel: 'text-red-600', score: 'text-red-700', accuracy: 'text-red-600' },
       oop: { border: 'border-amber-500', label: 'text-amber-600', box: 'bg-amber-50 border-amber-200', boxLabel: 'text-amber-600', score: 'text-amber-700', accuracy: 'text-amber-600' },
       spl: { border: 'border-emerald-500', label: 'text-emerald-600', box: 'bg-emerald-50 border-emerald-200', boxLabel: 'text-emerald-600', score: 'text-emerald-700', accuracy: 'text-emerald-600' },
+      os: { border: 'border-sky-500', label: 'text-sky-600', box: 'bg-sky-50 border-sky-200', boxLabel: 'text-sky-600', score: 'text-sky-700', accuracy: 'text-sky-600' },
+      ca: { border: 'border-rose-500', label: 'text-rose-600', box: 'bg-rose-50 border-rose-200', boxLabel: 'text-rose-600', score: 'text-rose-700', accuracy: 'text-rose-600' },
+      dbms: { border: 'border-indigo-500', label: 'text-indigo-600', box: 'bg-indigo-50 border-indigo-200', boxLabel: 'text-indigo-600', score: 'text-indigo-700', accuracy: 'text-indigo-600' },
     };
 
     function renderDiagnosticResult(course, result) {
@@ -4408,19 +4588,18 @@
       const badge = document.getElementById('followupCourseBadge');
       if (badge) {
         badge.textContent = `${currentFollowupCourse.toUpperCase()} Verification Assessment`;
-        if (currentFollowupCourse === 'dsa') badge.className = "text-xs font-bold text-brand-500 uppercase tracking-wider bg-brand-50 px-2.5 py-0.5 rounded-full border border-brand-100";
-        else if (currentFollowupCourse === 'oop') badge.className = "text-xs font-bold text-amber-700 uppercase tracking-wider bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200";
-        else badge.className = "text-xs font-bold text-emerald-700 uppercase tracking-wider bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200";
+        badge.className = "text-xs font-bold text-brand-500 uppercase tracking-wider bg-brand-50 px-2.5 py-0.5 rounded-full border border-brand-100";
       }
 
-      const dsaTab = document.getElementById('followupTabDsa');
-      const oopTab = document.getElementById('followupTabOop');
-      const splTab = document.getElementById('followupTabSpl');
-      if (dsaTab && oopTab && splTab) {
-        dsaTab.className = currentFollowupCourse === 'dsa' ? "px-3 py-1.5 rounded-lg text-xs font-bold bg-brand-500 text-white shadow-xs transition" : "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
-        oopTab.className = currentFollowupCourse === 'oop' ? "px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-600 text-white shadow-xs transition" : "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
-        splTab.className = currentFollowupCourse === 'spl' ? "px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 text-white shadow-xs transition" : "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
-      }
+      ALL_COURSE_KEYS.forEach((c) => {
+        const cap = c.charAt(0).toUpperCase() + c.slice(1);
+        const tab = document.getElementById(`followupTab${cap}`);
+        if (!tab) return;
+        const theme = OVERVIEW_TAB_THEME[c] || OVERVIEW_TAB_THEME.dsa;
+        tab.className = c === currentFollowupCourse
+          ? `px-3 py-1.5 rounded-lg text-xs font-bold ${theme.pill} text-white shadow-xs transition`
+          : "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
+      });
 
       document.getElementById('followupCounter').textContent = `Follow-Up Question ${currentFollowupIndex + 1} of ${questions.length}`;
       document.getElementById('followupProgress').style.width = `${((currentFollowupIndex + 1) / questions.length) * 100}%`;
@@ -4618,13 +4797,11 @@
     let currentProgressCourse = 'dsa';
 
     function switchProgressTab(tabId) {
-      document.getElementById('dsaTab').classList.add('hidden');
-      document.getElementById('oopTab').classList.add('hidden');
-      document.getElementById('splTab').classList.add('hidden');
-
-      document.getElementById('dsaTabBtn').className = "px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800";
-      document.getElementById('oopTabBtn').className = "px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800";
-      document.getElementById('splTabBtn').className = "px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800";
+      ALL_COURSE_KEYS.forEach((c) => {
+        document.getElementById(`${c}Tab`)?.classList.add('hidden');
+        const btn = document.getElementById(`${c}TabBtn`);
+        if (btn) btn.className = "px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800";
+      });
 
       document.getElementById(tabId).classList.remove('hidden');
       document.getElementById(tabId + 'Btn').className = "px-5 py-3 text-sm font-bold border-b-2 border-brand-500 text-brand-500";
@@ -5201,7 +5378,7 @@
       const el = document.getElementById('profileTopicMastery');
       try {
         const perCourse = await Promise.all(
-          ['dsa', 'oop', 'spl'].map(async (c) => ({ course: c, data: await apiFetch(`/courses/${courseIdCache[c]}/mastery-map`) })),
+          ALL_COURSE_KEYS.map(async (c) => ({ course: c, data: await apiFetch(`/courses/${courseIdCache[c]}/mastery-map`) })),
         );
         const rows = [];
         for (const { course, data } of perCourse) {

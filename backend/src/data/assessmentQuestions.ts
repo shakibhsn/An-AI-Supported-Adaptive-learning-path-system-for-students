@@ -26,6 +26,10 @@ import { CourseCode } from './topicMapping';
 import dsaExtra from './assessmentQuestions.dsaExtra.json';
 import oopQuestions from './assessmentQuestions.oop.json';
 import splQuestions from './assessmentQuestions.spl.json';
+// Phase 3 (OS/CA/DBMS) - 870 more questions (270+300+300), same pattern.
+import osQuestions from './assessmentQuestions.os.json';
+import caQuestions from './assessmentQuestions.ca.json';
+import dbmsQuestions from './assessmentQuestions.dbms.json';
 
 export type AssessDifficulty = 'EASY' | 'MEDIUM' | 'HARD';
 export type AssessType = 'MCQ' | 'SHORT_ANSWER' | 'PROBLEM_SOLVING';
@@ -165,4 +169,7 @@ export const ASSESSMENT_QUESTIONS: Partial<Record<CourseCode, AssessQuestion[]>>
   DSA: [...ARRAYS_QUESTIONS, ...(dsaExtra as AssessQuestion[])],
   OOP: oopQuestions as AssessQuestion[],
   SPL: splQuestions as AssessQuestion[],
+  OS: osQuestions as AssessQuestion[],
+  CA: caQuestions as AssessQuestion[],
+  DBMS: dbmsQuestions as AssessQuestion[],
 };

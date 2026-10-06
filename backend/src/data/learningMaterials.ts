@@ -15,6 +15,10 @@
  */
 
 import { CourseCode } from './topicMapping';
+// Phase 3 (OS/CA/DBMS) - same Record<topicName, SeedMaterial[]> shape, JSON for size.
+import osMaterials from './learningMaterials.os.json';
+import caMaterials from './learningMaterials.ca.json';
+import dbmsMaterials from './learningMaterials.dbms.json';
 
 export interface SeedMaterial {
   title: string;
@@ -184,4 +188,7 @@ export const LEARNING_MATERIALS: Record<CourseCode, Record<string, SeedMaterial[
       { title: 'CS50 - Memory (stack vs heap)', description: "Harvard CS50's lecture segment on memory layout.", type: 'VIDEO', url: 'https://cs50.harvard.edu/x/2024/weeks/4/', provider: 'Harvard CS50', difficulty: 'BEGINNER' },
     ],
   },
+  OS: osMaterials as Record<string, SeedMaterial[]>,
+  CA: caMaterials as Record<string, SeedMaterial[]>,
+  DBMS: dbmsMaterials as Record<string, SeedMaterial[]>,
 };

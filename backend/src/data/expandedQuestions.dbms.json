@@ -1,0 +1,962 @@
+[
+  {
+    "topic": "Database Fundamentals",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "Which of these is a core goal of using a DBMS instead of flat files?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Increasing data redundancy"
+      },
+      {
+        "letter": "B",
+        "text": "Providing controlled, centralized access that reduces redundancy and inconsistency"
+      },
+      {
+        "letter": "C",
+        "text": "Removing the need for a schema"
+      },
+      {
+        "letter": "D",
+        "text": "Preventing any application from reading the data"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A DBMS centralizes data management to minimize redundant, inconsistent copies while still allowing controlled shared access by multiple applications."
+  },
+  {
+    "topic": "Database Fundamentals",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: the internal schema in the three-schema architecture describes how end users see the data.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "The internal schema describes physical storage; it is the external schema (views) that describes how specific user groups see the data."
+  },
+  {
+    "topic": "Database Fundamentals",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "A company adds a new index to speed up a report query. Which form of data independence allows this change without altering the conceptual schema?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Logical data independence"
+      },
+      {
+        "letter": "B",
+        "text": "Physical data independence"
+      },
+      {
+        "letter": "C",
+        "text": "View independence"
+      },
+      {
+        "letter": "D",
+        "text": "Transaction independence"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Adding an index is a physical storage change; physical data independence ensures the conceptual schema (tables/columns) is unaffected by such internal-level changes."
+  },
+  {
+    "topic": "Database Fundamentals",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "Why is SQL considered to span DDL, DML, DCL, and TCL rather than belonging to just one category?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "SQL has no formal categorization"
+      },
+      {
+        "letter": "B",
+        "text": "SQL bundles schema definition (CREATE/ALTER), data manipulation (SELECT/INSERT/UPDATE/DELETE), access control (GRANT/REVOKE), and transaction control (COMMIT/ROLLBACK) under one unified syntax"
+      },
+      {
+        "letter": "C",
+        "text": "SQL can only define tables, nothing else"
+      },
+      {
+        "letter": "D",
+        "text": "SQL is a purely procedural language with no declarative statements"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "SQL is comprehensive, including statement types for every one of these categories, which is why it is described as covering DDL, DML, DCL, and TCL all at once."
+  },
+  {
+    "topic": "ER Model",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "Which ER construct is used to represent a property of an entity, such as a Student's Name?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Relationship"
+      },
+      {
+        "letter": "B",
+        "text": "Attribute"
+      },
+      {
+        "letter": "C",
+        "text": "Weak entity"
+      },
+      {
+        "letter": "D",
+        "text": "Generalization"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Attributes describe the properties/characteristics of an entity."
+  },
+  {
+    "topic": "ER Model",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: a weak entity type can be uniquely identified using only its own attributes, without reference to another entity.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A weak entity lacks a full key of its own and must be identified in combination with its owner entity's key plus its own partial key."
+  },
+  {
+    "topic": "ER Model",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "A Hospital database has Doctor and Patient entities connected by an \"Appointment\" M:N relationship that itself needs a Date, Time, and Room attribute, and the same doctor-patient pair can have multiple appointments over time. What is the most appropriate modeling choice?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Keep Appointment as a simple M:N relationship with no attributes"
+      },
+      {
+        "letter": "B",
+        "text": "Promote Appointment to its own entity with its own key, related to both Doctor and Patient"
+      },
+      {
+        "letter": "C",
+        "text": "Merge Doctor and Patient into one entity"
+      },
+      {
+        "letter": "D",
+        "text": "Remove the Room attribute since relationships cannot have extra context"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Since the same pair can have multiple appointments, each needing distinct attribute values, a plain M:N relationship (which allows only one associative instance per pair under typical interpretation) is insufficient; promoting Appointment to an entity with its own key allows multiple distinct, fully-attributed appointments per doctor-patient pair."
+  },
+  {
+    "topic": "ER Model",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "In specialization, what is the difference between the \"disjoint\" constraint and the \"overlapping\" constraint?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "They are synonyms for the same rule"
+      },
+      {
+        "letter": "B",
+        "text": "Disjoint means an entity instance can belong to at most one subclass; overlapping means an instance may belong to more than one subclass simultaneously"
+      },
+      {
+        "letter": "C",
+        "text": "Disjoint applies only to weak entities"
+      },
+      {
+        "letter": "D",
+        "text": "Overlapping means no entity instance can ever belong to any subclass"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Disjoint specialization restricts each superclass instance to at most one subclass membership, while overlapping specialization permits an instance to simultaneously belong to multiple subclasses (e.g., a person who is both a Student and an Employee)."
+  },
+  {
+    "topic": "Relational Model",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "In relational model terms, what is a \"domain\"?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "A foreign key"
+      },
+      {
+        "letter": "B",
+        "text": "The set of permissible (legal) values that an attribute can take"
+      },
+      {
+        "letter": "C",
+        "text": "A type of join"
+      },
+      {
+        "letter": "D",
+        "text": "A synonym for a relation"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A domain defines the pool of legal atomic values an attribute may hold, such as integers in a specific range for an Age attribute."
+  },
+  {
+    "topic": "Relational Model",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: a relation, as formally defined in the relational model, can contain two completely identical tuples.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Because a relation is mathematically a set of tuples, and sets cannot contain duplicate elements, no two tuples in a relation can be entirely identical."
+  },
+  {
+    "topic": "Relational Model",
+    "difficulty": "HARD",
+    "questionType": "CODE",
+    "question": "Given Order(OrderID PK, CustomerID FK -> Customer.CustomerID), what happens by default if you try to INSERT an Order row with a CustomerID that does not exist in Customer?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "The insert succeeds silently"
+      },
+      {
+        "letter": "B",
+        "text": "The insert is rejected due to a referential integrity (foreign key) constraint violation"
+      },
+      {
+        "letter": "C",
+        "text": "The Customer table automatically gains a new row with that CustomerID"
+      },
+      {
+        "letter": "D",
+        "text": "The OrderID is set to NULL instead"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A foreign key constraint enforces that CustomerID in Order must match an existing primary key value in Customer; referencing a non-existent value violates referential integrity and the insert is rejected."
+  },
+  {
+    "topic": "Relational Model",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "Why must a candidate key be \"minimal,\" and what would be wrong with treating a non-minimal super key as a candidate key?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Minimality has no real importance"
+      },
+      {
+        "letter": "B",
+        "text": "A candidate key must be minimal so that no attribute can be removed while still uniquely identifying tuples; a non-minimal super key would include unnecessary attributes, failing to represent the smallest sufficient identifier"
+      },
+      {
+        "letter": "C",
+        "text": "Candidate keys are never required to be unique"
+      },
+      {
+        "letter": "D",
+        "text": "Minimality only applies to foreign keys"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Minimality ensures the candidate key captures exactly the attributes needed for uniqueness, with no redundant extra attributes; a super key that is not minimal could still \"work\" but carries unnecessary attributes, so it would not qualify as a true candidate key."
+  },
+  {
+    "topic": "SQL",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "Which SQL keyword eliminates duplicate rows from a query result?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "UNIQUE"
+      },
+      {
+        "letter": "B",
+        "text": "DISTINCT"
+      },
+      {
+        "letter": "C",
+        "text": "FILTER"
+      },
+      {
+        "letter": "D",
+        "text": "GROUP"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "DISTINCT, placed after SELECT, removes duplicate rows from the final output."
+  },
+  {
+    "topic": "SQL",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: the WHERE clause can be used to filter rows based on the result of an aggregate function like COUNT(*).",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "WHERE filters individual rows before any grouping/aggregation occurs, so aggregate results are not yet available to it; HAVING must be used for that purpose instead."
+  },
+  {
+    "topic": "SQL",
+    "difficulty": "HARD",
+    "questionType": "CODE",
+    "question": "Given Employee(EmpID, Name, DeptID, Salary), which query correctly finds, for each department, the employee(s) earning the maximum salary in that department using a correlated subquery?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "SELECT * FROM Employee WHERE Salary = MAX(Salary)"
+      },
+      {
+        "letter": "B",
+        "text": "SELECT * FROM Employee e1 WHERE Salary = (SELECT MAX(Salary) FROM Employee e2 WHERE e2.DeptID = e1.DeptID)"
+      },
+      {
+        "letter": "C",
+        "text": "SELECT * FROM Employee GROUP BY DeptID"
+      },
+      {
+        "letter": "D",
+        "text": "SELECT MAX(Salary) FROM Employee"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "The correlated subquery recomputes the maximum salary scoped to each outer row's own DeptID (e2.DeptID = e1.DeptID), correctly identifying the top earner(s) within each department; MAX(Salary) cannot be used directly in WHERE without a subquery or window function."
+  },
+  {
+    "topic": "SQL",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "A query joins Customers to Orders with an INNER JOIN to list every customer's total orders, but customers with zero orders are missing from the report entirely. What is the correct fix?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Add a WHERE clause"
+      },
+      {
+        "letter": "B",
+        "text": "Switch to a LEFT OUTER JOIN from Customers to Orders, so customers are preserved even with no matching Orders rows"
+      },
+      {
+        "letter": "C",
+        "text": "Switch to a CROSS JOIN"
+      },
+      {
+        "letter": "D",
+        "text": "Remove the JOIN entirely"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "INNER JOIN drops unmatched rows from either side; a LEFT OUTER JOIN from Customers preserves every customer row, filling NULLs for Orders columns when there is no match, which is exactly what is needed to include zero-order customers."
+  },
+  {
+    "topic": "Relational Algebra",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "Which relational algebra operator produces every combination of a tuple from R paired with a tuple from S?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Selection (σ)"
+      },
+      {
+        "letter": "B",
+        "text": "Projection (π)"
+      },
+      {
+        "letter": "C",
+        "text": "Cartesian Product (×)"
+      },
+      {
+        "letter": "D",
+        "text": "Set Difference (−)"
+      }
+    ],
+    "correctAnswer": "C",
+    "explanation": "The Cartesian Product pairs every tuple of R with every tuple of S, with no filtering, producing |R| × |S| result tuples."
+  },
+  {
+    "topic": "Relational Algebra",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: the Union operator (∪) in relational algebra can be applied to any two relations regardless of their attribute structure.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Union requires the two relations to be union-compatible: the same number of attributes with corresponding, compatible domains."
+  },
+  {
+    "topic": "Relational Algebra",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "Why is σθ(R × S) considered logically equivalent to a theta join R ⋈θ S, yet typically far less efficient to evaluate directly?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "They are not actually equivalent"
+      },
+      {
+        "letter": "B",
+        "text": "Both express the same filtered-pairing logic, but computing the full Cartesian product R × S first (before filtering) can require materializing a huge number of tuples, most of which get discarded, whereas a dedicated join algorithm avoids this"
+      },
+      {
+        "letter": "C",
+        "text": "σθ(R × S) is always faster in practice"
+      },
+      {
+        "letter": "D",
+        "text": "Join algorithms do not use selection at all internally"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Although the two expressions are provably equivalent (a classic algebraic identity), directly computing R × S first can be extremely wasteful since nearly all of the |R|×|S| combined tuples may fail the condition θ; practical join algorithms combine filtering and pairing to avoid this blow-up."
+  },
+  {
+    "topic": "Relational Algebra",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "Given Enrolled(StudentID, CourseID) and RequiredCourses(CourseID) listing every mandatory course, which relational algebra operator directly answers \"which students are enrolled in ALL required courses\"?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Union (∪)"
+      },
+      {
+        "letter": "B",
+        "text": "Division (÷)"
+      },
+      {
+        "letter": "C",
+        "text": "Cartesian Product (×)"
+      },
+      {
+        "letter": "D",
+        "text": "Set Difference (−)"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Division (Enrolled ÷ RequiredCourses) finds exactly the StudentID values associated with every CourseID in RequiredCourses, which is the \"for all\" semantics this query needs."
+  },
+  {
+    "topic": "Functional Dependencies",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "In the functional dependency StudentID → Name, which attribute is the determinant?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Name"
+      },
+      {
+        "letter": "B",
+        "text": "StudentID"
+      },
+      {
+        "letter": "C",
+        "text": "Both equally"
+      },
+      {
+        "letter": "D",
+        "text": "Neither"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "StudentID is on the left-hand side, meaning it determines (and is the determinant for) the value of Name."
+  },
+  {
+    "topic": "Functional Dependencies",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: a trivial functional dependency X → Y (where Y is a subset of X) provides meaningful new information about the data.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A trivial FD holds automatically for any relation because Y's values are already contained within X, so it conveys no real constraint beyond what is self-evident."
+  },
+  {
+    "topic": "Functional Dependencies",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "Given R(A,B,C,D) with FDs {A → B, B → C, A → D}, what is the closure A+?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "{A}"
+      },
+      {
+        "letter": "B",
+        "text": "{A, B}"
+      },
+      {
+        "letter": "C",
+        "text": "{A, B, C, D}"
+      },
+      {
+        "letter": "D",
+        "text": "{B, C, D}"
+      }
+    ],
+    "correctAnswer": "C",
+    "explanation": "Starting from {A}: A → B adds B; B → C (now applicable since B is present) adds C; A → D adds D, yielding A+ = {A, B, C, D}."
+  },
+  {
+    "topic": "Functional Dependencies",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "When computing a minimal cover, an attribute on the left-hand side of an FD is called \"extraneous\" if:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "It appears on the right-hand side of a different FD"
+      },
+      {
+        "letter": "B",
+        "text": "Removing it from that FD's left-hand side does not change the overall closure/dependencies implied"
+      },
+      {
+        "letter": "C",
+        "text": "It is part of the primary key"
+      },
+      {
+        "letter": "D",
+        "text": "It never appears in any other FD"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "An extraneous left-hand attribute is one whose removal from that FD still preserves the exact same logical implications, meaning it was never actually necessary for that dependency to hold."
+  },
+  {
+    "topic": "Normalization",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What does 1NF require of every attribute value in a relation?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "It must be a foreign key"
+      },
+      {
+        "letter": "B",
+        "text": "It must be atomic (a single, indivisible value)"
+      },
+      {
+        "letter": "C",
+        "text": "It must be numeric"
+      },
+      {
+        "letter": "D",
+        "text": "It must be unique across the whole table"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "1NF requires atomic attribute values - no repeating groups, lists, or nested sub-tables within a single cell."
+  },
+  {
+    "topic": "Normalization",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: a relation with only a single-attribute primary key can still violate Second Normal Form (2NF) due to a partial dependency.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Partial dependency requires a composite (multi-attribute) key for a proper non-empty subset to even exist; with a single-attribute key, partial dependency is impossible, so 2NF is automatically satisfied once 1NF holds."
+  },
+  {
+    "topic": "Normalization",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "R(A, B, C) has FDs {AB → C, C → B}. Checking BCNF, which conclusion is correct?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "R is in BCNF because AB is a superkey for AB → C"
+      },
+      {
+        "letter": "B",
+        "text": "R violates BCNF because C → B has C as the determinant, and C alone is not a superkey of R"
+      },
+      {
+        "letter": "C",
+        "text": "R violates 1NF"
+      },
+      {
+        "letter": "D",
+        "text": "Both FDs trivially hold and need no checking"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "For C → B to satisfy BCNF, C alone would need to functionally determine all of A, B, C (i.e., be a superkey); since C alone does not determine A, this FD violates the BCNF requirement that every determinant be a superkey."
+  },
+  {
+    "topic": "Normalization",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "Why can achieving BCNF sometimes require sacrificing dependency preservation, while achieving 3NF does not have this problem?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "BCNF and 3NF always behave identically"
+      },
+      {
+        "letter": "B",
+        "text": "3NF's special exception (allowing X → Y when X is not a superkey, as long as Y is prime) avoids forcing a problematic decomposition; BCNF removes this exception, which can force splitting an FD's attributes across different relations so the FD can no longer be checked without a join"
+      },
+      {
+        "letter": "C",
+        "text": "Dependency preservation is never actually sacrificed in either normal form"
+      },
+      {
+        "letter": "D",
+        "text": "3NF is always a stricter requirement than BCNF"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "The classic overlapping-candidate-key scenario shows that enforcing BCNF's stricter superkey-determinant rule can require splitting attributes of a valid FD across separate relations, making that FD no longer locally checkable - a tradeoff 3NF's looser rule for prime attributes is specifically designed to avoid."
+  },
+  {
+    "topic": "Transactions",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "Which ACID property ensures a transaction is treated as an indivisible, all-or-nothing unit of work?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Atomicity"
+      },
+      {
+        "letter": "B",
+        "text": "Consistency"
+      },
+      {
+        "letter": "C",
+        "text": "Isolation"
+      },
+      {
+        "letter": "D",
+        "text": "Durability"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Atomicity guarantees that either every operation in a transaction completes, or none of them take effect at all."
+  },
+  {
+    "topic": "Transactions",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: once a transaction commits, its changes are guaranteed to survive a subsequent system crash, due to the Durability property.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Durability ensures committed changes are permanently recorded (typically via write-ahead logging) so they persist even through a crash immediately after commit."
+  },
+  {
+    "topic": "Transactions",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "What distinguishes a \"cascadeless\" schedule from a merely \"recoverable\" one?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "They are identical properties"
+      },
+      {
+        "letter": "B",
+        "text": "A cascadeless schedule additionally requires transactions to read only data already committed by its writer, preventing the chain-reaction (cascading) rollback that a merely recoverable schedule does not fully rule out"
+      },
+      {
+        "letter": "C",
+        "text": "Cascadeless schedules never require any logging"
+      },
+      {
+        "letter": "D",
+        "text": "Recoverable schedules are always stricter than cascadeless ones"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Recoverability alone only ensures a writer commits before a dependent reader commits; it does not prevent a reader from seeing uncommitted data and being forced into a cascading rollback if the writer later aborts - cascadelessness closes this gap by requiring reads only of already-committed data."
+  },
+  {
+    "topic": "Transactions",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "A system crashes mid-operation. During restart recovery using write-ahead logging, what do the UNDO and REDO passes respectively accomplish?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "UNDO reapplies committed changes; REDO reverses uncommitted changes"
+      },
+      {
+        "letter": "B",
+        "text": "UNDO reverses the effects of transactions that never committed; REDO reapplies the effects of committed transactions that may not have reached disk yet"
+      },
+      {
+        "letter": "C",
+        "text": "Both passes do the same thing for redundancy"
+      },
+      {
+        "letter": "D",
+        "text": "Neither pass uses the transaction log"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "REDO uses the log to reapply all changes from transactions that committed (ensuring durability even if the data page write did not reach disk before the crash), while UNDO reverses any partial changes from transactions that were still active (uncommitted) at the time of the crash."
+  },
+  {
+    "topic": "Concurrency Control",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What does an exclusive (X) lock prevent other transactions from doing to the locked item?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Nothing; X-locks have no effect"
+      },
+      {
+        "letter": "B",
+        "text": "Both reading and writing it while the lock is held"
+      },
+      {
+        "letter": "C",
+        "text": "Only writing it; reading is still allowed"
+      },
+      {
+        "letter": "D",
+        "text": "Only reading it; writing is still allowed"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "An exclusive lock grants the holder sole access, so no other transaction may acquire any lock (shared or exclusive) - meaning no other transaction can read or write that item until it is released."
+  },
+  {
+    "topic": "Concurrency Control",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: Two-Phase Locking (2PL), by itself, guarantees that deadlocks can never occur.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "2PL guarantees serializability but does not by itself prevent deadlock; two transactions can still each hold a lock the other needs, forming a cycle, requiring separate deadlock prevention or detection mechanisms."
+  },
+  {
+    "topic": "Concurrency Control",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "How does the Wound-Wait deadlock prevention scheme differ from Wait-Die in terms of which transaction is forced to abort?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "They are the same scheme with different names"
+      },
+      {
+        "letter": "B",
+        "text": "In Wound-Wait, an older requester forces (wounds) a younger lock holder to abort, while a younger requester waits; in Wait-Die, an older requester waits, while a younger requester is aborted (dies)"
+      },
+      {
+        "letter": "C",
+        "text": "Wound-Wait never aborts any transaction"
+      },
+      {
+        "letter": "D",
+        "text": "Wait-Die always aborts the older transaction"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Both schemes use transaction age (via timestamps) to decide, but in opposite directions: Wound-Wait has the older transaction preemptively abort the younger holder, while Wait-Die has the older transaction simply wait, aborting only the younger requester instead."
+  },
+  {
+    "topic": "Concurrency Control",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "Transactions T1 and T2 each need locks on items A and B, but T1 requests A then B while T2 requests B then A. Under Strict 2PL, what is the most likely outcome if both proceed concurrently without any deadlock-prevention scheme?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "They always complete successfully with no issue"
+      },
+      {
+        "letter": "B",
+        "text": "A deadlock can occur: T1 holds A waiting for B while T2 holds B waiting for A, forming a cycle"
+      },
+      {
+        "letter": "C",
+        "text": "T1 always wins and T2 is automatically aborted"
+      },
+      {
+        "letter": "D",
+        "text": "2PL automatically reorders their requests to avoid conflict"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Because each transaction acquires the items in opposite order, it is possible for T1 to hold A while waiting for B (held by T2) and T2 to hold B while waiting for A (held by T1) - a classic circular wait that Strict 2PL alone does not prevent, requiring deadlock detection or prevention on top of it."
+  },
+  {
+    "topic": "Indexing",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "How many clustered indexes can a single table have?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "As many as needed"
+      },
+      {
+        "letter": "B",
+        "text": "At most one"
+      },
+      {
+        "letter": "C",
+        "text": "Exactly two"
+      },
+      {
+        "letter": "D",
+        "text": "Zero, always"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Since a clustered index determines the actual physical storage order of the table's rows, a table can have only one clustered index."
+  },
+  {
+    "topic": "Indexing",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: a hash index is generally well-suited for efficiently answering range queries like \"find all values between 100 and 200.\"",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Hash indexes scatter keys based on hash value with no preserved ordering, so they cannot efficiently narrow down to a contiguous range the way a sorted B+ tree index can."
+  },
+  {
+    "topic": "Indexing",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "Why does a high fanout (branching factor) in a B+ tree keep the tree height very low even for huge datasets?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Fanout has no effect on tree height"
+      },
+      {
+        "letter": "B",
+        "text": "Tree height grows logarithmically with the number of keys, using the fanout as the logarithm's base, so a larger fanout means far fewer levels are needed to index the same number of keys"
+      },
+      {
+        "letter": "C",
+        "text": "A higher fanout always increases the height"
+      },
+      {
+        "letter": "D",
+        "text": "B+ trees do not have a concept of height"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Height is approximately log_n(N) for N keys and fanout n; since disk-page-sized nodes can hold many keys (large n), the tree stays very shallow even as N grows into the millions, keeping the number of disk I/Os per search small."
+  },
+  {
+    "topic": "Indexing",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "A table has a clustered index on OrderID, and queries frequently filter by CustomerID while also needing OrderDate and Status, without needing other columns. What indexing strategy best optimizes this query while avoiding an extra lookup into the base table?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Create a second clustered index on CustomerID"
+      },
+      {
+        "letter": "B",
+        "text": "Create a non-clustered (covering) index on CustomerID that also includes OrderDate and Status as covered columns"
+      },
+      {
+        "letter": "C",
+        "text": "Remove the clustered index entirely"
+      },
+      {
+        "letter": "D",
+        "text": "Add a hash index on OrderDate only"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A table can have only one clustered index (already on OrderID), so a non-clustered index on CustomerID is used; making it a covering index (including OrderDate and Status) lets the query be answered entirely from the index without an extra lookup into the base table."
+  }
+]

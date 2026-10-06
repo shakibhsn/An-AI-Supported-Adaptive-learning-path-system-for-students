@@ -11,6 +11,7 @@
     "typecheck": "tsc --noEmit",
     "prisma:migrate": "prisma migrate dev --name init",
     "prisma:seed": "prisma db seed",
+    "prisma:seed:phase3": "tsx prisma/seedPhase3.ts",
     "prisma:studio": "prisma studio"
   },
   "prisma": {

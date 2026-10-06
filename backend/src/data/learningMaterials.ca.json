@@ -1,0 +1,342 @@
+{
+  "Computer Organization Fundamentals": [
+    {
+      "title": "Von Neumann Architecture",
+      "description": "The stored-program model: CPU, memory, I/O and buses, and the Von Neumann bottleneck.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/computer-organization-von-neumann-architecture/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Computer Organization and Architecture Tutorial",
+      "description": "Full tutorial index covering CPU structure, buses, memory, I/O, pipelining and performance.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/computer-organization-and-architecture-tutorials/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Neso Academy - Computer Organization and Architecture",
+      "description": "Full-course playlist covering fundamentals, buses, and the instruction cycle.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@nesoacademy/playlists",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Gate Smashers - Computer Organization and Architecture",
+      "description": "GATE-focused playlist covering basic computer organization concepts.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@GateSmashers/playlists",
+      "provider": "YouTube (Gate Smashers)",
+      "difficulty": "BEGINNER"
+    }
+  ],
+  "Number Systems and Data Representation": [
+    {
+      "title": "Base Conversions for Number Systems",
+      "description": "Decimal, binary, octal and hexadecimal conversions with step-by-step examples.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/number-system-and-base-conversions/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "IEEE Standard 754 Floating Point Numbers",
+      "description": "Sign, biased exponent and mantissa fields, with worked single/double precision examples.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/ieee-standard-754-floating-point-numbers/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Neso Academy - Number Systems and Representation",
+      "description": "Playlist covering number systems, binary codes and complements.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@nesoacademy/playlists",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Practice: Computer Organization and Architecture Quiz",
+      "description": "GATE-style quiz bank including number representation and data representation questions.",
+      "type": "PRACTICE",
+      "url": "https://www.geeksforgeeks.org/quizzes/computer-organization-and-architecture-gq/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "Digital Logic and Boolean Concepts": [
+    {
+      "title": "Boolean Algebra",
+      "description": "Logical operations, truth tables, and the algebraic laws used for simplification.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/boolean-algebra/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Logic Gates",
+      "description": "AND, OR, NOT, NAND, NOR, XOR, XNOR gates with truth tables and Boolean expressions.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/logic-gates/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Gate Smashers - Digital Logic and Boolean Algebra",
+      "description": "Playlist covering logic gates, Boolean simplification, and Karnaugh maps.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@GateSmashers/playlists",
+      "provider": "YouTube (Gate Smashers)",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Practice: Computer Organization and Architecture Quiz",
+      "description": "GATE-style quiz bank including digital logic and Boolean algebra questions.",
+      "type": "PRACTICE",
+      "url": "https://www.geeksforgeeks.org/quizzes/computer-organization-and-architecture-gq/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "CPU Organization": [
+    {
+      "title": "Computer Organization and Architecture Tutorial",
+      "description": "See the CPU structure, register, and control-unit sections of this full COA tutorial index.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/computer-organization-and-architecture-tutorials/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Neso Academy - CPU Organization",
+      "description": "Playlist covering registers, the control unit, ALU, and the CPU datapath.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@nesoacademy/playlists",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Gate Smashers - CPU Organization and Control Unit Design",
+      "description": "Playlist covering hardwired vs. microprogrammed control and register organization.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@GateSmashers/playlists",
+      "provider": "YouTube (Gate Smashers)",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Practice: Computer Organization and Architecture Quiz",
+      "description": "GATE-style quiz bank including CPU organization and control-unit questions.",
+      "type": "PRACTICE",
+      "url": "https://www.geeksforgeeks.org/quizzes/computer-organization-and-architecture-gq/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "Instruction Set Architecture": [
+    {
+      "title": "Addressing Modes in Computer Architecture",
+      "description": "Implied, immediate, register, register-indirect, indexed and base-indexed addressing modes.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/addressing-modes/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "RISC vs CISC",
+      "description": "Comparison of instruction set design philosophies, instruction counts, and execution cycles.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/difference-between-risc-and-cisc/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Neso Academy - Instruction Set Architecture",
+      "description": "Playlist covering instruction formats, addressing modes, and RISC/CISC design.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@nesoacademy/playlists",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Practice: Computer Organization and Architecture Quiz",
+      "description": "GATE-style quiz bank including instruction formats and addressing-mode questions.",
+      "type": "PRACTICE",
+      "url": "https://www.geeksforgeeks.org/quizzes/computer-organization-and-architecture-gq/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "Memory Hierarchy": [
+    {
+      "title": "Memory Hierarchy Design and its Characteristics",
+      "description": "Levels from registers to magnetic tape, their speed, capacity, cost, and locality of reference.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/memory-hierarchy-design-and-its-characteristics/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Neso Academy - Memory Hierarchy",
+      "description": "Playlist covering memory hierarchy levels and the locality of reference principle.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@nesoacademy/playlists",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Gate Smashers - Memory Organization",
+      "description": "Playlist covering primary/secondary memory and memory hierarchy performance.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@GateSmashers/playlists",
+      "provider": "YouTube (Gate Smashers)",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Practice: Computer Organization and Architecture Quiz",
+      "description": "GATE-style quiz bank including memory hierarchy and performance questions.",
+      "type": "PRACTICE",
+      "url": "https://www.geeksforgeeks.org/quizzes/computer-organization-and-architecture-gq/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "Cache Memory": [
+    {
+      "title": "Cache Memory in Computer Organization",
+      "description": "How cache reduces average access time, cache mapping, and cache performance basics.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/cache-memory-in-computer-organization/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Neso Academy - Cache Memory",
+      "description": "Playlist covering cache mapping techniques, replacement policies, and write policies.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@nesoacademy/playlists",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Gate Smashers - Cache Memory Mapping Techniques",
+      "description": "Playlist covering direct, associative, and set-associative cache mapping with solved problems.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@GateSmashers/playlists",
+      "provider": "YouTube (Gate Smashers)",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Practice: Computer Organization and Architecture Quiz",
+      "description": "GATE-style quiz bank including cache mapping and performance calculation questions.",
+      "type": "PRACTICE",
+      "url": "https://www.geeksforgeeks.org/quizzes/computer-organization-and-architecture-gq/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "ADVANCED"
+    }
+  ],
+  "I/O Organization": [
+    {
+      "title": "Interrupts in Computer Organization",
+      "description": "Hardware and software interrupts, interrupt handling, priority, and latency.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/interrupts/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Computer Organization and Architecture Tutorial",
+      "description": "See the I/O systems section (DMA controllers, interrupts, bus systems) of this full COA tutorial index.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/computer-organization-and-architecture-tutorials/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Neso Academy - I/O Organization",
+      "description": "Playlist covering programmed I/O, interrupts, DMA, and bus arbitration.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@nesoacademy/playlists",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Gate Smashers - I/O Organization and DMA",
+      "description": "Playlist covering I/O techniques, interrupt-driven I/O, and DMA modes.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@GateSmashers/playlists",
+      "provider": "YouTube (Gate Smashers)",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "Pipelining": [
+    {
+      "title": "Pipelining | Set 1 (Execution, Stages and Throughput)",
+      "description": "The 5-stage RISC pipeline, instruction overlap, and throughput calculations.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/computer-organization-and-architecture-pipelining-set-1-execution-stages-and-throughput/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Pipelining | Set 2 (Dependencies and Data Hazard)",
+      "description": "RAW, WAR, and WAW data hazards and operand forwarding.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/computer-organization-and-architecture-pipelining-set-2-dependencies-and-data-hazard/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "ADVANCED"
+    },
+    {
+      "title": "Gate Smashers - Pipelining and Hazards",
+      "description": "Playlist covering pipeline stages, hazards, and branch prediction with solved GATE problems.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@GateSmashers/playlists",
+      "provider": "YouTube (Gate Smashers)",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Practice: Computer Organization and Architecture Quiz",
+      "description": "GATE-style quiz bank including pipeline hazard and throughput questions.",
+      "type": "PRACTICE",
+      "url": "https://www.geeksforgeeks.org/quizzes/computer-organization-and-architecture-gq/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "ADVANCED"
+    }
+  ],
+  "Performance and Parallelism": [
+    {
+      "title": "Computer Organization and Architecture Tutorial",
+      "description": "See the performance measures, Amdahl's law, and Flynn's taxonomy sections of this full COA tutorial index.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/computer-organization-and-architecture-tutorials/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Neso Academy - CPU Performance and Parallel Processing",
+      "description": "Playlist covering performance equations, CPI, and parallel architectures.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@nesoacademy/playlists",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Gate Smashers - Amdahl's Law and Flynn's Taxonomy",
+      "description": "Playlist covering performance metrics, Amdahl's Law speedup calculations, and Flynn's classification.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@GateSmashers/playlists",
+      "provider": "YouTube (Gate Smashers)",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Practice: Computer Organization and Architecture Quiz",
+      "description": "GATE-style quiz bank including performance and speedup calculation questions.",
+      "type": "PRACTICE",
+      "url": "https://www.geeksforgeeks.org/quizzes/computer-organization-and-architecture-gq/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "ADVANCED"
+    }
+  ]
+}

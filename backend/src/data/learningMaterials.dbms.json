@@ -1,0 +1,335 @@
+{
+  "Database Fundamentals": [
+    {
+      "title": "Introduction of DBMS",
+      "description": "What a DBMS is, its core components, and database languages (DDL/DML/DCL/TCL).",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/dbms/introduction-of-dbms-database-management-system-set-1/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Need for DBMS",
+      "description": "Why DBMS replaced file-based systems: redundancy, integrity, security, and data independence.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/dbms/need-for-dbms/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Neso Academy - DBMS Playlist",
+      "description": "Neso Academy's full DBMS lecture series, starting with database fundamentals and architecture.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@nesoacademy/playlists",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "BEGINNER",
+      "durationMinutes": 45
+    },
+    {
+      "title": "Practice: DBMS Quiz Hub",
+      "description": "GeeksforGeeks quiz hub covering DBMS fundamentals and every other DBMS topic.",
+      "type": "PRACTICE",
+      "url": "https://www.geeksforgeeks.org/quizzes/?category=dbms",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "ER Model": [
+    {
+      "title": "Introduction of ER Model",
+      "description": "Entities, attributes, relationships, cardinality, and participation constraints.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/dbms/introduction-of-er-model/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Generalization, Specialization and Aggregation in ER Model",
+      "description": "How to model subclasses, superclasses, and aggregated relationships in ER diagrams.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/dbms/generalization-specialization-and-aggregation-in-er-model/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Gate Smashers - DBMS Playlist",
+      "description": "Gate Smashers' DBMS series, including dedicated ER model and ER diagram lectures.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@GateSmashers/playlists",
+      "provider": "YouTube (Gate Smashers)",
+      "difficulty": "BEGINNER",
+      "durationMinutes": 40
+    },
+    {
+      "title": "Practice: DBMS Quiz Hub",
+      "description": "GeeksforGeeks quiz hub, including ER model and database design quizzes.",
+      "type": "PRACTICE",
+      "url": "https://www.geeksforgeeks.org/quizzes/?category=dbms",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "Relational Model": [
+    {
+      "title": "Introduction of Relational Model and Codd Rules in DBMS",
+      "description": "Relations, tuples, attributes, and Codd's 12 rules defining a true RDBMS.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/introduction-of-relational-model-and-codd-rules-in-dbms/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Candidate Key in DBMS",
+      "description": "Candidate, super, primary, and alternate keys, with worked examples.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/dbms/candidate-key-in-dbms/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Neso Academy - DBMS Playlist",
+      "description": "Neso Academy's lectures on the relational model, keys, and integrity constraints.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@nesoacademy/playlists",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "BEGINNER",
+      "durationMinutes": 50
+    },
+    {
+      "title": "Practice: DBMS Quiz Hub",
+      "description": "GeeksforGeeks quiz hub, including relational model and keys/constraints quizzes.",
+      "type": "PRACTICE",
+      "url": "https://www.geeksforgeeks.org/quizzes/?category=dbms",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "SQL": [
+    {
+      "title": "SQL Tutorial",
+      "description": "The complete W3Schools SQL tutorial: SELECT, WHERE, JOIN, GROUP BY, subqueries and more.",
+      "type": "ARTICLE",
+      "url": "https://www.w3schools.com/sql/",
+      "provider": "W3Schools",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "SQL Tutorial",
+      "description": "GeeksforGeeks SQL tutorial covering fundamentals through advanced querying.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/sql-tutorial/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Practice: SQL Exercises",
+      "description": "Graded SQL exercises across SELECT, WHERE, JOIN, aggregate functions, and more.",
+      "type": "PRACTICE",
+      "url": "https://www.w3schools.com/sql/sql_exercises.asp",
+      "provider": "W3Schools",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Practice: Top SQL 50",
+      "description": "Curated SQL interview practice set covering joins, subqueries, and aggregations.",
+      "type": "PRACTICE",
+      "url": "https://leetcode.com/studyplan/top-sql-50/",
+      "provider": "LeetCode",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "Relational Algebra": [
+    {
+      "title": "Introduction to Relational Algebra in DBMS",
+      "description": "Selection, projection, union, set difference, Cartesian product, and derived join operators.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/dbms/introduction-of-relational-algebra-in-dbms/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Gate Smashers - DBMS Playlist",
+      "description": "Gate Smashers' relational algebra lectures, including joins and the division operator.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@GateSmashers/playlists",
+      "provider": "YouTube (Gate Smashers)",
+      "difficulty": "INTERMEDIATE",
+      "durationMinutes": 45
+    },
+    {
+      "title": "Practice: DBMS Quiz Hub",
+      "description": "GeeksforGeeks quiz hub, including a dedicated relational algebra quiz drawn from GATE questions.",
+      "type": "PRACTICE",
+      "url": "https://www.geeksforgeeks.org/quizzes/?category=dbms",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "Functional Dependencies": [
+    {
+      "title": "Attribute Closure in DBMS",
+      "description": "Functional dependency notation, attribute closure, and finding candidate keys.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/dbms/functional-dependency-and-attribute-closure/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Types of Functional Dependencies in DBMS",
+      "description": "Trivial, non-trivial, partial, transitive, and multivalued dependencies explained with examples.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/dbms/types-of-functional-dependencies-in-dbms/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Neso Academy - DBMS Playlist",
+      "description": "Neso Academy's lectures on functional dependencies, Armstrong's axioms, and closures.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@nesoacademy/playlists",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "INTERMEDIATE",
+      "durationMinutes": 55
+    },
+    {
+      "title": "Practice: DBMS Quiz Hub",
+      "description": "GeeksforGeeks quiz hub, including functional dependency and normalization quizzes.",
+      "type": "PRACTICE",
+      "url": "https://www.geeksforgeeks.org/quizzes/?category=dbms",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "Normalization": [
+    {
+      "title": "Normal Forms in DBMS",
+      "description": "1NF through BCNF (and beyond), with violation examples and decomposition rules.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/dbms/normal-forms-in-dbms/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Gate Smashers - DBMS Playlist",
+      "description": "Gate Smashers' normalization series covering 1NF, 2NF, 3NF, and BCNF with solved examples.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@GateSmashers/playlists",
+      "provider": "YouTube (Gate Smashers)",
+      "difficulty": "INTERMEDIATE",
+      "durationMinutes": 60
+    },
+    {
+      "title": "Practice: DBMS Quiz Hub",
+      "description": "GeeksforGeeks quiz hub, including dedicated normalization and normal-form quizzes.",
+      "type": "PRACTICE",
+      "url": "https://www.geeksforgeeks.org/quizzes/?category=dbms",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "Transactions": [
+    {
+      "title": "Transaction in DBMS",
+      "description": "Transaction operations (read/write/commit/rollback) and schedules, with a banking example.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/dbms/transaction-in-dbms/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "ACID Properties in DBMS",
+      "description": "Atomicity, Consistency, Isolation, and Durability explained with practical examples.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/dbms/acid-properties-in-dbms/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Neso Academy - DBMS Playlist",
+      "description": "Neso Academy's lectures on transactions, ACID properties, and schedules.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@nesoacademy/playlists",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "INTERMEDIATE",
+      "durationMinutes": 50
+    },
+    {
+      "title": "Practice: DBMS Quiz Hub",
+      "description": "GeeksforGeeks quiz hub, including transaction and ACID property quizzes.",
+      "type": "PRACTICE",
+      "url": "https://www.geeksforgeeks.org/quizzes/?category=dbms",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "Concurrency Control": [
+    {
+      "title": "Concurrency Control in DBMS",
+      "description": "Why concurrency control is needed, and an overview of lock-based and timestamp-based protocols.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/dbms/concurrency-control-in-dbms/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Lock Based Concurrency Control Protocol in DBMS",
+      "description": "Shared/exclusive locks, Two-Phase Locking, and the deadlock/starvation risks of locking.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/dbms/lock-based-concurrency-control-protocol-in-dbms/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Gate Smashers - DBMS Playlist",
+      "description": "Gate Smashers' concurrency control series, including 2PL and deadlock handling.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@GateSmashers/playlists",
+      "provider": "YouTube (Gate Smashers)",
+      "difficulty": "INTERMEDIATE",
+      "durationMinutes": 55
+    },
+    {
+      "title": "Practice: DBMS Quiz Hub",
+      "description": "GeeksforGeeks quiz hub, including concurrency control and transaction scheduling quizzes.",
+      "type": "PRACTICE",
+      "url": "https://www.geeksforgeeks.org/quizzes/?category=dbms",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "Indexing": [
+    {
+      "title": "Indexing in Databases",
+      "description": "Dense/sparse, clustered/non-clustered, and multilevel indexing with tradeoffs.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/dbms/indexing-in-databases-set-1/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Introduction of B+ Tree",
+      "description": "B+ tree structure, linked leaf nodes, and why it is the standard database index structure.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/dbms/introduction-of-b-tree/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "ADVANCED"
+    },
+    {
+      "title": "Neso Academy - DBMS Playlist",
+      "description": "Neso Academy's lectures on indexing, B/B+ trees, and hashing techniques.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/@nesoacademy/playlists",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "INTERMEDIATE",
+      "durationMinutes": 50
+    },
+    {
+      "title": "Practice: DBMS Quiz Hub",
+      "description": "GeeksforGeeks quiz hub, including indexing and B/B+ tree practice questions.",
+      "type": "PRACTICE",
+      "url": "https://www.geeksforgeeks.org/quizzes/?category=dbms",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    }
+  ]
+}

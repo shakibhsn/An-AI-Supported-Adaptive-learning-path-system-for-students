@@ -1,0 +1,1396 @@
+{
+  "diagnostic": [
+    {
+      "topic": "Database Fundamentals",
+      "question": "What is the primary advantage of a DBMS over a traditional file-processing system?",
+      "optionA": "Centralized control of data with reduced redundancy and inconsistency",
+      "optionB": "It requires no storage device",
+      "optionC": "It eliminates the need for a query language",
+      "optionD": "It runs only on mainframes",
+      "correctAnswer": "A"
+    },
+    {
+      "topic": "ER Model",
+      "question": "In the ER model, an \"entity\" is best described as:",
+      "optionA": "An attribute of another entity",
+      "optionB": "A real-world object or concept that can be distinctly identified",
+      "optionC": "A SQL query",
+      "optionD": "A relationship between two tables",
+      "correctAnswer": "B"
+    },
+    {
+      "topic": "Relational Model",
+      "question": "In the relational model, a \"relation\" corresponds to what everyday database concept?",
+      "optionA": "A single row of data",
+      "optionB": "A table consisting of rows and columns",
+      "optionC": "A single column",
+      "optionD": "A query",
+      "correctAnswer": "B"
+    },
+    {
+      "topic": "SQL",
+      "question": "Which SQL clause is used to filter rows BEFORE any grouping takes place?",
+      "optionA": "HAVING",
+      "optionB": "WHERE",
+      "optionC": "GROUP BY",
+      "optionD": "ORDER BY",
+      "correctAnswer": "B"
+    },
+    {
+      "topic": "Relational Algebra",
+      "question": "Which relational algebra operator, symbolized by sigma (σ), selects rows (tuples) satisfying a given condition?",
+      "optionA": "Projection (π)",
+      "optionB": "Selection (σ)",
+      "optionC": "Union (∪)",
+      "optionD": "Join (⋈)",
+      "correctAnswer": "B"
+    },
+    {
+      "topic": "Functional Dependencies",
+      "question": "In the functional dependency notation X → Y, this means:",
+      "optionA": "Y determines X",
+      "optionB": "For any two tuples with the same value of X, their values of Y must also be the same",
+      "optionC": "X and Y must always be equal",
+      "optionD": "X is a foreign key to Y",
+      "correctAnswer": "B"
+    },
+    {
+      "topic": "Normalization",
+      "question": "A relation is in First Normal Form (1NF) if:",
+      "optionA": "Every non-key attribute depends on the whole primary key",
+      "optionB": "All attribute values are atomic (indivisible), with no repeating groups or multivalued attributes",
+      "optionC": "There are no transitive dependencies",
+      "optionD": "Every determinant is a candidate key",
+      "correctAnswer": "B"
+    },
+    {
+      "topic": "Transactions",
+      "question": "What does the \"A\" in ACID properties of a transaction stand for?",
+      "optionA": "Availability",
+      "optionB": "Atomicity",
+      "optionC": "Accuracy",
+      "optionD": "Authentication",
+      "correctAnswer": "B"
+    },
+    {
+      "topic": "Concurrency Control",
+      "question": "A \"shared lock\" (S-lock) on a data item allows:",
+      "optionA": "Only the transaction holding it to read OR write the item",
+      "optionB": "Multiple transactions to simultaneously hold a shared lock and read the item, but none may write it while any shared lock is held",
+      "optionC": "Only one transaction to ever access the item again",
+      "optionD": "Unlimited writes by any transaction",
+      "correctAnswer": "B"
+    },
+    {
+      "topic": "Indexing",
+      "question": "What is the primary purpose of creating an index on a database column?",
+      "optionA": "To enforce that the column cannot contain NULL values",
+      "optionB": "To speed up data retrieval operations (searches) on that column, at some cost in storage and write overhead",
+      "optionC": "To automatically encrypt the column's data",
+      "optionD": "To reduce the number of columns in the table",
+      "correctAnswer": "B"
+    }
+  ],
+  "practice": [
+    {
+      "topic": "Database Fundamentals",
+      "question": "Which of the following is a typical service provided by a DBMS that a plain file system does NOT provide?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Storing bytes on disk"
+        },
+        {
+          "letter": "B",
+          "text": "Enforcing data integrity constraints"
+        },
+        {
+          "letter": "C",
+          "text": "Reading a file sequentially"
+        },
+        {
+          "letter": "D",
+          "text": "Naming files"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "A DBMS enforces integrity constraints (e.g., primary keys, foreign keys) declared in the schema; a raw file system has no concept of such constraints.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Database Fundamentals",
+      "question": "In the three-schema architecture, which level describes how data is actually stored on disk?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "External schema"
+        },
+        {
+          "letter": "B",
+          "text": "Conceptual schema"
+        },
+        {
+          "letter": "C",
+          "text": "Internal schema"
+        },
+        {
+          "letter": "D",
+          "text": "View schema"
+        }
+      ],
+      "correctAnswer": "C",
+      "explanation": "The internal (physical) schema specifies storage structures, file organization, and access paths used to store the data.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Database Fundamentals",
+      "question": "\"Logical data independence\" is the capacity to change which schema without requiring changes to external schemas or application programs?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Internal schema only"
+        },
+        {
+          "letter": "B",
+          "text": "Conceptual schema"
+        },
+        {
+          "letter": "C",
+          "text": "Hardware configuration"
+        },
+        {
+          "letter": "D",
+          "text": "Network protocol"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "Logical data independence allows the conceptual schema to change (e.g., adding a new entity) without forcing changes to existing external views or the programs built on them.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Database Fundamentals",
+      "question": "Which category of SQL statements is used to define or alter database structure, such as CREATE TABLE and DROP TABLE?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "DML"
+        },
+        {
+          "letter": "B",
+          "text": "DDL"
+        },
+        {
+          "letter": "C",
+          "text": "DCL"
+        },
+        {
+          "letter": "D",
+          "text": "TCL"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "DDL (Data Definition Language) statements define and modify schema objects like tables, indexes, and views.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Database Fundamentals",
+      "question": "Which SQL command category includes GRANT and REVOKE?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "DDL"
+        },
+        {
+          "letter": "B",
+          "text": "DML"
+        },
+        {
+          "letter": "C",
+          "text": "DCL"
+        },
+        {
+          "letter": "D",
+          "text": "TCL"
+        }
+      ],
+      "correctAnswer": "C",
+      "explanation": "DCL (Data Control Language) statements such as GRANT and REVOKE manage user access permissions.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "ER Model",
+      "question": "In an ER diagram, a \"relationship\" represents:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "An attribute value"
+        },
+        {
+          "letter": "B",
+          "text": "An association among two or more entities"
+        },
+        {
+          "letter": "C",
+          "text": "A primary key"
+        },
+        {
+          "letter": "D",
+          "text": "A normalization rule"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "A relationship captures how entities are associated with each other, such as a Student \"enrolls in\" a Course.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "ER Model",
+      "question": "A \"weak entity\" in the ER model is an entity type that:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Has no attributes at all"
+        },
+        {
+          "letter": "B",
+          "text": "Does not have a key attribute of its own and depends on a related \"owner\" entity for identification"
+        },
+        {
+          "letter": "C",
+          "text": "Can only exist in one database"
+        },
+        {
+          "letter": "D",
+          "text": "Always has a 1:1 relationship"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "A weak entity lacks sufficient attributes to form its own primary key and relies on its identifying (owner) entity, combined with a partial key, for unique identification.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "ER Model",
+      "question": "What distinguishes a \"candidate key\" from the chosen \"primary key\" of an entity?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "A candidate key can have duplicate values while a primary key cannot"
+        },
+        {
+          "letter": "B",
+          "text": "A candidate key is any attribute (or minimal set) that could uniquely identify instances; the primary key is the one candidate key selected to be the actual identifier"
+        },
+        {
+          "letter": "C",
+          "text": "A primary key is always composite while a candidate key never is"
+        },
+        {
+          "letter": "D",
+          "text": "There is no difference"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "An entity may have multiple candidate keys (each capable of uniquely identifying instances); the database designer chooses one of them as the primary key.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "ER Model",
+      "question": "In ER modeling, \"specialization\" is the process of:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Merging two entity types into one"
+        },
+        {
+          "letter": "B",
+          "text": "Defining subclasses of an entity type based on distinguishing characteristics"
+        },
+        {
+          "letter": "C",
+          "text": "Removing all attributes from an entity"
+        },
+        {
+          "letter": "D",
+          "text": "Converting an entity into a relationship"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "Specialization takes a higher-level entity type (superclass) and defines one or more lower-level subclasses, each with attributes or relationships specific to that subclass (e.g., Employee specialized into Manager and Engineer).",
+      "isFollowUp": false
+    },
+    {
+      "topic": "ER Model",
+      "question": "A \"multivalued attribute\" is one that:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Can hold more than one value for a single entity instance"
+        },
+        {
+          "letter": "B",
+          "text": "Is always the primary key"
+        },
+        {
+          "letter": "C",
+          "text": "Cannot appear in an ER diagram"
+        },
+        {
+          "letter": "D",
+          "text": "Must be composite"
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "A multivalued attribute can take on multiple values simultaneously for a single entity instance, such as a Person having multiple PhoneNumbers.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "ER Model",
+      "question": "In ER specialization, \"disjoint\" constraint means:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "An entity instance can belong to multiple subclasses simultaneously"
+        },
+        {
+          "letter": "B",
+          "text": "An entity instance can belong to at most one subclass of the specialization"
+        },
+        {
+          "letter": "C",
+          "text": "All entity instances must belong to a subclass"
+        },
+        {
+          "letter": "D",
+          "text": "No entity instance can belong to any subclass"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "A disjoint constraint means each entity instance of the superclass can be a member of at most one of the specialization subclasses at a time, as opposed to \"overlapping\" where it could belong to multiple.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Relational Model",
+      "question": "In relational model terminology, a \"tuple\" corresponds to a:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Column of a table"
+        },
+        {
+          "letter": "B",
+          "text": "Row of a table"
+        },
+        {
+          "letter": "C",
+          "text": "Table name"
+        },
+        {
+          "letter": "D",
+          "text": "Database name"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "A tuple is a single, ordered set of attribute values - exactly one row of a relation.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Relational Model",
+      "question": "What is a \"foreign key\"?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "An attribute that must always be unique within its own table"
+        },
+        {
+          "letter": "B",
+          "text": "An attribute (or set of attributes) in one relation that references the primary key of another (or the same) relation"
+        },
+        {
+          "letter": "C",
+          "text": "A key used only for encryption"
+        },
+        {
+          "letter": "D",
+          "text": "A synonym for primary key"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "A foreign key establishes a link between two relations by referencing the primary key values of another relation, enforcing referential integrity.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Relational Model",
+      "question": "The \"entity integrity\" constraint states that:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Foreign key values must always exist in the referenced relation"
+        },
+        {
+          "letter": "B",
+          "text": "No primary key attribute of a base relation may contain a NULL value"
+        },
+        {
+          "letter": "C",
+          "text": "All attributes must be numeric"
+        },
+        {
+          "letter": "D",
+          "text": "Every relation must have exactly five attributes"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "Entity integrity requires that the primary key, which uniquely identifies tuples, can never be NULL, since a NULL value could not meaningfully identify a tuple.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Relational Model",
+      "question": "The \"referential integrity\" constraint requires that:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Every attribute value must be unique across the whole table"
+        },
+        {
+          "letter": "B",
+          "text": "A foreign key value must either match an existing primary key value in the referenced relation or be NULL"
+        },
+        {
+          "letter": "C",
+          "text": "Tables must not have more than 10 attributes"
+        },
+        {
+          "letter": "D",
+          "text": "Primary keys must always be numeric"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "Referential integrity ensures that any non-NULL foreign key value in the referencing relation must correspond to an existing primary key value in the referenced relation, preventing \"dangling\" references.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Relational Model",
+      "question": "What is a \"super key\"?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "A key that can never uniquely identify tuples"
+        },
+        {
+          "letter": "B",
+          "text": "Any set of attributes that uniquely identifies tuples in a relation, which may include additional, unnecessary attributes beyond a minimal candidate key"
+        },
+        {
+          "letter": "C",
+          "text": "A synonym for foreign key"
+        },
+        {
+          "letter": "D",
+          "text": "A key that only exists in weak entities"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "A super key is any attribute set that uniquely identifies tuples; a candidate key is defined as a minimal super key.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "SQL",
+      "question": "An INNER JOIN between two tables returns:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "All rows from both tables regardless of match"
+        },
+        {
+          "letter": "B",
+          "text": "Only rows that have matching values in both tables based on the join condition"
+        },
+        {
+          "letter": "C",
+          "text": "Only rows from the left table"
+        },
+        {
+          "letter": "D",
+          "text": "Only rows from the right table"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "INNER JOIN returns only the rows where the join condition is satisfied in both tables, excluding unmatched rows from either side.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "SQL",
+      "question": "Which SQL aggregate function returns the number of rows in a result set?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "SUM()"
+        },
+        {
+          "letter": "B",
+          "text": "COUNT()"
+        },
+        {
+          "letter": "C",
+          "text": "AVG()"
+        },
+        {
+          "letter": "D",
+          "text": "MAX()"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "COUNT() returns the number of rows (or non-NULL values of a specified column) matching the query.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "SQL",
+      "question": "Which clause is used to filter groups AFTER GROUP BY has been applied, typically based on an aggregate condition?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "WHERE"
+        },
+        {
+          "letter": "B",
+          "text": "HAVING"
+        },
+        {
+          "letter": "C",
+          "text": "ON"
+        },
+        {
+          "letter": "D",
+          "text": "LIMIT"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "HAVING filters aggregated groups (e.g., only departments with COUNT(*) > 5), unlike WHERE which filters individual rows before grouping.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "SQL",
+      "question": "A LEFT OUTER JOIN between tables A and B returns:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Only matching rows"
+        },
+        {
+          "letter": "B",
+          "text": "All rows from A, with matching rows from B where available, and NULLs for B's columns when there is no match"
+        },
+        {
+          "letter": "C",
+          "text": "Only rows from B"
+        },
+        {
+          "letter": "D",
+          "text": "Only rows with no match in either table"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "LEFT OUTER JOIN keeps every row from the left table, filling in NULLs for right-table columns whenever no matching row exists in the right table.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "SQL",
+      "question": "A subquery used with the IN operator, such as \"WHERE DeptID IN (SELECT DeptID FROM Department WHERE Location = 'NYC')\", is an example of:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "A correlated subquery"
+        },
+        {
+          "letter": "B",
+          "text": "An uncorrelated (independent) subquery that can be evaluated once, separately from the outer query"
+        },
+        {
+          "letter": "C",
+          "text": "A syntax error"
+        },
+        {
+          "letter": "D",
+          "text": "A view"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "This subquery does not reference any column from the outer query, so it can be evaluated independently and its result reused.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Relational Algebra",
+      "question": "Which relational algebra operator, symbolized by pi (π), extracts specific columns (attributes) from a relation?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Selection (σ)"
+        },
+        {
+          "letter": "B",
+          "text": "Projection (π)"
+        },
+        {
+          "letter": "C",
+          "text": "Set difference (−)"
+        },
+        {
+          "letter": "D",
+          "text": "Cartesian product (×)"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "Projection (π) produces a new relation containing only the specified attributes, dropping all others.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Relational Algebra",
+      "question": "What does the set difference operator R − S return?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Tuples that are in both R and S"
+        },
+        {
+          "letter": "B",
+          "text": "Tuples that are in R but NOT in S"
+        },
+        {
+          "letter": "C",
+          "text": "Tuples that are in S but not R"
+        },
+        {
+          "letter": "D",
+          "text": "All tuples from R and S combined"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "R − S returns exactly the tuples found in relation R that do not appear in relation S.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Relational Algebra",
+      "question": "The natural join operator (⋈) between two relations automatically:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Returns the Cartesian product with no filtering"
+        },
+        {
+          "letter": "B",
+          "text": "Joins on attributes with the same name in both relations and removes the duplicate join column from the result"
+        },
+        {
+          "letter": "C",
+          "text": "Requires explicitly specifying a join condition every time"
+        },
+        {
+          "letter": "D",
+          "text": "Can only be used on relations with no shared attribute names"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "A natural join implicitly equates attributes that share the same name in both relations and keeps only one copy of each such attribute in the output.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Relational Algebra",
+      "question": "A theta join (R ⋈θ S) differs from a natural join because:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "It can use any comparison condition (θ), not just equality on same-named attributes, and does not automatically remove duplicate columns"
+        },
+        {
+          "letter": "B",
+          "text": "It can only be performed on identical relations"
+        },
+        {
+          "letter": "C",
+          "text": "It never removes any tuples"
+        },
+        {
+          "letter": "D",
+          "text": "It is identical to a Cartesian product with no condition"
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "A theta join allows an arbitrary condition θ, and unlike a natural join it does not automatically eliminate duplicate attribute columns.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Relational Algebra",
+      "question": "The Division operator (R ÷ S) in relational algebra is typically used to answer queries phrased as:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "\"Find all tuples in R that match at least one tuple in S\""
+        },
+        {
+          "letter": "B",
+          "text": "\"Find values of R's attributes that are associated with ALL tuples/values in S\" (a \"for all\" type query)"
+        },
+        {
+          "letter": "C",
+          "text": "\"Find the Cartesian product of R and S\""
+        },
+        {
+          "letter": "D",
+          "text": "\"Find tuples unique to R\""
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "Division answers \"for all\" style queries, such as finding students who have enrolled in EVERY course listed in another relation.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Functional Dependencies",
+      "question": "In a functional dependency X → Y, X is referred to as the:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Dependent"
+        },
+        {
+          "letter": "B",
+          "text": "Determinant (or left-hand side)"
+        },
+        {
+          "letter": "C",
+          "text": "Foreign key"
+        },
+        {
+          "letter": "D",
+          "text": "Candidate value"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "X is called the determinant because its value determines the value of Y; X is also called the left-hand side (LHS) of the FD.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Functional Dependencies",
+      "question": "If attribute set X functionally determines ALL other attributes of a relation, and no proper subset of X does, X is called a:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Foreign key"
+        },
+        {
+          "letter": "B",
+          "text": "Candidate key"
+        },
+        {
+          "letter": "C",
+          "text": "Derived attribute"
+        },
+        {
+          "letter": "D",
+          "text": "Partial dependency"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "A candidate key is a minimal attribute set that functionally determines every other attribute in the relation.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Functional Dependencies",
+      "question": "The \"transitivity\" rule of Armstrong's axioms states that if X → Y and Y → Z both hold, then:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Z → X must also hold"
+        },
+        {
+          "letter": "B",
+          "text": "X → Z holds"
+        },
+        {
+          "letter": "C",
+          "text": "Y is a candidate key"
+        },
+        {
+          "letter": "D",
+          "text": "X and Z are unrelated"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "Transitivity allows chaining dependencies: if X determines Y, and Y determines Z, then X also determines Z.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Functional Dependencies",
+      "question": "The \"closure\" of an attribute set X (denoted X+) with respect to a set of FDs F is defined as:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "The set of all attributes that X can be derived from"
+        },
+        {
+          "letter": "B",
+          "text": "The set of all attributes that are functionally determined by X, given F"
+        },
+        {
+          "letter": "C",
+          "text": "The number of candidate keys in the relation"
+        },
+        {
+          "letter": "D",
+          "text": "The set of attributes not related to X"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "X+ is the set of every attribute that can be inferred to be functionally dependent on X using the given FDs and Armstrong's axioms.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Functional Dependencies",
+      "question": "A \"partial dependency\" exists when:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "A non-prime attribute depends on the whole of a composite candidate key"
+        },
+        {
+          "letter": "B",
+          "text": "A non-prime attribute depends on only part (a proper subset) of a composite candidate key, not the whole key"
+        },
+        {
+          "letter": "C",
+          "text": "Every attribute depends on every key"
+        },
+        {
+          "letter": "D",
+          "text": "No dependency exists at all"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "A partial dependency occurs when a non-prime attribute is functionally dependent on a proper subset of a composite key, rather than requiring the full key.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Normalization",
+      "question": "A relation is in Second Normal Form (2NF) if it is in 1NF AND:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "It has no composite candidate key at all"
+        },
+        {
+          "letter": "B",
+          "text": "Every non-prime attribute is fully functionally dependent on the whole of every candidate key (no partial dependencies)"
+        },
+        {
+          "letter": "C",
+          "text": "Every attribute is a foreign key"
+        },
+        {
+          "letter": "D",
+          "text": "It has exactly two attributes"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "2NF additionally requires eliminating partial dependencies - cases where a non-prime attribute depends on only part of a composite candidate key.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Normalization",
+      "question": "A relation is in Third Normal Form (3NF) if it is in 2NF AND:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "No non-prime attribute is transitively dependent on a candidate key (i.e., no non-prime attribute depends on another non-prime attribute)"
+        },
+        {
+          "letter": "B",
+          "text": "It has only one attribute"
+        },
+        {
+          "letter": "C",
+          "text": "Every attribute is unique across all rows"
+        },
+        {
+          "letter": "D",
+          "text": "It cannot have any foreign keys"
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "3NF eliminates transitive dependencies: a non-prime attribute should not depend on another non-prime attribute, only directly on a candidate key.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Normalization",
+      "question": "Boyce-Codd Normal Form (BCNF) strengthens 3NF by requiring that for every non-trivial functional dependency X → Y:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Y must be a prime attribute"
+        },
+        {
+          "letter": "B",
+          "text": "X must be a superkey of the relation"
+        },
+        {
+          "letter": "C",
+          "text": "Y must be a candidate key"
+        },
+        {
+          "letter": "D",
+          "text": "X must contain at least two attributes"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "BCNF requires that the determinant (left-hand side) of every non-trivial functional dependency be a superkey.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Normalization",
+      "question": "Which anomaly specifically refers to the inability to insert a new fact into a database because an unrelated required attribute lacks a value yet?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Update anomaly"
+        },
+        {
+          "letter": "B",
+          "text": "Insertion anomaly"
+        },
+        {
+          "letter": "C",
+          "text": "Deletion anomaly"
+        },
+        {
+          "letter": "D",
+          "text": "Selection anomaly"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "An insertion anomaly occurs when inserting valid data about one entity is blocked because the table requires values for a different, not-yet-available entity.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Normalization",
+      "question": "Given relation Employee(EmpID, DeptID, DeptLocation) where EmpID → DeptID and DeptID → DeptLocation, the dependency EmpID → DeptLocation is best described as a:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Partial dependency"
+        },
+        {
+          "letter": "B",
+          "text": "Transitive dependency, since it is derived through the intermediate non-prime attribute DeptID"
+        },
+        {
+          "letter": "C",
+          "text": "Trivial dependency"
+        },
+        {
+          "letter": "D",
+          "text": "Multivalued dependency"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "EmpID determines DeptLocation only indirectly, by way of DeptID (another non-prime attribute) - this chain is exactly what defines a transitive dependency.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Normalization",
+      "question": "A relation can be in 3NF but NOT in BCNF when:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "It has no candidate keys at all"
+        },
+        {
+          "letter": "B",
+          "text": "There exists a functional dependency X → Y where X is NOT a superkey, but Y happens to be a prime attribute (part of some candidate key)"
+        },
+        {
+          "letter": "C",
+          "text": "It has only one attribute"
+        },
+        {
+          "letter": "D",
+          "text": "All its attributes are prime"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "3NF allows a dependency X → Y to exist even if X is not a superkey, as long as Y is a prime attribute - this exception is exactly what BCNF removes.",
+      "isFollowUp": true
+    },
+    {
+      "topic": "Transactions",
+      "question": "Which ACID property ensures that a transaction takes the database from one valid state to another valid state, satisfying all defined integrity constraints?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Atomicity"
+        },
+        {
+          "letter": "B",
+          "text": "Consistency"
+        },
+        {
+          "letter": "C",
+          "text": "Isolation"
+        },
+        {
+          "letter": "D",
+          "text": "Durability"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "Consistency ensures that a transaction, upon completion, leaves the database in a state that satisfies all declared constraints and business rules.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Transactions",
+      "question": "Which ACID property guarantees that once a transaction commits, its changes survive even a subsequent system crash or power failure?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Isolation"
+        },
+        {
+          "letter": "B",
+          "text": "Durability"
+        },
+        {
+          "letter": "C",
+          "text": "Atomicity"
+        },
+        {
+          "letter": "D",
+          "text": "Consistency"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "Durability ensures that committed changes are permanently recorded and will not be lost even if the system crashes immediately afterward.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Transactions",
+      "question": "Which ACID property specifically ensures that the intermediate, uncommitted effects of one transaction are not visible to other concurrently executing transactions?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Atomicity"
+        },
+        {
+          "letter": "B",
+          "text": "Consistency"
+        },
+        {
+          "letter": "C",
+          "text": "Isolation"
+        },
+        {
+          "letter": "D",
+          "text": "Durability"
+        }
+      ],
+      "correctAnswer": "C",
+      "explanation": "Isolation ensures that concurrently running transactions do not observe each other's intermediate, uncommitted state, as if each were executing alone.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Transactions",
+      "question": "A \"serial schedule\" for a set of transactions is one where:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Operations of different transactions are arbitrarily interleaved"
+        },
+        {
+          "letter": "B",
+          "text": "Transactions execute one at a time to completion, with no interleaving of operations between different transactions"
+        },
+        {
+          "letter": "C",
+          "text": "All transactions run simultaneously with no ordering"
+        },
+        {
+          "letter": "D",
+          "text": "Only read operations are allowed"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "In a serial schedule, each transaction runs to completion before the next one starts.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Transactions",
+      "question": "A schedule is called \"serializable\" if:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "It must physically execute transactions one after another with no concurrency allowed"
+        },
+        {
+          "letter": "B",
+          "text": "Its effect (final database state and output) is equivalent to that of some serial schedule of the same transactions"
+        },
+        {
+          "letter": "C",
+          "text": "It always executes faster than a serial schedule"
+        },
+        {
+          "letter": "D",
+          "text": "It contains no read operations"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "A serializable schedule may interleave operations for better performance, but its overall effect must match some valid serial execution of the same transactions.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Concurrency Control",
+      "question": "An \"exclusive lock\" (X-lock) on a data item:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Can be held simultaneously by multiple transactions for reading"
+        },
+        {
+          "letter": "B",
+          "text": "Allows only the single transaction holding it to read and write the item; no other transaction may hold any lock on it simultaneously"
+        },
+        {
+          "letter": "C",
+          "text": "Is the same as a shared lock"
+        },
+        {
+          "letter": "D",
+          "text": "Cannot be used for writing"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "An exclusive lock grants the holding transaction sole read/write access, blocking all other transactions from acquiring any lock on that item.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Concurrency Control",
+      "question": "The Two-Phase Locking (2PL) protocol divides a transaction's locking actions into which two phases?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Read phase and write phase"
+        },
+        {
+          "letter": "B",
+          "text": "Growing phase (acquiring locks) and shrinking phase (releasing locks)"
+        },
+        {
+          "letter": "C",
+          "text": "Commit phase and abort phase"
+        },
+        {
+          "letter": "D",
+          "text": "Lock phase and unlock phase, which can be interleaved freely"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "In 2PL, a transaction first only acquires locks (growing phase), then, after its first release, only releases locks (shrinking phase).",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Concurrency Control",
+      "question": "A \"deadlock\" in concurrency control occurs when:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "A single transaction runs very slowly"
+        },
+        {
+          "letter": "B",
+          "text": "Two or more transactions are each waiting for a resource (lock) held by another in the group, forming a cycle, so none can proceed"
+        },
+        {
+          "letter": "C",
+          "text": "A transaction commits successfully"
+        },
+        {
+          "letter": "D",
+          "text": "The database runs out of disk space"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "Deadlock is a circular wait condition where each transaction in a cycle is blocked waiting for a lock held by another transaction in that same cycle.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Concurrency Control",
+      "question": "A \"wait-for graph\" used for deadlock detection represents:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "The physical layout of database files"
+        },
+        {
+          "letter": "B",
+          "text": "A directed graph where an edge from Ti to Tj means Ti is waiting for a lock held by Tj; a cycle in this graph indicates a deadlock"
+        },
+        {
+          "letter": "C",
+          "text": "The order in which transactions were submitted"
+        },
+        {
+          "letter": "D",
+          "text": "A list of all committed transactions"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "In a wait-for graph, nodes are transactions, and a directed edge Ti → Tj means transaction Ti is blocked waiting on a resource held by Tj; a cycle indicates deadlock.",
+      "isFollowUp": true
+    },
+    {
+      "topic": "Concurrency Control",
+      "question": "In timestamp-based concurrency control, each transaction is assigned a unique timestamp primarily used to:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Determine the physical location of its data on disk"
+        },
+        {
+          "letter": "B",
+          "text": "Decide the relative serialization order among concurrent transactions, ensuring consistency with that order"
+        },
+        {
+          "letter": "C",
+          "text": "Set the transaction's priority for CPU scheduling"
+        },
+        {
+          "letter": "D",
+          "text": "Encrypt the transaction's data"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "Timestamps establish a fixed logical ordering among transactions; the protocol uses them to detect and reject operations that would violate this intended serialization order.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Indexing",
+      "question": "A \"clustered index\" determines:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Nothing about physical storage; it is purely a logical concept"
+        },
+        {
+          "letter": "B",
+          "text": "The physical order in which table rows are actually stored on disk"
+        },
+        {
+          "letter": "C",
+          "text": "Only the order of index entries, never the table rows themselves"
+        },
+        {
+          "letter": "D",
+          "text": "That the table must have no primary key"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "A clustered index physically reorders (or stores) the table's rows according to the index key.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Indexing",
+      "question": "A B+ tree index organizes data such that:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "All actual data/key values are stored only in internal (non-leaf) nodes"
+        },
+        {
+          "letter": "B",
+          "text": "All actual key values (often with row pointers) are stored in the leaf nodes, which are linked together, while internal nodes only guide the search"
+        },
+        {
+          "letter": "C",
+          "text": "There is only one node in the whole structure"
+        },
+        {
+          "letter": "D",
+          "text": "Leaf nodes are not connected to each other at all"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "In a B+ tree, internal nodes contain only guide/separator keys for navigation, while all actual key values reside in the linked leaf level.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Indexing",
+      "question": "A hash index is generally most efficient for which type of query?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Range queries like \"find all values between 10 and 50\""
+        },
+        {
+          "letter": "B",
+          "text": "Exact-match (equality) lookups like \"find the row where key = 42\""
+        },
+        {
+          "letter": "C",
+          "text": "Sorting the entire table"
+        },
+        {
+          "letter": "D",
+          "text": "Finding the maximum value in a column"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "A hash index computes a hash of the search key to directly locate the bucket containing matching rows, which is extremely fast for exact-match lookups but does not support efficient range queries.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Indexing",
+      "question": "A \"dense index\" contains an index entry for:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Only the first record of each distinct block of data"
+        },
+        {
+          "letter": "B",
+          "text": "Every single search key value (record) in the data file"
+        },
+        {
+          "letter": "C",
+          "text": "Only even-numbered records"
+        },
+        {
+          "letter": "D",
+          "text": "No records at all, just a pointer to the whole file"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "A dense index has one index entry per record in the data file, in contrast to a sparse index.",
+      "isFollowUp": false
+    },
+    {
+      "topic": "Indexing",
+      "question": "A \"multilevel index\" is used primarily to address the problem that:",
+      "options": [
+        {
+          "letter": "A",
+          "text": "A single-level index on a very large file can itself become too large to search efficiently (e.g., requiring many disk reads for binary search)"
+        },
+        {
+          "letter": "B",
+          "text": "Databases cannot have more than one index per table"
+        },
+        {
+          "letter": "C",
+          "text": "Indexes cannot be stored on disk"
+        },
+        {
+          "letter": "D",
+          "text": "Hash indexes always outperform B+ trees"
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "When even the first-level index becomes large, a multilevel index builds an index-on-the-index so that searching reduces to a small number of fast steps.",
+      "isFollowUp": false
+    }
+  ]
+}

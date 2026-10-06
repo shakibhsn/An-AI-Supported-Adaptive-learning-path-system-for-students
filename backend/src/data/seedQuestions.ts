@@ -1,3 +1,10 @@
+// Phase 3 (OS/CA/DBMS) - same { diagnostic, practice } shape, kept as JSON
+// imports for the same reason assessmentQuestions.ts's extra topics are:
+// sheer size, not a different format.
+import osSeed from './seedQuestions.os.json';
+import caSeed from './seedQuestions.ca.json';
+import dbmsSeed from './seedQuestions.dbms.json';
+
 export const SEED_QUESTIONS = {
   "DSA": {
     "diagnostic": [
@@ -1411,5 +1418,8 @@ export const SEED_QUESTIONS = {
         "isFollowUp": true
       }
     ]
-  }
+  },
+  "OS": osSeed,
+  "CA": caSeed,
+  "DBMS": dbmsSeed,
 } as const;
