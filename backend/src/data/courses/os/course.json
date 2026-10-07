@@ -1,0 +1,43 @@
+{
+  "code": "OS",
+  "name": "Operating Systems",
+  "description": "Processes, threads, scheduling, synchronization, memory management, and file systems.",
+  "topics": [
+    {
+      "name": "OS Fundamentals",
+      "prerequisite": null
+    },
+    {
+      "name": "Processes",
+      "prerequisite": "OS Fundamentals"
+    },
+    {
+      "name": "Threads",
+      "prerequisite": "Processes"
+    },
+    {
+      "name": "CPU Scheduling",
+      "prerequisite": "Threads"
+    },
+    {
+      "name": "Synchronization",
+      "prerequisite": "Threads"
+    },
+    {
+      "name": "Deadlocks",
+      "prerequisite": "Synchronization"
+    },
+    {
+      "name": "Memory Management",
+      "prerequisite": "OS Fundamentals"
+    },
+    {
+      "name": "Virtual Memory",
+      "prerequisite": "Memory Management"
+    },
+    {
+      "name": "File Systems",
+      "prerequisite": "OS Fundamentals"
+    }
+  ]
+}

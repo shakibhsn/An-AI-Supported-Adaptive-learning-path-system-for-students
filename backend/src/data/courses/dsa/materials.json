@@ -1,0 +1,232 @@
+{
+  "Arrays": [
+    {
+      "title": "Arrays - Data Structure Introduction",
+      "description": "How arrays are laid out in memory and why index access is O(1).",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/array-data-structure/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Abdul Bari - Arrays & Array ADT",
+      "description": "Board-style walkthrough of arrays, addressing and complexity.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/playlist?list=PLsr8vTgyLdy_YndxNcI4WkH5Vorj5qvrv",
+      "provider": "YouTube (Abdul Bari)",
+      "difficulty": "BEGINNER",
+      "durationMinutes": 40
+    },
+    {
+      "title": "Programiz - Array Data Structure",
+      "description": "Concise beginner tutorial with C/C++/Java/Python examples.",
+      "type": "ARTICLE",
+      "url": "https://www.programiz.com/dsa/array",
+      "provider": "Programiz",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Practice: Array problems",
+      "description": "Graded array practice set.",
+      "type": "PRACTICE",
+      "url": "https://leetcode.com/tag/array/",
+      "provider": "LeetCode",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "Linked Lists": [
+    {
+      "title": "Linked List Data Structure",
+      "description": "Nodes, pointers, and why insertion at head is O(1).",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/linked-list-data-structure/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "mycodeschool - Linked List playlist",
+      "description": "The classic intuition-first linked list series in C/C++.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/playlist?list=PL2_aWCzGMAwI3W_JlcBbtYTwiQSsOTa6P",
+      "provider": "YouTube (mycodeschool)",
+      "difficulty": "BEGINNER",
+      "durationMinutes": 90
+    },
+    {
+      "title": "Programiz - Linked List Operations",
+      "description": "Traversal, insertion and deletion with diagrams.",
+      "type": "ARTICLE",
+      "url": "https://www.programiz.com/dsa/linked-list",
+      "provider": "Programiz",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Practice: Linked List problems",
+      "description": "Insertion, deletion, reversal, cycle detection.",
+      "type": "PRACTICE",
+      "url": "https://leetcode.com/tag/linked-list/",
+      "provider": "LeetCode",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "Stacks": [
+    {
+      "title": "Stack Data Structure",
+      "description": "LIFO model, push/pop, and real uses (undo, call stack).",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/stack-data-structure/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Abdul Bari - Stack ADT & applications",
+      "description": "Stack operations and postfix/infix evaluation.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/playlist?list=PLsr8vTgyLdy_YndxNcI4WkH5Vorj5qvrv",
+      "provider": "YouTube (Abdul Bari)",
+      "difficulty": "BEGINNER",
+      "durationMinutes": 35
+    },
+    {
+      "title": "Practice: Stack problems",
+      "description": "Balanced parentheses, min-stack, expression evaluation.",
+      "type": "PRACTICE",
+      "url": "https://leetcode.com/tag/stack/",
+      "provider": "LeetCode",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "Queues": [
+    {
+      "title": "Queue Data Structure",
+      "description": "FIFO model, enqueue/dequeue, circular queues.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/queue-data-structure/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Programiz - Queue Data Structure",
+      "description": "Array and linked-list queue implementations.",
+      "type": "ARTICLE",
+      "url": "https://www.programiz.com/dsa/queue",
+      "provider": "Programiz",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Practice: Queue problems",
+      "description": "Queue via stacks, sliding window, BFS-style practice.",
+      "type": "PRACTICE",
+      "url": "https://leetcode.com/tag/queue/",
+      "provider": "LeetCode",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "Recursion": [
+    {
+      "title": "Introduction to Recursion",
+      "description": "Base case, recursive case, and the call stack.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/introduction-to-recursion-data-structure-and-algorithm-tutorials/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "mycodeschool - Recursion series",
+      "description": "How recursion works with stack diagrams and worked examples.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/playlist?list=PL2_aWCzGMAwI3W_JlcBbtYTwiQSsOTa6P",
+      "provider": "YouTube (mycodeschool)",
+      "difficulty": "BEGINNER",
+      "durationMinutes": 60
+    },
+    {
+      "title": "Practice: Recursion problems",
+      "description": "Factorial, Fibonacci, subsets, string recursion.",
+      "type": "PRACTICE",
+      "url": "https://www.geeksforgeeks.org/practice-questions-for-recursion/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "Trees": [
+    {
+      "title": "Binary Tree Data Structure",
+      "description": "Tree terminology, traversals, and binary search trees.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/binary-tree-data-structure/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Abdul Bari - Trees & BST",
+      "description": "Tree height, traversals and BST operations explained on board.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/playlist?list=PLsr8vTgyLdy_YndxNcI4WkH5Vorj5qvrv",
+      "provider": "YouTube (Abdul Bari)",
+      "difficulty": "INTERMEDIATE",
+      "durationMinutes": 70
+    },
+    {
+      "title": "Practice: Tree problems",
+      "description": "Traversal, height, BST validation, LCA.",
+      "type": "PRACTICE",
+      "url": "https://leetcode.com/tag/tree/",
+      "provider": "LeetCode",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "Graphs": [
+    {
+      "title": "Graph Data Structure and Algorithms",
+      "description": "Representations (adjacency list/matrix) and BFS/DFS.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/graph-data-structure-and-algorithms/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Abdul Bari - Graph traversals (BFS/DFS)",
+      "description": "Breadth-first and depth-first traversal walkthroughs.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/playlist?list=PLsr8vTgyLdy_YndxNcI4WkH5Vorj5qvrv",
+      "provider": "YouTube (Abdul Bari)",
+      "difficulty": "INTERMEDIATE",
+      "durationMinutes": 50
+    },
+    {
+      "title": "Practice: Graph problems",
+      "description": "BFS/DFS, connected components, shortest path.",
+      "type": "PRACTICE",
+      "url": "https://leetcode.com/tag/graph/",
+      "provider": "LeetCode",
+      "difficulty": "ADVANCED"
+    }
+  ],
+  "Hashing": [
+    {
+      "title": "Hashing Data Structure",
+      "description": "Hash functions, collisions, chaining vs open addressing.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/hashing-data-structure/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Programiz - Hash Table",
+      "description": "How hash tables achieve average O(1) lookup.",
+      "type": "ARTICLE",
+      "url": "https://www.programiz.com/dsa/hash-table",
+      "provider": "Programiz",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Practice: Hash Table problems",
+      "description": "Two-sum, group anagrams, frequency counting.",
+      "type": "PRACTICE",
+      "url": "https://leetcode.com/tag/hash-table/",
+      "provider": "LeetCode",
+      "difficulty": "INTERMEDIATE"
+    }
+  ]
+}

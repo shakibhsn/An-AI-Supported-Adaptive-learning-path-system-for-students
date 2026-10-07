@@ -1,5 +1,677 @@
 [
   {
+    "topic": "Arrays",
+    "subtopic": "Traversal",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "In C, Java, and Python, the index of the first element of an array is:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "0"
+      },
+      {
+        "letter": "B",
+        "text": "1"
+      },
+      {
+        "letter": "C",
+        "text": "-1"
+      },
+      {
+        "letter": "D",
+        "text": "Depends on array size"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "These languages use zero-based indexing: the first element is at index 0.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Traversal",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What is the time complexity of accessing an element by index in an array (e.g. arr[i])?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(1)"
+      },
+      {
+        "letter": "B",
+        "text": "O(log n)"
+      },
+      {
+        "letter": "C",
+        "text": "O(n)"
+      },
+      {
+        "letter": "D",
+        "text": "O(n^2)"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Arrays store elements contiguously, so the address of arr[i] is computed directly from the base address and index - constant time.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Searching",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What is the worst-case time complexity of linear search on an unsorted array of n elements?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(1)"
+      },
+      {
+        "letter": "B",
+        "text": "O(log n)"
+      },
+      {
+        "letter": "C",
+        "text": "O(n)"
+      },
+      {
+        "letter": "D",
+        "text": "O(n log n)"
+      }
+    ],
+    "correctAnswer": "C",
+    "explanation": "Linear search checks each element one by one; in the worst case (target at the end or absent) it checks all n elements.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Insertion",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "Assuming there is free capacity at the end, what is the time complexity of inserting a new element at the END of an array?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(1)"
+      },
+      {
+        "letter": "B",
+        "text": "O(log n)"
+      },
+      {
+        "letter": "C",
+        "text": "O(n)"
+      },
+      {
+        "letter": "D",
+        "text": "O(n^2)"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "No existing elements need to move - the new value is simply placed at the next free slot.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Deletion",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What is the time complexity of deleting the LAST element of an array?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(1)"
+      },
+      {
+        "letter": "B",
+        "text": "O(log n)"
+      },
+      {
+        "letter": "C",
+        "text": "O(n)"
+      },
+      {
+        "letter": "D",
+        "text": "O(n^2)"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Removing the last element just decreases the count/size - no other elements need to shift.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Traversal",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "Which of the following best describes \"traversing\" an array?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Sorting all elements"
+      },
+      {
+        "letter": "B",
+        "text": "Visiting every element once, typically in order"
+      },
+      {
+        "letter": "C",
+        "text": "Deleting every element"
+      },
+      {
+        "letter": "D",
+        "text": "Searching for the maximum value only"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Traversal means systematically visiting each element of the array, usually from the first index to the last.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Traversal",
+    "difficulty": "EASY",
+    "questionType": "SHORT_ANSWER",
+    "question": "What does it mean to traverse an array, and how is it typically done?",
+    "expectedConcepts": [
+      "visit each element",
+      "sequential or systematic order",
+      "usually start to end",
+      "loop/iteration"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Searching",
+    "difficulty": "EASY",
+    "questionType": "SHORT_ANSWER",
+    "question": "What is linear search and how does it work?",
+    "expectedConcepts": [
+      "check each element one by one",
+      "compare each element to the target",
+      "stop when found or end of array reached",
+      "sequential"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Insertion",
+    "difficulty": "EASY",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe, step by step, how to insert a new value at a given index in a fixed-size array that already has empty capacity at the end.",
+    "expectedConcepts": [
+      "shift elements after the index one position right",
+      "start shifting from the last element to avoid overwriting",
+      "place the new value at the target index",
+      "increase the count/size"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Deletion",
+    "difficulty": "EASY",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe, step by step, how to delete the element at a given index from an array so there is no gap afterward.",
+    "expectedConcepts": [
+      "shift elements after the index one position left",
+      "overwrite the deleted slot",
+      "decrease the count/size"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Searching",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "What precondition must hold for binary search to work correctly?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "The array must be sorted"
+      },
+      {
+        "letter": "B",
+        "text": "The array must contain only integers"
+      },
+      {
+        "letter": "C",
+        "text": "The array must have an even number of elements"
+      },
+      {
+        "letter": "D",
+        "text": "The array must be a dynamic array"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Binary search relies on comparing the target to the middle element and discarding half the range - this only produces a correct answer if the array is sorted.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Searching",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "What is the time complexity of binary search on a sorted array of n elements?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(1)"
+      },
+      {
+        "letter": "B",
+        "text": "O(log n)"
+      },
+      {
+        "letter": "C",
+        "text": "O(n)"
+      },
+      {
+        "letter": "D",
+        "text": "O(n log n)"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Each comparison eliminates half of the remaining search range, giving logarithmic time complexity.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Insertion",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "What is the time complexity of inserting an element into the MIDDLE of an array with n elements?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(1)"
+      },
+      {
+        "letter": "B",
+        "text": "O(log n)"
+      },
+      {
+        "letter": "C",
+        "text": "O(n)"
+      },
+      {
+        "letter": "D",
+        "text": "O(n^2)"
+      }
+    ],
+    "correctAnswer": "C",
+    "explanation": "All elements after the insertion point must shift one position to the right, which takes linear time.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Deletion",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "What is the time complexity of deleting an element from the MIDDLE of an array with n elements?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(1)"
+      },
+      {
+        "letter": "B",
+        "text": "O(log n)"
+      },
+      {
+        "letter": "C",
+        "text": "O(n)"
+      },
+      {
+        "letter": "D",
+        "text": "O(n^2)"
+      }
+    ],
+    "correctAnswer": "C",
+    "explanation": "All elements after the deleted position must shift one position to the left, which takes linear time.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Traversal",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "What is the time complexity of fully traversing a 2D array with m rows and n columns using nested loops?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(m + n)"
+      },
+      {
+        "letter": "B",
+        "text": "O(m * n)"
+      },
+      {
+        "letter": "C",
+        "text": "O(log(m * n))"
+      },
+      {
+        "letter": "D",
+        "text": "O(m)"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A nested loop visiting every cell performs m * n total visits, one per element.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Searching",
+    "difficulty": "MEDIUM",
+    "questionType": "MCQ",
+    "question": "In the worst case, how many comparisons does binary search need on a sorted array of 16 elements?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "2"
+      },
+      {
+        "letter": "B",
+        "text": "4"
+      },
+      {
+        "letter": "C",
+        "text": "8"
+      },
+      {
+        "letter": "D",
+        "text": "16"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "log2(16) = 4 - each comparison halves the search space: 16 -> 8 -> 4 -> 2 -> 1.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Insertion",
+    "difficulty": "MEDIUM",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain why inserting an element at the BEGINNING of an array is less efficient than inserting at the END.",
+    "expectedConcepts": [
+      "shifting required when inserting at the beginning",
+      "all subsequent elements must move",
+      "end insertion needs no shifting",
+      "O(n) versus O(1)"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Deletion",
+    "difficulty": "MEDIUM",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain the tradeoff between deleting an element from an array versus from a linked list.",
+    "expectedConcepts": [
+      "array deletion requires shifting remaining elements",
+      "linked list deletion just relinks pointers",
+      "array delete is O(n)",
+      "linked list delete is O(1) once the node is located"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Searching",
+    "difficulty": "MEDIUM",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Given a sorted array of 8 elements, describe step by step how binary search finds a target value, including what happens to the search range at each step.",
+    "expectedConcepts": [
+      "start with the full range",
+      "compare the target to the middle element",
+      "narrow to the left half if the target is smaller",
+      "narrow to the right half if the target is larger",
+      "repeat until found or the range is empty"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Traversal",
+    "difficulty": "MEDIUM",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe an efficient way to find both the minimum and maximum values in an unsorted array using a single traversal.",
+    "expectedConcepts": [
+      "single pass through the array",
+      "track a running minimum and running maximum",
+      "compare each element and update min/max as needed",
+      "O(n) time overall"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Insertion",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "What is the AMORTIZED time complexity of appending to the end of a dynamic array (e.g. Python list, Java ArrayList) that automatically resizes?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(1) amortized"
+      },
+      {
+        "letter": "B",
+        "text": "O(log n) amortized"
+      },
+      {
+        "letter": "C",
+        "text": "O(n) amortized"
+      },
+      {
+        "letter": "D",
+        "text": "O(n^2) amortized"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Although an individual resize copy is O(n), doubling the capacity means resizes become exponentially rare, so the average (amortized) cost per append is O(1).",
+    "maxScore": 1
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Deletion",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "Which strategy keeps an array's elements contiguous (no gaps) immediately after deleting an element from the middle?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Leaving the slot empty (null)"
+      },
+      {
+        "letter": "B",
+        "text": "Shifting all subsequent elements left by one"
+      },
+      {
+        "letter": "C",
+        "text": "Swapping with a random element"
+      },
+      {
+        "letter": "D",
+        "text": "Marking the whole array as invalid"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Shifting subsequent elements left by one closes the gap and keeps the array contiguous, at the cost of an O(n) shift.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Searching",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "Running binary search on an UNSORTED array will:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Always still find the target correctly, just slower"
+      },
+      {
+        "letter": "B",
+        "text": "Run in O(1) time by luck"
+      },
+      {
+        "letter": "C",
+        "text": "Potentially return an incorrect result or miss the target"
+      },
+      {
+        "letter": "D",
+        "text": "Automatically sort the array first"
+      }
+    ],
+    "correctAnswer": "C",
+    "explanation": "Binary search's halving logic assumes sorted order; on unsorted data it can discard the half that actually contains the target, giving a wrong answer.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Traversal",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "Arrays generally traverse faster in practice than linked lists of the same size mainly because of:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Arrays being scanned less often"
+      },
+      {
+        "letter": "B",
+        "text": "Contiguous memory improving CPU cache locality"
+      },
+      {
+        "letter": "C",
+        "text": "Arrays using less memory in every case"
+      },
+      {
+        "letter": "D",
+        "text": "Linked lists requiring binary search"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Because array elements sit next to each other in memory, the CPU cache can prefetch upcoming elements, making sequential traversal significantly faster than chasing pointers scattered in memory.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Insertion",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "For a dynamic array that doubles its capacity whenever it is full, what is the TOTAL cost of performing n consecutive append operations, from empty?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(1)"
+      },
+      {
+        "letter": "B",
+        "text": "O(n)"
+      },
+      {
+        "letter": "C",
+        "text": "O(n log n)"
+      },
+      {
+        "letter": "D",
+        "text": "O(n^2)"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Even though some individual appends trigger an O(n) resize, the doubling strategy means the sum of all resize costs across n appends is still O(n) total (amortized O(1) each).",
+    "maxScore": 1
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Deletion",
+    "difficulty": "HARD",
+    "questionType": "MCQ",
+    "question": "Repeatedly deleting the FIRST element of a large array (one at a time, many times) is inefficient mainly because:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Each deletion requires shifting all remaining elements left, costing O(n) every time"
+      },
+      {
+        "letter": "B",
+        "text": "Arrays cannot delete the first element at all"
+      },
+      {
+        "letter": "C",
+        "text": "It corrupts the array's memory"
+      },
+      {
+        "letter": "D",
+        "text": "It always requires resizing"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Every front-deletion shifts every remaining element left by one, so repeating it k times costs O(n*k) - far more expensive than removing from the end.",
+    "maxScore": 1
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Insertion",
+    "difficulty": "HARD",
+    "questionType": "SHORT_ANSWER",
+    "question": "Explain how dynamic arrays achieve amortized O(1) append even though an individual resize is O(n).",
+    "expectedConcepts": [
+      "doubling capacity strategy",
+      "resizing happens infrequently as the array grows",
+      "the cost of a resize is spread across many appends",
+      "most individual appends are O(1)"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Searching",
+    "difficulty": "HARD",
+    "questionType": "SHORT_ANSWER",
+    "question": "Why can binary search not be directly applied to a sorted linked list the same way it is applied to a sorted array?",
+    "expectedConcepts": [
+      "linked lists lack random/direct access by index",
+      "reaching the middle node requires sequential traversal",
+      "this traversal cost removes the O(log n) advantage"
+    ],
+    "maxScore": 2
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Deletion",
+    "difficulty": "HARD",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe an approach to delete several specified indices from an array in a single efficient pass, rather than deleting them one at a time.",
+    "expectedConcepts": [
+      "single pass copying only the kept elements",
+      "use a write-index/two-pointer technique",
+      "skip elements marked for deletion",
+      "avoids repeated shifting for each deletion",
+      "O(n) total instead of O(n*k)"
+    ],
+    "maxScore": 5
+  },
+  {
+    "topic": "Arrays",
+    "subtopic": "Traversal",
+    "difficulty": "HARD",
+    "questionType": "PROBLEM_SOLVING",
+    "question": "Describe how to traverse a 2D array (matrix) to compute the sum of each row and store the results in a separate result array.",
+    "expectedConcepts": [
+      "outer loop over each row",
+      "inner loop over each column summing values",
+      "accumulate a running row sum",
+      "store the row sum into the result array at the row's index"
+    ],
+    "maxScore": 5
+  },
+  {
     "topic": "Linked Lists",
     "subtopic": "Traversal",
     "difficulty": "EASY",

@@ -1,0 +1,770 @@
+[
+  {
+    "topic": "Arrays",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "In most programming languages (C, Java, Python), array indexing starts at:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "0"
+      },
+      {
+        "letter": "B",
+        "text": "1"
+      },
+      {
+        "letter": "C",
+        "text": "-1"
+      },
+      {
+        "letter": "D",
+        "text": "It varies by array size"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Zero-based indexing is the standard convention in C-family languages and Python."
+  },
+  {
+    "topic": "Arrays",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: an array's size can be changed after it is declared in C.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Static C arrays have a fixed size determined at declaration; growing or shrinking it requires dynamic allocation (malloc/realloc), not the same array."
+  },
+  {
+    "topic": "Arrays",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "You insert an element at the very beginning of a full static array of size n. What is the time complexity, including the required shifting?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(1)"
+      },
+      {
+        "letter": "B",
+        "text": "O(log n)"
+      },
+      {
+        "letter": "C",
+        "text": "O(n)"
+      },
+      {
+        "letter": "D",
+        "text": "O(n²)"
+      }
+    ],
+    "correctAnswer": "C",
+    "explanation": "All n existing elements must shift one position to the right to make room, which is a linear-time operation - a key reason linked lists beat arrays for frequent front-insertions."
+  },
+  {
+    "topic": "Arrays",
+    "difficulty": "HARD",
+    "questionType": "CODE",
+    "question": "Given `int arr[5] = {10,20,30,40,50};`, what does `*(arr+2)` evaluate to in C?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "10"
+      },
+      {
+        "letter": "B",
+        "text": "20"
+      },
+      {
+        "letter": "C",
+        "text": "30"
+      },
+      {
+        "letter": "D",
+        "text": "The address of arr[2]"
+      }
+    ],
+    "correctAnswer": "C",
+    "explanation": "arr decays to a pointer to arr[0]; arr+2 points to arr[2]; dereferencing with * gives its value, 30."
+  },
+  {
+    "topic": "Linked Lists",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What does a NULL `next` pointer in a singly linked list node indicate?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "The node is corrupted"
+      },
+      {
+        "letter": "B",
+        "text": "It is the last node in the list"
+      },
+      {
+        "letter": "C",
+        "text": "The list is empty"
+      },
+      {
+        "letter": "D",
+        "text": "It is the head node"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "By convention the last node's next pointer is set to NULL to mark the end of the list."
+  },
+  {
+    "topic": "Linked Lists",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: you can directly access the 5th element of a singly linked list in O(1) time the way you can with an array.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Linked lists have no random access - reaching the 5th node requires traversing from the head, which is O(n)."
+  },
+  {
+    "topic": "Linked Lists",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "You're given only a pointer to a node (not the head) in a singly linked list and must 'delete' it in O(1), without traversing from head. What trick achieves this (assuming it isn't the last node)?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Free the node directly"
+      },
+      {
+        "letter": "B",
+        "text": "Copy the next node's data into this node, then delete/free the actual next node"
+      },
+      {
+        "letter": "C",
+        "text": "Set the node's data to NULL"
+      },
+      {
+        "letter": "D",
+        "text": "It is impossible"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "You overwrite the current node's data with the next node's data, then unlink and free the (now-duplicate) next node - effectively removing the current node's identity in O(1) without needing the previous node."
+  },
+  {
+    "topic": "Linked Lists",
+    "difficulty": "HARD",
+    "questionType": "CODE",
+    "question": "In C, given `struct Node* head` pointing to the first of 3 nodes, what does `head = head->next->next;` do?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Deletes the first two nodes and frees their memory"
+      },
+      {
+        "letter": "B",
+        "text": "Moves head to point to the 3rd node - the first two nodes leak if no other pointer references them"
+      },
+      {
+        "letter": "C",
+        "text": "Causes a compile error"
+      },
+      {
+        "letter": "D",
+        "text": "Reverses the list"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Reassigning head only changes where the head pointer points; the original first two nodes are never freed, so their memory becomes unreachable (a leak) unless something else held a reference to them."
+  },
+  {
+    "topic": "Stacks",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "Which principle governs a Stack data structure?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "FIFO (First-In-First-Out)"
+      },
+      {
+        "letter": "B",
+        "text": "LIFO (Last-In-First-Out)"
+      },
+      {
+        "letter": "C",
+        "text": "Priority-based ordering"
+      },
+      {
+        "letter": "D",
+        "text": "Random access"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A stack only allows insertion (push) and removal (pop) at one end, so the last item pushed is the first popped."
+  },
+  {
+    "topic": "Stacks",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: a stack's push and pop operations both run in O(1) time when implemented with a dynamic array (amortized) or a linked list.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Both implementations only touch one end of the structure per operation, giving constant (amortized, for dynamic arrays) time."
+  },
+  {
+    "topic": "Stacks",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "You implement a Queue using two Stacks (input and output). When dequeuing and the output stack is empty, what should you do?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Return an error immediately"
+      },
+      {
+        "letter": "B",
+        "text": "Pop all elements from the input stack and push them onto the output stack, then pop from output"
+      },
+      {
+        "letter": "C",
+        "text": "Reverse the input stack in place without a second stack"
+      },
+      {
+        "letter": "D",
+        "text": "Push a new element"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Transferring input to output reverses the order once, turning stack-order (LIFO) into queue-order (FIFO) for that batch; this is the classic two-stack queue technique."
+  },
+  {
+    "topic": "Stacks",
+    "difficulty": "HARD",
+    "questionType": "CODE",
+    "question": "Evaluating the postfix expression `5 3 + 8 2 - *` using a stack gives what result?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "24"
+      },
+      {
+        "letter": "B",
+        "text": "48"
+      },
+      {
+        "letter": "C",
+        "text": "13"
+      },
+      {
+        "letter": "D",
+        "text": "30"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "5+3=8 (stack: [8]); push 8, push 2 (stack: [8,8,2]); 8-2=6 (stack: [8,6]); 8*6=48."
+  },
+  {
+    "topic": "Queues",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "Which principle governs a Queue data structure?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "LIFO"
+      },
+      {
+        "letter": "B",
+        "text": "FIFO (First-In-First-Out)"
+      },
+      {
+        "letter": "C",
+        "text": "Random"
+      },
+      {
+        "letter": "D",
+        "text": "Priority only"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Elements are added at the rear and removed from the front, so the first item enqueued is the first dequeued."
+  },
+  {
+    "topic": "Queues",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: in a plain linear array-based queue (no wraparound), repeated dequeues and enqueues can waste array space even when the queue isn't logically full.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Once front advances past index 0, those freed slots at the start are never reused without wraparound logic - the core motivation for circular queues."
+  },
+  {
+    "topic": "Queues",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "A circular queue has capacity 5 (indices 0-4). front=3, rear=1 (rear points to the last inserted element). How many elements are currently in the queue?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "2"
+      },
+      {
+        "letter": "B",
+        "text": "3"
+      },
+      {
+        "letter": "C",
+        "text": "4"
+      },
+      {
+        "letter": "D",
+        "text": "5"
+      }
+    ],
+    "correctAnswer": "C",
+    "explanation": "Using count = ((rear - front + N) % N) + 1: ((1-3+5)%5)+1 = (3%5)+1 = 3+1 = 4."
+  },
+  {
+    "topic": "Queues",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "Which underlying data structure is the natural fit for the frontier in a Breadth-First Search (BFS) traversal?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Stack"
+      },
+      {
+        "letter": "B",
+        "text": "Queue"
+      },
+      {
+        "letter": "C",
+        "text": "Priority heap"
+      },
+      {
+        "letter": "D",
+        "text": "Hash set only"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "BFS explores nodes level by level, visiting the earliest-discovered node next - exactly the FIFO behavior a queue provides."
+  },
+  {
+    "topic": "Recursion",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What are the two essential components every correct recursive function must have?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "A loop and a counter"
+      },
+      {
+        "letter": "B",
+        "text": "A base case and a recursive case"
+      },
+      {
+        "letter": "C",
+        "text": "Two return statements"
+      },
+      {
+        "letter": "D",
+        "text": "A global variable"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Without a base case (a condition that stops recursing) the function would call itself forever, causing a stack overflow."
+  },
+  {
+    "topic": "Recursion",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: every iterative (loop-based) algorithm can, in principle, be rewritten using recursion.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Iteration and recursion are computationally equivalent - any loop can be reformulated as a function calling itself with updated state."
+  },
+  {
+    "topic": "Recursion",
+    "difficulty": "HARD",
+    "questionType": "CODE",
+    "question": "Given fib(n) = fib(n-1) + fib(n-2), with fib(0)=0 and fib(1)=1, what does fib(5) return?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "3"
+      },
+      {
+        "letter": "B",
+        "text": "5"
+      },
+      {
+        "letter": "C",
+        "text": "8"
+      },
+      {
+        "letter": "D",
+        "text": "13"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "fib: 0,1,1,2,3,5 for n=0..5 - fib(5)=5."
+  },
+  {
+    "topic": "Recursion",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "A recursive function that calls itself twice per invocation (like naive, non-memoized Fibonacci) has what time complexity?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(n)"
+      },
+      {
+        "letter": "B",
+        "text": "O(n log n)"
+      },
+      {
+        "letter": "C",
+        "text": "O(2^n) - exponential"
+      },
+      {
+        "letter": "D",
+        "text": "O(n²)"
+      }
+    ],
+    "correctAnswer": "C",
+    "explanation": "Each call spawns two more calls without reusing prior results, so the call tree grows exponentially with depth n."
+  },
+  {
+    "topic": "Trees",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "In a Binary Search Tree (BST), where are values smaller than a node's value stored?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "In the right subtree"
+      },
+      {
+        "letter": "B",
+        "text": "In the left subtree"
+      },
+      {
+        "letter": "C",
+        "text": "At the root only"
+      },
+      {
+        "letter": "D",
+        "text": "Order doesn't matter"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "The BST property places smaller values in the left subtree and larger values in the right subtree of every node."
+  },
+  {
+    "topic": "Trees",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: in a Binary Tree, every node can have at most 2 children.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "That's the defining property of a binary tree - each node has at most a left and a right child."
+  },
+  {
+    "topic": "Trees",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "What is the worst-case search time in an unbalanced BST built by inserting already-sorted data?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(log n)"
+      },
+      {
+        "letter": "B",
+        "text": "O(1)"
+      },
+      {
+        "letter": "C",
+        "text": "O(n) - it degenerates into a linked list"
+      },
+      {
+        "letter": "D",
+        "text": "O(n log n)"
+      }
+    ],
+    "correctAnswer": "C",
+    "explanation": "Inserting sorted data into a plain BST with no rebalancing produces a tree where every node has only one child - functionally a linked list, so search is linear."
+  },
+  {
+    "topic": "Trees",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "Which traversal of a Binary Search Tree visits nodes in ascending sorted order?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Pre-order"
+      },
+      {
+        "letter": "B",
+        "text": "Post-order"
+      },
+      {
+        "letter": "C",
+        "text": "In-order"
+      },
+      {
+        "letter": "D",
+        "text": "Level-order"
+      }
+    ],
+    "correctAnswer": "C",
+    "explanation": "In-order traversal (left, root, right) visits the smaller left subtree, then the node, then the larger right subtree - producing sorted order for a BST."
+  },
+  {
+    "topic": "Graphs",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "Which two are the most common ways to represent a graph in memory?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Stack and Queue"
+      },
+      {
+        "letter": "B",
+        "text": "Adjacency Matrix and Adjacency List"
+      },
+      {
+        "letter": "C",
+        "text": "Array and Linked List only"
+      },
+      {
+        "letter": "D",
+        "text": "Hash table only"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "An adjacency matrix stores edges as a 2D grid; an adjacency list stores, per node, a list of its neighbors - both are standard graph representations."
+  },
+  {
+    "topic": "Graphs",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: in an undirected graph, an edge from node A to node B implies an edge from B to A.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Undirected edges have no direction, so connectivity works both ways by definition."
+  },
+  {
+    "topic": "Graphs",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "You need the shortest path (fewest edges) between two nodes in an UNWEIGHTED graph. Which traversal guarantees this directly?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "DFS"
+      },
+      {
+        "letter": "B",
+        "text": "BFS"
+      },
+      {
+        "letter": "C",
+        "text": "In-order traversal"
+      },
+      {
+        "letter": "D",
+        "text": "Any traversal works equally"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "BFS explores nodes in increasing distance order (level by level) from the source, so the first time it reaches the target is guaranteed to be via the shortest path in an unweighted graph."
+  },
+  {
+    "topic": "Graphs",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "What does it mean for a graph to contain a 'cycle'?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "It has more edges than nodes"
+      },
+      {
+        "letter": "B",
+        "text": "There is a path that starts and ends at the same node without repeating an edge"
+      },
+      {
+        "letter": "C",
+        "text": "It is disconnected"
+      },
+      {
+        "letter": "D",
+        "text": "All nodes share the same degree"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A cycle is a closed path - you can walk from a node back to itself following distinct edges."
+  },
+  {
+    "topic": "Hashing",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What is the primary purpose of a hash function in a hash table?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "To sort the keys"
+      },
+      {
+        "letter": "B",
+        "text": "To map a key to an array index (bucket)"
+      },
+      {
+        "letter": "C",
+        "text": "To encrypt the data"
+      },
+      {
+        "letter": "D",
+        "text": "To compress the data"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A hash function converts a key into an index, letting the table jump almost directly to where that key's value is stored."
+  },
+  {
+    "topic": "Hashing",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: two different keys can never produce the same hash value (a 'collision').",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Collisions are expected and normal in hashing - the hash space is finite while the key space can be much larger, so collision-resolution strategies (chaining, open addressing) exist to handle them."
+  },
+  {
+    "topic": "Hashing",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "Which collision-resolution technique stores multiple colliding elements in a linked list at the same bucket index?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Open addressing"
+      },
+      {
+        "letter": "B",
+        "text": "Separate chaining"
+      },
+      {
+        "letter": "C",
+        "text": "Linear probing"
+      },
+      {
+        "letter": "D",
+        "text": "Double hashing"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Separate chaining keeps a small linked list (or similar structure) per bucket, appending colliding entries to it instead of finding another slot."
+  },
+  {
+    "topic": "Hashing",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "What is the average-case time complexity of lookup, insert, and delete in a well-implemented hash table with few collisions?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(n)"
+      },
+      {
+        "letter": "B",
+        "text": "O(log n)"
+      },
+      {
+        "letter": "C",
+        "text": "O(1)"
+      },
+      {
+        "letter": "D",
+        "text": "O(n log n)"
+      }
+    ],
+    "correctAnswer": "C",
+    "explanation": "With a good hash function and load factor, each key maps to a bucket with very few (ideally zero) collisions, making these operations constant time on average."
+  }
+]

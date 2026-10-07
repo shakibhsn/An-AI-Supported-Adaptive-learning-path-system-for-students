@@ -1,0 +1,377 @@
+[
+  {
+    "topic": "Encapsulation",
+    "question": "Why are class variables typically declared private while providing public getters and setters?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "To allow validation logic and prevent unauthorized state tampering"
+      },
+      {
+        "letter": "B",
+        "text": "Faster CPU speed"
+      },
+      {
+        "letter": "C",
+        "text": "Bypass access modifiers"
+      },
+      {
+        "letter": "D",
+        "text": "Public cannot hold numbers"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Correct! Encapsulation ensures object invariants are strictly guarded.",
+    "isFollowUp": false
+  },
+  {
+    "topic": "Access Modifiers",
+    "question": "Which access modifier allows access within the same class, package, and derived subclasses in different packages?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "private"
+      },
+      {
+        "letter": "B",
+        "text": "default (package-private)"
+      },
+      {
+        "letter": "C",
+        "text": "protected"
+      },
+      {
+        "letter": "D",
+        "text": "static"
+      }
+    ],
+    "correctAnswer": "C",
+    "explanation": "Correct! 'protected' grants visibility to subclasses even across distinct packages.",
+    "isFollowUp": false
+  },
+  {
+    "topic": "Constructors",
+    "question": "What keyword is used within a subclass constructor to invoke the immediate parent class constructor?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "this()"
+      },
+      {
+        "letter": "B",
+        "text": "super()"
+      },
+      {
+        "letter": "C",
+        "text": "parent()"
+      },
+      {
+        "letter": "D",
+        "text": "base()"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Correct! super() delegates initialization upward to initialize inherited parent members.",
+    "isFollowUp": false
+  },
+  {
+    "topic": "Polymorphism",
+    "question": "Given Animal a = new Dog(); where Dog overrides makeSound(), which version runs when calling a.makeSound()?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Animal's base version"
+      },
+      {
+        "letter": "B",
+        "text": "Dog's overridden version (Dynamic Dispatch)"
+      },
+      {
+        "letter": "C",
+        "text": "Compiler error"
+      },
+      {
+        "letter": "D",
+        "text": "Both execute in order"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Correct! Dynamic method dispatch checks the runtime heap instance (Dog) rather than variable reference type.",
+    "isFollowUp": false
+  },
+  {
+    "topic": "Overloading",
+    "question": "Which scenario represents valid method overloading within the same class?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "int calc(int a) and double calc(int a)"
+      },
+      {
+        "letter": "B",
+        "text": "void proc(int a) and void proc(int a, String b)"
+      },
+      {
+        "letter": "C",
+        "text": "static void run() and void run()"
+      },
+      {
+        "letter": "D",
+        "text": "private int get() and public int get()"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Correct! Overloading requires a distinct parameter list (signature). Return type alone is insufficient.",
+    "isFollowUp": false
+  },
+  {
+    "topic": "Abstract Classes",
+    "question": "What happens if a concrete subclass extends an abstract class but fails to implement an abstract method?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Code compiles with warning"
+      },
+      {
+        "letter": "B",
+        "text": "Compilation fails unless subclass is also declared abstract"
+      },
+      {
+        "letter": "C",
+        "text": "Missing method defaults to null"
+      },
+      {
+        "letter": "D",
+        "text": "Method is skipped at runtime"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Correct! A non-abstract subclass must implement all inherited abstract methods.",
+    "isFollowUp": false
+  },
+  {
+    "topic": "Interfaces",
+    "question": "What is a primary design advantage of implementing an Interface over extending a concrete class?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "A class can implement multiple interfaces (multiple type contracts)"
+      },
+      {
+        "letter": "B",
+        "text": "Eliminates memory allocation"
+      },
+      {
+        "letter": "C",
+        "text": "Automatically creates getters/setters"
+      },
+      {
+        "letter": "D",
+        "text": "Disables garbage collection"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Correct! Interfaces provide type contracts without inheritance hierarchy coupling.",
+    "isFollowUp": false
+  },
+  {
+    "topic": "Static Members",
+    "question": "If a static variable 'count' is incremented by instance A, what value is observed by instance B?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "The initial default value"
+      },
+      {
+        "letter": "B",
+        "text": "The updated incremented value (Shared Memory)"
+      },
+      {
+        "letter": "C",
+        "text": "Instance B has isolated copy"
+      },
+      {
+        "letter": "D",
+        "text": "Memory error occurs"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Correct! Static members belong to the class itself and are shared among all instances.",
+    "isFollowUp": false
+  },
+  {
+    "topic": "Inheritance",
+    "question": "What is the consequence of marking a class as 'final' in Java?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "The class cannot be instantiated"
+      },
+      {
+        "letter": "B",
+        "text": "The class cannot be extended or subclassed"
+      },
+      {
+        "letter": "C",
+        "text": "All fields must be strings"
+      },
+      {
+        "letter": "D",
+        "text": "Garbage collector ignores it"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Correct! A final class cannot be inherited, securing its implementation from alteration.",
+    "isFollowUp": false
+  },
+  {
+    "topic": "Exception Handling",
+    "question": "Under what circumstance does the 'finally' block NOT execute?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "When an uncaught exception is thrown"
+      },
+      {
+        "letter": "B",
+        "text": "When try block executes return"
+      },
+      {
+        "letter": "C",
+        "text": "When System.exit(0) is called or JVM process terminates"
+      },
+      {
+        "letter": "D",
+        "text": "When catch catches the error"
+      }
+    ],
+    "correctAnswer": "C",
+    "explanation": "Correct! finally always executes unless the underlying virtual machine process is terminated.",
+    "isFollowUp": false
+  },
+  {
+    "topic": "Polymorphism",
+    "question": "Given Animal a = new Dog(); where Dog extends Animal and overrides makeSound(), which implementation executes when calling a.makeSound()?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Animal's base method because variable 'a' is typed as Animal"
+      },
+      {
+        "letter": "B",
+        "text": "Dog's overridden method resolved via runtime dynamic dispatch (VTable)"
+      },
+      {
+        "letter": "C",
+        "text": "Compiler throws a type mismatch ambiguity error"
+      },
+      {
+        "letter": "D",
+        "text": "Both execute sequentially from superclass to subclass"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": null,
+    "isFollowUp": true
+  },
+  {
+    "topic": "Interfaces",
+    "question": "What is a primary architectural reason to implement an Interface rather than extend an Abstract Class?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Interfaces permit declaring mutable instance state variables"
+      },
+      {
+        "letter": "B",
+        "text": "A class can implement multiple interfaces, overcoming single class inheritance limits"
+      },
+      {
+        "letter": "C",
+        "text": "Interfaces compile directly into machine microcode"
+      },
+      {
+        "letter": "D",
+        "text": "Abstract classes cannot define methods with bodies"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": null,
+    "isFollowUp": true
+  },
+  {
+    "topic": "Constructors",
+    "question": "In an inheritance hierarchy, why must super() be called as the very first statement within a subclass constructor?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "To guarantee parent base state is properly initialized before subclass code executes"
+      },
+      {
+        "letter": "B",
+        "text": "To release memory allocated to temporary local variables"
+      },
+      {
+        "letter": "C",
+        "text": "To overwrite private fields declared in the superclass"
+      },
+      {
+        "letter": "D",
+        "text": "To disable garbage collection during instantiation"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": null,
+    "isFollowUp": true
+  },
+  {
+    "topic": "Polymorphism",
+    "question": "How does the object-oriented runtime resolve which overridden method to execute during polymorphic invocation?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "By scanning the source code directory on the filesystem during execution"
+      },
+      {
+        "letter": "B",
+        "text": "By consulting the object's Virtual Method Table (VTable) pointer in heap memory"
+      },
+      {
+        "letter": "C",
+        "text": "By converting all instance methods into static global functions"
+      },
+      {
+        "letter": "D",
+        "text": "By executing a linear search through the call stack frames"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": null,
+    "isFollowUp": true
+  },
+  {
+    "topic": "Encapsulation",
+    "question": "Which implementation correctly enforces encapsulation for a sensitive class variable 'balance'?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Declaring balance public so any external class can update it directly"
+      },
+      {
+        "letter": "B",
+        "text": "Declaring balance private and providing a validated public setter method"
+      },
+      {
+        "letter": "C",
+        "text": "Declaring balance as static volatile without getter or setter methods"
+      },
+      {
+        "letter": "D",
+        "text": "Accessing balance using raw pointer memory offsets"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": null,
+    "isFollowUp": true
+  }
+]

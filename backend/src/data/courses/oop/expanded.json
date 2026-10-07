@@ -1,0 +1,962 @@
+[
+  {
+    "topic": "Encapsulation",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What is the main purpose of encapsulation in OOP?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "To allow multiple inheritance"
+      },
+      {
+        "letter": "B",
+        "text": "To bundle data and methods together while restricting direct access to internal state"
+      },
+      {
+        "letter": "C",
+        "text": "To speed up compilation"
+      },
+      {
+        "letter": "D",
+        "text": "To enable polymorphism directly"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Encapsulation hides an object's internal representation and exposes only a controlled public interface."
+  },
+  {
+    "topic": "Encapsulation",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: encapsulation is typically achieved in Java by declaring fields as private and exposing public getter/setter methods.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "This is the standard Java idiom for encapsulating field access while still allowing controlled read/write."
+  },
+  {
+    "topic": "Encapsulation",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "A class exposes a public field `balance` directly instead of a private field with a validated setter. What is the main risk?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Slower performance"
+      },
+      {
+        "letter": "B",
+        "text": "External code can set balance to an invalid value (e.g., negative) with no validation"
+      },
+      {
+        "letter": "C",
+        "text": "The class won't compile"
+      },
+      {
+        "letter": "D",
+        "text": "It breaks inheritance"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Without encapsulation, any code that can see the field can mutate it however it likes, bypassing any business rules the class was supposed to enforce."
+  },
+  {
+    "topic": "Encapsulation",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "Why is encapsulation considered essential for maintainability in large codebases?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "It reduces the number of classes needed"
+      },
+      {
+        "letter": "B",
+        "text": "It lets you change a class's internal implementation without breaking code that depends on its public interface"
+      },
+      {
+        "letter": "C",
+        "text": "It automatically improves performance"
+      },
+      {
+        "letter": "D",
+        "text": "It removes the need for constructors"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "As long as the public interface (method signatures) stays the same, the internal implementation can be freely rewritten without affecting any external code that uses the class."
+  },
+  {
+    "topic": "Access Modifiers",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "In Java, which access modifier makes a member accessible ONLY within its own class?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "public"
+      },
+      {
+        "letter": "B",
+        "text": "protected"
+      },
+      {
+        "letter": "C",
+        "text": "private"
+      },
+      {
+        "letter": "D",
+        "text": "default (package-private)"
+      }
+    ],
+    "correctAnswer": "C",
+    "explanation": "private restricts visibility to the declaring class itself - not even subclasses can access it directly."
+  },
+  {
+    "topic": "Access Modifiers",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: a 'protected' member in Java is accessible to subclasses, even in a different package.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "protected extends default (package) access to also include subclasses regardless of package, which is what distinguishes it from default access."
+  },
+  {
+    "topic": "Access Modifiers",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "A base class has a protected method. A subclass in a different package receives a base-class-typed parameter and tries to call that protected method on it. Is this allowed?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Yes, always"
+      },
+      {
+        "letter": "B",
+        "text": "No - protected access via inheritance only permits calling it on the subclass's own instance (or subtypes), not on an arbitrary base-class instance from another package"
+      },
+      {
+        "letter": "C",
+        "text": "Only if the method is also static"
+      },
+      {
+        "letter": "D",
+        "text": "Only in interfaces"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Java's protected rule for cross-package access requires the call to go through a reference of the subclass's own type (or a subtype of it), not an arbitrary base-type reference."
+  },
+  {
+    "topic": "Access Modifiers",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "What is the risk of making all class fields public by default instead of private?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "The program won't compile"
+      },
+      {
+        "letter": "B",
+        "text": "It breaks encapsulation, letting any external code modify internal state without validation"
+      },
+      {
+        "letter": "C",
+        "text": "It prevents inheritance"
+      },
+      {
+        "letter": "D",
+        "text": "It reduces memory usage"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Public fields can be read and written by any code with a reference to the object, removing the class's ability to enforce invariants on its own state."
+  },
+  {
+    "topic": "Inheritance",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "Which keyword does Java use for a class to inherit from another class?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "implements"
+      },
+      {
+        "letter": "B",
+        "text": "extends"
+      },
+      {
+        "letter": "C",
+        "text": "inherits"
+      },
+      {
+        "letter": "D",
+        "text": "super"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "'extends' declares a subclass relationship to a superclass; 'implements' is used for interfaces instead."
+  },
+  {
+    "topic": "Inheritance",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: in single inheritance, a class can extend at most one direct superclass.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Java classes support only single inheritance of implementation - multiple interface implementation is allowed instead."
+  },
+  {
+    "topic": "Inheritance",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "A subclass wants to run its immediate superclass's constructor before its own constructor body executes. Which call does it use?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "this()"
+      },
+      {
+        "letter": "B",
+        "text": "super()"
+      },
+      {
+        "letter": "C",
+        "text": "new Parent()"
+      },
+      {
+        "letter": "D",
+        "text": "extends()"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "super() invokes the superclass's constructor and must be the first statement in the subclass constructor if used explicitly."
+  },
+  {
+    "topic": "Inheritance",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "What does the 'Diamond Problem' refer to, and how does Java avoid it for classes?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "A sorting algorithm inefficiency"
+      },
+      {
+        "letter": "B",
+        "text": "Ambiguity when a class would inherit the same method from two different superclasses via multiple inheritance - Java disallows multiple class inheritance to avoid this"
+      },
+      {
+        "letter": "C",
+        "text": "A memory leak pattern"
+      },
+      {
+        "letter": "D",
+        "text": "It only affects interfaces, not classes"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "If a class could extend two superclasses that both define the same method differently, the compiler would not know which version to use - Java sidesteps this entirely by permitting only single class inheritance."
+  },
+  {
+    "topic": "Polymorphism",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What does polymorphism allow a single method call to do, depending on the actual object type at runtime?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Run faster automatically"
+      },
+      {
+        "letter": "B",
+        "text": "Behave differently, by invoking different overridden implementations"
+      },
+      {
+        "letter": "C",
+        "text": "Skip validation logic"
+      },
+      {
+        "letter": "D",
+        "text": "Avoid inheritance entirely"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Polymorphism means 'many forms' - the same method call resolves to different behavior depending on the concrete runtime type of the object."
+  },
+  {
+    "topic": "Polymorphism",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: method overriding is an example of runtime (dynamic) polymorphism.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "The version of an overridden method that executes is decided at runtime based on the object's actual type, not its declared/reference type."
+  },
+  {
+    "topic": "Polymorphism",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "A `Shape` reference variable points to a `Circle` object, and `Circle` overrides `area()`. When you call `shape.area()`, which version runs?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Shape's version, because the variable is typed Shape"
+      },
+      {
+        "letter": "B",
+        "text": "Circle's version, because Java resolves overridden methods based on the object's actual runtime type (dynamic dispatch)"
+      },
+      {
+        "letter": "C",
+        "text": "A compile error occurs"
+      },
+      {
+        "letter": "D",
+        "text": "Both versions run"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "For overridden instance methods, Java uses dynamic dispatch: the JVM looks at the actual object type at runtime, not the compile-time reference type."
+  },
+  {
+    "topic": "Polymorphism",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "What internal mechanism lets dynamic dispatch (runtime polymorphism) work in languages like Java and C++?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "A virtual method table (vtable) mapping overridden methods to the correct implementation at runtime"
+      },
+      {
+        "letter": "B",
+        "text": "The garbage collector"
+      },
+      {
+        "letter": "C",
+        "text": "Static binding at compile time"
+      },
+      {
+        "letter": "D",
+        "text": "Reflection only, invoked manually"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Each class (with virtual/overridable methods) has a table of method pointers; at runtime the object's vtable is consulted to find the correct overridden implementation to call."
+  },
+  {
+    "topic": "Overloading",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What distinguishes overloaded methods that share the same name in a class?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Different return types only"
+      },
+      {
+        "letter": "B",
+        "text": "Different parameter lists (number and/or type of parameters)"
+      },
+      {
+        "letter": "C",
+        "text": "Different access modifiers"
+      },
+      {
+        "letter": "D",
+        "text": "Nothing - they must be identical"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Overload resolution is based on the parameter list (its 'signature'); return type alone does not distinguish overloads."
+  },
+  {
+    "topic": "Overloading",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: method overloading is resolved at compile time based on argument types (static/early binding).",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Unlike overriding (resolved at runtime), the compiler picks the matching overload based on the static types of the arguments at the call site."
+  },
+  {
+    "topic": "Overloading",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "You define `void print(int x)` and `void print(double x)`. What happens when you call `print(5)`?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Compile error - ambiguous call"
+      },
+      {
+        "letter": "B",
+        "text": "It calls print(int) since 5 is an int literal and matches exactly, which is preferred over widening to double"
+      },
+      {
+        "letter": "C",
+        "text": "It always calls print(double)"
+      },
+      {
+        "letter": "D",
+        "text": "A random choice is made at runtime"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Java prefers an exact type match over an implicit widening conversion, so the int literal 5 resolves to print(int)."
+  },
+  {
+    "topic": "Overloading",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "Can two methods that differ ONLY in return type (same name, same parameter list) be valid overloads in Java?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Yes, always"
+      },
+      {
+        "letter": "B",
+        "text": "No - return type alone is not sufficient; the compiler treats it as a duplicate/conflicting method declaration"
+      },
+      {
+        "letter": "C",
+        "text": "Only for static methods"
+      },
+      {
+        "letter": "D",
+        "text": "Only for constructors"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Java's overload resolution is based on the method signature (name + parameter types), which does not include the return type - so two such methods would clash."
+  },
+  {
+    "topic": "Abstract Classes",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "Can an abstract class in Java have a constructor?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "No, never"
+      },
+      {
+        "letter": "B",
+        "text": "Yes - it can have one, invoked via super() from subclasses, even though the abstract class itself cannot be instantiated directly"
+      },
+      {
+        "letter": "C",
+        "text": "Only if all its methods are abstract"
+      },
+      {
+        "letter": "D",
+        "text": "Only in C++, not Java"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "An abstract class's constructor runs as part of initializing any concrete subclass instance, even though `new AbstractClass()` itself is disallowed."
+  },
+  {
+    "topic": "Abstract Classes",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: an abstract class can contain both abstract methods (no body) and concrete methods (with a body).",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Abstract classes may mix fully-implemented methods with abstract ones that subclasses must implement."
+  },
+  {
+    "topic": "Abstract Classes",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "A subclass extends an abstract class but does not implement one of the inherited abstract methods. What must be true of the subclass?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "It compiles fine and the method is simply skipped"
+      },
+      {
+        "letter": "B",
+        "text": "The subclass must also be declared abstract, or the code fails to compile"
+      },
+      {
+        "letter": "C",
+        "text": "It's only a runtime warning"
+      },
+      {
+        "letter": "D",
+        "text": "Java auto-generates a default implementation"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A concrete (non-abstract) class must provide bodies for every abstract method it inherits; if it leaves one unimplemented, it must itself be marked abstract."
+  },
+  {
+    "topic": "Abstract Classes",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "When should you prefer an abstract class over an interface for a family of shape classes sharing state (like a `color` field) and default behavior?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Never, interfaces are always the better choice"
+      },
+      {
+        "letter": "B",
+        "text": "When you need to share actual field state and common implementation logic across subclasses, not just a method contract"
+      },
+      {
+        "letter": "C",
+        "text": "Abstract classes can't declare any methods"
+      },
+      {
+        "letter": "D",
+        "text": "There's no functional difference between them"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Interfaces (pre-default-methods, and even with them for state) are best for defining a pure contract; abstract classes are the right tool when subclasses genuinely share implementation and state."
+  },
+  {
+    "topic": "Interfaces",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What must a (non-abstract) class do when it implements an interface?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Nothing extra"
+      },
+      {
+        "letter": "B",
+        "text": "Provide concrete implementations for all of the interface's abstract methods"
+      },
+      {
+        "letter": "C",
+        "text": "Extend a superclass first"
+      },
+      {
+        "letter": "D",
+        "text": "Declare all its fields as private"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Implementing an interface is a contract: the class must supply real method bodies for every abstract method the interface declares."
+  },
+  {
+    "topic": "Interfaces",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: unlike class inheritance, a Java class can implement multiple interfaces at once.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Java allows implementing any number of interfaces, which is how it provides multiple-inheritance-of-type without the diamond problem for state."
+  },
+  {
+    "topic": "Interfaces",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "Interfaces A and B both declare a default method `greet()` with different bodies, and a class implements both without overriding greet(). What happens?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "It compiles, picking A's version"
+      },
+      {
+        "letter": "B",
+        "text": "It compiles, picking B's version"
+      },
+      {
+        "letter": "C",
+        "text": "Compile error - the class must explicitly override greet() to resolve the conflict"
+      },
+      {
+        "letter": "D",
+        "text": "A runtime exception only, not a compile error"
+      }
+    ],
+    "correctAnswer": "C",
+    "explanation": "When two default methods clash, Java refuses to guess which one you meant and forces the implementing class to explicitly resolve the ambiguity by overriding the method itself."
+  },
+  {
+    "topic": "Interfaces",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "Why are interfaces well-suited for defining a shared contract across otherwise unrelated classes (e.g., Comparable across very different types)?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "They force a shared common ancestor class"
+      },
+      {
+        "letter": "B",
+        "text": "They let unrelated classes agree to support the same behavior/API without sharing an implementation hierarchy"
+      },
+      {
+        "letter": "C",
+        "text": "They automatically implement the methods for you"
+      },
+      {
+        "letter": "D",
+        "text": "They prevent polymorphism"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Any class, regardless of its inheritance tree, can opt into an interface and gain type compatibility with anything expecting that interface - decoupling \"is-a-kind-of\" state hierarchies from \"can-do\" behavioral contracts."
+  },
+  {
+    "topic": "Constructors",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What is a 'default constructor' in Java?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "A constructor you must always write yourself"
+      },
+      {
+        "letter": "B",
+        "text": "A no-argument constructor the compiler automatically supplies if you define no constructors at all"
+      },
+      {
+        "letter": "C",
+        "text": "A constructor that takes every field as a parameter"
+      },
+      {
+        "letter": "D",
+        "text": "The last constructor declared in the class"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "If a class defines zero constructors, the compiler silently inserts a public no-argument one that does nothing beyond the implicit super() call."
+  },
+  {
+    "topic": "Constructors",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: if a class defines any constructor at all (even a parameterized one), Java stops auto-generating a no-argument default constructor.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "The compiler only provides the implicit default constructor when you write none yourself - as soon as you write one, that behavior disappears."
+  },
+  {
+    "topic": "Constructors",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "A subclass constructor doesn't explicitly call super(...) as its first statement, and the superclass has no no-argument constructor. What happens?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "It compiles fine using default field values"
+      },
+      {
+        "letter": "B",
+        "text": "Compile error - the compiler implicitly inserts a no-arg super() call, which does not exist"
+      },
+      {
+        "letter": "C",
+        "text": "It links to a random constructor"
+      },
+      {
+        "letter": "D",
+        "text": "It's only a runtime error"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Every constructor implicitly calls super() as its first action unless you explicitly call a different super(...) or this(...); if no matching no-arg superclass constructor exists, compilation fails."
+  },
+  {
+    "topic": "Constructors",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "What is 'constructor chaining' via this(...), and why is it useful?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "It calls the superclass constructor"
+      },
+      {
+        "letter": "B",
+        "text": "It lets one constructor in a class call another constructor in that same class, avoiding duplicated initialization logic"
+      },
+      {
+        "letter": "C",
+        "text": "It creates multiple objects in one call"
+      },
+      {
+        "letter": "D",
+        "text": "It only applies to static methods"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "this(...) redirects to another overload of the constructor in the same class, letting you centralize shared setup logic in one place instead of copy-pasting it across overloads."
+  },
+  {
+    "topic": "Static Members",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "A `static` field in a class belongs to:",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Each individual object separately"
+      },
+      {
+        "letter": "B",
+        "text": "The class itself, shared across all instances"
+      },
+      {
+        "letter": "C",
+        "text": "Only the constructor"
+      },
+      {
+        "letter": "D",
+        "text": "Nothing until an object is instantiated"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Static fields are stored once per class (not once per object) and are shared by every instance."
+  },
+  {
+    "topic": "Static Members",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: a static method can directly access instance (non-static) fields without an object reference.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Static methods have no implicit `this`, so they cannot directly touch instance members - they would need an explicit object reference to do so."
+  },
+  {
+    "topic": "Static Members",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "A constructor increments a `static int counter` every time an object is created. After 5 objects are created (starting from 0, nothing else resets it), what is `counter`?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "1, because each object has its own copy"
+      },
+      {
+        "letter": "B",
+        "text": "5, because all instances share the single static counter"
+      },
+      {
+        "letter": "C",
+        "text": "0, static fields never change"
+      },
+      {
+        "letter": "D",
+        "text": "Undefined behavior"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Because the field is static, every object increments the same shared value rather than its own copy."
+  },
+  {
+    "topic": "Static Members",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "Why can't a static method be overridden in the true polymorphic sense (though it can be redeclared/'hidden' in a subclass)?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Static methods are resolved at compile time based on the reference type (static binding), so there's no runtime dynamic dispatch to override"
+      },
+      {
+        "letter": "B",
+        "text": "Static methods don't exist in subclasses at all"
+      },
+      {
+        "letter": "C",
+        "text": "Java forbids static methods entirely in subclasses"
+      },
+      {
+        "letter": "D",
+        "text": "It's a syntax error to redeclare them"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Overriding relies on dynamic dispatch through an object's actual runtime type; static methods are looked up by the compile-time reference type instead, so 'hiding' happens rather than true overriding."
+  },
+  {
+    "topic": "Exception Handling",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "Which block always executes in a try-catch-finally structure, whether or not an exception occurred?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "try"
+      },
+      {
+        "letter": "B",
+        "text": "catch"
+      },
+      {
+        "letter": "C",
+        "text": "finally"
+      },
+      {
+        "letter": "D",
+        "text": "throw"
+      }
+    ],
+    "correctAnswer": "C",
+    "explanation": "finally is designed to run regardless of whether the try block succeeded, threw, or even returned - typically used for cleanup."
+  },
+  {
+    "topic": "Exception Handling",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: a 'checked' exception in Java must either be caught or declared in the method's throws clause, or the code fails to compile.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Checked exceptions are verified by the compiler, which enforces that callers acknowledge the possibility of that exception one way or another."
+  },
+  {
+    "topic": "Exception Handling",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "A method has `return 1;` inside try, and `return 2;` inside finally. What value does the method actually return?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "1"
+      },
+      {
+        "letter": "B",
+        "text": "2 - a return statement in finally overrides the return value from try"
+      },
+      {
+        "letter": "C",
+        "text": "A compile error"
+      },
+      {
+        "letter": "D",
+        "text": "Both values, as a list"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "If finally itself contains a return, it overrides any pending return from try/catch - this is exactly why returning from finally is considered a bad practice, since it silently discards the original result."
+  },
+  {
+    "topic": "Exception Handling",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "Why is catching the generic Exception (or worse, Throwable) class usually considered bad practice?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "It's actually the recommended best practice"
+      },
+      {
+        "letter": "B",
+        "text": "It silently swallows/masks specific error types you didn't anticipate, making real bugs much harder to diagnose - catching specific exception types is usually better"
+      },
+      {
+        "letter": "C",
+        "text": "It's slower at runtime"
+      },
+      {
+        "letter": "D",
+        "text": "It prevents the program from compiling"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A broad catch hides the real, specific failure (e.g., NullPointerException vs IOException) behind generic handling, so bugs surface later and are harder to trace back to their cause."
+  }
+]

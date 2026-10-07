@@ -1,0 +1,47 @@
+{
+  "code": "SPL",
+  "name": "Structured Programming Language",
+  "description": "C fundamentals: pointers, memory management, and structures.",
+  "topics": [
+    {
+      "name": "Data Types",
+      "prerequisite": null
+    },
+    {
+      "name": "Pointers",
+      "prerequisite": "Data Types"
+    },
+    {
+      "name": "Dereferencing",
+      "prerequisite": "Pointers"
+    },
+    {
+      "name": "Arrays & Pointers",
+      "prerequisite": "Pointers"
+    },
+    {
+      "name": "Dynamic Memory",
+      "prerequisite": "Pointers"
+    },
+    {
+      "name": "Deallocation",
+      "prerequisite": "Dynamic Memory"
+    },
+    {
+      "name": "Strings",
+      "prerequisite": "Arrays & Pointers"
+    },
+    {
+      "name": "Structures",
+      "prerequisite": "Data Types"
+    },
+    {
+      "name": "Storage Classes",
+      "prerequisite": "Data Types"
+    },
+    {
+      "name": "Call Stack",
+      "prerequisite": null
+    }
+  ]
+}

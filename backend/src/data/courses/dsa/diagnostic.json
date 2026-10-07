@@ -1,0 +1,92 @@
+[
+  {
+    "topic": "Arrays",
+    "question": "What is the worst-case time complexity of accessing an element in an unsorted dynamic array by index?",
+    "optionA": "O(n) Linear Time",
+    "optionB": "O(1) Constant Time",
+    "optionC": "O(log n)",
+    "optionD": "O(n²)",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Linked Lists",
+    "question": "In a singly linked list, what is the consequence of executing head = head->next without saving the previous head in C?",
+    "optionA": "Memory leak of the first node",
+    "optionB": "Immediate segmentation fault",
+    "optionC": "Reversal of the list",
+    "optionD": "Infinite looping",
+    "correctAnswer": "A"
+  },
+  {
+    "topic": "Linked Lists",
+    "question": "Which operation can be performed in O(1) constant time in a singly linked list, given only the pointer to the 'head' node?",
+    "optionA": "Searching for a specific value",
+    "optionB": "Inserting a new node at the beginning of the list",
+    "optionC": "Deleting the last node",
+    "optionD": "Accessing index k directly",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Stacks",
+    "question": "Which data structure is implicitly utilized by the system call stack when executing recursive functions?",
+    "optionA": "Queue",
+    "optionB": "Priority Heap",
+    "optionC": "Last-In-First-Out Stack",
+    "optionD": "Hash Table",
+    "correctAnswer": "C"
+  },
+  {
+    "topic": "Queues",
+    "question": "In a circular queue implemented using an array of size N, what condition signifies that the queue is completely full?",
+    "optionA": "front == rear",
+    "optionB": "(rear + 1) % N == front",
+    "optionC": "rear == N - 1",
+    "optionD": "front == -1",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Recursion",
+    "question": "What happens if a recursive function does not define a valid base case or never reaches it?",
+    "optionA": "Syntax error",
+    "optionB": "Stack Overflow runtime crash",
+    "optionC": "Memory compaction",
+    "optionD": "Returns NULL automatically",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Trees",
+    "question": "What is the in-order traversal (Left -> Root -> Right) result of a valid Binary Search Tree (BST)?",
+    "optionA": "Descending order",
+    "optionB": "Sorted ascending order",
+    "optionC": "Grouped by depth",
+    "optionD": "Arbitrary order",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Trees",
+    "question": "What is the maximum number of nodes in a full binary tree of height h (where root has height 0)?",
+    "optionA": "2^h",
+    "optionB": "2^(h+1) - 1",
+    "optionC": "h² + 1",
+    "optionD": "2h - 1",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Graphs",
+    "question": "Which graph traversal algorithm uses a Queue data structure to visit vertices level by level?",
+    "optionA": "Depth-First Search (DFS)",
+    "optionB": "Breadth-First Search (BFS)",
+    "optionC": "Dijkstra's Algorithm",
+    "optionD": "Kruskal's MST",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Hashing",
+    "question": "In a hash table, what technique resolves collisions by maintaining a linked list of entries at each bucket index?",
+    "optionA": "Open Addressing",
+    "optionB": "Linear Probing",
+    "optionC": "Separate Chaining",
+    "optionD": "Double Hashing",
+    "correctAnswer": "C"
+  }
+]

@@ -5,7 +5,22 @@
 
 import { calculateTopicScores, rankWeakTopics, classifyStatus, AnswerRecord } from '../src/services/mastery.service';
 import { generateLearningPath, TopicMasterySnapshot } from '../src/services/adaptiveEngine.service';
-import { PREREQUISITES } from '../src/data/topicMapping';
+
+// Phase 8: prerequisites are now database-driven (see
+// learningPath.service.ts's getPrerequisiteMap) rather than read from a
+// hardcoded TS module, so this test supplies the same DSA chain directly -
+// it's testing the pure generateLearningPath algorithm against a known
+// fixture, not asserting anything about where real data comes from.
+const DSA_PREREQUISITES: Record<string, string | null> = {
+  Arrays: null,
+  'Linked Lists': 'Arrays',
+  Stacks: 'Arrays',
+  Queues: 'Arrays',
+  Recursion: null,
+  Trees: 'Recursion',
+  Graphs: 'Trees',
+  Hashing: 'Arrays',
+};
 
 let passed = 0;
 let failed = 0;
@@ -83,7 +98,7 @@ const allMastery: TopicMasterySnapshot[] = [
   { topic: 'Trees', score: 30, status: 'Weak/Critical' },
 ];
 
-const path = generateLearningPath(PREREQUISITES.DSA, ranked, allMastery);
+const path = generateLearningPath(DSA_PREREQUISITES, ranked, allMastery);
 // Depth 0 (no prerequisite): Arrays (revision, Mastered) and Recursion (genuinely weak) -
 //   revision-before-weak tiebreak puts Arrays first.
 // Depth 1: Trees and Linked Lists - both genuinely weak, worst score first (Trees 30 < Linked Lists 35).
@@ -107,7 +122,7 @@ const updatedMastery: TopicMasterySnapshot[] = [
 const updatedRanked = rankWeakTopics(
   Object.fromEntries(updatedMastery.map((m) => [m.topic, { ...m, correct: 0, total: 0 }]))
 );
-const updatedPath = generateLearningPath(PREREQUISITES.DSA, updatedRanked, updatedMastery);
+const updatedPath = generateLearningPath(DSA_PREREQUISITES, updatedRanked, updatedMastery);
 assertEqual(
   updatedPath.map((p) => p.topic),
   ['Recursion', 'Trees'],

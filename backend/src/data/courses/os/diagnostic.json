@@ -1,0 +1,83 @@
+[
+  {
+    "topic": "OS Fundamentals",
+    "question": "Which of the following best describes the primary role of an operating system?",
+    "optionA": "It compiles source code into machine instructions",
+    "optionB": "It acts as an intermediary between the user/applications and computer hardware, managing resources",
+    "optionC": "It is a type of application software for document editing",
+    "optionD": "It physically manufactures computer hardware components",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Processes",
+    "question": "What is a process in the context of an operating system?",
+    "optionA": "A file stored permanently on disk",
+    "optionB": "An instance of a program in execution, including its current activity and resources",
+    "optionC": "A section of source code that has not yet been compiled",
+    "optionD": "A hardware component that executes instructions",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Threads",
+    "question": "What is the main characteristic that distinguishes a thread from a process?",
+    "optionA": "A thread cannot be scheduled by the CPU scheduler",
+    "optionB": "A thread is a lightweight unit of execution that shares its address space (code, data) with other threads of the same process",
+    "optionC": "A thread always requires its own separate memory address space",
+    "optionD": "A thread can only exist inside the kernel, never in user programs",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "CPU Scheduling",
+    "question": "What is the main objective of a CPU scheduling algorithm?",
+    "optionA": "To permanently remove processes from the ready queue",
+    "optionB": "To decide which of the ready processes gets allocated the CPU next, optimizing criteria such as utilization, throughput, and waiting time",
+    "optionC": "To physically speed up the CPU clock frequency",
+    "optionD": "To allocate disk blocks to files",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Synchronization",
+    "question": "What is a race condition?",
+    "optionA": "A condition where a process runs out of CPU time",
+    "optionB": "A situation where multiple processes/threads access and manipulate shared data concurrently, and the final outcome depends on the particular order of execution",
+    "optionC": "An error that occurs only during process termination",
+    "optionD": "A scheduling algorithm that races processes based on priority",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Deadlocks",
+    "question": "Which of the following is one of the four necessary conditions for a deadlock to occur?",
+    "optionA": "High CPU utilization",
+    "optionB": "Circular wait, where each process in a set is waiting for a resource held by the next process in the set",
+    "optionC": "Fast context switching",
+    "optionD": "Use of virtual memory",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Memory Management",
+    "question": "What is the primary purpose of memory management in an operating system?",
+    "optionA": "To keep track of which parts of memory are in use and by whom, and to allocate/deallocate memory efficiently among processes",
+    "optionB": "To compile programs faster",
+    "optionC": "To manage only the file system directory structure",
+    "optionD": "To schedule which process runs next on the CPU",
+    "correctAnswer": "A"
+  },
+  {
+    "topic": "Virtual Memory",
+    "question": "What does virtual memory allow an operating system to do?",
+    "optionA": "Execute processes that are not completely loaded into physical memory, by separating logical memory from physical memory",
+    "optionB": "Permanently increase the physical RAM installed in the machine",
+    "optionC": "Eliminate the need for a CPU scheduler",
+    "optionD": "Store files without using a file system",
+    "correctAnswer": "A"
+  },
+  {
+    "topic": "File Systems",
+    "question": "What is the primary purpose of a file system in an operating system?",
+    "optionA": "To schedule CPU bursts for running processes",
+    "optionB": "To organize, store, retrieve, name, and manage data (files) on storage devices in a structured way",
+    "optionC": "To manage thread creation and destruction",
+    "optionD": "To translate logical addresses into physical addresses",
+    "correctAnswer": "B"
+  }
+]

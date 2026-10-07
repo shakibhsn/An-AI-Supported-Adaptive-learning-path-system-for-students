@@ -1,0 +1,962 @@
+[
+  {
+    "topic": "Data Types",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "Which of these is typically the smallest in byte size on a standard system?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "int"
+      },
+      {
+        "letter": "B",
+        "text": "double"
+      },
+      {
+        "letter": "C",
+        "text": "char"
+      },
+      {
+        "letter": "D",
+        "text": "long"
+      }
+    ],
+    "correctAnswer": "C",
+    "explanation": "char is defined to be exactly 1 byte, the smallest addressable unit, while int/long/double are all wider."
+  },
+  {
+    "topic": "Data Types",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: an unsigned int can store larger positive values than a signed int of the same size, because it doesn't reserve a bit for the sign.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Signed types split their range between negative and positive values; unsigned types dedicate the entire bit pattern to non-negative values, roughly doubling the positive range."
+  },
+  {
+    "topic": "Data Types",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "You assign -1 to an `unsigned int` variable in C. What happens?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Compile error"
+      },
+      {
+        "letter": "B",
+        "text": "It wraps around to the maximum representable unsigned value (e.g., 4294967295 for a 32-bit unsigned int)"
+      },
+      {
+        "letter": "C",
+        "text": "It stays -1"
+      },
+      {
+        "letter": "D",
+        "text": "The program crashes immediately"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Unsigned integer arithmetic in C wraps modulo 2^n; -1 has the all-1-bits pattern, which unsigned interpretation reads as the maximum value."
+  },
+  {
+    "topic": "Data Types",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "Why can sizeof(int) differ between systems/compilers in C?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "It never differs - always exactly 4 bytes"
+      },
+      {
+        "letter": "B",
+        "text": "The C standard only guarantees a minimum range for int; the exact size is implementation-defined (commonly 4 bytes, but not guaranteed)"
+      },
+      {
+        "letter": "C",
+        "text": "It depends on the variable name length"
+      },
+      {
+        "letter": "D",
+        "text": "It's randomized at compile time"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "The C standard specifies minimum ranges, not exact byte widths, so int's actual size is chosen by each compiler/platform (historically 2, commonly 4 bytes today)."
+  },
+  {
+    "topic": "Pointers",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What does the `&` operator do when applied to a variable in C?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Dereferences a pointer"
+      },
+      {
+        "letter": "B",
+        "text": "Returns the memory address of the variable"
+      },
+      {
+        "letter": "C",
+        "text": "Performs bitwise AND only"
+      },
+      {
+        "letter": "D",
+        "text": "Declares a new pointer"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "The address-of operator & yields the memory location where a variable is stored, which is what you assign to a pointer."
+  },
+  {
+    "topic": "Pointers",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: a pointer variable itself occupies memory, separate from the memory of the variable it points to.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "A pointer is a variable in its own right (typically 4 or 8 bytes) that happens to store an address - it has its own storage location distinct from what it points to."
+  },
+  {
+    "topic": "Pointers",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "Given `int x = 10; int *p = &x; *p = 20;`, what is the value of `x` afterward?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "10"
+      },
+      {
+        "letter": "B",
+        "text": "20"
+      },
+      {
+        "letter": "C",
+        "text": "The address of x"
+      },
+      {
+        "letter": "D",
+        "text": "Undefined behavior"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "p holds the address of x, so dereferencing p with *p = 20 writes 20 directly into x's memory location."
+  },
+  {
+    "topic": "Pointers",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "Why must a pointer be declared with a specific type (e.g., `int *p` vs `char *p`) rather than being generic?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Purely stylistic, it has no real effect"
+      },
+      {
+        "letter": "B",
+        "text": "The type tells the compiler how many bytes to read/write on dereference and how far to move for pointer arithmetic"
+      },
+      {
+        "letter": "C",
+        "text": "All pointers are the same size and type is irrelevant"
+      },
+      {
+        "letter": "D",
+        "text": "It only affects how the value is printed"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Dereferencing and pointer arithmetic both depend on the pointed-to type's size - e.g. `p+1` on an int* advances by sizeof(int) bytes, but on a char* it advances by 1 byte."
+  },
+  {
+    "topic": "Dereferencing",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What does the `*` operator do when applied to a pointer variable (not in a declaration)?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Multiplies the pointer"
+      },
+      {
+        "letter": "B",
+        "text": "Accesses/dereferences the value stored at the address the pointer holds"
+      },
+      {
+        "letter": "C",
+        "text": "Declares a new variable"
+      },
+      {
+        "letter": "D",
+        "text": "Returns the pointer's own address"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "The dereference operator follows the pointer to the memory it points at and reads (or writes) the value stored there."
+  },
+  {
+    "topic": "Dereferencing",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: dereferencing a NULL pointer in C is safe and simply returns 0.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Dereferencing NULL is undefined behavior in C and typically crashes the program with a segmentation fault rather than safely returning any value."
+  },
+  {
+    "topic": "Dereferencing",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "`int *p; *p = 5;` is executed without ever giving `p` a valid address first. What is the likely result?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "p automatically points to a freshly allocated int"
+      },
+      {
+        "letter": "B",
+        "text": "Undefined behavior - p holds a garbage/uninitialized address, and writing through it can crash the program or corrupt memory"
+      },
+      {
+        "letter": "C",
+        "text": "Compile error"
+      },
+      {
+        "letter": "D",
+        "text": "5 is safely stored in p itself, not through it"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "An uninitialized pointer holds whatever garbage value happened to be in memory; dereferencing and writing through it is undefined behavior and a common source of crashes."
+  },
+  {
+    "topic": "Dereferencing",
+    "difficulty": "HARD",
+    "questionType": "CODE",
+    "question": "Given `int x = 7; int *p = &x; int **pp = &p;`, what does `**pp` evaluate to?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "The address of p"
+      },
+      {
+        "letter": "B",
+        "text": "The address of x"
+      },
+      {
+        "letter": "C",
+        "text": "7 (the value of x)"
+      },
+      {
+        "letter": "D",
+        "text": "Compile error"
+      }
+    ],
+    "correctAnswer": "C",
+    "explanation": "pp is a pointer-to-pointer holding the address of p; *pp gives p (the address of x); dereferencing again, **pp, gives the value at that address, which is 7."
+  },
+  {
+    "topic": "Arrays & Pointers",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "In C, what does an array's name (e.g., `arr`) 'decay' into in most expressions?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Its total byte size"
+      },
+      {
+        "letter": "B",
+        "text": "A pointer to its first element"
+      },
+      {
+        "letter": "C",
+        "text": "A full copy of the array"
+      },
+      {
+        "letter": "D",
+        "text": "NULL"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Except in a few contexts like sizeof(), an array name used in an expression decays to a pointer to its first element."
+  },
+  {
+    "topic": "Arrays & Pointers",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: arr[i] and *(arr + i) are equivalent ways of accessing an array element in C.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "C defines arr[i] as syntactic sugar for *(arr + i), so the two are always interchangeable."
+  },
+  {
+    "topic": "Arrays & Pointers",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "For `int arr[10];`, how does `sizeof(arr)` compare to `sizeof(arr + 0)`?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "They return the same value"
+      },
+      {
+        "letter": "B",
+        "text": "sizeof(arr) returns the array's full byte size (e.g., 40 bytes for 10 ints), while sizeof(arr+0) returns just the size of a pointer (e.g., 8 bytes on 64-bit) - because arr+0 decays to a pointer"
+      },
+      {
+        "letter": "C",
+        "text": "Both return 10"
+      },
+      {
+        "letter": "D",
+        "text": "Both cause a compile error"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "sizeof(arr) is special-cased to know the array's true size; the moment you use arr in an arithmetic expression like arr+0, it decays into a plain pointer and loses that array-size information."
+  },
+  {
+    "topic": "Arrays & Pointers",
+    "difficulty": "HARD",
+    "questionType": "CODE",
+    "question": "Given `int arr[5] = {1,2,3,4,5}; int *p = arr + 3;`, what does `*p` evaluate to?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "3"
+      },
+      {
+        "letter": "B",
+        "text": "4"
+      },
+      {
+        "letter": "C",
+        "text": "The address of arr[3]"
+      },
+      {
+        "letter": "D",
+        "text": "5"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "arr+3 points to arr[3] (0-indexed), whose value is 4."
+  },
+  {
+    "topic": "Dynamic Memory",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "Which C standard library function allocates a block of heap memory without initializing its contents?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "free()"
+      },
+      {
+        "letter": "B",
+        "text": "malloc()"
+      },
+      {
+        "letter": "C",
+        "text": "sizeof()"
+      },
+      {
+        "letter": "D",
+        "text": "delete()"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "malloc() reserves a block of the requested size on the heap but leaves its contents unspecified (garbage values)."
+  },
+  {
+    "topic": "Dynamic Memory",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: unlike malloc(), calloc() initializes the allocated memory block to zero.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "calloc() explicitly zero-initializes every byte of the allocated block, which is its key difference from malloc()."
+  },
+  {
+    "topic": "Dynamic Memory",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "malloc() returns NULL. What is the safest immediate next step before continuing to use the pointer?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Proceed normally - NULL is harmless to dereference"
+      },
+      {
+        "letter": "B",
+        "text": "Check for NULL and handle the allocation failure (e.g., report an error and exit or return) before ever dereferencing the pointer"
+      },
+      {
+        "letter": "C",
+        "text": "Call free() on it immediately"
+      },
+      {
+        "letter": "D",
+        "text": "Retry malloc with a smaller size automatically"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "malloc returning NULL signals the allocation failed; dereferencing a NULL pointer is undefined behavior, so failure must be checked and handled before use."
+  },
+  {
+    "topic": "Dynamic Memory",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "What is the key difference between malloc(n) and realloc(ptr, n)?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "They are functionally identical"
+      },
+      {
+        "letter": "B",
+        "text": "malloc allocates a brand-new block; realloc resizes an existing previously-allocated block (possibly moving it), preserving as much of the original content as fits"
+      },
+      {
+        "letter": "C",
+        "text": "realloc always frees the old memory without copying anything"
+      },
+      {
+        "letter": "D",
+        "text": "malloc can also resize existing memory"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "realloc grows or shrinks a block obtained from a prior malloc/calloc/realloc call, copying existing data to a new location if it can't extend in place - malloc always starts fresh."
+  },
+  {
+    "topic": "Deallocation",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What does the C function free() do?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Sets a pointer to NULL automatically"
+      },
+      {
+        "letter": "B",
+        "text": "Releases a block of dynamically allocated (heap) memory back to the system"
+      },
+      {
+        "letter": "C",
+        "text": "Deletes the pointer variable itself"
+      },
+      {
+        "letter": "D",
+        "text": "Frees stack memory"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "free() returns previously malloc/calloc/realloc-allocated heap memory to the allocator so it can be reused; it does not touch the pointer variable itself."
+  },
+  {
+    "topic": "Deallocation",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: calling free() twice on the same pointer (a 'double free') is undefined behavior and can corrupt memory.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Double-freeing corrupts the heap allocator's internal bookkeeping and is a classic, serious memory-safety bug."
+  },
+  {
+    "topic": "Deallocation",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "After `free(ptr);`, the code later uses `*ptr` without reassigning ptr. What is this bug called, and why is it dangerous?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "A memory leak - wastes memory but is otherwise harmless"
+      },
+      {
+        "letter": "B",
+        "text": "A 'use-after-free' bug - ptr is now a dangling pointer to freed memory, and using it causes undefined behavior/crashes/corruption"
+      },
+      {
+        "letter": "C",
+        "text": "A stack overflow"
+      },
+      {
+        "letter": "D",
+        "text": "A compile-time error"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "ptr still holds the old (now-invalid) address after free(); the memory it pointed to may be reused for something else, so reading/writing through it corrupts unrelated data or crashes."
+  },
+  {
+    "topic": "Deallocation",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "What is a 'memory leak' in C's manual memory management model?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Freeing memory too early"
+      },
+      {
+        "letter": "B",
+        "text": "Dynamically allocated memory that is never freed and becomes unreachable, wasting memory for the life of the program"
+      },
+      {
+        "letter": "C",
+        "text": "A pointer pointing to invalid memory"
+      },
+      {
+        "letter": "D",
+        "text": "An array that is too large"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "A leak happens when the only pointer to a heap block is overwritten or goes out of scope before free() is called - the memory is still 'allocated' but nothing can reach it to free it."
+  },
+  {
+    "topic": "Strings",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "How does C know where a string (char array) ends?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "A separate length is tracked automatically"
+      },
+      {
+        "letter": "B",
+        "text": "By a null terminator character '\\0' marking the end"
+      },
+      {
+        "letter": "C",
+        "text": "Strings in C have a fixed maximum length"
+      },
+      {
+        "letter": "D",
+        "text": "By counting non-whitespace characters"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "C strings are just char arrays with no built-in length field - functions like strlen() scan forward until they hit the '\\0' sentinel."
+  },
+  {
+    "topic": "Strings",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: the C string literal \"hi\" actually occupies 3 bytes in memory: 'h', 'i', and the null terminator.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "The compiler always appends a trailing '\\0' to string literals, so a 2-character literal needs 3 bytes of storage."
+  },
+  {
+    "topic": "Strings",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "You call `strcpy(dest, src)` where dest is `char[5]` but src is a 10-character string. What is the likely consequence?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "strcpy automatically truncates safely"
+      },
+      {
+        "letter": "B",
+        "text": "A buffer overflow - strcpy writes past the end of dest, corrupting adjacent memory (this is why strncpy is often preferred)"
+      },
+      {
+        "letter": "C",
+        "text": "Compile error"
+      },
+      {
+        "letter": "D",
+        "text": "src is silently truncated to fit dest"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "strcpy() has no concept of the destination's capacity - it copies until it hits src's null terminator, regardless of whether dest is large enough, which is a classic overflow vulnerability."
+  },
+  {
+    "topic": "Strings",
+    "difficulty": "HARD",
+    "questionType": "CODE",
+    "question": "What does `strlen(\"Hello\")` return?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "6"
+      },
+      {
+        "letter": "B",
+        "text": "5"
+      },
+      {
+        "letter": "C",
+        "text": "4"
+      },
+      {
+        "letter": "D",
+        "text": "It depends on the null terminator's ASCII value"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "strlen() counts only the visible characters (H-e-l-l-o = 5), excluding the trailing '\\0'."
+  },
+  {
+    "topic": "Structures",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "How do you access member `age` of a plain (non-pointer) struct variable `struct Student s`?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "s->age"
+      },
+      {
+        "letter": "B",
+        "text": "s.age"
+      },
+      {
+        "letter": "C",
+        "text": "s::age"
+      },
+      {
+        "letter": "D",
+        "text": "s[age]"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "The dot operator (.) accesses members of a struct value directly."
+  },
+  {
+    "topic": "Structures",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: if you have a pointer `struct Student *sp`, you access its members using the -> (arrow) operator, e.g. sp->age.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "The arrow operator is shorthand for dereferencing the pointer and then accessing the member: sp->age is equivalent to (*sp).age."
+  },
+  {
+    "topic": "Structures",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "A struct has `char name[20]` followed by `int id`. Why might sizeof(struct Student) exceed sizeof(name) + sizeof(id)?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "It's never larger than the sum"
+      },
+      {
+        "letter": "B",
+        "text": "Structure padding/alignment the compiler inserts so fields sit on convenient memory-alignment boundaries"
+      },
+      {
+        "letter": "C",
+        "text": "Structs always double in size"
+      },
+      {
+        "letter": "D",
+        "text": "It's a compiler bug"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Compilers commonly insert padding bytes between (or after) struct members so each field starts at an address aligned to its type's natural boundary, which can make the struct larger than the raw sum of its members."
+  },
+  {
+    "topic": "Structures",
+    "difficulty": "HARD",
+    "questionType": "CODE",
+    "question": "Given `struct Point { int x, y; }; struct Point p1 = {3, 4}; struct Point *ptr = &p1;`, which correctly sets y to 10 via the pointer?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "ptr.y = 10;"
+      },
+      {
+        "letter": "B",
+        "text": "ptr->y = 10;"
+      },
+      {
+        "letter": "C",
+        "text": "*ptr.y = 10;"
+      },
+      {
+        "letter": "D",
+        "text": "&ptr->y = 10;"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Accessing a member through a struct pointer requires the arrow operator, ptr->y."
+  },
+  {
+    "topic": "Storage Classes",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What is the default storage class of a local variable declared inside a C function?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "static"
+      },
+      {
+        "letter": "B",
+        "text": "extern"
+      },
+      {
+        "letter": "C",
+        "text": "auto (automatic)"
+      },
+      {
+        "letter": "D",
+        "text": "register"
+      }
+    ],
+    "correctAnswer": "C",
+    "explanation": "Local variables are 'auto' by default - allocated on the stack and destroyed when the function returns, unless explicitly marked otherwise."
+  },
+  {
+    "topic": "Storage Classes",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: a static local variable inside a function retains its value between successive calls to that function.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Unlike ordinary (auto) locals, a static local is allocated once for the program's lifetime and keeps its value across calls."
+  },
+  {
+    "topic": "Storage Classes",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "A function has `static int count = 0;` and increments count every call. After 3 calls, what is count?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "0 - it resets every call"
+      },
+      {
+        "letter": "B",
+        "text": "3 - static preserves the value across calls"
+      },
+      {
+        "letter": "C",
+        "text": "1 - static always resets to its initializer"
+      },
+      {
+        "letter": "D",
+        "text": "Undefined behavior"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Because count is static, its storage persists between calls instead of being reinitialized each time, so each call's increment accumulates."
+  },
+  {
+    "topic": "Storage Classes",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "What does the `extern` storage class specifier allow in a multi-file C program?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Declaring a variable defined in another file, so multiple files can share a single global variable"
+      },
+      {
+        "letter": "B",
+        "text": "Making a variable local only to one function"
+      },
+      {
+        "letter": "C",
+        "text": "Allocating memory on the heap"
+      },
+      {
+        "letter": "D",
+        "text": "Forcing a variable to always be zero"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "extern tells the compiler 'this variable is defined elsewhere' - the linker then resolves the reference to the single actual definition in another translation unit."
+  },
+  {
+    "topic": "Call Stack",
+    "difficulty": "EASY",
+    "questionType": "MCQ",
+    "question": "What is stored in a function's 'stack frame' when it is called?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "The entire heap"
+      },
+      {
+        "letter": "B",
+        "text": "Local variables, parameters, and the return address, among other bookkeeping"
+      },
+      {
+        "letter": "C",
+        "text": "Only global variables"
+      },
+      {
+        "letter": "D",
+        "text": "The source code text"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Each call gets its own frame holding that invocation's parameters, local variables, and where to resume execution in the caller once it returns."
+  },
+  {
+    "topic": "Call Stack",
+    "difficulty": "EASY",
+    "questionType": "TRUE_FALSE",
+    "question": "True or False: each recursive call creates a new stack frame, and deeply unbounded recursion can exhaust the call stack ('stack overflow').",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Every call - recursive or not - pushes a new frame; if recursion never terminates (or goes too deep), the stack runs out of space."
+  },
+  {
+    "topic": "Call Stack",
+    "difficulty": "HARD",
+    "questionType": "SCENARIO",
+    "question": "A function returns a pointer to one of its own local (non-static) variables. Why is this dangerous?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "It's perfectly safe"
+      },
+      {
+        "letter": "B",
+        "text": "The local variable's stack frame is destroyed once the function returns, so the returned pointer becomes a dangling pointer to invalid memory"
+      },
+      {
+        "letter": "C",
+        "text": "It automatically becomes a global variable"
+      },
+      {
+        "letter": "D",
+        "text": "It only causes a compile-time-only warning with no runtime effect"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Once the function returns, its stack frame - and everything in it, including that local variable - is considered reclaimed; any pointer to it is now dangling and unsafe to use."
+  },
+  {
+    "topic": "Call Stack",
+    "difficulty": "HARD",
+    "questionType": "CONCEPT",
+    "question": "In what order are function stack frames removed as functions return?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "First-In-First-Out (FIFO), the same order they were created"
+      },
+      {
+        "letter": "B",
+        "text": "Last-In-First-Out (LIFO) - the most recently called function returns (and its frame is removed) first"
+      },
+      {
+        "letter": "C",
+        "text": "Random order"
+      },
+      {
+        "letter": "D",
+        "text": "All at once, only when main() exits"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "The call stack is, as the name implies, a stack: the most recently pushed frame (the most recently called, still-running function) is the first one popped when it returns."
+  }
+]

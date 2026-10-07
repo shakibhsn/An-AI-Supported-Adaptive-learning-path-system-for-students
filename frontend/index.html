@@ -826,33 +826,10 @@
             <span>›</span>
             <span id="overviewBreadcrumbText" class="font-semibold text-slate-800">Course Page</span>
           </div>
-          <!-- Course Selector Pills -->
-          <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200">
-            <button id="overviewTabDsa" onclick="switchOverviewTab('dsa')"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-brand-500 text-white shadow-xs transition">
-              DSA
-            </button>
-            <button id="overviewTabOop" onclick="switchOverviewTab('oop')"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-              OOP
-            </button>
-            <button id="overviewTabSpl" onclick="switchOverviewTab('spl')"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-              SPL
-            </button>
-            <button id="overviewTabOs" onclick="switchOverviewTab('os')"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-              OS
-            </button>
-            <button id="overviewTabCa" onclick="switchOverviewTab('ca')"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-              CA
-            </button>
-            <button id="overviewTabDbms" onclick="switchOverviewTab('dbms')"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-              DBMS
-            </button>
-          </div>
+          <!-- Course Selector Pills (Phase 8: rendered dynamically by
+               switchOverviewTab() -> renderDynamicTabBar(), one button per
+               real course - see getAllCourseKeys()). -->
+          <div id="overviewTabBar" class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200"></div>
         </div>
 
         <div id="courseOverviewBody" class="space-y-6">
@@ -987,33 +964,9 @@
             <span>›</span>
             <span id="gapsBreadcrumbText" class="font-semibold text-slate-800">DSA Learning Gap Analysis</span>
           </div>
-          <!-- Course Switcher Pills -->
-          <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200">
-            <button id="gapTabDsa" onclick="switchGapTab('dsa')"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-brand-500 text-white shadow-xs transition">
-              DSA Gaps
-            </button>
-            <button id="gapTabOop" onclick="switchGapTab('oop')"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-              OOP Gaps
-            </button>
-            <button id="gapTabSpl" onclick="switchGapTab('spl')"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-              SPL Gaps
-            </button>
-            <button id="gapTabOs" onclick="switchGapTab('os')"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-              OS Gaps
-            </button>
-            <button id="gapTabCa" onclick="switchGapTab('ca')"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-              CA Gaps
-            </button>
-            <button id="gapTabDbms" onclick="switchGapTab('dbms')"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-              DBMS Gaps
-            </button>
-          </div>
+          <!-- Course Switcher Pills (Phase 8: dynamically rendered, see
+               switchGapTab() -> renderDynamicTabBar()). -->
+          <div id="gapTabBar" class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200"></div>
         </div>
 
         <!-- LEARNING GAPS - one dynamic body for DSA/OOP/SPL (UI redesign
@@ -1063,215 +1016,17 @@
             <span>›</span>
             <span id="planBreadcrumbText" class="font-semibold text-slate-800">DSA AI Personalized Study Plan</span>
           </div>
-          <!-- Course Switcher Pills -->
-          <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200">
-            <button id="planTabDsa" onclick="switchScreen('s08'); switchPlanTab('dsa');"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-brand-500 text-white shadow-xs transition">
-              DSA Plan (60m)
-            </button>
-            <button id="planTabOop" onclick="switchScreen('s08'); switchPlanTab('oop');"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-              OOP Plan (60m)
-            </button>
-            <button id="planTabSpl" onclick="switchScreen('s08'); switchPlanTab('spl');"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-              SPL Plan (60m)
-            </button>
-            <button id="planTabOs" onclick="switchScreen('s08'); switchPlanTab('os');"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-              OS Plan (60m)
-            </button>
-            <button id="planTabCa" onclick="switchScreen('s08'); switchPlanTab('ca');"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-              CA Plan (60m)
-            </button>
-            <button id="planTabDbms" onclick="switchScreen('s08'); switchPlanTab('dbms');"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-              DBMS Plan (60m)
-            </button>
-          </div>
+          <!-- Course Switcher Pills (Phase 8: dynamically rendered, see
+               switchPlanTab() -> renderDynamicTabBar()). -->
+          <div id="planTabBar" class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200"></div>
         </div>
 
-        <!-- ================= DSA STUDY PLAN ================= -->
-        <div id="planDsa" class="hub-card rounded-2xl p-6 md:p-8 bg-gradient-to-br from-white to-brand-50/40">
-          <div class="flex items-center gap-3 mb-4">
-            <div
-              class="w-10 h-10 rounded-xl bg-brand-500 text-white flex items-center justify-center font-extrabold text-sm shadow-md">
-              AI
-            </div>
-            <div>
-              <span class="text-xs font-bold text-brand-500 uppercase tracking-wider">Adaptive Learning Path Engine • DSA
-                Track</span>
-              <h2 class="text-2xl font-bold text-slate-900">Your AI-Generated Study Plan: DSA</h2>
-            </div>
-          </div>
-
-          <p class="text-sm text-slate-600 mb-6 leading-relaxed" id="planDsaSummary">
-            Generating your personalized plan...
-          </p>
-
-          <div class="space-y-4 mb-6" id="planDsaSteps">
-            <!-- Populated dynamically by renderAiPlan() from POST /api/ai/personalize -->
-          </div>
-
-          <div id="planDsaFallbackNotice"
-            class="hidden text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
-            AI personalization is temporarily unavailable - showing a fallback plan based on your learning path order.
-          </div>
-
-          <div class="flex items-center justify-between pt-4 border-t border-slate-200">
-            <span class="text-xs text-slate-500">Plan Duration: <strong id="planDsaDuration">60 Minutes
-                Total</strong></span>
-            <button onclick="switchContentTab('dsa'); switchScreen('s09');"
-              class="bg-brand-500 hover:bg-brand-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
-              Start DSA Plan Now →
-            </button>
-          </div>
-        </div>
-
-        <!-- ================= OOP STUDY PLAN ================= -->
-        <div id="planOop" class="hidden hub-card rounded-2xl p-6 md:p-8 bg-gradient-to-br from-white to-amber-50/40">
-          <div class="flex items-center gap-3 mb-4">
-            <div
-              class="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center font-extrabold text-sm shadow-md">
-              AI
-            </div>
-            <div>
-              <span class="text-xs font-bold text-amber-700 uppercase tracking-wider">Adaptive Learning Path Engine •
-                OOP Track</span>
-              <h2 class="text-2xl font-bold text-slate-900">Your AI-Generated Study Plan: OOP</h2>
-            </div>
-          </div>
-
-          <p class="text-sm text-slate-600 mb-6 leading-relaxed" id="planOopSummary">
-            Generating your personalized plan...
-          </p>
-
-          <div class="space-y-4 mb-6" id="planOopSteps">
-            <!-- Populated dynamically by renderAiPlan() from POST /api/ai/personalize -->
-          </div>
-
-          <div id="planOopFallbackNotice"
-            class="hidden text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
-            AI personalization is temporarily unavailable - showing a fallback plan based on your learning path order.
-          </div>
-
-          <div class="flex items-center justify-between pt-4 border-t border-slate-200">
-            <span class="text-xs text-slate-500">Plan Duration: <strong id="planOopDuration">60 Minutes
-                Total</strong></span>
-            <button onclick="switchContentTab('oop'); switchScreen('s09');"
-              class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
-              Start Oop Plan Now →
-            </button>
-          </div>
-        </div>
-
-
-        <!-- ================= SPL STUDY PLAN ================= -->
-        <div id="planSpl" class="hidden hub-card rounded-2xl p-6 md:p-8 bg-gradient-to-br from-white to-emerald-50/40">
-          <div class="flex items-center gap-3 mb-4">
-            <div
-              class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-extrabold text-sm shadow-md">
-              AI
-            </div>
-            <div>
-              <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider">Adaptive Learning Path Engine •
-                SPL Track</span>
-              <h2 class="text-2xl font-bold text-slate-900">Your AI-Generated Study Plan: SPL</h2>
-            </div>
-          </div>
-
-          <p class="text-sm text-slate-600 mb-6 leading-relaxed" id="planSplSummary">
-            Generating your personalized plan...
-          </p>
-
-          <div class="space-y-4 mb-6" id="planSplSteps">
-            <!-- Populated dynamically by renderAiPlan() from POST /api/ai/personalize -->
-          </div>
-
-          <div id="planSplFallbackNotice"
-            class="hidden text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
-            AI personalization is temporarily unavailable - showing a fallback plan based on your learning path order.
-          </div>
-
-          <div class="flex items-center justify-between pt-4 border-t border-slate-200">
-            <span class="text-xs text-slate-500">Plan Duration: <strong id="planSplDuration">60 Minutes
-                Total</strong></span>
-            <button onclick="switchContentTab('spl'); switchScreen('s09');"
-              class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
-              Start Spl Plan Now →
-            </button>
-          </div>
-        </div>
-
-        <!-- ================= OS STUDY PLAN (Phase 3) ================= -->
-        <div id="planOs" class="hidden hub-card rounded-2xl p-6 md:p-8 bg-gradient-to-br from-white to-sky-50/40">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="w-10 h-10 rounded-xl bg-sky-600 text-white flex items-center justify-center font-extrabold text-sm shadow-md">AI</div>
-            <div>
-              <span class="text-xs font-bold text-sky-700 uppercase tracking-wider">Adaptive Learning Path Engine • OS Track</span>
-              <h2 class="text-2xl font-bold text-slate-900">Your AI-Generated Study Plan: OS</h2>
-            </div>
-          </div>
-          <p class="text-sm text-slate-600 mb-6 leading-relaxed" id="planOsSummary">Generating your personalized plan...</p>
-          <div class="space-y-4 mb-6" id="planOsSteps"></div>
-          <div id="planOsFallbackNotice" class="hidden text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
-            AI personalization is temporarily unavailable - showing a fallback plan based on your learning path order.
-          </div>
-          <div class="flex items-center justify-between pt-4 border-t border-slate-200">
-            <span class="text-xs text-slate-500">Plan Duration: <strong id="planOsDuration">60 Minutes Total</strong></span>
-            <button onclick="switchContentTab('os'); switchScreen('s09');"
-              class="bg-sky-600 hover:bg-sky-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
-              Start Os Plan Now →
-            </button>
-          </div>
-        </div>
-
-        <!-- ================= CA STUDY PLAN (Phase 3) ================= -->
-        <div id="planCa" class="hidden hub-card rounded-2xl p-6 md:p-8 bg-gradient-to-br from-white to-rose-50/40">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="w-10 h-10 rounded-xl bg-rose-600 text-white flex items-center justify-center font-extrabold text-sm shadow-md">AI</div>
-            <div>
-              <span class="text-xs font-bold text-rose-700 uppercase tracking-wider">Adaptive Learning Path Engine • CA Track</span>
-              <h2 class="text-2xl font-bold text-slate-900">Your AI-Generated Study Plan: CA</h2>
-            </div>
-          </div>
-          <p class="text-sm text-slate-600 mb-6 leading-relaxed" id="planCaSummary">Generating your personalized plan...</p>
-          <div class="space-y-4 mb-6" id="planCaSteps"></div>
-          <div id="planCaFallbackNotice" class="hidden text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
-            AI personalization is temporarily unavailable - showing a fallback plan based on your learning path order.
-          </div>
-          <div class="flex items-center justify-between pt-4 border-t border-slate-200">
-            <span class="text-xs text-slate-500">Plan Duration: <strong id="planCaDuration">60 Minutes Total</strong></span>
-            <button onclick="switchContentTab('ca'); switchScreen('s09');"
-              class="bg-rose-600 hover:bg-rose-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
-              Start Ca Plan Now →
-            </button>
-          </div>
-        </div>
-
-        <!-- ================= DBMS STUDY PLAN (Phase 3) ================= -->
-        <div id="planDbms" class="hidden hub-card rounded-2xl p-6 md:p-8 bg-gradient-to-br from-white to-indigo-50/40">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-extrabold text-sm shadow-md">AI</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-700 uppercase tracking-wider">Adaptive Learning Path Engine • DBMS Track</span>
-              <h2 class="text-2xl font-bold text-slate-900">Your AI-Generated Study Plan: DBMS</h2>
-            </div>
-          </div>
-          <p class="text-sm text-slate-600 mb-6 leading-relaxed" id="planDbmsSummary">Generating your personalized plan...</p>
-          <div class="space-y-4 mb-6" id="planDbmsSteps"></div>
-          <div id="planDbmsFallbackNotice" class="hidden text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
-            AI personalization is temporarily unavailable - showing a fallback plan based on your learning path order.
-          </div>
-          <div class="flex items-center justify-between pt-4 border-t border-slate-200">
-            <span class="text-xs text-slate-500">Plan Duration: <strong id="planDbmsDuration">60 Minutes Total</strong></span>
-            <button onclick="switchContentTab('dbms'); switchScreen('s09');"
-              class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
-              Start Dbms Plan Now →
-            </button>
-          </div>
-        </div>
+        <!-- Phase 8 Step D: ONE shared panel, fully rebuilt per course by
+             renderPlanPanelShell() (below) instead of six near-identical
+             hardcoded divs (planDsa/planOop/.../planDbms). Content inside
+             (#planSummary/#planSteps/#planFallbackNotice/#planDuration) is
+             then populated by the existing, already-generic renderAiPlan(). -->
+        <div id="planContent" class="hub-card rounded-2xl p-6 md:p-8"></div>
 
       </div>
     </div>
@@ -1287,33 +1042,9 @@
             <span id="contentBreadcrumbText" class="font-semibold text-slate-800">DSA Module 2.1: Singly Linked
               Lists</span>
           </div>
-          <!-- Course Selector Pills -->
-          <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200">
-            <button id="contentTabDsa" onclick="switchContentTab('dsa')"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-brand-500 text-white shadow-xs transition">
-              DSA Content
-            </button>
-            <button id="contentTabOop" onclick="switchContentTab('oop')"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-              OOP Content
-            </button>
-            <button id="contentTabSpl" onclick="switchContentTab('spl')"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-              SPL Content
-            </button>
-            <button id="contentTabOs" onclick="switchContentTab('os')"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-              OS Content
-            </button>
-            <button id="contentTabCa" onclick="switchContentTab('ca')"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-              CA Content
-            </button>
-            <button id="contentTabDbms" onclick="switchContentTab('dbms')"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-              DBMS Content
-            </button>
-          </div>
+          <!-- Course Selector Pills (Phase 8: dynamically rendered, see
+               switchContentTab() -> renderDynamicTabBar()). -->
+          <div id="contentTabBar" class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200"></div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -1680,33 +1411,12 @@
             <div id="followupCounter" class="text-lg font-bold text-slate-900">Follow-Up Question 1 of 5</div>
           </div>
 
-          <!-- Course Pills -->
-          <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200">
-            <button id="followupTabDsa" onclick="switchFollowupCourse('dsa')"
-              class="px-3 py-1.5 rounded-lg text-xs font-bold bg-brand-500 text-white shadow-xs transition">
-              DSA (5 Qs)
-            </button>
-            <button id="followupTabOop" onclick="switchFollowupCourse('oop')"
-              class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-              OOP (5 Qs)
-            </button>
-            <button id="followupTabSpl" onclick="switchFollowupCourse('spl')"
-              class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-              SPL (5 Qs)
-            </button>
-            <button id="followupTabOs" onclick="switchFollowupCourse('os')"
-              class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-              OS (5 Qs)
-            </button>
-            <button id="followupTabCa" onclick="switchFollowupCourse('ca')"
-              class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-              CA (5 Qs)
-            </button>
-            <button id="followupTabDbms" onclick="switchFollowupCourse('dbms')"
-              class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">
-              DBMS (5 Qs)
-            </button>
-          </div>
+          <!-- Course Pills (Phase 8: dynamically rendered, see
+               renderFollowupQuestion() -> renderDynamicTabBar(). Label
+               dropped the hardcoded "(5 Qs)" - that count already varied
+               per course (2 for OS/CA/DBMS vs 5 for DSA/OOP/SPL) and would
+               have been wrong for any future course anyway.) -->
+          <div id="followupTabBar" class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200"></div>
         </div>
 
         <!-- PROGRESS BAR -->
@@ -1831,95 +1541,17 @@
           </button>
         </div>
 
-        <div class="flex border-b border-slate-200 gap-2">
-          <button onclick="switchProgressTab('dsaTab')" id="dsaTabBtn"
-            class="px-5 py-3 text-sm font-bold border-b-2 border-brand-500 text-brand-500">
-            DSA Progress
-          </button>
-          <button onclick="switchProgressTab('oopTab')" id="oopTabBtn"
-            class="px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800">
-            OOP Progress
-          </button>
-          <button onclick="switchProgressTab('splTab')" id="splTabBtn"
-            class="px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800">
-            SPL Progress
-          </button>
-          <button onclick="switchProgressTab('osTab')" id="osTabBtn"
-            class="px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800">
-            OS Progress
-          </button>
-          <button onclick="switchProgressTab('caTab')" id="caTabBtn"
-            class="px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800">
-            CA Progress
-          </button>
-          <button onclick="switchProgressTab('dbmsTab')" id="dbmsTabBtn"
-            class="px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800">
-            DBMS Progress
-          </button>
-        </div>
+        <!-- Phase 8: dynamically rendered, see switchProgressTab() -> renderDynamicTabBar(). -->
+        <div id="progressTabBar" class="flex border-b border-slate-200 gap-2"></div>
 
-        <!-- TAB CONTENT: DSA -->
-        <div id="dsaTab" class="space-y-6">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="dsaProgressStats">
-            <!-- Populated dynamically by renderProgressTab() from GET /api/progress/:courseId -->
-          </div>
-
+        <!-- Phase 8 Step E: ONE shared panel instead of six near-identical
+             hardcoded divs (dsaTab/oopTab/.../dbmsTab). renderProgressTab()
+             (already generic) now targets these fixed ids directly. -->
+        <div class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="progressStats"></div>
           <div class="hub-card rounded-2xl p-6">
-            <h3 class="text-base font-bold text-slate-900 mb-4">DSA Topic Proficiency Details</h3>
-            <div class="space-y-3" id="dsaProgressDetails">
-              <!-- Populated dynamically by renderProgressTab() -->
-            </div>
-          </div>
-        </div>
-
-        <div id="oopTab" class="hidden space-y-6">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="oopProgressStats">
-            <!-- Populated dynamically by renderProgressTab() from GET /api/progress/:courseId -->
-          </div>
-
-          <div class="hub-card rounded-2xl p-6">
-            <h3 class="text-base font-bold text-slate-900 mb-4">OOP Topic Proficiency Details</h3>
-            <div class="space-y-3" id="oopProgressDetails">
-              <!-- Populated dynamically by renderProgressTab() -->
-            </div>
-          </div>
-        </div>
-
-        <div id="splTab" class="hidden space-y-6">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="splProgressStats">
-            <!-- Populated dynamically by renderProgressTab() from GET /api/progress/:courseId -->
-          </div>
-
-          <div class="hub-card rounded-2xl p-6">
-            <h3 class="text-base font-bold text-slate-900 mb-4">SPL Topic Proficiency Details</h3>
-            <div class="space-y-3" id="splProgressDetails">
-              <!-- Populated dynamically by renderProgressTab() -->
-            </div>
-          </div>
-        </div>
-
-        <!-- TAB CONTENT: OS/CA/DBMS (Phase 3) -->
-        <div id="osTab" class="hidden space-y-6">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="osProgressStats"></div>
-          <div class="hub-card rounded-2xl p-6">
-            <h3 class="text-base font-bold text-slate-900 mb-4">OS Topic Proficiency Details</h3>
-            <div class="space-y-3" id="osProgressDetails"></div>
-          </div>
-        </div>
-
-        <div id="caTab" class="hidden space-y-6">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="caProgressStats"></div>
-          <div class="hub-card rounded-2xl p-6">
-            <h3 class="text-base font-bold text-slate-900 mb-4">CA Topic Proficiency Details</h3>
-            <div class="space-y-3" id="caProgressDetails"></div>
-          </div>
-        </div>
-
-        <div id="dbmsTab" class="hidden space-y-6">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="dbmsProgressStats"></div>
-          <div class="hub-card rounded-2xl p-6">
-            <h3 class="text-base font-bold text-slate-900 mb-4">DBMS Topic Proficiency Details</h3>
-            <div class="space-y-3" id="dbmsProgressDetails"></div>
+            <h3 class="text-base font-bold text-slate-900 mb-4" id="progressDetailsHeading">Topic Proficiency Details</h3>
+            <div class="space-y-3" id="progressDetails"></div>
           </div>
         </div>
 
@@ -2293,20 +1925,8 @@
             <span>›</span>
             <span class="font-semibold text-slate-800">Assessments</span>
           </div>
-          <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200">
-            <button id="assessmentsTabDsa" onclick="switchAssessmentsTab('dsa')"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-brand-500 text-white shadow-xs transition">DSA</button>
-            <button id="assessmentsTabOop" onclick="switchAssessmentsTab('oop')"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">OOP</button>
-            <button id="assessmentsTabSpl" onclick="switchAssessmentsTab('spl')"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">SPL</button>
-            <button id="assessmentsTabOs" onclick="switchAssessmentsTab('os')"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">OS</button>
-            <button id="assessmentsTabCa" onclick="switchAssessmentsTab('ca')"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">CA</button>
-            <button id="assessmentsTabDbms" onclick="switchAssessmentsTab('dbms')"
-              class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition">DBMS</button>
-          </div>
+          <!-- Phase 8: dynamically rendered, see switchAssessmentsTab() -> renderDynamicTabBar(). -->
+          <div id="assessmentsTabBar" class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200"></div>
         </div>
 
         <div class="hub-card rounded-2xl p-6">
@@ -2909,7 +2529,7 @@
 
     function beginOnboardingDiagnostics() {
       const checked = [...document.querySelectorAll('.onboard-course-check:checked')].map((c) => c.dataset.courseKey);
-      onboardingQueue = checked.length > 0 ? checked : ALL_COURSE_KEYS;
+      onboardingQueue = checked.length > 0 ? checked : getAllCourseKeys();
       advanceOnboarding();
     }
 
@@ -3056,21 +2676,59 @@
     // One card per enrolled course, built from GET /api/courses +
     // GET /api/progress. Replaces the three hardcoded 42/75/82% cards and
     // the malformed grid they lived in.
+    // Phase 8: a handful of courses get a deliberately-chosen, distinct
+    // accent color; DEFAULT is the explicit, documented fallback for any
+    // course that doesn't (a future course added purely through data, with
+    // no code change here) - never a crash, never an unstyled element,
+    // just the same professional purple the app already uses everywhere
+    // else. Tailwind's runtime JIT (Play CDN) generates CSS only for class
+    // names it can see literally in the page, so this is a small fixed set
+    // of fully-written-out class strings rather than a dynamically
+    // constructed `bg-${color}-500` that the JIT could fail to catch.
     const COURSE_THEME = {
+      DEFAULT: { accent: 'brand', bar: 'bg-brand-400', tint: 'bg-brand-50/50 border-brand-100', btn: 'bg-brand-500 hover:bg-brand-700', ovBtn: 'bg-brand-50 hover:bg-brand-100 text-brand-800 border-brand-200' },
       DSA: { accent: 'brand', bar: 'bg-brand-400', tint: 'bg-brand-50/50 border-brand-100', btn: 'bg-brand-500 hover:bg-brand-700', ovBtn: 'bg-brand-50 hover:bg-brand-100 text-brand-800 border-brand-200' },
       OOP: { accent: 'amber', bar: 'bg-amber-500', tint: 'bg-amber-50/50 border-amber-100', btn: 'bg-brand-500 hover:bg-brand-700', ovBtn: 'bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-200' },
       SPL: { accent: 'emerald', bar: 'bg-emerald-500', tint: 'bg-emerald-50/50 border-emerald-100', btn: 'bg-brand-500 hover:bg-brand-700', ovBtn: 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-200' },
-      // Phase 3 (new CSE core courses) - distinct accents from the originals.
       OS: { accent: 'sky', bar: 'bg-sky-500', tint: 'bg-sky-50/50 border-sky-100', btn: 'bg-brand-500 hover:bg-brand-700', ovBtn: 'bg-sky-50 hover:bg-sky-100 text-sky-800 border-sky-200' },
       CA: { accent: 'rose', bar: 'bg-rose-500', tint: 'bg-rose-50/50 border-rose-100', btn: 'bg-brand-500 hover:bg-brand-700', ovBtn: 'bg-rose-50 hover:bg-rose-100 text-rose-800 border-rose-200' },
       DBMS: { accent: 'indigo', bar: 'bg-indigo-500', tint: 'bg-indigo-50/50 border-indigo-100', btn: 'bg-brand-500 hover:bg-brand-700', ovBtn: 'bg-indigo-50 hover:bg-indigo-100 text-indigo-800 border-indigo-200' },
     };
 
-    // Single shared list of course keys every per-course tab switcher loops
-    // over (Course Overview, Gaps, AI Plan, Materials, Assessments,
-    // Progress) - adding a course means updating this one array plus that
-    // screen's tab markup, instead of six separate hardcoded arrays.
-    const ALL_COURSE_KEYS = ['dsa', 'oop', 'spl', 'os', 'ca', 'dbms'];
+    // Phase 8 (replaces the hardcoded ALL_COURSE_KEYS array): the real,
+    // backend-discovered list of courses, derived from courseIdCache (itself
+    // populated from GET /courses by loadCourseIds() before any screen that
+    // needs this ever renders - see the login/bootstrap handlers). A future
+    // course appears here automatically the moment it exists in the
+    // database, with zero code change.
+    function getAllCourseKeys() {
+      return Object.keys(courseIdCache);
+    }
+
+    // Phase 8 Step 3B: one generic tab-bar renderer, replacing six screens'
+    // worth of hand-written <button> markup. `container` is an empty
+    // element already in the screen's HTML; the buttons themselves are
+    // generated from the real course list every time this is called, so a
+    // future course gets a tab automatically with zero markup to add.
+    //
+    //   opts.labelFor(key)      -> visible button text, e.g. "DSA"
+    //   opts.activePillFor(key) -> Tailwind classes for the ACTIVE button
+    //   opts.onSelect(key)      -> called when that tab is clicked
+    const TAB_INACTIVE_CLASS = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition';
+
+    function renderDynamicTabBar(containerId, activeKey, opts) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      container.innerHTML = '';
+      for (const key of getAllCourseKeys()) {
+        const btn = document.createElement('button');
+        const isActive = key === activeKey;
+        btn.className = isActive ? opts.activePillFor(key) : (opts.inactiveClass || TAB_INACTIVE_CLASS);
+        btn.textContent = opts.labelFor(key);
+        btn.onclick = () => opts.onSelect(key);
+        container.appendChild(btn);
+      }
+    }
 
     function masteryBadge(avg, assessed) {
       if (assessed === 0) return { label: 'Not started', cls: 'bg-slate-100 text-slate-500 border border-slate-200' };
@@ -3112,7 +2770,7 @@
     function buildCourseCardEl(c, progById, gapsById) {
       const code = c.code.toUpperCase();
       const key = c.code.toLowerCase();
-      const theme = COURSE_THEME[code] || COURSE_THEME.DSA;
+      const theme = COURSE_THEME[code] || COURSE_THEME.DEFAULT;
       const p = progById[c.id] || { averageMastery: null, topicsAssessed: 0 };
       const assessed = p.topicsAssessed || 0;
       const avg = p.averageMastery == null ? null : Math.round(p.averageMastery);
@@ -3393,7 +3051,7 @@
 
       // Load real data for screens that default to the DSA tab on entry
       // (their non-DSA tabs are loaded on-demand by their own tab switchers).
-      if (screenId === 's13') { currentProgressCourse = 'dsa'; renderProgressTab('dsa'); renderMasteryMap('dsa'); renderAssessmentImprovementProgress('dsa'); renderPathHistory('dsa'); renderLearningProfile('dsa'); renderLearningInsights('dsa'); }
+      if (screenId === 's13') switchProgressTab('dsaTab');
       if (screenId === 's07') renderGaps('dsa');
       if (screenId === 's02') renderStudentOverview();
       if (screenId === 's09') switchContentTab(currentChatCourse || 'dsa');
@@ -3439,6 +3097,7 @@
 
     // ================= COURSE OVERVIEW TAB SWITCHER =================
     const OVERVIEW_TAB_THEME = {
+      DEFAULT: { pill: 'bg-brand-500' },
       dsa: { pill: 'bg-brand-500', name: 'DSA' },
       oop: { pill: 'bg-amber-600', name: 'OOP' },
       spl: { pill: 'bg-emerald-600', name: 'SPL' },
@@ -3447,14 +3106,26 @@
       dbms: { pill: 'bg-indigo-600', name: 'DBMS' },
     };
 
+    // Phase 8: the fallback path must never show the WRONG course's label -
+    // falling back to dsa's theme used to also silently display "DSA" while
+    // actually viewing a different course. This builds a safe theme for any
+    // course key: a known entry if one exists, otherwise the generic
+    // DEFAULT color with the real course code as the name.
+    function themeFor(themeObject, courseKey) {
+      if (themeObject[courseKey]) return themeObject[courseKey];
+      return { ...themeObject.DEFAULT, name: courseKey.toUpperCase() };
+    }
+
     function switchOverviewTab(course) {
-      ALL_COURSE_KEYS.forEach((c) => {
-        const el = document.getElementById(`overviewTab${c.charAt(0).toUpperCase() + c.slice(1)}`);
-        if (el) el.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
+      const theme = themeFor(OVERVIEW_TAB_THEME, course);
+      // Phase 8 Step 3B: dynamically generated, one button per real course -
+      // see renderDynamicTabBar(). No hardcoded markup, so a future course
+      // gets a working tab automatically.
+      renderDynamicTabBar('overviewTabBar', course, {
+        labelFor: (key) => key.toUpperCase(),
+        activePillFor: (key) => `px-3.5 py-1.5 rounded-lg text-xs font-bold ${themeFor(OVERVIEW_TAB_THEME, key).pill} text-white shadow-xs transition`,
+        onSelect: (key) => switchOverviewTab(key),
       });
-      const theme = OVERVIEW_TAB_THEME[course] || OVERVIEW_TAB_THEME.dsa;
-      document.getElementById(`overviewTab${course.charAt(0).toUpperCase() + course.slice(1)}`).className =
-        `px-3.5 py-1.5 rounded-lg text-xs font-bold ${theme.pill} text-white shadow-xs transition`;
 
       const breadcrumb = document.getElementById('overviewBreadcrumbText');
       if (breadcrumb) breadcrumb.textContent = `${theme.name} Course Page`;
@@ -3482,7 +3153,7 @@
         const avg = prog.averageMastery == null ? null : Math.round(prog.averageMastery);
         const assessed = prog.topicsAssessed || 0;
         const badge = masteryBadge(avg ?? 0, assessed);
-        const theme = COURSE_THEME[course.toUpperCase()] || COURSE_THEME.DSA;
+        const theme = COURSE_THEME[course.toUpperCase()] || COURSE_THEME.DEFAULT;
         const myFocus = focusData.focuses.find((f) => f.courseCode.toLowerCase() === course);
         const masteryByTopicId = new Map(masteryMapData.topics.map((t) => [t.topicId, t]));
 
@@ -3546,13 +3217,11 @@
     // exact same diagnostic/adaptive-assessment/follow-up flows already
     // built and tested; this is purely a real-data index page over them. ----
     async function switchAssessmentsTab(course) {
-      ALL_COURSE_KEYS.forEach((c) => {
-        const el = document.getElementById(`assessmentsTab${c.charAt(0).toUpperCase()}${c.slice(1)}`);
-        if (el) el.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
+      renderDynamicTabBar('assessmentsTabBar', course, {
+        labelFor: (key) => key.toUpperCase(),
+        activePillFor: (key) => `px-3.5 py-1.5 rounded-lg text-xs font-bold ${themeFor(OVERVIEW_TAB_THEME, key).pill} text-white shadow-xs transition`,
+        onSelect: (key) => switchAssessmentsTab(key),
       });
-      const theme = OVERVIEW_TAB_THEME[course] || OVERVIEW_TAB_THEME.dsa;
-      document.getElementById(`assessmentsTab${course.charAt(0).toUpperCase()}${course.slice(1)}`).className =
-        `px-3.5 py-1.5 rounded-lg text-xs font-bold ${theme.pill} text-white shadow-xs transition`;
       await renderAssessmentsHub(course);
     }
 
@@ -3673,6 +3342,7 @@
     }
 
     const GAP_TAB_THEME = {
+      DEFAULT: { pill: 'bg-brand-500', icon: 'bg-red-50 text-red-600', label: 'text-brand-500 bg-brand-50 border-brand-100' },
       dsa: { pill: 'bg-brand-500', icon: 'bg-red-50 text-red-600', label: 'text-brand-500 bg-brand-50 border-brand-100', name: 'DSA' },
       oop: { pill: 'bg-amber-600', icon: 'bg-amber-50 text-amber-600', label: 'text-amber-700 bg-amber-50 border-amber-200', name: 'OOP' },
       spl: { pill: 'bg-emerald-600', icon: 'bg-emerald-50 text-emerald-600', label: 'text-emerald-700 bg-emerald-50 border-emerald-200', name: 'SPL' },
@@ -3682,13 +3352,12 @@
     };
 
     function switchGapTab(course) {
-      ALL_COURSE_KEYS.forEach((c) => {
-        const el = document.getElementById(`gapTab${c.charAt(0).toUpperCase() + c.slice(1)}`);
-        if (el) el.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
+      const theme = themeFor(GAP_TAB_THEME, course);
+      renderDynamicTabBar('gapTabBar', course, {
+        labelFor: (key) => `${key.toUpperCase()} Gaps`,
+        activePillFor: (key) => `px-3.5 py-1.5 rounded-lg text-xs font-bold ${themeFor(GAP_TAB_THEME, key).pill} text-white shadow-xs transition`,
+        onSelect: (key) => switchGapTab(key),
       });
-      const theme = GAP_TAB_THEME[course] || GAP_TAB_THEME.dsa;
-      document.getElementById(`gapTab${course.charAt(0).toUpperCase() + course.slice(1)}`).className =
-        `px-3.5 py-1.5 rounded-lg text-xs font-bold ${theme.pill} text-white shadow-xs transition`;
 
       const breadcrumb = document.getElementById('gapsBreadcrumbText');
       if (breadcrumb) breadcrumb.textContent = `${theme.name} Learning Gap Analysis`;
@@ -3709,11 +3378,10 @@
     // labeled fallback if the LLM call fails) - replaces the entirely
     // hardcoded 4-step plans that used to live here.
     async function renderAiPlan(course) {
-      const capitalized = course.charAt(0).toUpperCase() + course.slice(1);
-      const summaryEl = document.getElementById(`plan${capitalized}Summary`);
-      const stepsEl = document.getElementById(`plan${capitalized}Steps`);
-      const fallbackNotice = document.getElementById(`plan${capitalized}FallbackNotice`);
-      const durationEl = document.getElementById(`plan${capitalized}Duration`);
+      const summaryEl = document.getElementById('planSummary');
+      const stepsEl = document.getElementById('planSteps');
+      const fallbackNotice = document.getElementById('planFallbackNotice');
+      const durationEl = document.getElementById('planDuration');
       if (!summaryEl) return;
 
       summaryEl.textContent = 'Generating your personalized plan...';
@@ -3804,29 +3472,57 @@
       }
     }
 
+    // Phase 8 Step D: builds the one shared plan panel's shell (header,
+    // placeholders, footer button) for the given course, reusing ONLY
+    // Tailwind classes already guaranteed present elsewhere on the page
+    // (COURSE_THEME.tint/.btn) - never a freshly-interpolated color-shade
+    // string the Play-CDN JIT scanner might not have generated CSS for.
+    function renderPlanPanelShell(course) {
+      const theme = themeFor(OVERVIEW_TAB_THEME, course);
+      const courseTheme = COURSE_THEME[course.toUpperCase()] || COURSE_THEME.DEFAULT;
+      const container = document.getElementById('planContent');
+      if (!container) return;
+      container.className = `hub-card rounded-2xl p-6 md:p-8 ${courseTheme.tint}`;
+      container.innerHTML = `
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-xl ${courseTheme.btn} text-white flex items-center justify-center font-extrabold text-sm shadow-md">AI</div>
+          <div>
+            <span class="text-xs font-bold text-slate-600 uppercase tracking-wider">Adaptive Learning Path Engine &bull; ${escapeHtml(theme.name)} Track</span>
+            <h2 class="text-2xl font-bold text-slate-900">Your AI-Generated Study Plan: ${escapeHtml(theme.name)}</h2>
+          </div>
+        </div>
+        <p class="text-sm text-slate-600 mb-6 leading-relaxed" id="planSummary">Generating your personalized plan...</p>
+        <div class="space-y-4 mb-6" id="planSteps"></div>
+        <div id="planFallbackNotice" class="hidden text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
+          AI personalization is temporarily unavailable - showing a fallback plan based on your learning path order.
+        </div>
+        <div class="flex items-center justify-between pt-4 border-t border-slate-200">
+          <span class="text-xs text-slate-500">Plan Duration: <strong id="planDuration">60 Minutes Total</strong></span>
+          <button id="planStartBtn" class="${courseTheme.btn} text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition">
+            Start ${escapeHtml(theme.name)} Plan Now &rarr;
+          </button>
+        </div>`;
+      document.getElementById('planStartBtn').onclick = () => { switchContentTab(course); switchScreen('s09'); };
+    }
+
     function switchPlanTab(course) {
       const breadcrumb = document.getElementById('planBreadcrumbText');
-      ALL_COURSE_KEYS.forEach((c) => {
-        const cap = c.charAt(0).toUpperCase() + c.slice(1);
-        document.getElementById(`plan${cap}`)?.classList.add('hidden');
-        const btn = document.getElementById(`planTab${cap}`);
-        if (btn) btn.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
+      const theme = themeFor(OVERVIEW_TAB_THEME, course);
+      renderDynamicTabBar('planTabBar', course, {
+        labelFor: (key) => `${key.toUpperCase()} Plan (60m)`,
+        activePillFor: (key) => `px-3.5 py-1.5 rounded-lg text-xs font-bold ${themeFor(OVERVIEW_TAB_THEME, key).pill} text-white shadow-xs transition`,
+        onSelect: (key) => switchPlanTab(key),
       });
-
-      const cap = course.charAt(0).toUpperCase() + course.slice(1);
-      const theme = OVERVIEW_TAB_THEME[course] || OVERVIEW_TAB_THEME.dsa;
-      document.getElementById(`plan${cap}`)?.classList.remove('hidden');
-      const activeBtn = document.getElementById(`planTab${cap}`);
-      if (activeBtn) activeBtn.className = `px-3.5 py-1.5 rounded-lg text-xs font-bold ${theme.pill} text-white shadow-xs transition`;
       if (breadcrumb) breadcrumb.textContent = `${theme.name} AI Personalized Study Plan`;
 
+      renderPlanPanelShell(course);
       renderAiPlan(course);
     }
 
     // ================= LEARNING MATERIALS (SCREEN 09) =================
     // Titles the AI plan recommended, per course code - populated by
     // renderAiPlan() so renderMaterials() can highlight them (Section 18).
-    const recommendedMaterialTitles = Object.fromEntries(ALL_COURSE_KEYS.map((c) => [c, new Set()]));
+    const recommendedMaterialTitles = Object.fromEntries(getAllCourseKeys().map((c) => [c, new Set()]));
 
     const MATERIAL_TYPE_META = {
       VIDEO: { label: 'Video', cls: 'bg-rose-50 text-rose-700 border-rose-200' },
@@ -3839,12 +3535,11 @@
 
     function switchContentTab(course) {
       currentChatCourse = course;
-      for (const k of ALL_COURSE_KEYS) {
-        const btn = document.getElementById('contentTab' + k.charAt(0).toUpperCase() + k.slice(1));
-        if (btn) btn.className = k === course
-          ? 'px-3.5 py-1.5 rounded-lg text-xs font-bold bg-brand-500 text-white shadow-xs transition'
-          : 'px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition';
-      }
+      renderDynamicTabBar('contentTabBar', course, {
+        labelFor: (key) => `${key.toUpperCase()} Content`,
+        activePillFor: () => 'px-3.5 py-1.5 rounded-lg text-xs font-bold bg-brand-500 text-white shadow-xs transition',
+        onSelect: (key) => switchContentTab(key),
+      });
       const breadcrumb = document.getElementById('contentBreadcrumbText');
       if (breadcrumb) breadcrumb.textContent = `${course.toUpperCase()} — Learning Materials`;
       renderMaterials(course);
@@ -4245,6 +3940,7 @@
     // Stage 3 merged this from 3 near-identical per-course copies, s06a/b/c)
     // from the actual backend response.
     const DIAG_RESULT_THEME = {
+      DEFAULT: { border: 'border-red-500', label: 'text-red-600', box: 'bg-red-50 border-red-200', boxLabel: 'text-red-600', score: 'text-red-700', accuracy: 'text-red-600' },
       dsa: { border: 'border-red-500', label: 'text-red-600', box: 'bg-red-50 border-red-200', boxLabel: 'text-red-600', score: 'text-red-700', accuracy: 'text-red-600' },
       oop: { border: 'border-amber-500', label: 'text-amber-600', box: 'bg-amber-50 border-amber-200', boxLabel: 'text-amber-600', score: 'text-amber-700', accuracy: 'text-amber-600' },
       spl: { border: 'border-emerald-500', label: 'text-emerald-600', box: 'bg-emerald-50 border-emerald-200', boxLabel: 'text-emerald-600', score: 'text-emerald-700', accuracy: 'text-emerald-600' },
@@ -4255,7 +3951,7 @@
 
     function renderDiagnosticResult(course, result) {
       const code = course.toUpperCase();
-      const theme = DIAG_RESULT_THEME[course] || DIAG_RESULT_THEME.dsa;
+      const theme = DIAG_RESULT_THEME[course] || DIAG_RESULT_THEME.DEFAULT;
 
       document.getElementById('diagResultCard').className = `hub-card rounded-2xl p-6 md:p-8 border-t-4 ${theme.border}`;
       document.getElementById('diagResultLabel').className = `text-xs font-bold ${theme.label} uppercase tracking-wider`;
@@ -4712,14 +4408,11 @@
         badge.className = "text-xs font-bold text-brand-500 uppercase tracking-wider bg-brand-50 px-2.5 py-0.5 rounded-full border border-brand-100";
       }
 
-      ALL_COURSE_KEYS.forEach((c) => {
-        const cap = c.charAt(0).toUpperCase() + c.slice(1);
-        const tab = document.getElementById(`followupTab${cap}`);
-        if (!tab) return;
-        const theme = OVERVIEW_TAB_THEME[c] || OVERVIEW_TAB_THEME.dsa;
-        tab.className = c === currentFollowupCourse
-          ? `px-3 py-1.5 rounded-lg text-xs font-bold ${theme.pill} text-white shadow-xs transition`
-          : "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition";
+      renderDynamicTabBar('followupTabBar', currentFollowupCourse, {
+        labelFor: (key) => key.toUpperCase(),
+        activePillFor: (key) => `px-3 py-1.5 rounded-lg text-xs font-bold ${themeFor(OVERVIEW_TAB_THEME, key).pill} text-white shadow-xs transition`,
+        inactiveClass: 'px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition',
+        onSelect: (key) => switchFollowupCourse(key),
       });
 
       document.getElementById('followupCounter').textContent = `Follow-Up Question ${currentFollowupIndex + 1} of ${questions.length}`;
@@ -4861,8 +4554,8 @@
     // Renders real progress data (from GET /api/progress/:courseId) into
     // the stats cards + topic proficiency list for one course tab.
     async function renderProgressTab(course) {
-      const statsEl = document.getElementById(`${course}ProgressStats`);
-      const detailsEl = document.getElementById(`${course}ProgressDetails`);
+      const statsEl = document.getElementById('progressStats');
+      const detailsEl = document.getElementById('progressDetails');
       if (!statsEl) return;
 
       statsEl.innerHTML = `<p class="text-sm text-slate-500 col-span-3">Loading progress...</p>`;
@@ -4917,23 +4610,29 @@
 
     let currentProgressCourse = 'dsa';
 
+    // Phase 8 Step E: tabId keeps its historical "xTab" shape (one other
+    // caller - the Course Page's Progress button - already builds it that
+    // way), but the tab bar and content panel are now the shared, dynamic
+    // ones instead of six hardcoded divs.
     function switchProgressTab(tabId) {
-      ALL_COURSE_KEYS.forEach((c) => {
-        document.getElementById(`${c}Tab`)?.classList.add('hidden');
-        const btn = document.getElementById(`${c}TabBtn`);
-        if (btn) btn.className = "px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800";
+      const course = tabId.replace('Tab', '');
+      currentProgressCourse = course;
+
+      renderDynamicTabBar('progressTabBar', course, {
+        labelFor: (key) => `${key.toUpperCase()} Progress`,
+        activePillFor: () => 'px-5 py-3 text-sm font-bold border-b-2 border-brand-500 text-brand-500',
+        inactiveClass: 'px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800',
+        onSelect: (key) => switchProgressTab(key + 'Tab'),
       });
+      const heading = document.getElementById('progressDetailsHeading');
+      if (heading) heading.textContent = `${course.toUpperCase()} Topic Proficiency Details`;
 
-      document.getElementById(tabId).classList.remove('hidden');
-      document.getElementById(tabId + 'Btn').className = "px-5 py-3 text-sm font-bold border-b-2 border-brand-500 text-brand-500";
-
-      currentProgressCourse = tabId.replace('Tab', '');
-      renderProgressTab(currentProgressCourse);
-      renderMasteryMap(currentProgressCourse);
-      renderAssessmentImprovementProgress(currentProgressCourse);
-      renderPathHistory(currentProgressCourse);
-      renderLearningProfile(currentProgressCourse);
-      renderLearningInsights(currentProgressCourse);
+      renderProgressTab(course);
+      renderMasteryMap(course);
+      renderAssessmentImprovementProgress(course);
+      renderPathHistory(course);
+      renderLearningProfile(course);
+      renderLearningInsights(course);
       document.getElementById('analyzeProgressResult').innerHTML = '';
     }
 
@@ -5560,7 +5259,7 @@
       const el = document.getElementById('profileTopicMastery');
       try {
         const perCourse = await Promise.all(
-          ALL_COURSE_KEYS.map(async (c) => ({ course: c, data: await apiFetch(`/courses/${courseIdCache[c]}/mastery-map`) })),
+          getAllCourseKeys().map(async (c) => ({ course: c, data: await apiFetch(`/courses/${courseIdCache[c]}/mastery-map`) })),
         );
         const rows = [];
         for (const { course, data } of perCourse) {

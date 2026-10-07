@@ -1,0 +1,39 @@
+{
+  "code": "DSA",
+  "name": "Data Structures and Algorithms",
+  "description": "Core data structures, algorithmic complexity, and traversal/search techniques.",
+  "topics": [
+    {
+      "name": "Arrays",
+      "prerequisite": null
+    },
+    {
+      "name": "Linked Lists",
+      "prerequisite": "Arrays"
+    },
+    {
+      "name": "Stacks",
+      "prerequisite": "Arrays"
+    },
+    {
+      "name": "Queues",
+      "prerequisite": "Arrays"
+    },
+    {
+      "name": "Recursion",
+      "prerequisite": null
+    },
+    {
+      "name": "Trees",
+      "prerequisite": "Recursion"
+    },
+    {
+      "name": "Graphs",
+      "prerequisite": "Trees"
+    },
+    {
+      "name": "Hashing",
+      "prerequisite": "Arrays"
+    }
+  ]
+}

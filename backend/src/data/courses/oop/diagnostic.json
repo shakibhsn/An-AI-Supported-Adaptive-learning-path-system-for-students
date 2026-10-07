@@ -1,0 +1,92 @@
+[
+  {
+    "topic": "Encapsulation",
+    "question": "Which core principle of OOP restricts direct access to an object's internal fields?",
+    "optionA": "Inheritance",
+    "optionB": "Encapsulation",
+    "optionC": "Polymorphism",
+    "optionD": "Dynamic Linking",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Access Modifiers",
+    "question": "If a class member is declared as 'protected', where is it accessible from?",
+    "optionA": "Only within its own class",
+    "optionB": "Everywhere in program",
+    "optionC": "Within own package and subclasses",
+    "optionD": "Only global functions",
+    "correctAnswer": "C"
+  },
+  {
+    "topic": "Inheritance",
+    "question": "What relationship is modeled when a 'Car' class extends a 'Vehicle' class?",
+    "optionA": "HAS-A relationship",
+    "optionB": "IS-A relationship",
+    "optionC": "USES-A relationship",
+    "optionD": "PART-OF relationship",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Polymorphism",
+    "question": "Which feature allows a method call to invoke different implementations based on the runtime instance?",
+    "optionA": "Compile-time Shadowing",
+    "optionB": "Dynamic / Runtime Polymorphism",
+    "optionC": "Static Variable Hiding",
+    "optionD": "Constructor Chaining",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Overloading",
+    "question": "What is the defining characteristic of method overloading within the same class?",
+    "optionA": "Same method name, different parameter signature",
+    "optionB": "Different return types only",
+    "optionC": "Redefining superclass method",
+    "optionD": "Static final binding",
+    "correctAnswer": "A"
+  },
+  {
+    "topic": "Abstract Classes",
+    "question": "What is a primary restriction of an abstract class?",
+    "optionA": "Cannot contain concrete methods",
+    "optionB": "Cannot be instantiated with 'new'",
+    "optionC": "Cannot hold variables",
+    "optionD": "Cannot be extended",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Interfaces",
+    "question": "What is an advantage of implementing an Interface over extending a concrete class?",
+    "optionA": "Faster compilation",
+    "optionB": "Supports multiple type contracts",
+    "optionC": "Eliminates constructors",
+    "optionD": "Hardware pointer access",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Constructors",
+    "question": "When does the compiler automatically provide a default no-argument constructor?",
+    "optionA": "Always",
+    "optionB": "Only when NO explicit constructor is defined",
+    "optionC": "When declared public static",
+    "optionD": "At garbage collection",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Static Members",
+    "question": "Which statement is true regarding a static method in an OOP class?",
+    "optionA": "Can access 'this' directly",
+    "optionB": "Belongs to the class itself rather than an instance",
+    "optionC": "Duplicated for each object",
+    "optionD": "Cannot accept parameters",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Exception Handling",
+    "question": "What is the explicit guarantee of the 'finally' block?",
+    "optionA": "Executes only on uncaught errors",
+    "optionB": "Executes guaranteed cleanup code whether exception occurred or not",
+    "optionC": "Restarts program",
+    "optionD": "Catches syntax errors",
+    "correctAnswer": "B"
+  }
+]

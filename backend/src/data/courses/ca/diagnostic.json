@@ -1,0 +1,92 @@
+[
+  {
+    "topic": "Computer Organization Fundamentals",
+    "question": "Which of the following best describes the stored-program (Von Neumann) concept that underlies most modern computers?",
+    "optionA": "Programs must be physically rewired into the hardware for each new task",
+    "optionB": "Both program instructions and data are stored in the same memory and can be fetched and modified like any other data",
+    "optionC": "Instructions are permanently etched onto read-only chips and cannot be changed",
+    "optionD": "Each instruction requires a separate dedicated processor",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Number Systems and Data Representation",
+    "question": "What is the decimal value of the binary number 1011?",
+    "optionA": "9",
+    "optionB": "11",
+    "optionC": "13",
+    "optionD": "15",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Digital Logic and Boolean Concepts",
+    "question": "Which logic gate outputs 1 only when all of its inputs are 1?",
+    "optionA": "OR",
+    "optionB": "AND",
+    "optionC": "NAND",
+    "optionD": "XOR",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "CPU Organization",
+    "question": "Which CPU component performs arithmetic and logical operations such as addition and comparison?",
+    "optionA": "Control Unit",
+    "optionB": "Arithmetic Logic Unit (ALU)",
+    "optionC": "Cache",
+    "optionD": "Program Counter",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Instruction Set Architecture",
+    "question": "What is the primary purpose of an Instruction Set Architecture (ISA)?",
+    "optionA": "To define the physical layout of transistors on a chip",
+    "optionB": "To define the set of instructions, registers, and data types that software can use to interact with the hardware",
+    "optionC": "To define network protocols",
+    "optionD": "To define the operating system's file structure",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Memory Hierarchy",
+    "question": "Why do computer systems use a memory hierarchy (registers -> cache -> RAM -> disk) instead of a single type of memory?",
+    "optionA": "Because a single memory technology cannot simultaneously provide high speed, large capacity, and low cost, so the hierarchy balances these tradeoffs",
+    "optionB": "Because all memory types are equally fast and this is just a tradition",
+    "optionC": "Because programs cannot run without multiple memory types",
+    "optionD": "Because the operating system requires at least four separate memories to boot",
+    "correctAnswer": "A"
+  },
+  {
+    "topic": "Cache Memory",
+    "question": "What is the primary purpose of cache memory in a computer system?",
+    "optionA": "To permanently store all program data",
+    "optionB": "To provide a small, fast memory that holds frequently or recently used data, reducing average memory access time",
+    "optionC": "To replace the need for a hard disk",
+    "optionD": "To execute instructions directly",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "I/O Organization",
+    "question": "Which I/O technique requires the CPU to continuously check (poll) a status flag to determine if an I/O device is ready, wasting CPU cycles while waiting?",
+    "optionA": "Interrupt-driven I/O",
+    "optionB": "Programmed I/O (polling)",
+    "optionC": "Direct Memory Access (DMA)",
+    "optionD": "Memory-mapped I/O",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Pipelining",
+    "question": "What is the primary goal of instruction pipelining in CPU design?",
+    "optionA": "To execute only one instruction per program run",
+    "optionB": "To overlap the execution of multiple instructions in different stages, increasing instruction throughput",
+    "optionC": "To eliminate the need for registers",
+    "optionD": "To slow down the clock for safety",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Performance and Parallelism",
+    "question": "Which formula correctly relates CPU execution time to instruction count, clock cycles per instruction (CPI), and clock cycle time?",
+    "optionA": "CPU time = Instruction count / (CPI x Clock cycle time)",
+    "optionB": "CPU time = Instruction count x CPI x Clock cycle time",
+    "optionC": "CPU time = Clock cycle time / (Instruction count x CPI)",
+    "optionD": "CPU time = CPI / Instruction count",
+    "correctAnswer": "B"
+  }
+]

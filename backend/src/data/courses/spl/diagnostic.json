@@ -1,0 +1,92 @@
+[
+  {
+    "topic": "Data Types",
+    "question": "In standard C, what is the exact output of printf(\"%d\", 7 / 2);?",
+    "optionA": "3.5",
+    "optionB": "3 (Integer truncation)",
+    "optionC": "4",
+    "optionD": "Runtime Error",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Pointers",
+    "question": "If int x = 10; int *p = &x;, which expression evaluates to the memory address of x?",
+    "optionA": "*p",
+    "optionB": "p",
+    "optionC": "&p",
+    "optionD": "*x",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Dereferencing",
+    "question": "Given int x = 10; int *ptr = &x;, what happens when executing *ptr = 25;?",
+    "optionA": "Changes address stored in ptr",
+    "optionB": "Modifies the value stored in variable x to 25",
+    "optionC": "Causes segmentation fault",
+    "optionD": "Allocates new memory",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Arrays & Pointers",
+    "question": "If int arr[5] = {10, 20, 30, 40, 50};, what is the value of *(arr + 2)?",
+    "optionA": "10",
+    "optionB": "20",
+    "optionC": "30",
+    "optionD": "Memory address",
+    "correctAnswer": "C"
+  },
+  {
+    "topic": "Dynamic Memory",
+    "question": "Which function allocates uninitialized raw bytes on the heap and returns void*?",
+    "optionA": "calloc()",
+    "optionB": "malloc()",
+    "optionC": "realloc()",
+    "optionD": "free()",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Deallocation",
+    "question": "What bug occurs when a pointer variable continues to reference memory after free(ptr)?",
+    "optionA": "Memory Leak",
+    "optionB": "Dangling Pointer",
+    "optionC": "Stack Underflow",
+    "optionD": "Buffer Overflow",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Strings",
+    "question": "How is the end of a valid character string in C designated in memory?",
+    "optionA": "' '",
+    "optionB": "Null terminator '\\0'",
+    "optionC": "'\\n'",
+    "optionD": "EOF",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Structures",
+    "question": "Which operator is used to access a struct member when holding a pointer to that structure?",
+    "optionA": "s.member",
+    "optionB": "s->member",
+    "optionC": "s::member",
+    "optionD": "s*member",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Storage Classes",
+    "question": "Which keyword retains the value of a local variable across repeated function calls in C?",
+    "optionA": "auto",
+    "optionB": "static",
+    "optionC": "register",
+    "optionD": "volatile",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Call Stack",
+    "question": "What happens if a recursive function in C fails to hit a base case before stack RAM is exhausted?",
+    "optionA": "Exits code 0",
+    "optionB": "Segmentation fault due to stack overflow",
+    "optionC": "Converts to while loop",
+    "optionD": "Memory compaction",
+    "correctAnswer": "B"
+  }
+]

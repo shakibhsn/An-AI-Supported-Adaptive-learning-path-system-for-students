@@ -1,0 +1,272 @@
+{
+  "Data Types": [
+    {
+      "title": "Data Types in C",
+      "description": "int/char/float/double, sizes, signed vs unsigned.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/data-types-in-c/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Neso Academy - C Programming (Data types)",
+      "description": "The data-type lectures from the full C Programming course.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/playlist?list=PLBlnK6fEyqRggZZgYpPMUxdY1CYkZtARR",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "BEGINNER",
+      "durationMinutes": 40
+    },
+    {
+      "title": "Programiz - C Data Types",
+      "description": "Beginner overview with ranges and format specifiers.",
+      "type": "ARTICLE",
+      "url": "https://www.programiz.com/c-programming/c-data-types",
+      "provider": "Programiz",
+      "difficulty": "BEGINNER"
+    }
+  ],
+  "Pointers": [
+    {
+      "title": "C Pointers",
+      "description": "Address-of, pointer variables, pointer arithmetic and byte scaling.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/c-pointers/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "mycodeschool - Pointers in C/C++",
+      "description": "The definitive beginner pointer series.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/playlist?list=PL2_aWCzGMAwLZp6LMUKI3cc7pgGsasm2_",
+      "provider": "YouTube (mycodeschool)",
+      "difficulty": "BEGINNER",
+      "durationMinutes": 75
+    },
+    {
+      "title": "Programiz - C Pointers",
+      "description": "Pointers explained with memory diagrams.",
+      "type": "ARTICLE",
+      "url": "https://www.programiz.com/c-programming/c-pointers",
+      "provider": "Programiz",
+      "difficulty": "BEGINNER"
+    }
+  ],
+  "Dereferencing": [
+    {
+      "title": "Dereference, Reference, & Dereference again",
+      "description": "The * and & operators and what dereferencing actually does.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/difference-between-dereference-and-reference-operator-in-c/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Neso Academy - C Programming (Pointers & dereferencing)",
+      "description": "The pointer/dereference lectures from the full C course.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/playlist?list=PLBlnK6fEyqRggZZgYpPMUxdY1CYkZtARR",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "BEGINNER",
+      "durationMinutes": 35
+    },
+    {
+      "title": "Programiz - C Pointers and Arrays",
+      "description": "Covers dereferencing and the address-of operator.",
+      "type": "ARTICLE",
+      "url": "https://www.programiz.com/c-programming/c-pointers-arrays",
+      "provider": "Programiz",
+      "difficulty": "BEGINNER"
+    }
+  ],
+  "Arrays & Pointers": [
+    {
+      "title": "Pointer vs Array in C",
+      "description": "Array-to-pointer decay and the equivalence a[i] == *(a+i).",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/difference-pointer-array-c/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Neso Academy - C Programming (Arrays & pointers)",
+      "description": "The arrays-and-pointers lectures from the full C course.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/playlist?list=PLBlnK6fEyqRggZZgYpPMUxdY1CYkZtARR",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "INTERMEDIATE",
+      "durationMinutes": 30
+    },
+    {
+      "title": "Pointer Arithmetic in C",
+      "description": "Why p+1 advances by sizeof(*p) bytes.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/pointer-arithmetics-in-c-with-examples/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "Dynamic Memory": [
+    {
+      "title": "Dynamic Memory Allocation in C",
+      "description": "malloc/calloc/realloc/free and checking for NULL.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/dynamic-memory-allocation-in-c-using-malloc-calloc-free-and-realloc/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Neso Academy - C Programming (Dynamic memory)",
+      "description": "The malloc/calloc/realloc/free lectures from the full C course.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/playlist?list=PLBlnK6fEyqRggZZgYpPMUxdY1CYkZtARR",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "INTERMEDIATE",
+      "durationMinutes": 30
+    },
+    {
+      "title": "Programiz - C Dynamic Memory Allocation",
+      "description": "Heap allocation lifecycle with examples.",
+      "type": "ARTICLE",
+      "url": "https://www.programiz.com/c-programming/c-dynamic-memory-allocation",
+      "provider": "Programiz",
+      "difficulty": "BEGINNER"
+    }
+  ],
+  "Deallocation": [
+    {
+      "title": "free() and dangling pointers",
+      "description": "Use-after-free, double-free, and setting pointers to NULL.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/dangling-void-null-wild-pointers/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Neso Academy - C Programming (free & dangling pointers)",
+      "description": "The deallocation/dangling-pointer lectures from the full C course.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/playlist?list=PLBlnK6fEyqRggZZgYpPMUxdY1CYkZtARR",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "INTERMEDIATE",
+      "durationMinutes": 20
+    },
+    {
+      "title": "Memory Leak in C",
+      "description": "What leaks are, how to spot them, remediation.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/what-is-memory-leak-how-can-we-avoid/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    }
+  ],
+  "Strings": [
+    {
+      "title": "Strings in C",
+      "description": "Null-terminated char arrays and the string.h functions.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/strings-in-c/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Neso Academy - C Programming (Strings)",
+      "description": "The strings-in-C lectures from the full C course.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/playlist?list=PLBlnK6fEyqRggZZgYpPMUxdY1CYkZtARR",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "BEGINNER",
+      "durationMinutes": 35
+    },
+    {
+      "title": "Programiz - C Strings",
+      "description": "Declaring, reading and manipulating strings.",
+      "type": "ARTICLE",
+      "url": "https://www.programiz.com/c-programming/c-strings",
+      "provider": "Programiz",
+      "difficulty": "BEGINNER"
+    }
+  ],
+  "Structures": [
+    {
+      "title": "Structures in C",
+      "description": "struct definition, member access, and struct pointers (-> operator).",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/structures-c/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "BEGINNER"
+    },
+    {
+      "title": "Neso Academy - C Programming (Structures)",
+      "description": "The structures lectures from the full C course.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/playlist?list=PLBlnK6fEyqRggZZgYpPMUxdY1CYkZtARR",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "BEGINNER",
+      "durationMinutes": 40
+    },
+    {
+      "title": "Programiz - C structs",
+      "description": "Structs, arrays of structs, and pointers to structs.",
+      "type": "ARTICLE",
+      "url": "https://www.programiz.com/c-programming/c-structures",
+      "provider": "Programiz",
+      "difficulty": "BEGINNER"
+    }
+  ],
+  "Storage Classes": [
+    {
+      "title": "Storage Classes in C",
+      "description": "auto / register / static / extern and variable lifetime.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/storage-classes-in-c/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Neso Academy - C Programming (Storage classes)",
+      "description": "The storage-class lectures from the full C course.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/playlist?list=PLBlnK6fEyqRggZZgYpPMUxdY1CYkZtARR",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "INTERMEDIATE",
+      "durationMinutes": 25
+    },
+    {
+      "title": "Programiz - C Storage Class",
+      "description": "Scope, lifetime and linkage with examples.",
+      "type": "ARTICLE",
+      "url": "https://www.programiz.com/c-programming/c-storage-class",
+      "provider": "Programiz",
+      "difficulty": "BEGINNER"
+    }
+  ],
+  "Call Stack": [
+    {
+      "title": "Function Call Stack in C",
+      "description": "Stack frames, local variables, and how returns work.",
+      "type": "ARTICLE",
+      "url": "https://www.geeksforgeeks.org/function-call-stack-in-c/",
+      "provider": "GeeksforGeeks",
+      "difficulty": "INTERMEDIATE"
+    },
+    {
+      "title": "Neso Academy - C Programming (Functions & the stack)",
+      "description": "The function-call lectures from the full C course.",
+      "type": "PLAYLIST",
+      "url": "https://www.youtube.com/playlist?list=PLBlnK6fEyqRggZZgYpPMUxdY1CYkZtARR",
+      "provider": "YouTube (Neso Academy)",
+      "difficulty": "INTERMEDIATE",
+      "durationMinutes": 30
+    },
+    {
+      "title": "CS50 - Memory (stack vs heap)",
+      "description": "Harvard CS50's lecture segment on memory layout.",
+      "type": "VIDEO",
+      "url": "https://cs50.harvard.edu/x/2024/weeks/4/",
+      "provider": "Harvard CS50",
+      "difficulty": "BEGINNER"
+    }
+  ]
+}

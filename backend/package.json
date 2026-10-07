@@ -12,7 +12,7 @@
     "prisma:migrate": "prisma migrate dev --name init",
     "prisma:migrate:deploy": "prisma migrate deploy",
     "prisma:seed": "prisma db seed",
-    "prisma:seed:phase3": "tsx prisma/seedPhase3.ts",
+    "prisma:seed:courses": "tsx prisma/seedCourses.ts",
     "prisma:studio": "prisma studio",
     "postinstall": "prisma generate"
   },

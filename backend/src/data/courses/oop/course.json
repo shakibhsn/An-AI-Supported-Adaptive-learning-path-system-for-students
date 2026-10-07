@@ -1,0 +1,47 @@
+{
+  "code": "OOP",
+  "name": "Object-Oriented Programming",
+  "description": "Classes, inheritance, polymorphism, and OOP design principles.",
+  "topics": [
+    {
+      "name": "Encapsulation",
+      "prerequisite": "Access Modifiers"
+    },
+    {
+      "name": "Access Modifiers",
+      "prerequisite": null
+    },
+    {
+      "name": "Inheritance",
+      "prerequisite": "Encapsulation"
+    },
+    {
+      "name": "Polymorphism",
+      "prerequisite": "Inheritance"
+    },
+    {
+      "name": "Overloading",
+      "prerequisite": null
+    },
+    {
+      "name": "Abstract Classes",
+      "prerequisite": "Inheritance"
+    },
+    {
+      "name": "Interfaces",
+      "prerequisite": "Abstract Classes"
+    },
+    {
+      "name": "Constructors",
+      "prerequisite": null
+    },
+    {
+      "name": "Static Members",
+      "prerequisite": null
+    },
+    {
+      "name": "Exception Handling",
+      "prerequisite": null
+    }
+  ]
+}

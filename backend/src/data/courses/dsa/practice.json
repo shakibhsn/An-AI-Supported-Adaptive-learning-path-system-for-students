@@ -1,0 +1,377 @@
+[
+  {
+    "topic": "Linked Lists",
+    "question": "What happens if you execute head = newNode; BEFORE setting newNode->next = head; during head insertion?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Node correctly attaches"
+      },
+      {
+        "letter": "B",
+        "text": "Original list is lost in memory (Memory Leak)"
+      },
+      {
+        "letter": "C",
+        "text": "Compiler error"
+      },
+      {
+        "letter": "D",
+        "text": "List becomes circular"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Correct! By assigning head = newNode first, you overwrite the only pointer holding the rest of the list.",
+    "isFollowUp": false
+  },
+  {
+    "topic": "Linked Lists",
+    "question": "Which while loop condition correctly traverses a singly linked list until ptr is pointing directly at the tail node?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "while (ptr != NULL)"
+      },
+      {
+        "letter": "B",
+        "text": "while (ptr->next != NULL)"
+      },
+      {
+        "letter": "C",
+        "text": "while (ptr->data != 0)"
+      },
+      {
+        "letter": "D",
+        "text": "while (ptr->next == head)"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Correct! while (ptr->next != NULL) stops directly on the last node, avoiding stepping into NULL.",
+    "isFollowUp": false
+  },
+  {
+    "topic": "Linked Lists",
+    "question": "What is the correct two-step sequence to delete the head node in a singly linked list in C?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "free(head); head = head->next;"
+      },
+      {
+        "letter": "B",
+        "text": "Node* temp = head; head = head->next; free(temp);"
+      },
+      {
+        "letter": "C",
+        "text": "head = head->next; free(head);"
+      },
+      {
+        "letter": "D",
+        "text": "head->next = NULL; free(head);"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Correct! You must store current head in a temporary pointer first, advance head, and then free temp.",
+    "isFollowUp": false
+  },
+  {
+    "topic": "Stacks",
+    "question": "When evaluating the postfix expression '5 3 + 2 *' using a stack, what is the final evaluated result?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "16"
+      },
+      {
+        "letter": "B",
+        "text": "11"
+      },
+      {
+        "letter": "C",
+        "text": "13"
+      },
+      {
+        "letter": "D",
+        "text": "25"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Correct! 5 and 3 are pushed, '+' computes 8. 2 is pushed, and '*' evaluates 8 * 2 = 16.",
+    "isFollowUp": false
+  },
+  {
+    "topic": "Queues",
+    "question": "In a circular queue implemented using an array of size N, what condition signifies that the queue is completely full?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "front == rear"
+      },
+      {
+        "letter": "B",
+        "text": "(rear + 1) % N == front"
+      },
+      {
+        "letter": "C",
+        "text": "rear == N - 1"
+      },
+      {
+        "letter": "D",
+        "text": "front == -1"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Correct! FIFO queues remove from front: first A, then B, leaving C at front.",
+    "isFollowUp": false
+  },
+  {
+    "topic": "Recursion",
+    "question": "What is the return value of factorial(3) defined as f(n) = n * f(n-1) with base case f(0) = 1?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "3"
+      },
+      {
+        "letter": "B",
+        "text": "6"
+      },
+      {
+        "letter": "C",
+        "text": "9"
+      },
+      {
+        "letter": "D",
+        "text": "1"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Correct! f(3) = 3 * f(2) = 3 * (2 * 1) = 6.",
+    "isFollowUp": false
+  },
+  {
+    "topic": "Trees",
+    "question": "Given a BST with root 15, left child 10, and right child 20, what is the in-order traversal output?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "15, 10, 20"
+      },
+      {
+        "letter": "B",
+        "text": "10, 15, 20 (Ascending Order)"
+      },
+      {
+        "letter": "C",
+        "text": "20, 15, 10"
+      },
+      {
+        "letter": "D",
+        "text": "10, 20, 15"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Correct! In-order traversal visits Left -> Root -> Right, yielding sorted order in a BST.",
+    "isFollowUp": false
+  },
+  {
+    "topic": "Trees",
+    "question": "What is the worst-case search time complexity in a completely skewed Binary Search Tree of n nodes?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(1)"
+      },
+      {
+        "letter": "B",
+        "text": "O(log n)"
+      },
+      {
+        "letter": "C",
+        "text": "O(n) Linear Time"
+      },
+      {
+        "letter": "D",
+        "text": "O(n log n)"
+      }
+    ],
+    "correctAnswer": "C",
+    "explanation": "Correct! When a BST degenerates into a linear linked chain, search degrades to O(n).",
+    "isFollowUp": false
+  },
+  {
+    "topic": "Graphs",
+    "question": "Why does Breadth-First Search (BFS) guarantee finding the shortest path in an unweighted graph?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "It uses system call stack recursion"
+      },
+      {
+        "letter": "B",
+        "text": "It visits all vertices at distance k before any at distance k+1"
+      },
+      {
+        "letter": "C",
+        "text": "It sorts edges by cost"
+      },
+      {
+        "letter": "D",
+        "text": "It skips internal cycles"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": "Correct! BFS systematically expands vertex frontiers level by level, ensuring minimum edges traversed.",
+    "isFollowUp": false
+  },
+  {
+    "topic": "Hashing",
+    "question": "In open addressing with linear probing, what is the major drawback when the load factor becomes high?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Primary clustering leading to long probe sequences"
+      },
+      {
+        "letter": "B",
+        "text": "Fatal stack overflow crash"
+      },
+      {
+        "letter": "C",
+        "text": "Inversion of stored hash keys"
+      },
+      {
+        "letter": "D",
+        "text": "Dangling pointers"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": "Correct! Contiguous filled buckets coalesce into large clusters, increasing probe counts.",
+    "isFollowUp": false
+  },
+  {
+    "topic": "Linked Lists",
+    "question": "In a singly linked list, when inserting a new node at the very beginning (head), which statement must execute FIRST to prevent losing the existing nodes?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "head = newNode;"
+      },
+      {
+        "letter": "B",
+        "text": "newNode->next = head;"
+      },
+      {
+        "letter": "C",
+        "text": "newNode->prev = NULL;"
+      },
+      {
+        "letter": "D",
+        "text": "free(head);"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": null,
+    "isFollowUp": true
+  },
+  {
+    "topic": "Linked Lists",
+    "question": "What is the time complexity of deleting the first node of a singly linked list when given direct access to the 'head' pointer?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "O(1) Constant Time"
+      },
+      {
+        "letter": "B",
+        "text": "O(n) Linear Time"
+      },
+      {
+        "letter": "C",
+        "text": "O(log n) Logarithmic Time"
+      },
+      {
+        "letter": "D",
+        "text": "O(n²) Quadratic Time"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": null,
+    "isFollowUp": true
+  },
+  {
+    "topic": "Linked Lists",
+    "question": "Which assignment statement correctly advances a temporary pointer 'temp' to point to the subsequent node in a singly linked list?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "temp = temp + 1;"
+      },
+      {
+        "letter": "B",
+        "text": "temp = temp->next;"
+      },
+      {
+        "letter": "C",
+        "text": "temp = &temp;"
+      },
+      {
+        "letter": "D",
+        "text": "temp->next = temp;"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": null,
+    "isFollowUp": true
+  },
+  {
+    "topic": "Linked Lists",
+    "question": "What condition indicates that a singly linked list is completely empty?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "head->next == head"
+      },
+      {
+        "letter": "B",
+        "text": "head == NULL"
+      },
+      {
+        "letter": "C",
+        "text": "head->data == 0"
+      },
+      {
+        "letter": "D",
+        "text": "head->next == NULL"
+      }
+    ],
+    "correctAnswer": "B",
+    "explanation": null,
+    "isFollowUp": true
+  },
+  {
+    "topic": "Linked Lists",
+    "question": "When removing a dynamically allocated node from a linked list in C, why is calling free(deletedNode) strictly required?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "To reclaim heap memory and prevent memory leaks"
+      },
+      {
+        "letter": "B",
+        "text": "To reset the CPU execution registers"
+      },
+      {
+        "letter": "C",
+        "text": "To notify the compiler that execution ended"
+      },
+      {
+        "letter": "D",
+        "text": "To automatically reconnect remaining list nodes"
+      }
+    ],
+    "correctAnswer": "A",
+    "explanation": null,
+    "isFollowUp": true
+  }
+]

@@ -1,0 +1,47 @@
+{
+  "code": "CA",
+  "name": "Computer Architecture",
+  "description": "Number systems, digital logic, CPU organization, memory hierarchy, and pipelining.",
+  "topics": [
+    {
+      "name": "Computer Organization Fundamentals",
+      "prerequisite": null
+    },
+    {
+      "name": "Number Systems and Data Representation",
+      "prerequisite": null
+    },
+    {
+      "name": "Digital Logic and Boolean Concepts",
+      "prerequisite": "Number Systems and Data Representation"
+    },
+    {
+      "name": "CPU Organization",
+      "prerequisite": "Computer Organization Fundamentals"
+    },
+    {
+      "name": "Instruction Set Architecture",
+      "prerequisite": "CPU Organization"
+    },
+    {
+      "name": "Memory Hierarchy",
+      "prerequisite": "Computer Organization Fundamentals"
+    },
+    {
+      "name": "Cache Memory",
+      "prerequisite": "Memory Hierarchy"
+    },
+    {
+      "name": "I/O Organization",
+      "prerequisite": "Computer Organization Fundamentals"
+    },
+    {
+      "name": "Pipelining",
+      "prerequisite": "Instruction Set Architecture"
+    },
+    {
+      "name": "Performance and Parallelism",
+      "prerequisite": "Pipelining"
+    }
+  ]
+}

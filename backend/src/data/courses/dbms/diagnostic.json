@@ -1,0 +1,92 @@
+[
+  {
+    "topic": "Database Fundamentals",
+    "question": "What is the primary advantage of a DBMS over a traditional file-processing system?",
+    "optionA": "Centralized control of data with reduced redundancy and inconsistency",
+    "optionB": "It requires no storage device",
+    "optionC": "It eliminates the need for a query language",
+    "optionD": "It runs only on mainframes",
+    "correctAnswer": "A"
+  },
+  {
+    "topic": "ER Model",
+    "question": "In the ER model, an \"entity\" is best described as:",
+    "optionA": "An attribute of another entity",
+    "optionB": "A real-world object or concept that can be distinctly identified",
+    "optionC": "A SQL query",
+    "optionD": "A relationship between two tables",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Relational Model",
+    "question": "In the relational model, a \"relation\" corresponds to what everyday database concept?",
+    "optionA": "A single row of data",
+    "optionB": "A table consisting of rows and columns",
+    "optionC": "A single column",
+    "optionD": "A query",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "SQL",
+    "question": "Which SQL clause is used to filter rows BEFORE any grouping takes place?",
+    "optionA": "HAVING",
+    "optionB": "WHERE",
+    "optionC": "GROUP BY",
+    "optionD": "ORDER BY",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Relational Algebra",
+    "question": "Which relational algebra operator, symbolized by sigma (σ), selects rows (tuples) satisfying a given condition?",
+    "optionA": "Projection (π)",
+    "optionB": "Selection (σ)",
+    "optionC": "Union (∪)",
+    "optionD": "Join (⋈)",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Functional Dependencies",
+    "question": "In the functional dependency notation X → Y, this means:",
+    "optionA": "Y determines X",
+    "optionB": "For any two tuples with the same value of X, their values of Y must also be the same",
+    "optionC": "X and Y must always be equal",
+    "optionD": "X is a foreign key to Y",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Normalization",
+    "question": "A relation is in First Normal Form (1NF) if:",
+    "optionA": "Every non-key attribute depends on the whole primary key",
+    "optionB": "All attribute values are atomic (indivisible), with no repeating groups or multivalued attributes",
+    "optionC": "There are no transitive dependencies",
+    "optionD": "Every determinant is a candidate key",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Transactions",
+    "question": "What does the \"A\" in ACID properties of a transaction stand for?",
+    "optionA": "Availability",
+    "optionB": "Atomicity",
+    "optionC": "Accuracy",
+    "optionD": "Authentication",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Concurrency Control",
+    "question": "A \"shared lock\" (S-lock) on a data item allows:",
+    "optionA": "Only the transaction holding it to read OR write the item",
+    "optionB": "Multiple transactions to simultaneously hold a shared lock and read the item, but none may write it while any shared lock is held",
+    "optionC": "Only one transaction to ever access the item again",
+    "optionD": "Unlimited writes by any transaction",
+    "correctAnswer": "B"
+  },
+  {
+    "topic": "Indexing",
+    "question": "What is the primary purpose of creating an index on a database column?",
+    "optionA": "To enforce that the column cannot contain NULL values",
+    "optionB": "To speed up data retrieval operations (searches) on that column, at some cost in storage and write overhead",
+    "optionC": "To automatically encrypt the column's data",
+    "optionD": "To reduce the number of columns in the table",
+    "correctAnswer": "B"
+  }
+]

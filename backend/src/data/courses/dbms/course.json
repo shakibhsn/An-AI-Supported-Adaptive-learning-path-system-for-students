@@ -1,0 +1,47 @@
+{
+  "code": "DBMS",
+  "name": "Database Management Systems",
+  "description": "Relational modeling, SQL, normalization, transactions, and concurrency control.",
+  "topics": [
+    {
+      "name": "Database Fundamentals",
+      "prerequisite": null
+    },
+    {
+      "name": "ER Model",
+      "prerequisite": "Database Fundamentals"
+    },
+    {
+      "name": "Relational Model",
+      "prerequisite": "ER Model"
+    },
+    {
+      "name": "SQL",
+      "prerequisite": "Relational Model"
+    },
+    {
+      "name": "Relational Algebra",
+      "prerequisite": "Relational Model"
+    },
+    {
+      "name": "Functional Dependencies",
+      "prerequisite": "Relational Model"
+    },
+    {
+      "name": "Normalization",
+      "prerequisite": "Functional Dependencies"
+    },
+    {
+      "name": "Transactions",
+      "prerequisite": "Database Fundamentals"
+    },
+    {
+      "name": "Concurrency Control",
+      "prerequisite": "Transactions"
+    },
+    {
+      "name": "Indexing",
+      "prerequisite": "SQL"
+    }
+  ]
+}
