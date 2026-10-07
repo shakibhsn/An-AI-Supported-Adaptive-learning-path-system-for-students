@@ -3,30 +3,44 @@ import { prisma } from '../prisma';
 import { AuthenticatedRequest } from '../middleware/auth.middleware';
 import * as llm from '../services/llm.service';
 import { getActivitySummary } from '../services/activity.service';
+import { searchBooksForTopic } from '../services/openLibrary.service';
+
+const MAX_CHAT_MESSAGE_LENGTH = 2000;
 
 export async function personalize(req: AuthenticatedRequest, res: Response) {
   if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
   const { courseId, weakTopics, learningPath, studyTimeMinutes, learningPreference, goal } = req.body;
 
+  if (!courseId || typeof courseId !== 'string') return res.status(400).json({ error: 'courseId is required.' });
+
   const course = await prisma.course.findUnique({ where: { id: courseId } });
   if (!course) return res.status(404).json({ error: 'Course not found' });
 
-  // Section 18: retrieve the trusted materials for the path's topics and hand
-  // them to the LLM. The LLM may recommend from this list but never invent one.
+  // Section 18 / Phase 5: retrieve the trusted materials AND Open Library
+  // books for the path's topics and hand them to the LLM. The LLM may
+  // recommend from this list but never invent one (capped to the first 5
+  // path topics - this is a plan-generation call, not a per-message chat,
+  // so a few extra parallel lookups here are fine; Open Library calls are
+  // cheap in practice since searchBooksForTopic caches per course+topic).
   const pathTopicNames: string[] = Array.isArray(learningPath) ? learningPath : [];
-  const materialRows = pathTopicNames.length
-    ? await prisma.learningMaterial.findMany({
-        where: { courseId, isActive: true, topic: { name: { in: pathTopicNames } } },
-        include: { topic: { select: { name: true } } },
-        orderBy: { sortOrder: 'asc' },
-      })
-    : [];
-  const availableMaterials = materialRows.map((m) => ({
-    title: m.title,
-    type: m.type,
-    topic: m.topic.name,
-    url: m.url,
-  }));
+  const bookLookupTopics = pathTopicNames.slice(0, 5);
+  const [materialRows, bookResults] = await Promise.all([
+    pathTopicNames.length
+      ? prisma.learningMaterial.findMany({
+          where: { courseId, isActive: true, topic: { name: { in: pathTopicNames } } },
+          include: { topic: { select: { name: true } } },
+          orderBy: { sortOrder: 'asc' },
+        })
+      : Promise.resolve([]),
+    Promise.all(bookLookupTopics.map(async (topicName) => ({
+      topicName,
+      result: await searchBooksForTopic(course.name, topicName),
+    }))),
+  ]);
+  const availableMaterials = [
+    ...materialRows.map((m) => ({ title: m.title, type: m.type, topic: m.topic.name, url: m.url })),
+    ...bookResults.flatMap(({ topicName, result }) => result.books.map((b) => ({ title: b.title, type: 'BOOK', topic: topicName, url: b.url }))),
+  ];
 
   const result = await llm.personalize({
     course: course.code,
@@ -54,8 +68,21 @@ export async function personalize(req: AuthenticatedRequest, res: Response) {
 export async function chatEndpoint(req: AuthenticatedRequest, res: Response) {
   if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
   const { courseId, topic, mastery, learningPath, message, style } = req.body as {
-    courseId: string; topic: string; mastery?: number; learningPath?: string[]; message: string; style?: llm.ChatStyle;
+    courseId?: string; topic?: string; mastery?: number; learningPath?: string[]; message?: string; style?: llm.ChatStyle;
   };
+
+  // Phase 5: basic input validation - the AI must remain usable/predictable
+  // for empty and excessively long input, and must not silently proceed
+  // with a missing courseId/topic/message (which would previously have
+  // produced a confusing downstream error instead of a clear 400).
+  if (!courseId || typeof courseId !== 'string') return res.status(400).json({ error: 'courseId is required.' });
+  if (!topic || typeof topic !== 'string') return res.status(400).json({ error: 'topic is required.' });
+  if (!message || typeof message !== 'string' || message.trim().length === 0) {
+    return res.status(400).json({ error: 'message is required.' });
+  }
+  if (message.length > MAX_CHAT_MESSAGE_LENGTH) {
+    return res.status(400).json({ error: `message is too long (max ${MAX_CHAT_MESSAGE_LENGTH} characters).` });
+  }
 
   const course = await prisma.course.findUnique({ where: { id: courseId } });
   if (!course) return res.status(404).json({ error: 'Course not found' });
@@ -91,6 +118,40 @@ export async function chatEndpoint(req: AuthenticatedRequest, res: Response) {
   });
   if (activePath) realLearningPath = activePath.items.map((i) => i.topic.name);
 
+  const pathIndex = realLearningPath.indexOf(topic);
+  const pathPosition = pathIndex !== -1 && realLearningPath.length > 0
+    ? `${pathIndex + 1} of ${realLearningPath.length} in your learning path`
+    : undefined;
+
+  // Resource-aware AI (Phase 5): the ONLY resources the model is allowed to
+  // reference - real curated materials for this topic plus the Phase 4
+  // Open Library integration (through its existing cache, so this costs
+  // nothing extra on a repeat question about the same topic).
+  const [weakMasteryRows, materialRows, bookResult] = await Promise.all([
+    prisma.topicMastery.findMany({
+      where: { userId: req.user.userId, courseId, status: { in: ['Weak/Critical', 'Needs Improvement'] }, topicId: { not: topicRow?.id } },
+      include: { topic: { select: { name: true } } },
+    }),
+    topicRow
+      ? prisma.learningMaterial.findMany({ where: { topicId: topicRow.id, isActive: true }, take: 5, orderBy: { sortOrder: 'asc' } })
+      : Promise.resolve([]),
+    topicRow ? searchBooksForTopic(course.name, topicRow.name) : Promise.resolve({ books: [], unavailable: true }),
+  ]);
+
+  const weakAreas = weakMasteryRows.map((m) => ({ topic: m.topic.name, mastery: Math.round(m.masteryPercentage) }));
+  const availableResources: llm.ChatResource[] = [
+    ...materialRows.map((m) => ({ title: m.title, type: m.type, url: m.url, source: 'internal' as const })),
+    ...bookResult.books.map((b) => ({ title: b.title, type: 'BOOK', url: b.url, source: 'open_library' as const })),
+  ];
+
+  // Completed-activity summary (Phase 5's "completed learning activities"
+  // context) - a count/duration, not an invented narrative.
+  const [courseActivity, completedMaterialCount] = await Promise.all([
+    getActivitySummary(req.user.userId, { courseId, range: 'week' }),
+    prisma.materialCompletion.count({ where: { userId: req.user.userId, material: { courseId } } }),
+  ]);
+  const completedActivitiesSummary = `${completedMaterialCount} material${completedMaterialCount === 1 ? '' : 's'} completed in this course; ${Math.round(courseActivity.totalSeconds / 60)} minutes of activity logged this week.`;
+
   const result = await llm.chat({
     course: course.code,
     topic,
@@ -99,6 +160,10 @@ export async function chatEndpoint(req: AuthenticatedRequest, res: Response) {
     message,
     style,
     recentPerformance,
+    weakAreas,
+    availableResources,
+    completedActivitiesSummary,
+    pathPosition,
   });
 
   await prisma.aIInteraction.create({
@@ -123,7 +188,8 @@ export async function chatEndpoint(req: AuthenticatedRequest, res: Response) {
 // Assembles ONLY real, backend-queried numbers and hands them to the LLM.
 export async function analyzeProgressEndpoint(req: AuthenticatedRequest, res: Response) {
   if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
-  const { courseId } = req.body as { courseId: string };
+  const { courseId } = req.body as { courseId?: string };
+  if (!courseId || typeof courseId !== 'string') return res.status(400).json({ error: 'courseId is required.' });
   const userId = req.user.userId;
 
   const course = await prisma.course.findUnique({ where: { id: courseId } });

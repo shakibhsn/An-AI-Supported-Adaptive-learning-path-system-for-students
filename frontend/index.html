@@ -1357,6 +1357,25 @@
               </span>
             </div>
 
+            <!-- AI LEARNING CONTEXT SUMMARY (Phase 5) - real, backend-derived
+                 Mastery/Weak Areas/Recommended Focus for whatever course the
+                 assistant is currently scoped to, so the student can see
+                 exactly what the AI already knows before asking anything. -->
+            <div id="aiContextSummary" class="grid grid-cols-3 gap-2 py-2.5 border-b border-slate-100 text-[10px]">
+              <div class="bg-slate-50 rounded-lg px-2 py-1.5 border border-slate-100">
+                <div class="text-slate-400 font-bold uppercase tracking-wide">Mastery</div>
+                <div id="aiCtxMastery" class="text-slate-800 font-extrabold mt-0.5">—</div>
+              </div>
+              <div class="bg-slate-50 rounded-lg px-2 py-1.5 border border-slate-100">
+                <div class="text-slate-400 font-bold uppercase tracking-wide">Weak Areas</div>
+                <div id="aiCtxWeakAreas" class="text-slate-800 font-semibold mt-0.5 truncate" title="">—</div>
+              </div>
+              <div class="bg-slate-50 rounded-lg px-2 py-1.5 border border-slate-100">
+                <div class="text-slate-400 font-bold uppercase tracking-wide">Recommended Focus</div>
+                <div id="aiCtxFocus" class="text-slate-800 font-semibold mt-0.5 truncate" title="">—</div>
+              </div>
+            </div>
+
             <!-- PROMPT FILTER CATEGORY PILLS -->
             <div class="pt-3 pb-1">
               <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Topic Prompt Filters:
@@ -3813,16 +3832,56 @@
       // Default the "Explain at my level" / chat context to this course's
       // top real weak topic (falls back to the previous topic if none).
       (async () => {
+        let gaps = null;
         try {
           const courseId = courseIdCache[course];
-          const gaps = await apiFetch(`/courses/${courseId}/gaps`);
+          gaps = await apiFetch(`/courses/${courseId}/gaps`);
           if (gaps.ranked && gaps.ranked.length > 0) currentChatTopic = gaps.ranked[0].topic;
         } catch (_) { /* keep previous topic if no diagnostic yet */ }
         const label = document.getElementById('explainTopicLabel');
         if (label) label.textContent = currentChatTopic;
         const pill = document.getElementById('aiContextPill');
         if (pill) pill.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Context: ${course.toUpperCase()} (${currentChatTopic})`;
+        updateAiContextSummary(course, gaps);
       })();
+    }
+
+    // Phase 5 AI UI: real Mastery/Weak Areas/Recommended Focus for the
+    // assistant's current course, shown before the student asks anything.
+    // `gaps` (from /courses/:id/gaps) may be null if there's no diagnostic
+    // data yet for this course - every element degrades to an honest
+    // "Not assessed yet" rather than a fake number.
+    async function updateAiContextSummary(course, gaps) {
+      const masteryEl = document.getElementById('aiCtxMastery');
+      const weakEl = document.getElementById('aiCtxWeakAreas');
+      const focusEl = document.getElementById('aiCtxFocus');
+      if (!masteryEl || !weakEl || !focusEl) return;
+
+      if (!gaps || !gaps.all || gaps.all.length === 0) {
+        masteryEl.textContent = 'Not assessed yet';
+        weakEl.textContent = '—';
+        weakEl.title = '';
+        focusEl.textContent = 'Take a diagnostic to get started';
+        focusEl.title = '';
+        return;
+      }
+
+      const avg = Math.round(gaps.all.reduce((s, t) => s + t.score, 0) / gaps.all.length);
+      masteryEl.textContent = `${avg}% avg`;
+
+      const weakNames = (gaps.ranked || []).map((t) => t.topic);
+      weakEl.textContent = weakNames.length > 0 ? weakNames.join(', ') : 'None - on track';
+      weakEl.title = weakEl.textContent;
+
+      try {
+        const focusData = await apiFetch('/profile/focus');
+        const myFocus = (focusData.focuses || []).find((f) => f.courseCode.toLowerCase() === course);
+        focusEl.textContent = myFocus ? myFocus.topic : 'All caught up';
+        focusEl.title = myFocus ? myFocus.reason : '';
+      } catch (_) {
+        focusEl.textContent = weakNames[0] || 'All caught up';
+        focusEl.title = '';
+      }
     }
 
     // Representative-topic (Linked Lists) test verified clean - embedding is

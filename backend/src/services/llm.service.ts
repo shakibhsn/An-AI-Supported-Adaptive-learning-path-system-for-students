@@ -52,13 +52,25 @@ interface LlmRequest {
   jsonMode?: boolean;
 }
 
+// Phase 5: every provider call now has a hard client-side timeout. Without
+// this, a hung Groq/xAI/Anthropic connection could leave a request pending
+// indefinitely instead of degrading to the existing fallback path - the
+// explicit "the application must remain usable when the LLM is unavailable"
+// requirement extends to "slow", not just "erroring".
+const LLM_TIMEOUT_MS = 20000;
+
 /**
  * Makes one non-streaming completion call to the configured provider and
- * returns the assistant's text. Throws on any transport/auth/shape error -
- * callers are responsible for the graceful fallback (see personalize/chat).
+ * returns the assistant's text. Throws on any transport/auth/shape/timeout
+ * error - callers are responsible for the graceful fallback (see
+ * personalize/chat/analyzeProgress/evaluateShortAnswer).
  */
 async function callLlm(req: LlmRequest): Promise<string> {
-  return getProvider() === 'anthropic' ? callAnthropic(req) : callXai(req);
+  const timeoutPromise = new Promise<never>((_, reject) => {
+    setTimeout(() => reject(new Error(`LLM call timed out after ${LLM_TIMEOUT_MS}ms`)), LLM_TIMEOUT_MS);
+  });
+  const callPromise = getProvider() === 'anthropic' ? callAnthropic(req) : callXai(req);
+  return Promise.race([callPromise, timeoutPromise]);
 }
 
 async function callXai(req: LlmRequest): Promise<string> {
@@ -67,27 +79,38 @@ async function callXai(req: LlmRequest): Promise<string> {
     throw new Error('XAI_API_KEY is not set. Get one at https://console.x.ai and add it to .env.');
   }
 
-  const res = await fetch(`${XAI_BASE_URL}/chat/completions`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      model: XAI_MODEL,
-      messages: [
-        { role: 'system', content: req.system },
-        { role: 'user', content: req.user },
-      ],
-      max_tokens: req.maxTokens,
-      temperature: 0.4,
-      ...(req.jsonMode ? { response_format: { type: 'json_object' } } : {}),
-    }),
-  });
+  const controller = new AbortController();
+  const abortTimer = setTimeout(() => controller.abort(), LLM_TIMEOUT_MS);
+  let res: Response;
+  try {
+    res = await fetch(`${XAI_BASE_URL}/chat/completions`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model: XAI_MODEL,
+        messages: [
+          { role: 'system', content: req.system },
+          { role: 'user', content: req.user },
+        ],
+        max_tokens: req.maxTokens,
+        temperature: 0.4,
+        ...(req.jsonMode ? { response_format: { type: 'json_object' } } : {}),
+      }),
+      signal: controller.signal,
+    });
+  } finally {
+    clearTimeout(abortTimer);
+  }
 
   if (!res.ok) {
     const detail = await res.text().catch(() => '');
-    throw new Error(`xAI API error ${res.status}: ${detail.slice(0, 300)}`);
+    // Surfaced distinctly so a caller/log can tell "we got rate-limited" apart
+    // from other failures, without changing the fallback behavior itself.
+    const kind = res.status === 429 ? 'rate limited' : `error ${res.status}`;
+    throw new Error(`xAI API ${kind}: ${detail.slice(0, 300)}`);
   }
 
   const data = (await res.json()) as {
@@ -144,11 +167,18 @@ Return VALID JSON ONLY, no markdown fences, no preamble, matching exactly this s
 
 const CHAT_SYSTEM_PROMPT = `You are StudyGuard AI, a contextual learning assistant embedded in an adaptive learning app.
 
-You know the student's current course, current topic, their mastery level on that topic, and the authoritative learning path (determined by a separate deterministic engine, which you must never contradict or reorder).
+You will be given the student's real learning context in four labeled sections below (STUDENT LEARNING CONTEXT, CURRENT TOPIC CONTEXT, AVAILABLE RESOURCE CONTEXT, then the student's question) - everything in them was looked up by the backend, not claimed by the student, and is the only truth you have about them.
 
-Answer the student's question directly and simply, calibrated to their stated mastery level. If the student asks something unrelated to their current learning context, gently redirect them back toward their learning goal. Do not invent facts about the student beyond what is given to you below.
+Your job: personalized explanations, study guidance, concept clarification, improvement suggestions, and resource suggestions - calibrated to the student's stated mastery level.
 
-Respond in plain text (not JSON) - a normal, warm, helpful reply.`;
+You must NEVER:
+- change, report, or imply a different assessment score, mastery percentage, or unlock state than what is given to you
+- claim a topic or assessment level is unlocked/locked if that contradicts the given data
+- invent that the student completed an activity, material, or assessment that isn't in the given data
+- reorder, second-guess, or contradict the given learning path - it is produced by a separate deterministic engine, not you
+- invent a book, video, article, or URL - if you recommend a resource, it MUST be copied verbatim (title and URL) from the AVAILABLE RESOURCE CONTEXT section; if nothing there is relevant, say so honestly instead of making one up
+
+If the student asks something unrelated to their current learning context, gently redirect them back toward their learning goal. Respond in plain text (not JSON) - a normal, warm, helpful reply, not a wall of bullet points.`;
 
 // Appended to CHAT_SYSTEM_PROMPT when the student picks an explanation style
 // (Section 13 - "Explain at my level").
@@ -256,6 +286,14 @@ export async function personalize(input: PersonalizeInput): Promise<PersonalizeR
 
 export type ChatStyle = 'simple' | 'detailed' | 'example' | 'step_by_step';
 
+/** A real, backend-retrieved resource the AI may recommend verbatim - never invent one (Phase 5). */
+export interface ChatResource {
+  title: string;
+  type: string; // LearningMaterial.type (VIDEO/ARTICLE/...) or 'BOOK' for an Open Library result
+  url: string;
+  source: 'internal' | 'open_library';
+}
+
 export interface ChatInput {
   course: string;
   topic: string;
@@ -266,6 +304,14 @@ export interface ChatInput {
   style?: ChatStyle;
   /** Recent performance context (Section 13's "recent performance" requirement), server-derived. */
   recentPerformance?: string;
+  /** Other topics in this course the student is currently weak on (Phase 5), server-derived. */
+  weakAreas?: { topic: string; mastery: number }[];
+  /** Real materials + Open Library books for the current topic (Phase 5) - the ONLY resources the AI may reference. */
+  availableResources?: ChatResource[];
+  /** e.g. "3 of 8 topics completed, 42 minutes logged this week" - server-derived, never invented. */
+  completedActivitiesSummary?: string;
+  /** e.g. "Position 3 of 8 in your learning path" - server-derived from the real path order. */
+  pathPosition?: string;
 }
 
 export interface ChatResult {
@@ -277,23 +323,49 @@ export interface ChatResult {
 
 export async function chat(input: ChatInput): Promise<ChatResult> {
   try {
-    const context = [
+    // Structured as the four labeled sections the system prompt refers to:
+    // STUDENT LEARNING CONTEXT + CURRENT TOPIC CONTEXT + AVAILABLE RESOURCE
+    // CONTEXT + the question itself. Keeping these as distinct, labeled
+    // blocks (rather than one flat list) is what lets the system prompt
+    // point at "the AVAILABLE RESOURCE CONTEXT section" unambiguously.
+    const studentContext = [
       `Course: ${input.course}`,
+      `Authoritative learning path (in order, do not reorder): ${input.learningPath.join(' -> ') || 'not yet generated'}`,
+      input.pathPosition ? `Path position: ${input.pathPosition}` : null,
+      input.weakAreas && input.weakAreas.length > 0
+        ? `Other weak areas in this course: ${input.weakAreas.map((w) => `${w.topic} (${w.mastery}%)`).join(', ')}`
+        : null,
+      input.completedActivitiesSummary ? `Completed activity: ${input.completedActivitiesSummary}` : null,
+    ].filter(Boolean).join('\n');
+
+    const topicContext = [
       `Current topic: ${input.topic}`,
       `Current mastery on this topic: ${input.mastery}%`,
-      `Authoritative learning path: ${input.learningPath.join(' -> ')}`,
       input.recentPerformance ? `Recent performance: ${input.recentPerformance}` : null,
     ].filter(Boolean).join('\n');
+
+    const resourceContext = input.availableResources && input.availableResources.length > 0
+      ? input.availableResources.map((r) => `- [${r.type}${r.source === 'open_library' ? ', Open Library' : ''}] ${r.title} — ${r.url}`).join('\n')
+      : '(none available for this topic right now - do not invent one)';
+
+    const user = [
+      'STUDENT LEARNING CONTEXT:',
+      studentContext,
+      '',
+      'CURRENT TOPIC CONTEXT:',
+      topicContext,
+      '',
+      'AVAILABLE RESOURCE CONTEXT (only resources you may ever recommend, copied verbatim):',
+      resourceContext,
+      '',
+      `Student's message: ${input.message}`,
+    ].join('\n');
 
     const system = input.style && CHAT_STYLE_INSTRUCTIONS[input.style]
       ? `${CHAT_SYSTEM_PROMPT}\n\n${CHAT_STYLE_INSTRUCTIONS[input.style]}`
       : CHAT_SYSTEM_PROMPT;
 
-    const reply = await callLlm({
-      system,
-      user: `${context}\n\nStudent's message: ${input.message}`,
-      maxTokens: 700,
-    });
+    const reply = await callLlm({ system, user, maxTokens: 700 });
     if (!reply.trim()) throw new Error('LLM response was empty');
     return { success: true, source: 'llm', reply };
   } catch (err) {
