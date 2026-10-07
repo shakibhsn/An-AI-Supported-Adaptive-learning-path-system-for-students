@@ -177,17 +177,13 @@ export async function getCurrentFocus(req: AuthenticatedRequest, res: Response) 
   return res.json({ focuses });
 }
 
-// GET /api/profile/assessment-improvement
-// Section 9: real before/after using the student's ACTUAL AssessmentAttempt
-// history per topic (earliest completed vs. most recent completed). A topic
-// with only one completed attempt honestly reports "no previous assessment"
-// rather than fabricating an improvement number.
-export async function getAssessmentImprovement(req: AuthenticatedRequest, res: Response) {
-  if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
-  const userId = req.user.userId;
-
+// Shared by getAssessmentImprovement (below) and getLearningInsights
+// (Phase 6) so both report the exact same improvement numbers from the
+// exact same real AssessmentAttempt history - never two independently-
+// derived "improvement" signals that could quietly disagree.
+async function computeAssessmentImprovements(userId: string, courseId?: string) {
   const attempts = await prisma.assessmentAttempt.findMany({
-    where: { userId, status: 'completed' },
+    where: { userId, status: 'completed', ...(courseId ? { courseId } : {}) },
     include: { topic: true },
     orderBy: { completedAt: 'asc' },
   });
@@ -199,7 +195,7 @@ export async function getAssessmentImprovement(req: AuthenticatedRequest, res: R
     byTopic.set(a.topicId, list);
   }
 
-  const results = [...byTopic.values()].map((list) => {
+  return [...byTopic.values()].map((list) => {
     const first = list[0];
     const latest = list[list.length - 1];
     const hasPrevious = list.length >= 2;
@@ -213,6 +209,62 @@ export async function getAssessmentImprovement(req: AuthenticatedRequest, res: R
       attemptCount: list.length,
     };
   });
+}
 
+// GET /api/profile/assessment-improvement
+// Section 9: real before/after using the student's ACTUAL AssessmentAttempt
+// history per topic (earliest completed vs. most recent completed). A topic
+// with only one completed attempt honestly reports "no previous assessment"
+// rather than fabricating an improvement number.
+export async function getAssessmentImprovement(req: AuthenticatedRequest, res: Response) {
+  if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
+  const results = await computeAssessmentImprovements(req.user.userId);
   return res.json({ results });
+}
+
+// GET /api/profile/insights?courseId=  (Phase 6 - "Learning Insights")
+// Deterministic, rule-based statements straight from real stored data - NOT
+// an LLM call (that remains the separate, on-demand "Analyze My Progress"
+// feature in insights.controller.ts/analyzeProgress). Every insight here is
+// the direct output of a query; nothing is inferred, phrased by a model, or
+// guessed. If there's no data yet, this returns an empty, honest list -
+// never a fabricated "you're doing great" with nothing behind it.
+export async function getLearningInsights(req: AuthenticatedRequest, res: Response) {
+  if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
+  const userId = req.user.userId;
+  const courseId = typeof req.query.courseId === 'string' ? req.query.courseId : undefined;
+
+  const [masteryRows, improvements, completedThisWeek] = await Promise.all([
+    prisma.topicMastery.findMany({ where: { userId, ...(courseId ? { courseId } : {}) }, include: { topic: true } }),
+    computeAssessmentImprovements(userId, courseId),
+    prisma.materialCompletion.count({
+      where: {
+        userId,
+        completedAt: { gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) },
+        ...(courseId ? { material: { courseId } } : {}),
+      },
+    }),
+  ]);
+
+  const insights: { type: 'improvement' | 'weak_area' | 'activity'; text: string }[] = [];
+
+  // "You improved in X" - only topics with a REAL earlier assessment to
+  // compare against, and only where the number actually went up.
+  const improved = improvements.filter((r) => r.hasPrevious && (r.improvement ?? 0) > 0);
+  for (const r of improved.slice(0, 3)) {
+    insights.push({ type: 'improvement', text: `You improved in ${r.topic} by ${r.improvement} points (now ${r.latestPercentage}%).` });
+  }
+
+  // "You still need practice in Y" - real Weak/Critical or Needs Improvement topics.
+  const weak = masteryRows.filter((m) => m.status === 'Weak/Critical' || m.status === 'Needs Improvement');
+  for (const m of weak.slice(0, 3)) {
+    insights.push({ type: 'weak_area', text: `You still need practice in ${m.topic.name} (currently ${Math.round(m.masteryPercentage)}%).` });
+  }
+
+  // "You completed N learning activities" - real MaterialCompletion rows, this week.
+  if (completedThisWeek > 0) {
+    insights.push({ type: 'activity', text: `You completed ${completedThisWeek} learning material${completedThisWeek === 1 ? '' : 's'} this week.` });
+  }
+
+  return res.json({ insights, hasData: masteryRows.length > 0 });
 }

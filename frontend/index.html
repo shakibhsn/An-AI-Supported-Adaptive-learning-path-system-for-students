@@ -1959,6 +1959,16 @@
           <div id="learningProfileBody" class="text-sm text-slate-600">Loading…</div>
         </div>
 
+        <!-- LEARNING INSIGHTS (Phase 6) - deterministic, rule-based
+             statements straight from stored data (no AI call). Distinct
+             from "AI Progress Insight" below, which is an on-demand LLM
+             narrative over the same kind of real numbers. -->
+        <div class="hub-card rounded-2xl p-6">
+          <h3 class="text-base font-bold text-slate-900 mb-1">Learning Insights</h3>
+          <p class="text-xs text-slate-500 mb-4">Instant, data-only observations - no AI call, just your real stored numbers.</p>
+          <div id="learningInsightsBody" class="space-y-2">Loading…</div>
+        </div>
+
         <!-- AI PROGRESS ANALYSIS (Section 8/14) -->
         <div class="hub-card rounded-2xl p-6">
           <div class="flex items-center justify-between mb-1">
@@ -2070,6 +2080,16 @@
         <div class="hub-card rounded-2xl p-6">
           <h3 class="text-base font-bold text-slate-900 mb-4">Current Learning Focus</h3>
           <div id="profileCurrentFocus" class="space-y-3">
+            <p class="text-sm text-slate-500">Loading…</p>
+          </div>
+        </div>
+
+        <!-- LEARNING INSIGHTS (Phase 6) - deterministic, rule-based, across
+             every enrolled course. No AI call. -->
+        <div class="hub-card rounded-2xl p-6">
+          <h3 class="text-base font-bold text-slate-900 mb-1">Learning Insights</h3>
+          <p class="text-xs text-slate-500 mb-4">Instant, data-only observations across all your courses.</p>
+          <div id="profileLearningInsights" class="space-y-2">
             <p class="text-sm text-slate-500">Loading…</p>
           </div>
         </div>
@@ -3373,7 +3393,7 @@
 
       // Load real data for screens that default to the DSA tab on entry
       // (their non-DSA tabs are loaded on-demand by their own tab switchers).
-      if (screenId === 's13') { currentProgressCourse = 'dsa'; renderProgressTab('dsa'); renderMasteryMap('dsa'); renderAssessmentImprovementProgress('dsa'); renderPathHistory('dsa'); renderLearningProfile('dsa'); }
+      if (screenId === 's13') { currentProgressCourse = 'dsa'; renderProgressTab('dsa'); renderMasteryMap('dsa'); renderAssessmentImprovementProgress('dsa'); renderPathHistory('dsa'); renderLearningProfile('dsa'); renderLearningInsights('dsa'); }
       if (screenId === 's07') renderGaps('dsa');
       if (screenId === 's02') renderStudentOverview();
       if (screenId === 's09') switchContentTab(currentChatCourse || 'dsa');
@@ -4913,6 +4933,7 @@
       renderAssessmentImprovementProgress(currentProgressCourse);
       renderPathHistory(currentProgressCourse);
       renderLearningProfile(currentProgressCourse);
+      renderLearningInsights(currentProgressCourse);
       document.getElementById('analyzeProgressResult').innerHTML = '';
     }
 
@@ -5077,6 +5098,39 @@
           </div>`;
       } catch (err) {
         body.innerHTML = `<p class="text-sm text-red-600">Could not load your learning profile: ${escapeHtml(err.message)}</p>`;
+      }
+    }
+
+    // ---- Learning Insights (Phase 6) - deterministic, rule-based text
+    // straight from /profile/insights (no AI call). Each insight already
+    // comes pre-phrased from the backend; this just renders the list. ----
+    const INSIGHT_ICON_CLASS = {
+      improvement: 'text-emerald-600 bg-emerald-50 border-emerald-200',
+      weak_area: 'text-amber-600 bg-amber-50 border-amber-200',
+      activity: 'text-brand-600 bg-brand-50 border-brand-200',
+    };
+
+    async function renderLearningInsights(course) {
+      const body = document.getElementById('learningInsightsBody');
+      if (!body) return;
+      body.innerHTML = 'Loading…';
+      try {
+        const courseId = courseIdCache[course];
+        const data = await apiFetch(`/profile/insights?courseId=${courseId}`);
+        if (!data.hasData) {
+          body.innerHTML = '<p class="text-sm text-slate-500">Complete a diagnostic for this course to get personalized insights.</p>';
+          return;
+        }
+        if (data.insights.length === 0) {
+          body.innerHTML = '<p class="text-sm text-slate-500">No standout insights yet - keep practicing and check back.</p>';
+          return;
+        }
+        body.innerHTML = data.insights.map((i) => `
+          <div class="flex items-start gap-2.5 p-2.5 rounded-xl border ${INSIGHT_ICON_CLASS[i.type] || 'text-slate-600 bg-slate-50 border-slate-200'}">
+            <span class="text-sm font-semibold">${escapeHtml(i.text)}</span>
+          </div>`).join('');
+      } catch (err) {
+        body.innerHTML = `<p class="text-sm text-red-600">Could not load learning insights: ${escapeHtml(err.message)}</p>`;
       }
     }
 
@@ -5293,7 +5347,34 @@
       renderProfileTopicMastery();
       renderProfileCurrentFocus();
       renderProfileAssessmentImprovement();
+      renderProfileLearningInsights();
       renderProfileActivityFeed();
+    }
+
+    // Cross-course version of renderLearningInsights (Phase 6) - Profile is
+    // the one place that reports across every enrolled course at once, so
+    // this omits courseId rather than looping per course.
+    async function renderProfileLearningInsights() {
+      const body = document.getElementById('profileLearningInsights');
+      if (!body) return;
+      body.innerHTML = '<p class="text-sm text-slate-500">Loading…</p>';
+      try {
+        const data = await apiFetch('/profile/insights');
+        if (!data.hasData) {
+          body.innerHTML = '<p class="text-sm text-slate-500">Complete a diagnostic in any course to get personalized insights.</p>';
+          return;
+        }
+        if (data.insights.length === 0) {
+          body.innerHTML = '<p class="text-sm text-slate-500">No standout insights yet - keep practicing and check back.</p>';
+          return;
+        }
+        body.innerHTML = data.insights.map((i) => `
+          <div class="flex items-start gap-2.5 p-2.5 rounded-xl border ${INSIGHT_ICON_CLASS[i.type] || 'text-slate-600 bg-slate-50 border-slate-200'}">
+            <span class="text-sm font-semibold">${escapeHtml(i.text)}</span>
+          </div>`).join('');
+      } catch (err) {
+        body.innerHTML = `<p class="text-sm text-red-600">Could not load learning insights: ${escapeHtml(err.message)}</p>`;
+      }
     }
 
     function renderProfileAccountInfo() {
