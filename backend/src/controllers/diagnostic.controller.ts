@@ -34,8 +34,15 @@ export async function submitDiagnostic(req: AuthenticatedRequest, res: Response)
   if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
   const { courseId, answers } = req.body as SubmitBody;
 
-  if (!courseId || !answers || answers.length === 0) {
+  if (!courseId || typeof courseId !== 'string' || !Array.isArray(answers) || answers.length === 0) {
     return res.status(400).json({ error: 'courseId and at least one answer are required.' });
+  }
+  // Phase 7: validate each answer's shape before any field is read off it -
+  // a malformed entry here previously only surfaced as a generic 500
+  // (safely caught by asyncHandler, but not a useful error for the client).
+  const hasInvalidAnswer = answers.some((a) => typeof a?.questionId !== 'string' || typeof a?.selectedAnswer !== 'string');
+  if (hasInvalidAnswer) {
+    return res.status(400).json({ error: 'Each answer must have a questionId and a selectedAnswer, both strings.' });
   }
 
   const questionIds = answers.map((a) => a.questionId);

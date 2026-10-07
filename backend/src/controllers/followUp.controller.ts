@@ -31,9 +31,16 @@ export async function getFollowUp(req: Request, res: Response) {
 export async function submitFollowUp(req: AuthenticatedRequest, res: Response) {
   if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
   const { courseId, answers } = req.body as {
-    courseId: string;
-    answers: { questionId: string; selectedAnswer: string }[];
+    courseId?: string;
+    answers?: { questionId: string; selectedAnswer: string }[];
   };
+
+  if (!courseId || typeof courseId !== 'string' || !Array.isArray(answers) || answers.length === 0) {
+    return res.status(400).json({ error: 'courseId and at least one answer are required.' });
+  }
+  if (answers.some((a) => typeof a?.questionId !== 'string' || typeof a?.selectedAnswer !== 'string')) {
+    return res.status(400).json({ error: 'Each answer must have a questionId and a selectedAnswer, both strings.' });
+  }
 
   const questions = await prisma.practiceQuestion.findMany({
     where: { id: { in: answers.map((a) => a.questionId) }, isFollowUp: true },

@@ -39,6 +39,19 @@ const aiLimiter = rateLimit({
 });
 app.use('/api/ai', aiLimiter);
 
+// Phase 7: dedicated brute-force protection on login/register - the
+// generic 200/min global limiter below is far too permissive for
+// credential-stuffing/signup-spam resistance on its own.
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many attempts. Please wait a few minutes and try again.' },
+});
+app.use('/api/auth/login', authLimiter);
+app.use('/api/auth/register', authLimiter);
+
 // A gentler global limiter for everything else (auth brute-force, scraping).
 const globalLimiter = rateLimit({
   windowMs: 60 * 1000,

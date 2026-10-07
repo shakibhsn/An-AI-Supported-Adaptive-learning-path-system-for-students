@@ -132,6 +132,9 @@ export async function submitPractice(req: AuthenticatedRequest, res: Response) {
   if (!courseId || !Array.isArray(answers) || answers.length === 0) {
     return res.status(400).json({ error: 'courseId and at least one answer are required.' });
   }
+  if (answers.some((a) => typeof a?.questionId !== 'string' || typeof a?.selectedAnswer !== 'string')) {
+    return res.status(400).json({ error: 'Each answer must have a questionId and a selectedAnswer, both strings.' });
+  }
 
   const questions = await prisma.practiceQuestion.findMany({
     where: { id: { in: answers.map((a) => a.questionId) } },
