@@ -12,6 +12,7 @@ import activityRoutes from './activity.routes';
 import insightsRoutes from './insights.routes';
 import assessmentRoutes from './assessment.routes';
 import profileRoutes from './profile.routes';
+import booksRoutes from './books.routes';
 
 const router = Router();
 
@@ -28,5 +29,6 @@ router.use('/', activityRoutes); // exposes /activity/start, /activity/:id/heart
 router.use('/', insightsRoutes); // exposes /courses/:id/mastery-map, /courses/:id/learning-profile, /courses/:id/path-history
 router.use('/', assessmentRoutes); // exposes /topics/:id/assessment/state, /topics/:id/assessment/start, /assessment-attempts/:id/submit
 router.use('/profile', profileRoutes); // exposes /profile/summary, /profile/activity, /profile/focus, /profile/assessment-improvement
+router.use('/', booksRoutes); // exposes /topics/:id/books (Open Library - Phase 4)
 
 export default router;

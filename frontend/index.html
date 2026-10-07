@@ -3915,6 +3915,12 @@
                 class="text-[11px] font-bold text-brand-700 bg-brand-50 hover:bg-brand-100 border border-brand-200 px-3 py-1.5 rounded-lg transition">
                 Practice ${escapeHtml(t.topicName)} (adapts to your level, instant feedback) →
               </button>
+            </div>
+            <div>
+              <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wide mb-1.5">Recommended Books</div>
+              <div class="space-y-2" id="books-${t.topicId}">
+                <p class="text-xs text-slate-400">Loading recommended books&hellip;</p>
+              </div>
             </div>`;
           panel.appendChild(card);
         }
@@ -3966,6 +3972,42 @@
             });
           });
         });
+
+        // Open Library "Recommended Books" (Phase 4) - fired LAST and never
+        // awaited here on purpose: every existing checkbox/link/embed
+        // button above is already wired and interactive by this point, so
+        // if Open Library is slow, down, or rate-limited, only this
+        // section's placeholder lingers - the rest of the page never waits
+        // on it. Each topic's fetch has its own try/catch, so this can
+        // never produce an unhandled rejection.
+        const bookHtml = (b) => `
+          <div class="p-3 rounded-xl border border-slate-100 bg-white flex items-start gap-3">
+            ${b.cover
+              ? `<img src="${escapeHtml(b.cover)}" alt="" class="w-10 h-14 object-cover rounded-md border border-slate-100 shrink-0" loading="lazy">`
+              : `<div class="w-10 h-14 rounded-md border border-slate-200 bg-slate-50 shrink-0 flex items-center justify-center text-[9px] text-slate-400 font-semibold text-center leading-tight">No cover</div>`}
+            <div class="flex-1 min-w-0">
+              <a href="${escapeHtml(b.url)}" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-slate-900 hover:text-brand-700 hover:underline">${escapeHtml(b.title)}</a>
+              <p class="text-xs text-slate-500 mt-0.5">${escapeHtml(b.authors.join(', '))}</p>
+              <p class="text-[11px] text-slate-400 mt-1">${b.firstPublishYear ? b.firstPublishYear + ' · ' : ''}Open Library</p>
+            </div>
+          </div>`;
+
+        Promise.all(topics.map(async (t) => {
+          const container = document.getElementById(`books-${t.topicId}`);
+          if (!container) return;
+          try {
+            const bookData = await apiFetch(`/topics/${t.topicId}/books`);
+            if (bookData.unavailable) {
+              container.innerHTML = '<p class="text-xs text-slate-400">Additional book recommendations are currently unavailable.</p>';
+            } else if (!bookData.books || bookData.books.length === 0) {
+              container.innerHTML = '<p class="text-xs text-slate-400">No book recommendations found for this topic yet.</p>';
+            } else {
+              container.innerHTML = bookData.books.map(bookHtml).join('');
+            }
+          } catch (_err) {
+            container.innerHTML = '<p class="text-xs text-slate-400">Additional book recommendations are currently unavailable.</p>';
+          }
+        }));
       } catch (err) {
         panel.innerHTML = `<div class="hub-card rounded-2xl p-6 text-sm text-red-600">Could not load materials: ${escapeHtml(err.message)}</div>`;
       }
