@@ -1,0 +1,32 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run backend dev server",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"--prefix",
+				"backend",
+				"run",
+				"dev"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Run frontend static server",
+			"type": "shell",
+			"command": "npx",
+			"args": [
+				"--yes",
+				"serve",
+				"-l",
+				"3000",
+				"frontend"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		}
+	]
+}
